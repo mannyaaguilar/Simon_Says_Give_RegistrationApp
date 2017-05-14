@@ -31,6 +31,16 @@ myApp.config(['$routeProvider', '$locationProvider',
         }]
       }
     })
+    // Import View of the app
+    .when('/import', {
+      templateUrl: '/views/templates/import.html',
+      controller: 'ImportController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser();
+        }]
+      }
+    })
     .otherwise({
       redirectTo: 'home'
     });
