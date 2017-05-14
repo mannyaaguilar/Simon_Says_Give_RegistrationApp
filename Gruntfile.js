@@ -84,12 +84,6 @@ module.exports = function(grunt){
               'angular-messages.min.js.map'],
         dest: 'server/public/vendors/angular-messages/'
       }
-      // angularcsvimport: {
-      //   expand: true,
-      //   cwd: 'node_modules/angular-csv-import/dist/',
-      //   src: ['angular-csv-import.js'],
-      //   dest: 'server/public/vendors/angular-csv-import/'
-      // }
     },
     watch: {
       files: [
