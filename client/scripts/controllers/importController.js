@@ -1,4 +1,4 @@
-myApp.controller('ImportController', ['$scope', '$http', '$location', 'UserService', function($scope, $http, $location, UserService) {
+myApp.controller('ImportController', ['$scope', '$http', '$location', 'UserService', 'CSVService', function($scope, $http, $location, UserService, CSVService) {
 
   $scope.userObject = UserService.userObject;
   $scope.logout = UserService.logout;
@@ -61,6 +61,7 @@ myApp.controller('ImportController', ['$scope', '$http', '$location', 'UserServi
        setTimeout("document.getElementById('progress_bar').className='';", 2000);
 
        console.log(e.target.result);
+       CSVService.sendCSV(e.target.result);
 
 
      }

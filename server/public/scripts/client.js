@@ -46,7 +46,7 @@ myApp.config(['$routeProvider', '$locationProvider',
     });
 }]);
 
-myApp.controller('ImportController', ['$scope', '$http', '$location', 'UserService', function($scope, $http, $location, UserService) {
+myApp.controller('ImportController', ['$scope', '$http', '$location', 'UserService', 'CSVService', function($scope, $http, $location, UserService, CSVService) {
 
   $scope.userObject = UserService.userObject;
   $scope.logout = UserService.logout;
@@ -109,6 +109,7 @@ myApp.controller('ImportController', ['$scope', '$http', '$location', 'UserServi
        setTimeout("document.getElementById('progress_bar').className='';", 2000);
 
        console.log(e.target.result);
+       CSVService.sendCSV(e.target.result);
 
 
      }
@@ -170,6 +171,24 @@ myApp.controller('UserController', ['$scope', '$http', '$location', 'UserService
   $scope.logout = UserService.logout;
   $scope.redirect = UserService.redirect;
 
+}]);
+
+myApp.factory('CSVService', ['$http', function($http){
+  console.log('CSVService Loaded');
+
+  // Sends CSV file content to server
+  sendCSV = function(csv) {
+    var csvToPost = {};
+    csvToPost.fileContent = csv;
+    console.log('Posting csv ', csvToPost);
+    $http.post('/csv/upload', csvToPost).then(function(response) {
+      console.log('Back from server after posting csv content', response);
+    });
+  };
+
+  return {
+    sendCSV: sendCSV
+  };
 }]);
 
 myApp.factory('UserService', ['$http', '$location', function($http, $location){
