@@ -4,11 +4,10 @@ myApp.controller('ConfirmationController', ['$scope', '$http', '$location', '$in
   $scope.logout = UserService.logout;
   $scope.redirect = UserService.redirect;
 
-  $scope.enabled = true;
-  $scope.timer = 0;
-  var timeOutLength = 3;
+  $scope.timer = 0; // timer starts at 0 seconds
+  var timeOutLength = 5; //page will change view after x seconds
 
-  // function that changes view to check-in/check-out after x amount of seconds
+  // function that changes view to check-in/check-out view after x seconds
   $scope.timeOut = function() {
     var interval = $interval(function(){
       if ($scope.timer < timeOutLength){
@@ -23,11 +22,12 @@ myApp.controller('ConfirmationController', ['$scope', '$http', '$location', '$in
 
   //changes view to checkInOut page
   $scope.changeView = function() {
-    // $location.path('/checkInOut');
-    $location.path('/user');
+    $location.path('/checkInOut');
+    //user path for testing:
+    // $location.path('/user');
   };
 
-  // timeOut function runs on view load - redirects page in 10 seconds
+  // timeOut function runs when confirmation view is loaded
   $scope.timeOut();
 
 }]);

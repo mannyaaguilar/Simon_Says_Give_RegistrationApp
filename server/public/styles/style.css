@@ -119,3 +119,8 @@ footer {
   max-height: 48%;
   max-width: 48%;
 }
+
+#confirmation {
+  padding-top: 20px;
+  text-align: center;
+}
