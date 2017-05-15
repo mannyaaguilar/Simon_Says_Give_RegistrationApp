@@ -49,6 +49,7 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/override.html',
       controller: 'OverrideController',
     })
+    //
     .otherwise({
       redirectTo: 'home'
     });
