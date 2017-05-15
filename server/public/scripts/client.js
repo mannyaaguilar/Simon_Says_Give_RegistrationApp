@@ -16,6 +16,14 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/home.html',
       controller: 'LoginController',
     })
+    .when('/admin', {
+      templateUrl: '/views/templates/admin.html',
+      controller: 'AdminController',
+    })
+    .when('/test', {
+      templateUrl: '/views/templates/test.html',
+      controller: 'AdminController',
+    })
     // Register new user View
     .when('/register', {
       templateUrl: '/views/templates/register.html',
@@ -34,6 +42,12 @@ myApp.config(['$routeProvider', '$locationProvider',
     .otherwise({
       redirectTo: 'home'
     });
+}]);
+
+myApp.controller('AdminController', ['$scope', '$http', '$location', 'UserService', function($scope, $http, $location, UserService) {
+console.log("adminController Loaded");
+
+$scope.redirect = UserService.redirect;
 }]);
 
 myApp.controller('LoginController', ['$scope', '$http', '$location', function($scope, $http, $location) {

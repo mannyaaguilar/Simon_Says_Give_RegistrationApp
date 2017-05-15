@@ -16,6 +16,14 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/home.html',
       controller: 'LoginController',
     })
+    .when('/admin', {
+      templateUrl: '/views/templates/admin.html',
+      controller: 'AdminController',
+    })
+    .when('/test', {
+      templateUrl: '/views/templates/test.html',
+      controller: 'AdminController',
+    })
     // Register new user View
     .when('/register', {
       templateUrl: '/views/templates/register.html',
