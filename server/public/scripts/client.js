@@ -145,11 +145,13 @@ myApp.controller('UserController', ['$scope', '$http', '$location', 'UserService
 
 }]);
 
-myApp.controller('WaiverController',
-  ['$scope', '$http', '$location',
+myApp.controller('WaiverController', ['$scope', '$http', '$location',
   function($scope, $http, $location) {
 
-    //FUNCTIONALITY
+$scope.adultWaiver = {};
+$scope.submitAdultWaiver = function(waiverObj) {
+  console.log("Adult waiver object: ", waiverObj);
+};
 
 }]);
 

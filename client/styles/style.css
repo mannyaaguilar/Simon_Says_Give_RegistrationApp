@@ -37,10 +37,6 @@ h1 {
   color: whitesmoke;
 }
 
-.superBack {
-  background-color: tan;
-}
-
 .themed-Btn {
   padding-top: 0;
   padding-right: 50px;
@@ -177,4 +173,16 @@ footer {
 #confirmation {
   padding-top: 20px;
   text-align: center;
+}
+
+.noMargins {
+  margin: 0;
+}
+
+.bufferDiv {
+  min-height: 40px;
+}
+
+md-input-container .md-errors-spacer:empty {
+    display: none;
 }
