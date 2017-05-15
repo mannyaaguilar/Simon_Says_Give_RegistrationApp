@@ -3,7 +3,10 @@
   <div layout-md="column" flex="33"></div>
   <div layout="column" flex="33">
 
-    <h2>Simon Says Give</h>
+    <div class="mainImageDiv">
+      <img class="mainLogo" src="views/assets/SSG_Logo_Drawn_Primary.png" alt="Simon Says Give">
+    </div>
+    <!-- <h2>Simon Says Give</h> -->
     <h3 ng-if="message != ''">{{message}}</h3>
     <form name="loginView" ng-submit="login()">
       <md-input-container layout="column">
