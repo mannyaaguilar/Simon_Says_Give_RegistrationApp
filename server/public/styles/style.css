@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Open Sans'; /*a name to be used later*/
-    src: url('/views/assets/fonts/OpenSans-Regular.ttf'); /*URL to font*/
+    src: url('../views/assets/fonts/OpenSans-Regular.ttf'); /*URL to font*/
 }
 
 @font-face {
@@ -118,4 +118,9 @@ footer {
 .kidsImg {
   max-height: 48%;
   max-width: 48%;
+}
+
+#confirmation {
+  padding-top: 20px;
+  text-align: center;
 }
