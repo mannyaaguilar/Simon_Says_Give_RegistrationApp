@@ -20,8 +20,8 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/admin.html',
       controller: 'AdminController',
     })
-    .when('/test', {
-      templateUrl: '/views/templates/test.html',
+    .when('/export', {
+      templateUrl: '/views/templates/export.html',
       controller: 'AdminController',
     })
     // Register new user View
@@ -39,6 +39,29 @@ myApp.config(['$routeProvider', '$locationProvider',
         }]
       }
     })
+    //adds volunteerView and controller
+    .when('/volunteer', {
+      templateUrl: '/views/templates/volunteer.html',
+      controller: 'VolunteerController',
+    })
+    .when('/startEvent', {
+      templateUrl: '/views/templates/startEvent.html',
+      controller: 'startEventController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser();
+        }]
+      }
+    })
+    .when('/checkInOut', {
+      templateUrl: '/views/templates/checkInOut.html',
+      controller: 'checkInOutController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser();
+        }]
+      }
+    })
     // Waiver View for adult primary
     .when('/waiver-adult', {
       templateUrl: '/views/templates/adultWaiver.html',
@@ -49,6 +72,12 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/confirmation.html',
       controller: 'ConfirmationController',
     })
+    // Override View
+    .when('/override', {
+      templateUrl: '/views/templates/override.html',
+      controller: 'OverrideController',
+    })
+    //
     .otherwise({
       redirectTo: 'home'
     });
