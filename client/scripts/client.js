@@ -39,6 +39,11 @@ myApp.config(['$routeProvider', '$locationProvider',
         }]
       }
     })
+    // Confirmation View
+    .when('/confirmation', {
+      templateUrl: '/views/templates/confirmation.html',
+      controller: 'ConfirmationController',
+    })
     .otherwise({
       redirectTo: 'home'
     });

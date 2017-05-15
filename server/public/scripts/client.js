@@ -39,6 +39,11 @@ myApp.config(['$routeProvider', '$locationProvider',
         }]
       }
     })
+    // Confirmation View
+    .when('/confirmation', {
+      templateUrl: '/views/templates/confirmation.html',
+      controller: 'ConfirmationController',
+    })
     .otherwise({
       redirectTo: 'home'
     });
@@ -48,6 +53,14 @@ myApp.controller('AdminController', ['$scope', '$http', '$location', 'UserServic
 console.log("adminController Loaded");
 
 $scope.redirect = UserService.redirect;
+}]);
+
+myApp.controller('ConfirmationController', ['$scope', '$http', '$location', 'UserService', function($scope, $http, $location, UserService) {
+
+  $scope.userObject = UserService.userObject;
+  $scope.logout = UserService.logout;
+  $scope.redirect = UserService.redirect;
+
 }]);
 
 myApp.controller('LoginController', ['$scope', '$http', '$location', function($scope, $http, $location) {
