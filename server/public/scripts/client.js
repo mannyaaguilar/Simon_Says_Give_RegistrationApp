@@ -44,6 +44,11 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/confirmation.html',
       controller: 'ConfirmationController',
     })
+    // Override View
+    .when('/override', {
+      templateUrl: '/views/templates/override.html',
+      controller: 'OverrideController',
+    })
     .otherwise({
       redirectTo: 'home'
     });
@@ -130,6 +135,14 @@ myApp.controller('LoginController', ['$scope', '$http', '$location', function($s
         });
       }
     }
+}]);
+
+myApp.controller('OverrideController', ['$scope', '$http', '$location', 'UserService', function($scope, $http, $location, UserService) {
+console.log('OverrideController loaded');
+
+$scope.redirect = UserService.redirect;
+
+
 }]);
 
 myApp.controller('UserController', ['$scope', '$http', '$location', 'UserService', function($scope, $http, $location, UserService) {

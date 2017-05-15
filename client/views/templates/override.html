@@ -1,0 +1,38 @@
+<!-- HEADER INCLUDED -->
+<div ng-include="'views/partials/header.html'"></div>
+
+<div layout="row">
+  <div layout-md="column" flex="10" ></div>
+  <div layout="column" flex="80" id="confirmation">
+    <h1>PLEASE SPEAK TO A STAFF MEMBER</h1>
+
+    <div layout="row">
+      <div layout-md="column" flex="35" ></div>
+      <md-input-container layout="column" flex="30">
+        <div>
+          <label for="code">Administrator Code:</label>
+          <input type="text" required/>
+        </div>
+      </md-input-container>
+    </div>
+    <div layout="row">
+      <div layout-md="column" flex="10" ></div>
+      <md-input-container layout="column" layout-align="center center" flex="40">
+        <div>
+          <md-button class="md-raised" type="submit" name="submit" aria-label="Done"
+                     value="Done" ng-click="changeView()">Back To Waiver</md-button>
+        </div>
+      </md-input-container>
+      <md-input-container layout="column" layout-align="center center" flex="40">
+        <div>
+          <md-button class="md-raised" type="submit" name="submit" aria-label="Done"
+                     value="Done" ng-click="changeView()">Finish</md-button>
+        </div>
+      </md-input-container>
+    </div>
+  </div>
+  <div layout-md="column" flex="10"></div>
+</div>
+
+<!-- FOOTER INCLUDED -->
+<div ng-include="'views/partials/footer.html'"></div>
