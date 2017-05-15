@@ -31,6 +31,11 @@ myApp.config(['$routeProvider', '$locationProvider',
         }]
       }
     })
+    // Waiver View for adult primary
+    .when('/waiver-adult', {
+      templateUrl: '/views/templates/adultWaiver.html',
+      controller: 'WaiverController' //RESOLVE
+    })
     .otherwise({
       redirectTo: 'home'
     });

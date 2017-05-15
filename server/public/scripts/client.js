@@ -31,6 +31,11 @@ myApp.config(['$routeProvider', '$locationProvider',
         }]
       }
     })
+    // Waiver View for adult primary
+    .when('/waiver-adult', {
+      templateUrl: '/views/templates/adultWaiver.html',
+      controller: 'WaiverController' //RESOLVE
+    })
     .otherwise({
       redirectTo: 'home'
     });
@@ -86,6 +91,16 @@ myApp.controller('UserController', ['$scope', '$http', '$location', 'UserService
   $scope.redirect = UserService.redirect;
 
 }]);
+
+myApp.controller('WaiverController',
+  ['$scope', '$http', '$location',
+  function($scope, $http, $location) {
+
+    //FUNCTIONALITY
+
+}]);
+
+//SERVICE
 
 myApp.factory('UserService', ['$http', '$location', function($http, $location){
   console.log('User Service Loaded');

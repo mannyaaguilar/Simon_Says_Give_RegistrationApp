@@ -2,3 +2,58 @@
   background-color: #3573b9;
   color: whitesmoke;
 }
+
+.superBack {
+  background-color: tan;
+}
+
+@font-face {
+  font-family: 'League Gothic Regular';
+  src: url('./fonts/leaguegothic-regular-webfont.ttf') format('truetype'),
+       url('./fonts/leaguegothic-regular-webfont.woff') format('woff');
+}
+
+.themed-Btn {
+  padding-top: 0;
+  padding-right: 50px;
+  padding-bottom: 0;
+  padding-left: 25px;
+  display: inline-block;
+	margin: 0;
+	height: 58px;
+	overflow: visible;
+	position: relative;
+	font-size: 24px;
+  line-height: 50px;
+  font-family: "League Gothic Regular", "Arial Narrow", Arial, sans-serif;
+  font-weight: bold;
+	letter-spacing: 0.015em;
+	color: #FFF;
+	background-color: #3691df;
+  background-image: url("http://www.simonsaysgive.org/wp-content/themes/simonsaysgive.theme/images/button-sprite.png");
+  background-position-x: 100%;
+  background-position-y: 0;
+  background-repeat: repeat-x;
+	text-align: center;
+	text-transform: uppercase;
+	white-space: nowrap;
+	border: #fcfdfd 3px solid;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	outline: none;
+	cursor: pointer;
+	max-width: 100%;
+	-webkit-background-clip: padding-box;
+	-moz-background-clip: padding-box;
+	background-clip: padding-box;
+	-webkit-font-smoothing: antialiased;
+}
+
+.themed-Btn:hover,
+.themed-Btn:focus,
+.themed-Btn:active {
+  background-color: #2f7dc0;
+  background-position-x: 100%;
+  background-position-y: -64px;
+}
