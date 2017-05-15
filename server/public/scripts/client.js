@@ -20,8 +20,8 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/admin.html',
       controller: 'AdminController',
     })
-    .when('/test', {
-      templateUrl: '/views/templates/test.html',
+    .when('/export', {
+      templateUrl: '/views/templates/export.html',
       controller: 'AdminController',
     })
     // Register new user View
@@ -38,6 +38,11 @@ myApp.config(['$routeProvider', '$locationProvider',
           return UserService.getuser();
         }]
       }
+    })
+    //adds volunteerView and controller
+    .when('/volunteer', {
+      templateUrl: '/views/templates/volunteer.html',
+      controller: 'VolunteerController',
     })
     .otherwise({
       redirectTo: 'home'
@@ -98,6 +103,35 @@ myApp.controller('UserController', ['$scope', '$http', '$location', 'UserService
   $scope.userObject = UserService.userObject;
   $scope.logout = UserService.logout;
   $scope.redirect = UserService.redirect;
+
+}]);
+
+myApp.controller('VolunteerController', ['$scope', '$http', '$location', 'UserService', function($scope, $http, $location, UserService) {
+console.log("VolunteerController Loaded");
+
+$scope.redirect = UserService.redirect;
+//need
+// volunteerCheckIn()
+var volunteer = {
+  email: '',
+  first_name: '',
+  last_name: '',
+  under_18: true,
+  dob: ''
+};
+$scope.birthDate = new Date();
+
+  // this.minDate = new Date(
+  //   this.birthDate.getFullYear(),
+  //   this.birthDate.getMonth() - 2,
+  //   this.birthDate.getDate()
+  // );
+  //
+  this.maxDate = new Date(
+    this.birthDate.getFullYear() - 8,
+    this.birthDate.getMonth() ,
+    this.birthDate.getDate()
+  );
 
 }]);
 
