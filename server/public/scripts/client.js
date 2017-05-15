@@ -31,9 +31,39 @@ myApp.config(['$routeProvider', '$locationProvider',
         }]
       }
     })
+    .when('/startEvent', {
+      templateUrl: '/views/templates/startEvent.html',
+      controller: 'startEventController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser();
+        }]
+      }
+    })
+    .when('/checkInOut', {
+      templateUrl: '/views/templates/checkInOut.html',
+      controller: 'checkInOutController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser();
+        }]
+      }
+    })
     .otherwise({
       redirectTo: 'home'
     });
+}]);
+
+myApp.controller('checkInOutController', ['$scope', '$location', function($scope, $location) {
+  $scope.checkIn = function(){
+  console.log("Check in button clicked");
+  // $location.path('/volunteer');
+  };
+  $scope.checkOut = function(){
+  console.log("Check out button clicked");
+  // route to confirmation view
+  // $location.path('/ ');
+  };
 }]);
 
 myApp.controller('LoginController', ['$scope', '$http', '$location', function($scope, $http, $location) {
@@ -77,6 +107,16 @@ myApp.controller('LoginController', ['$scope', '$http', '$location', function($s
         });
       }
     }
+}]);
+
+myApp.controller('startEventController', ['$scope', '$location', function($scope, $location) {
+  $scope.code = {
+    thisCode: ''
+  };
+  $scope.eventCode = function(code){
+  console.log("Event Code button clicked", code.thisCode);
+  $location.path('/checkInOut');
+};
 }]);
 
 myApp.controller('UserController', ['$scope', '$http', '$location', 'UserService', function($scope, $http, $location, UserService) {

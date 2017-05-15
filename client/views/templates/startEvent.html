@@ -1,0 +1,16 @@
+<div ng-include="'views/partials/header.html'"></div>
+
+<div layout="row">
+  <div layout-md="column" flex="33"></div>
+  <div layout="column" flex="33">
+    <md-input-container layout="column">
+      <div>
+        <h1>Please Enter Your Event Code</h1>
+        <input name="eventCode" type="text" ng-model="code.thisCode" />
+        <md-button class="md-raised" type="submit" name="login" aria-label="Log In" value="Log In" ng-click="eventCode(code)">Login</md-button>
+      </div>
+    </md-input-container>
+  </div>
+</div>
+
+<div ng-include="'views/partials/footer.html'"></div>

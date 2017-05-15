@@ -1,11 +1,11 @@
 @font-face {
     font-family: 'Open Sans'; /*a name to be used later*/
-    src: url('/views/assets/fonts/OpenSans-Regular.ttf'); /*URL to font*/
+    src: url('../views/assets/fonts/OpenSans-Regular.ttf'); /*URL to font*/
 }
 
 @font-face {
     font-family: 'BluBerry Grunge'; /*a name to be used later*/
-    src: url('views/assets/fonts/Bluberry Grunge.ttf'); /*URL to font*/
+    src: url('../views/assets/fonts/Bluberry Grunge.ttf'); /*URL to font*/
 }
 
 html {
@@ -72,4 +72,31 @@ footer {
 .kidsImg {
   max-height: 48%;
   max-width: 48%;
+}
+
+/*center buttons in checkInOut View*/
+.checkInOutContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*check in button styling*/
+.checkInBtn {
+  height: 250px;
+  width: 400px;
+  font-size: 30px;
+  color: white;
+  margin-bottom: 30px;
+  background-color: rgb(65,182,73);
+}
+
+/*check out button styling*/
+.checkOutBtn {
+  height: 250px;
+  width: 400px;
+  font-size: 30px;
+  color: white;
+  margin-bottom: 30px;
+  background-color: rgb(237,39,44);
 }
