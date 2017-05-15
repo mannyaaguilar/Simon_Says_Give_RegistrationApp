@@ -1,11 +1,11 @@
 @font-face {
     font-family: 'Open Sans'; /*a name to be used later*/
-    src: url('/views/assets/fonts/OpenSans-Regular.ttf'); /*URL to font*/
+    src: url('../views/assets/fonts/OpenSans-Regular.ttf'); /*URL to font*/
 }
 
 @font-face {
     font-family: 'BluBerry Grunge'; /*a name to be used later*/
-    src: url('views/assets/fonts/Bluberry Grunge.ttf'); /*URL to font*/
+    src: url('../views/assets/fonts/Bluberry Grunge.ttf'); /*URL to font*/
 }
 
 html {
