@@ -62,6 +62,12 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/confirmation.html',
       controller: 'ConfirmationController',
     })
+    // Override View
+    .when('/override', {
+      templateUrl: '/views/templates/override.html',
+      controller: 'OverrideController',
+    })
+    //
     .otherwise({
       redirectTo: 'home'
     });
