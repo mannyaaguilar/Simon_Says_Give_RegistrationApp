@@ -120,6 +120,32 @@ footer {
   max-width: 48%;
 }
 
+/*center buttons in checkInOut View*/
+.checkInOutContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*check in button styling*/
+.checkInBtn {
+  height: 250px;
+  width: 400px;
+  font-size: 30px;
+  color: white;
+  margin-bottom: 30px;
+  background-color: rgb(65,182,73);
+}
+
+/*check out button styling*/
+.checkOutBtn {
+  height: 250px;
+  width: 400px;
+  font-size: 30px;
+  color: white;
+  margin-bottom: 30px;
+  background-color: rgb(237,39,44);
+}
 #confirmation {
   padding-top: 20px;
   text-align: center;

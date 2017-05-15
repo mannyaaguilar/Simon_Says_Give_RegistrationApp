@@ -39,6 +39,24 @@ myApp.config(['$routeProvider', '$locationProvider',
         }]
       }
     })
+    .when('/startEvent', {
+      templateUrl: '/views/templates/startEvent.html',
+      controller: 'startEventController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser();
+        }]
+      }
+    })
+    .when('/checkInOut', {
+      templateUrl: '/views/templates/checkInOut.html',
+      controller: 'checkInOutController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser();
+        }]
+      }
+    })
     // Confirmation View
     .when('/confirmation', {
       templateUrl: '/views/templates/confirmation.html',
