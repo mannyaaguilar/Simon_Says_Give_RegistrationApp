@@ -5,7 +5,7 @@
 
 @font-face {
     font-family: 'BluBerry Grunge'; /*a name to be used later*/
-    src: url('views/assets/fonts/Bluberry Grunge.ttf'); /*URL to font*/
+    src: url('../views/assets/fonts/Bluberry Grunge.ttf'); /*URL to font*/
 }
 
 html {
