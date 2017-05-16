@@ -240,10 +240,17 @@
       </div>
       <div layout="row" class="bufferDiv">
       </div>
-      <div flex="66">
+
+      <div flex="66" ng-hide="photoWaiver.agreed">
+        <button type="button" name="button" class="themed-Btn"
+          ng-click="submitPhotoWaiver(photoWaiver)">Decline</button>
+      </div>
+
+      <div flex="66" ng-show="photoWaiver.agreed">
         <button type="button" name="button" class="themed-Btn"
           ng-click="submitPhotoWaiver(photoWaiver)">Submit</button>
       </div>
+
     </div>
 
     <div flex="15"></div>
