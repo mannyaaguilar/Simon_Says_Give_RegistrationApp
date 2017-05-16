@@ -1,0 +1,66 @@
+<!-- finish button - needs validation that a volunteer has been selected -->
+<div ng-include="'views/partials/header.html'"></div>
+
+<div layout="row">
+  <div layout-md="column" flex="5"></div>
+  <div layout="column" flex="90">
+    <h1>CHECKOUT</h1>
+  </div>
+</div>
+<div layout="row">
+  <div layout-md="column" flex="35" ></div>
+  <md-input-container layout="column" flex="30" >
+    <div>
+      <label for="email">Email:</label>
+      <input type="text" ng-model="volunteerObject.email"/>
+    </div>
+  </md-input-container>
+</div>
+<div layout="row">
+  <div layout-md="column" flex="25" ></div>
+  <md-input-container layout="column" flex="25" >
+    <div>
+      <label for="first_name" >First Name:</label>
+      <input type="text" ng-model="volunteerObject.firstName"/>
+    </div>
+  </md-input-container>
+  <md-input-container layout="column" flex="25" >
+    <div>
+      <label for="last_name">Last Name:</label>
+      <input type="text" ng-model="volunteerObject.lastName"/>
+    </div>
+  </md-input-container>
+</div>
+<div layout="row">
+  <div layout-md="column" flex="10" ></div>
+  <md-input-container layout="column" layout-align="center center" flex="80">
+    <div>
+      <md-button class="md-raised" type="submit" name="submit" aria-label="Checkout"
+      value="Search" ng-click="search()">Search</md-button>
+    </div>
+  </md-input-container>
+</div>
+<!-- add div with ng-show for list of search results: -->
+<div layout="row" ng-show="success">
+  <div layout-md="column" flex="10" ></div>
+  <div layout-md="column" flex="80">
+    <h3>Select Who You Want to Check Out!</h3>
+    <!-- should add ng-repeat for items returned from DB, need to include checkboxes -->
+    <div ng-repeat="volunteer in volunteerList">
+      <md-checkbox ng-model="updatelater" aria-label="{{volunteer}}" >
+            {{volunteer}}
+      </md-checkbox>
+    </div>
+  </div>
+</div>
+<div layout="row">
+  <div layout-md="column" flex="10" ></div>
+  <md-input-container layout="column" layout-align="center center" flex="80">
+    <div>
+      <md-button class="md-raised" type="submit" name="submit" aria-label="Checkout"
+      value="Checkout" ng-click="checkout()">Checkout</md-button>
+    </div>
+  </md-input-container>
+</div>
+
+<div ng-include="'views/partials/footer.html'"></div>
