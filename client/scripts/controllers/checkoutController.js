@@ -1,13 +1,20 @@
 myApp.controller('CheckoutController', ['$scope', '$location', function($scope, $location) {
-  //inputs for name, email,
-  //time stamp for clockout.... put to database
+
+$scope.volunteerObject = {
+    firstName: '',
+    lastName: '',
+    email: '',
+};
+
+$scope.search = function() {
+  console.log('volunteerObject: ', $scope.volunteerObject);
+};
 
 $scope.checkout = function() {
-  // change view to checkInOut
-  console.log('checkout function running');
-
   // put to database - update chosen volunteer(s) checkout time in database
   $scope.changeView();
+  //NEED TO ADD: PUT ROUTE to add checkout time to volunteer hours record
+  console.log('Logging checkout time on click: ', new Date());
 };
 
 //changes view to confirmation page

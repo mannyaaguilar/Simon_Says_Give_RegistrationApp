@@ -77,6 +77,11 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/override.html',
       controller: 'OverrideController',
     })
+    // Checkout View
+    .when('/checkout', {
+      templateUrl: '/views/templates/checkout.html',
+      controller: 'CheckoutController',
+    })
     //
     .otherwise({
       redirectTo: 'home'
@@ -99,6 +104,32 @@ myApp.controller('checkInOutController', ['$scope', '$location', function($scope
   // route to confirmation view
   // $location.path('/ ');
   };
+}]);
+
+myApp.controller('CheckoutController', ['$scope', '$location', function($scope, $location) {
+
+$scope.volunteerObject = {
+    firstName: '',
+    lastName: '',
+    email: '',
+};
+
+$scope.search = function() {
+  console.log('volunteerObject: ', $scope.volunteerObject);
+};
+
+$scope.checkout = function() {
+  // put to database - update chosen volunteer(s) checkout time in database
+  $scope.changeView();
+  //NEED TO ADD: PUT ROUTE to add checkout time to volunteer hours record
+  console.log('Logging checkout time on click: ', new Date());
+};
+
+//changes view to confirmation page
+$scope.changeView = function() {
+  $location.path('/confirmation');
+};
+
 }]);
 
 myApp.controller('ConfirmationController', ['$scope', '$http', '$location', '$interval', 'UserService', function($scope, $http, $location, $interval, UserService) {

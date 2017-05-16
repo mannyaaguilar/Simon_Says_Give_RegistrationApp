@@ -1,12 +1,5 @@
-<!-- email input  -->
-<!-- first name input -->
-<!-- last name input -->
-<!-- search button -->
-
 <!-- heading to select users from list of matches -->
 <!-- finish button - needs validation that a volunteer has been selected -->
-
-
 
 <!-- HEADER INCLUDED -->
 <div ng-include="'views/partials/header.html'"></div>
@@ -19,6 +12,39 @@
   </div>
 </div>
 
+<div layout="row">
+  <div layout-md="column" flex="35" ></div>
+  <md-input-container layout="column" flex="30" >
+    <div>
+      <label for="email">Email:</label>
+      <input type="text" ng-model="volunteerObject.email"/>
+    </div>
+  </md-input-container>
+</div>
+<div layout="row">
+  <div layout-md="column" flex="25" ></div>
+  <md-input-container layout="column" flex="25" >
+    <div>
+      <label for="first_name" >First Name:</label>
+      <input type="text" ng-model="volunteerObject.firstName"/>
+    </div>
+  </md-input-container>
+  <md-input-container layout="column" flex="25" >
+    <div>
+      <label for="last_name">Last Name:</label>
+      <input type="text" ng-model="volunteerObject.lastName"/>
+    </div>
+  </md-input-container>
+</div>
+<div layout="row">
+  <div layout-md="column" flex="10" ></div>
+  <md-input-container layout="column" layout-align="center center" flex="80">
+    <div>
+      <md-button class="md-raised" type="submit" name="submit" aria-label="Checkout"
+                 value="Search" ng-click="search()">Search</md-button>
+    </div>
+  </md-input-container>
+</div>
 <div layout="row">
   <div layout-md="column" flex="10" ></div>
   <md-input-container layout="column" layout-align="center center" flex="80">
