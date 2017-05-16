@@ -4,6 +4,7 @@
     <div flex="70">
       <h1>Simon Says Give</h1>
       <h2>Adult Volunteer Release and Waiver of Liability</h2>
+      <button ng-click="setCheckIn()">CheckIn</button>
     </div>
     <div flex="15"></div>
   </div>
@@ -142,7 +143,7 @@
       </div>
       <div flex="66">
         <button type="button" name="button" class="themed-Btn"
-          ng-click="submitAdultWaiver(adultWaiver)">Submit</button>
+          ng-click="submitAdultWaiver(adultWaiver); captureTime()">Submit</button>
       </div>
     </div>
     <div flex="15"></div>
