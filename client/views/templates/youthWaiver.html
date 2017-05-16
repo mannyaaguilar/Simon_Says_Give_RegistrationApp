@@ -4,26 +4,39 @@
     <div flex="70">
       <h1>Simon Says Give</h1>
       <h2>Guardian and Minor Volunteer Release and Waiver of Liability</h2>
+      <div layout="row" class="bufferDiv">
+      </div>
+      <div>
+        <input type="checkbox" ng-check="youthWaiver.noParent = true"
+          ng-model="youthWaiver.noParent">
+        <span>My parent or guardian is not present</span>
+      </div>
+      <div layout="row" class="bufferDiv">
+      </div>
     </div>
     <div flex="15"></div>
   </div>
-  <div layout="row">
+
+  <div layout="row" ng-hide="youthWaiver.noParent">
     <div flex="15"></div>
     <div layout="column" flex="70">
       <p>
         This Release and Waiver of Liability (the “release”) executed on
         <md-input-container md-no-float class="noMargins">
-          <input type="text" name="youthWaiverDateTop" value=""
+          <input ng-required="!youthWaiver.noParent"
+            type="text" name="youthWaiverDateTop" value=""
             ng-model="youthWaiver.dateTop" placeholder="date">
         </md-input-container>
         (date) by
         <md-input-container md-no-float class="noMargins">
-          <input type="text" name="youthWaiverNameTop" value=""
+          <input ng-required="!youthWaiver.noParent"
+            type="text" name="youthWaiverNameTop" value=""
             ng-model="youthWaiver.nameTop" placeholder="name">
         </md-input-container>
         (“Volunteer”), and
         <md-input-container md-no-float class="noMargins">
-          <input type="text" name="youthWaiverGuardianTop" value=""
+          <input ng-required="!youthWaiver.noParent"
+            type="text" name="youthWaiverGuardianTop" value=""
             ng-model="youthWaiver.guardianTop" placeholder="name">
         </md-input-container>
         ("Guardian") releases Simon Says Give (hereafter referred to as the
@@ -37,7 +50,8 @@
     </div>
     <div flex="15"></div>
   </div>
-  <div layout="row">
+
+  <div layout="row" ng-hide="youthWaiver.noParent">
     <div flex="15"></div>
     <div layout="column" flex="70">
       <br>
@@ -123,10 +137,12 @@
   <div layout="row">
     <div flex="15"></div>
     <div layout="column" flex="70">
-      <div layout="row">
-        <input type="checkbox" ng-check="youthWaiver.agreed = true"
+
+      <div layout="row" ng-hide="youthWaiver.noParent">
+        <input ng-required="!youthWaiver.noParent"
+          type="checkbox" ng-check="youthWaiver.agreed = true"
           ng-model="youthWaiver.agreed">
-        <span>I acknowledge the above</span>
+        <span>I acknowledge the above *</span>
       </div>
       <div layout="row" class="bufferDiv">
       </div>
@@ -136,7 +152,7 @@
         </div>
         <md-input-container class="noMargins" flex="85">
           <label>Please enter your name between slash marks: /John Doe/</label>
-          <input type="text" name="youthWaiverNameBottom" value=""
+          <input required type="text" name="youthWaiverNameBottom" value=""
             ng-model="youthWaiver.nameBottom">
         </md-input-container>
       </div>
@@ -148,34 +164,51 @@
         </div>
         <md-input-container class="noMargins" flex="85">
           <label>MM/DD/YYYY</label>
-          <input type="text" name="youthWaiverDateBottomVol" value=""
+          <input required type="text" name="youthWaiverDateBottomVol" value=""
             ng-model="youthWaiver.dateBottomVol">
         </md-input-container>
       </div>
       <div layout="row" class="bufferDiv">
       </div>
-      <div layout="row">
+
+      <div layout="row" ng-hide="youthWaiver.noParent">
         <div flex="15">
           <span>Signature of Guardian:</span>
         </div>
         <md-input-container class="noMargins" flex="85">
           <label>Please enter your name between slash marks: /John Doe/</label>
-          <input type="text" name="youthWaiverGuardianBottom" value=""
+          <input ng-required="!youthWaiver.noParent"
+            type="text" name="youthWaiverGuardianBottom" value=""
             ng-model="youthWaiver.guardianBottom">
         </md-input-container>
       </div>
       <div layout="row" class="bufferDiv">
       </div>
-      <div layout="row">
+
+      <div layout="row" ng-hide="youthWaiver.noParent">
         <div flex="15">
           <span>Today's Date:</span>
         </div>
         <md-input-container class="noMargins" flex="85">
           <label>MM/DD/YYYY</label>
-          <input type="text" name="youthWaiverDateBottomGuard" value=""
+          <input ng-required="!youthWaiver.noParent"
+            type="text" name="youthWaiverDateBottomGuard" value=""
             ng-model="youthWaiver.dateBottomGuard">
         </md-input-container>
       </div>
+
+      <div layout="row" ng-show="youthWaiver.noParent">
+        <div flex="15">
+          <span>Guardian Email Address:</span>
+        </div>
+        <md-input-container class="noMargins" flex="85">
+          <label>Please type the email for your parent or guardian:</label>
+          <input ng-required="youthWaiver.noParent"
+            type="text" name="youthWaiverGuardianEmail" value=""
+            ng-model="youthWaiver.guardianEmail">
+        </md-input-container>
+      </div>
+
       <div layout="row" class="bufferDiv">
       </div>
       <div flex="66">
