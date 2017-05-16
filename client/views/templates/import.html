@@ -5,9 +5,15 @@
 <div layout="row">
   <div layout-md="column" flex="5"></div>
   <div layout="column" flex="90">
-
-    <input type="file" id="files" name="file" />
-    <div id="progress_bar"><div class="percent">0%</div></div>
-
+    <div class="importFileContainer">
+      <h1>IMPORT .CSV FILE INTO SSG VOLUNTEER DATABASE</h1>
+      <p>Please select the .csv file that you want to import:</p>
+      <input type="file" id="files" name="file" accept=".csv"/>
+      <div id="progress_bar"><div class="percent">0%</div></div>
+      <p>{{serverResponseObject.response.data}}</p>
+    </div>
   </div>
 </div>
+
+<!-- FOOTER INCLUDED -->
+<div ng-include="'views/partials/footer.html'"></div>
