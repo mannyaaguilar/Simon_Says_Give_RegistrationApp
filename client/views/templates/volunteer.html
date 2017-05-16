@@ -1,0 +1,51 @@
+<!-- HEADER INCLUDED -->
+<div ng-include="'views/partials/header.html'"></div>
+
+<div layout="row">
+  <div layout-md="column" flex="20"></div>
+  <div layout="column" flex="60">
+    <form form name="volunteerView" ng-submit="volunteerCheckIn()">
+      <md-input-container layout="column">
+        <div>
+          <label for="email">Email:</label>
+          <input type="email" ng-model="volunteer.email" required/>
+        </div>
+      </md-input-container>
+      <md-input-container layout="column">
+        <div>
+          <label for="first_name">First Name:</label>
+          <input type="text" ng-model="volunteer.first_name" required/>
+        </div>
+      </md-input-container>
+      <md-input-container layout="column">
+        <div>
+          <label for="last_name">Last Name:</label>
+          <input type="text" ng-model="volunteer.last_name" required/>
+        </div>
+      </md-input-container>
+      <md-input-container layout="column">
+        <div>
+          <label for="under_18">Are you under the age of 18?:</label>
+          <input type="checkbox" ng-model="volunteer.under_18"/>
+        </div>
+      </md-input-container>
+      <md-input-container layout="column">
+        <div ng-show="volunteer.under_18">
+          <label for="dob">Date of Birth:</label>
+          <md-datepicker ng-model="volunteer.dob" md-current-view="year" md-placeholder="Enter date" md-max-date="ctrl.maxDate"></md-datepicker>
+        </div>
+      </md-input-container>
+      <md-input-container layout="row" layout-align="center center">
+        <div>
+          <button class="themed-Btn" type="submit" name="submit" aria-label="Register" value="Register">Next</md-button>
+        </div>
+        <div >
+          <a href="#home">Cancel</a>
+        </div>
+      </md-input-container>
+    </form>
+    </div>
+  <div layout-md="column" flex="20"></div>
+</div>
+<!-- FOOTER INCLUDED -->
+<div ng-include="'views/partials/footer.html'"></div>
