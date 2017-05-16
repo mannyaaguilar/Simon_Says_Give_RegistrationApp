@@ -1,10 +1,6 @@
 myApp.controller('CheckoutController', ['$scope', '$location', function($scope, $location) {
-console.log('in checkout controller');
-//inputs for name, email,
-
-
-//time stamp for clockout.... put to database
-
+  //inputs for name, email,
+  //time stamp for clockout.... put to database
 
 $scope.checkout = function() {
   // change view to checkInOut
