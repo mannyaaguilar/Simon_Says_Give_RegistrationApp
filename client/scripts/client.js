@@ -20,8 +20,8 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/admin.html',
       controller: 'AdminController',
     })
-    .when('/test', {
-      templateUrl: '/views/templates/test.html',
+    .when('/export', {
+      templateUrl: '/views/templates/export.html',
       controller: 'AdminController',
     })
     // Register new user View
@@ -38,6 +38,11 @@ myApp.config(['$routeProvider', '$locationProvider',
           return UserService.getuser();
         }]
       }
+    })
+    //adds volunteerView and controller
+    .when('/volunteer', {
+      templateUrl: '/views/templates/volunteer.html',
+      controller: 'VolunteerController',
     })
     .when('/startEvent', {
       templateUrl: '/views/templates/startEvent.html',
@@ -56,6 +61,11 @@ myApp.config(['$routeProvider', '$locationProvider',
           return UserService.getuser();
         }]
       }
+    })
+    // Waiver View for adult primary
+    .when('/waiver-adult', {
+      templateUrl: '/views/templates/adultWaiver.html',
+      controller: 'WaiverController' //RESOLVE
     })
     // Confirmation View
     .when('/confirmation', {
