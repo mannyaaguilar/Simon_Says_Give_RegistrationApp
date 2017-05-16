@@ -37,6 +37,10 @@ h1 {
   color: whitesmoke;
 }
 
+.btnPadding {
+  padding: 15px;
+}
+
 .themed-Btn {
   padding-top: 0;
   padding-right: 50px;
@@ -81,13 +85,13 @@ h1 {
   background-position-y: -64px;
 }
 
-.standardBtn {
+/*.standardBtn {
   display: inline-block;
     margin: 8px;
     padding: 0 45px 0 20px;
     height: 40px;
     overflow: visible;
-    /*position: relative;*/
+    position: relative;
     font: 22px/34px 'League Gothic Regular', 'Arial Narrow', Arial, sans-serif;
     letter-spacing: 0.015em;
     color: #FFF;
@@ -103,10 +107,10 @@ h1 {
     cursor: pointer;
     max-width: 100%;
 
-    /*position: fixed;*/
-    /*background-color: #f8d208;*/
+    position: fixed;
+    background-color: #f8d208;
     color: whitesmoke;
-}
+}*/
 
 
 
