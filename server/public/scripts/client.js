@@ -57,6 +57,16 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/adultWaiver.html',
       controller: 'WaiverController' //RESOLVE
     })
+    // Waiver View for adult primary
+    .when('/waiver-youth', {
+      templateUrl: '/views/templates/youthWaiver.html',
+      controller: 'WaiverController' //RESOLVE
+    })
+    // Waiver View for adult primary
+    .when('/waiver-photo', {
+      templateUrl: '/views/templates/photoWaiver.html',
+      controller: 'WaiverController' //RESOLVE
+    })
     // Confirmation View
     .when('/confirmation', {
       templateUrl: '/views/templates/confirmation.html',
@@ -140,8 +150,8 @@ myApp.controller('LoginController', ['$scope', '$http', '$location', function($s
           if(response.data.username) {
             console.log('success: ', response.data);
             // location works with SPA (ng-route)
-            console.log('redirecting to user page');
-            $location.path('/user');
+            console.log('redirecting to admin page');
+            $location.path('/admin');
           } else {
             console.log('failure: ', response);
             $scope.message = "Wrong!!";
@@ -252,6 +262,16 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location',
 
 $scope.adultWaiver = {};
 $scope.submitAdultWaiver = function(waiverObj) {
+  console.log("Adult waiver object: ", waiverObj);
+};
+
+$scope.youthWaiver = {};
+$scope.submitYouthWaiver = function(waiverObj) {
+  console.log("Adult waiver object: ", waiverObj);
+};
+
+$scope.photoWaiver = {};
+$scope.submitPhotoWaiver = function(waiverObj) {
   console.log("Adult waiver object: ", waiverObj);
 };
 

@@ -57,6 +57,16 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/adultWaiver.html',
       controller: 'WaiverController' //RESOLVE
     })
+    // Waiver View for adult primary
+    .when('/waiver-youth', {
+      templateUrl: '/views/templates/youthWaiver.html',
+      controller: 'WaiverController' //RESOLVE
+    })
+    // Waiver View for adult primary
+    .when('/waiver-photo', {
+      templateUrl: '/views/templates/photoWaiver.html',
+      controller: 'WaiverController' //RESOLVE
+    })
     // Confirmation View
     .when('/confirmation', {
       templateUrl: '/views/templates/confirmation.html',
