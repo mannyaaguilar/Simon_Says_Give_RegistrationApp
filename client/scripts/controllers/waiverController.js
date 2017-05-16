@@ -6,6 +6,16 @@ $scope.submitAdultWaiver = function(waiverObj) {
   console.log("Adult waiver object: ", waiverObj);
 };
 
+$scope.youthWaiver = {};
+$scope.submitYouthWaiver = function(waiverObj) {
+  console.log("Adult waiver object: ", waiverObj);
+};
+
+$scope.photoWaiver = {};
+$scope.submitPhotoWaiver = function(waiverObj) {
+  console.log("Adult waiver object: ", waiverObj);
+};
+
 }]);
 
 //SERVICE
