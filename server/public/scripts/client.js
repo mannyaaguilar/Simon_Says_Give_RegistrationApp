@@ -47,20 +47,10 @@ myApp.config(['$routeProvider', '$locationProvider',
     .when('/startEvent', {
       templateUrl: '/views/templates/startEvent.html',
       controller: 'startEventController',
-      resolve: {
-        getuser : ['UserService', function(UserService){
-          return UserService.getuser();
-        }]
-      }
     })
     .when('/checkInOut', {
       templateUrl: '/views/templates/checkInOut.html',
       controller: 'checkInOutController',
-      resolve: {
-        getuser : ['UserService', function(UserService){
-          return UserService.getuser();
-        }]
-      }
     })
     // Waiver View for adult primary
     .when('/waiver-adult', {
@@ -90,14 +80,13 @@ $scope.redirect = UserService.redirect;
 }]);
 
 myApp.controller('checkInOutController', ['$scope', '$location', function($scope, $location) {
+  // when check in btn clicked, route to volunteer view
   $scope.checkIn = function(){
-  console.log("Check in button clicked");
-  // $location.path('/volunteer');
+    $location.path('/volunteer');
   };
+  // when check out btn clicked, route to confirmation view
   $scope.checkOut = function(){
-  console.log("Check out button clicked");
-  // route to confirmation view
-  // $location.path('/ ');
+    $location.path('/checkout');
   };
 }]);
 
@@ -199,12 +188,22 @@ $scope.finish = function() {
 }]);
 
 myApp.controller('startEventController', ['$scope', '$location', function($scope, $location) {
+  // REMOVE DUMMY DATA LATER //
+  // hard coded event
+  // will need to compare code stored in a session somehow which needs to be figured out
+  var eventCodeHardCoded = 4783;
+  // code entered in input field by Admin
   $scope.code = {
     thisCode: ''
   };
   $scope.eventCode = function(code){
-  console.log("Event Code button clicked", code.thisCode);
-  $location.path('/checkInOut');
+    console.log("Event Code button clicked", code.thisCode);
+    if (code.thisCode == eventCodeHardCoded) {
+      $location.path('/checkInOut');
+    }
+    else {
+      console.log('try again');
+  }
 };
 }]);
 
