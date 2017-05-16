@@ -1,11 +1,10 @@
 myApp.controller('checkInOutController', ['$scope', '$location', function($scope, $location) {
+  // when check in btn clicked, route to volunteer view
   $scope.checkIn = function(){
-  console.log("Check in button clicked");
-  // $location.path('/volunteer');
+    $location.path('/volunteer');
   };
+  // when check out btn clicked, route to confirmation view
   $scope.checkOut = function(){
-  console.log("Check out button clicked");
-  // route to confirmation view
-  // $location.path('/ ');
+    $location.path('/checkout');
   };
 }]);
