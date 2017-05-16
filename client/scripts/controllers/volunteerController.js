@@ -14,6 +14,7 @@ var volunteer = {
   under_18: true,
   dob: ''
 };
+
 // $scope.birthDate = new Date();
 //
 //   // this.minDate = new Date(
@@ -28,4 +29,11 @@ var volunteer = {
 //     this.birthDate.getDate()
 //   );
 
+//if under_18 = true, redirect to childWaiver, if false, redirect to adultWaiver
+
+volunteerCheckIn = function(){
+  if(volunteer.under_18 === true){
+    $location.path('/youthWaiver')
+  }
+}
 }]);
