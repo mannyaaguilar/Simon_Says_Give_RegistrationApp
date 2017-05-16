@@ -6,15 +6,20 @@ $scope.volunteerObject = {
     email: '',
 };
 
+$scope.success = false;
+
 $scope.search = function() {
   console.log('volunteerObject: ', $scope.volunteerObject);
+  //NEED TO ADD: GET to collect matching records by email and/or name
+  $scope.success = true;
 };
 
 $scope.checkout = function() {
-  // put to database - update chosen volunteer(s) checkout time in database
-  $scope.changeView();
-  //NEED TO ADD: PUT ROUTE to add checkout time to volunteer hours record
+  //NEED TO ADD: PUT ROUTE to add checkout time to chosen volunteer hours record
   console.log('Logging checkout time on click: ', new Date());
+
+  //changes view to confirmation page:
+  $scope.changeView();
 };
 
 //changes view to confirmation page
