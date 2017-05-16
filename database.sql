@@ -7,6 +7,11 @@ CREATE TABLE "users" (
   "password" varchar(120) not null
 );
 
+CREATE TABLE "json_volunteer" (
+ ID serial NOT NULL PRIMARY KEY,
+ info json NOT NULL
+);
+
 CREATE TABLE "volunteer" (
 "id" serial not null,
 "email" varchar(80) not null,
@@ -26,8 +31,7 @@ CREATE TABLE "volunteer" (
 "school" varchar(80),
 "employer" varchar(120),
 "employer_match" boolean DEFAULT FALSE,
-PRIMARY KEY(email, first_name, last_name)
-);
+PRIMARY KEY(email, first_name, last_name));
 
 CREATE TABLE "volunteer_hours" (
 "id" serial not null,

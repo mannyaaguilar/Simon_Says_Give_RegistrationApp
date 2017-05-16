@@ -47,24 +47,24 @@ myApp.config(['$routeProvider', '$locationProvider',
     .when('/startEvent', {
       templateUrl: '/views/templates/startEvent.html',
       controller: 'startEventController',
-      resolve: {
-        getuser : ['UserService', function(UserService){
-          return UserService.getuser();
-        }]
-      }
     })
     .when('/checkInOut', {
       templateUrl: '/views/templates/checkInOut.html',
       controller: 'checkInOutController',
-      resolve: {
-        getuser : ['UserService', function(UserService){
-          return UserService.getuser();
-        }]
-      }
     })
     // Waiver View for adult primary
     .when('/waiver-adult', {
       templateUrl: '/views/templates/adultWaiver.html',
+      controller: 'WaiverController' //RESOLVE
+    })
+    // Waiver View for adult primary
+    .when('/waiver-youth', {
+      templateUrl: '/views/templates/youthWaiver.html',
+      controller: 'WaiverController' //RESOLVE
+    })
+    // Waiver View for adult primary
+    .when('/waiver-photo', {
+      templateUrl: '/views/templates/photoWaiver.html',
       controller: 'WaiverController' //RESOLVE
     })
     // Confirmation View
@@ -81,6 +81,11 @@ myApp.config(['$routeProvider', '$locationProvider',
     .when('/checkout', {
       templateUrl: '/views/templates/checkout.html',
       controller: 'CheckoutController',
+    })
+    // Import View of the app
+    .when('/import', {
+      templateUrl: '/views/templates/import.html',
+      controller: 'ImportController'
     })
     //
     .otherwise({

@@ -37,6 +37,10 @@ h1 {
   color: whitesmoke;
 }
 
+.btnPadding {
+  padding: 15px;
+}
+
 .themed-Btn {
   padding-top: 0;
   padding-right: 50px;
@@ -81,13 +85,13 @@ h1 {
   background-position-y: -64px;
 }
 
-.standardBtn {
+/*.standardBtn {
   display: inline-block;
     margin: 8px;
     padding: 0 45px 0 20px;
     height: 40px;
     overflow: visible;
-    /*position: relative;*/
+    position: relative;
     font: 22px/34px 'League Gothic Regular', 'Arial Narrow', Arial, sans-serif;
     letter-spacing: 0.015em;
     color: #FFF;
@@ -103,10 +107,10 @@ h1 {
     cursor: pointer;
     max-width: 100%;
 
-    /*position: fixed;*/
-    /*background-color: #f8d208;*/
+    position: fixed;
+    background-color: #f8d208;
     color: whitesmoke;
-}
+}*/
 
 
 
@@ -166,9 +170,37 @@ footer {
 }
 
 .kidsImg {
-  max-height: 48%;
-  max-width: 48%;
+  max-width: 100%;
+  height: auto;
 }
+
+/*Import .CSV file styles*/
+#progress_bar {
+   margin: 10px 0;
+   padding: 3px;
+   border: 1px solid #000;
+   font-size: 14px;
+   clear: both;
+   opacity: 0;
+   -moz-transition: opacity 1s linear;
+   -o-transition: opacity 1s linear;
+   -webkit-transition: opacity 1s linear;
+ }
+
+ #progress_bar.loading {
+   opacity: 1.0;
+ }
+
+ #progress_bar .percent {
+   background-color: #99ccff;
+   height: auto;
+   width: 0;
+ }
+
+ .importFileContainer {
+   padding-top: 30px;
+ }
+ /*Import .CSV file styles*/
 
 /*center buttons in checkInOut View*/
 .checkInOutContainer {
@@ -209,6 +241,6 @@ footer {
   min-height: 40px;
 }
 
-md-input-container .md-errors-spacer:empty {
+.md-errors-spacer:empty {
     display: none;
 }
