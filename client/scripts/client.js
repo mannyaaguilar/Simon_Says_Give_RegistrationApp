@@ -77,6 +77,11 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/override.html',
       controller: 'OverrideController',
     })
+    // Import View of the app
+    .when('/import', {
+      templateUrl: '/views/templates/import.html',
+      controller: 'ImportController'
+    })
     //
     .otherwise({
       redirectTo: 'home'
