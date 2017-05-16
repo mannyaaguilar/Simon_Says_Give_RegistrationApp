@@ -1,17 +1,12 @@
-<!-- heading to select users from list of matches -->
 <!-- finish button - needs validation that a volunteer has been selected -->
-
-<!-- HEADER INCLUDED -->
 <div ng-include="'views/partials/header.html'"></div>
 
-<!-- RECIPE SEARCH -->
 <div layout="row">
   <div layout-md="column" flex="5"></div>
   <div layout="column" flex="90">
     <h1>CHECKOUT</h1>
   </div>
 </div>
-
 <div layout="row">
   <div layout-md="column" flex="35" ></div>
   <md-input-container layout="column" flex="30" >
@@ -41,28 +36,31 @@
   <md-input-container layout="column" layout-align="center center" flex="80">
     <div>
       <md-button class="md-raised" type="submit" name="submit" aria-label="Checkout"
-                 value="Search" ng-click="search()">Search</md-button>
+      value="Search" ng-click="search()">Search</md-button>
     </div>
   </md-input-container>
 </div>
-
 <!-- add div with ng-show for list of search results: -->
 <div layout="row" ng-show="success">
   <div layout-md="column" flex="10" ></div>
-    <div layout-md="column" flex="80">
-      <p>Show search results here!</p>
+  <div layout-md="column" flex="80">
+    <h3>Select Who You Want to Check Out!</h3>
+    <!-- should add ng-repeat for items returned from DB, need to include checkboxes -->
+    <div ng-repeat="volunteer in volunteerList">
+      <md-checkbox ng-model="updatelater" aria-label="{{volunteer}}" >
+            {{volunteer}}
+      </md-checkbox>
     </div>
+  </div>
 </div>
-
 <div layout="row">
   <div layout-md="column" flex="10" ></div>
   <md-input-container layout="column" layout-align="center center" flex="80">
     <div>
       <md-button class="md-raised" type="submit" name="submit" aria-label="Checkout"
-                 value="Checkout" ng-click="checkout()">Checkout</md-button>
+      value="Checkout" ng-click="checkout()">Checkout</md-button>
     </div>
   </md-input-container>
 </div>
 
-<!-- FOOTER INCLUDED -->
 <div ng-include="'views/partials/footer.html'"></div>
