@@ -2,10 +2,8 @@ myApp.controller('VolunteerController', ['$scope', '$http', '$location', 'UserSe
 console.log("VolunteerController Loaded");
 
 $scope.redirect = UserService.redirect;
-//need
-$scope.volunteerCheckIn = function(){
-   console.log('volunteerCheckIn accessed');
- };
+$scope.volunteerCheckIn = UserService.volunteerCheckIn;
+
 
 var volunteer = {
   email: '',
@@ -14,18 +12,6 @@ var volunteer = {
   under_18: true,
   dob: ''
 };
-// $scope.birthDate = new Date();
-//
-//   // this.minDate = new Date(
-//   //   this.birthDate.getFullYear(),
-//   //   this.birthDate.getMonth() - 2,
-//   //   this.birthDate.getDate()
-//   // );
-//   //
-//   this.maxDate = new Date(
-//     this.birthDate.getFullYear() - 8,
-//     this.birthDate.getMonth() ,
-//     this.birthDate.getDate()
-//   );
+
 
 }]);
