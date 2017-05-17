@@ -13,12 +13,12 @@
       <p>
         This Release and Waiver of Liability (the “release”) executed on
         <md-input-container md-no-float class="noMargins">
-          <input type="text" name="adultWaiverDateTop" value=""
+          <input required type="text" name="adultWaiverDateTop" value=""
             ng-model="adultWaiver.dateTop" placeholder="date">
         </md-input-container>
         (date) by
         <md-input-container md-no-float class="noMargins">
-          <input type="text" name="adultWaiverNameTop" value=""
+          <input required type="text" name="adultWaiverNameTop" value=""
             ng-model="adultWaiver.nameTop" placeholder="name">
         </md-input-container>
         (“Volunteer”) releases Simon Says Give (hereafter referred to as the
@@ -110,7 +110,7 @@
     <div flex="15"></div>
     <div layout="column" flex="70">
       <div layout="row">
-        <input type="checkbox" ng-check="adultWaiver.agreed = true"
+        <input required type="checkbox" ng-check="adultWaiver.agreed = true"
           ng-model="adultWaiver.agreed">
         <span>I acknowledge the above</span>
       </div>
@@ -122,7 +122,7 @@
         </div>
         <md-input-container class="noMargins" flex="85">
           <label>Please enter your name between slash marks: /John Doe/</label>
-          <input type="text" name="adultWaiverNameBottom" value=""
+          <input required type="text" name="adultWaiverNameBottom" value=""
             ng-model="adultWaiver.nameBottom">
         </md-input-container>
       </div>
@@ -134,7 +134,7 @@
         </div>
         <md-input-container class="noMargins" flex="85">
           <label>MM/DD/YYYY</label>
-          <input type="text" name="adultWaiverDateBottom" value=""
+          <input required type="text" name="adultWaiverDateBottom" value=""
             ng-model="adultWaiver.dateBottom">
         </md-input-container>
       </div>

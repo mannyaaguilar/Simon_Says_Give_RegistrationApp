@@ -47,20 +47,10 @@ myApp.config(['$routeProvider', '$locationProvider',
     .when('/startEvent', {
       templateUrl: '/views/templates/startEvent.html',
       controller: 'startEventController',
-      resolve: {
-        getuser : ['UserService', function(UserService){
-          return UserService.getuser();
-        }]
-      }
     })
     .when('/checkInOut', {
       templateUrl: '/views/templates/checkInOut.html',
       controller: 'checkInOutController',
-      resolve: {
-        getuser : ['UserService', function(UserService){
-          return UserService.getuser();
-        }]
-      }
     })
     // Waiver View for adult primary
     .when('/waiver-adult', {
@@ -86,6 +76,16 @@ myApp.config(['$routeProvider', '$locationProvider',
     .when('/override', {
       templateUrl: '/views/templates/override.html',
       controller: 'OverrideController',
+    })
+    // Checkout View
+    .when('/checkout', {
+      templateUrl: '/views/templates/checkout.html',
+      controller: 'CheckoutController',
+    })
+    // Import View of the app
+    .when('/import', {
+      templateUrl: '/views/templates/import.html',
+      controller: 'ImportController'
     })
     //
     .otherwise({
