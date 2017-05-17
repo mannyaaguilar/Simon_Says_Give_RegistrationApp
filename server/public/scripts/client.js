@@ -319,20 +319,25 @@ myApp.controller('startEventController', ['$scope', '$location', function($scope
   // REMOVE DUMMY DATA LATER //
   // hard coded event
   // will need to compare code stored in a session somehow which needs to be figured out
-  var eventCodeHardCoded = 4783;
+  var eventCodeHardCoded = 1234;
   // code entered in input field by Admin
   $scope.code = {
     thisCode: ''
   };
-  $scope.eventCode = function(code){
-    console.log("Event Code button clicked", code.thisCode);
-    if (code.thisCode == eventCodeHardCoded) {
-      $location.path('/checkInOut');
+  $scope.message = '';
+
+  $scope.eventCode = function(code) {
+    if(code.thisCode == false) {
+      $scope.message = 'Please enter an event code';
+    }
+    else if (code.thisCode == eventCodeHardCoded){
+      $location.path('checkInOut');
     }
     else {
-      console.log('try again');
-  }
-};
+        console.log(code.thisCode);
+        $scope.message = 'Please try again.';
+    }
+  };
 }]);
 
 myApp.controller('UserController', ['$scope', '$http', '$location', 'UserService', function($scope, $http, $location, UserService) {
@@ -347,10 +352,8 @@ myApp.controller('VolunteerController', ['$scope', '$http', '$location', 'UserSe
 console.log("VolunteerController Loaded");
 
 $scope.redirect = UserService.redirect;
-//need
-$scope.volunteerCheckIn = function(){
-   console.log('volunteerCheckIn accessed');
- };
+$scope.volunteerCheckIn = UserService.volunteerCheckIn;
+
 
 var volunteer = {
   email: '',
@@ -359,19 +362,7 @@ var volunteer = {
   under_18: true,
   dob: ''
 };
-// $scope.birthDate = new Date();
-//
-//   // this.minDate = new Date(
-//   //   this.birthDate.getFullYear(),
-//   //   this.birthDate.getMonth() - 2,
-//   //   this.birthDate.getDate()
-//   // );
-//   //
-//   this.maxDate = new Date(
-//     this.birthDate.getFullYear() - 8,
-//     this.birthDate.getMonth() ,
-//     this.birthDate.getDate()
-//   );
+
 
 }]);
 
@@ -525,9 +516,30 @@ myApp.factory('UserService', ['$http', '$location', function($http, $location){
     $location.url(page);
   }
 
+  function volunteerCheckIn(volunteer){
+    console.log("volunteerCheckIn function accessed", volunteer);
+    if(volunteer.under_18 === true){
+      console.log("General Waiver Needed- youth", volunteer.dob);
+      $location.path('/waiver-youth');
+    } else if (volunteer.has_signed_waiver === true && volunteer.has_allowed_photos === true) {
+      console.log("Adult General Waiver & Photo Waiver on record");
+      $location.path('/confirmation');
+    } else if (volunteer.has_signed_waiver === true && volunteer.has_allowed_photos === false) {
+      console.log("General Waiver on record, just need Photo Waiver");
+      $location.path('/waiver-photo');
+    } else if (volunteer.has_signed_waiver === false && volunteer.has_allowed_photos === true) {
+      console.log("Photo Waiver on record, just need General Waiver");
+      $location.path('/waiver-adult');
+    } else {
+      $location.path('/waiver-adult');
+    }
+  }
+
+
   return {
     userObject : userObject,
     redirect : redirect,
+    volunteerCheckIn: volunteerCheckIn,
 
     getuser : function(){
       $http.get('/user').then(function(response) {
