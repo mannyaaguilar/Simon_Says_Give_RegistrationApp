@@ -482,6 +482,10 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location',
     }
   };
 
+  $scope.declineWaiver = function() {
+    $location.path("/override");
+  };
+
 }]);
 
 myApp.factory('CSVService', ['$http', function($http){

@@ -239,6 +239,7 @@ footer {
 
 .bufferDiv {
   min-height: 40px;
+  min-width: 40px;
 }
 
 .md-errors-spacer:empty {
@@ -255,5 +256,17 @@ footer {
 }
 
 .eventCodeError {
-  color: red;
+  color: rgb(237,39,44);
+}
+
+.badButton {
+  background-color: rgb(237,39,44);
+  background-image: none;
+  padding-right: 25px;
+}
+
+.goodButton {
+  background-color: rgb(65,182,73);
+  background-image: none;
+  padding-right: 25px;
 }

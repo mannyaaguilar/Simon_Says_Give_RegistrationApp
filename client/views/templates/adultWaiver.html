@@ -144,9 +144,13 @@
       </div>
       <div layout="row" class="bufferDiv">
       </div>
-      <div flex="66">
+      <div layout="row" flex="33">
         <button type="button" name="button" class="themed-Btn"
           ng-click="submitAdultWaiver(adultWaiver); captureTime()">Submit</button>
+        <div class="bufferDiv">
+        </div>
+        <button type="button" name="button" class="themed-Btn declineButton"
+          ng-click="declineWaiver(); captureTime()">Decline</button>
       </div>
     </div>
     <div flex="15"></div>
