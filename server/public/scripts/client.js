@@ -121,7 +121,6 @@ $scope.success = false;
 //Array to assign search results to - has dummy info for now
 $scope.volunteerList = [1,2,3,4,5];
 
-
 //Connected to Search button - take inputs and check for records in database,
 // append results to DOM
 $scope.search = function() {
@@ -137,11 +136,19 @@ $scope.getVolunteers = function() {
     });
 };
 
+
 $scope.checkout = function() {
   //NEED TO ADD: PUT ROUTE to add checkout time to chosen volunteer hours record
   console.log('Logging checkout time on click: ', new Date());
   //changes view to confirmation page:
   $scope.changeView();
+};
+
+//PUT Route that updates the checkout time of chosen volunteer record(s)
+$scope.checkoutVolunteers = function() {
+  $http.put('/checkout').then(function(response){
+    console.log(response);
+    });
 };
 
 
