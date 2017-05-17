@@ -319,20 +319,25 @@ myApp.controller('startEventController', ['$scope', '$location', function($scope
   // REMOVE DUMMY DATA LATER //
   // hard coded event
   // will need to compare code stored in a session somehow which needs to be figured out
-  var eventCodeHardCoded = 4783;
+  var eventCodeHardCoded = 1234;
   // code entered in input field by Admin
   $scope.code = {
     thisCode: ''
   };
-  $scope.eventCode = function(code){
-    console.log("Event Code button clicked", code.thisCode);
-    if (code.thisCode == eventCodeHardCoded) {
-      $location.path('/checkInOut');
+  $scope.message = '';
+
+  $scope.eventCode = function(code) {
+    if(code.thisCode == false) {
+      $scope.message = 'Please enter an event code';
+    }
+    else if (code.thisCode == eventCodeHardCoded){
+      $location.path('checkInOut');
     }
     else {
-      console.log('try again');
-  }
-};
+        console.log(code.thisCode);
+        $scope.message = 'Please try again.';
+    }
+  };
 }]);
 
 myApp.controller('UserController', ['$scope', '$http', '$location', 'UserService', function($scope, $http, $location, UserService) {
