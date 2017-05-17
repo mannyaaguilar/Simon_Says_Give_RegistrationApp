@@ -349,13 +349,39 @@ console.log("VolunteerController Loaded");
 $scope.redirect = UserService.redirect;
 $scope.volunteerCheckIn = UserService.volunteerCheckIn;
 
+//***
+$scope.formatdob = function() {
+  var volDOB = $scope.volunteer.birthdate;
+  var numMonth = volDOB.getMonth();
+  var monthString = numMonth.toString();
+  if ( monthString.length === 1 ) {
+    monthString = "0" + monthString;
+  }
+  var dateString = volDOB.toString();
+  var dayString = dateString.slice(8, 10);
+  var yearString = dateString.slice(11, 15);
 
-var volunteer = {
+  var superDate = yearString + " " + monthString + " " + dayString;
+  $scope.volunteer.birthdate = superDate;
+};
+//***
+
+// $scope.initial = {
+//   dob: new Date()
+// };
+// var stringDate = toString()
+// $scope.formatdob = function(initial){
+// console.log(typeof(inital));
+// console.log("Initial DOB: ", initial);
+// var formattedDOB = $scope.initial.slice(0, 10);
+// console.log(formattedDOB);
+// };
+$scope.volunteer = {
   email: '',
   first_name: '',
   last_name: '',
   under_18: true,
-  dob: ''
+  birthdate: ''
 };
 
 
@@ -430,22 +456,26 @@ myApp.factory('UserService', ['$http', '$location', function($http, $location){
 
   function volunteerCheckIn(volunteer){
     console.log("volunteerCheckIn function accessed", volunteer);
-    if(volunteer.under_18 === true){
-      console.log("General Waiver Needed- youth", volunteer.dob);
-      $location.path('/waiver-youth');
-    } else if (volunteer.has_signed_waiver === true && volunteer.has_allowed_photos === true) {
-      console.log("Adult General Waiver & Photo Waiver on record");
-      $location.path('/confirmation');
-    } else if (volunteer.has_signed_waiver === true && volunteer.has_allowed_photos === false) {
-      console.log("General Waiver on record, just need Photo Waiver");
-      $location.path('/waiver-photo');
-    } else if (volunteer.has_signed_waiver === false && volunteer.has_allowed_photos === true) {
-      console.log("Photo Waiver on record, just need General Waiver");
-      $location.path('/waiver-adult');
-    } else {
-      $location.path('/waiver-adult');
-    }
-  }
+    $http.post('/volunteer', volunteer).then(function(){
+      if(volunteer.under_18 === true){
+        console.log("General Waiver Needed- youth", volunteer.dob);
+        $location.path('/waiver-youth');
+      } else if (volunteer.has_signed_waiver === true && volunteer.has_allowed_photos === true) {
+        console.log("Adult General Waiver & Photo Waiver on record");
+        $location.path('/confirmation');
+      } else if (volunteer.has_signed_waiver === true && volunteer.has_allowed_photos === false) {
+        console.log("General Waiver on record, just need Photo Waiver");
+        $location.path('/waiver-photo');
+      } else if (volunteer.has_signed_waiver === false && volunteer.has_allowed_photos === true) {
+        console.log("Photo Waiver on record, just need General Waiver");
+        $location.path('/waiver-adult');
+      } else {
+        $location.path('/waiver-adult');
+      }
+    });
+
+
+  }//end volunteerCheckIn
 
 
   return {

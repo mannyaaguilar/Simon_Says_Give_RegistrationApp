@@ -10,22 +10,26 @@ myApp.factory('UserService', ['$http', '$location', function($http, $location){
 
   function volunteerCheckIn(volunteer){
     console.log("volunteerCheckIn function accessed", volunteer);
-    if(volunteer.under_18 === true){
-      console.log("General Waiver Needed- youth", volunteer.dob);
-      $location.path('/waiver-youth');
-    } else if (volunteer.has_signed_waiver === true && volunteer.has_allowed_photos === true) {
-      console.log("Adult General Waiver & Photo Waiver on record");
-      $location.path('/confirmation');
-    } else if (volunteer.has_signed_waiver === true && volunteer.has_allowed_photos === false) {
-      console.log("General Waiver on record, just need Photo Waiver");
-      $location.path('/waiver-photo');
-    } else if (volunteer.has_signed_waiver === false && volunteer.has_allowed_photos === true) {
-      console.log("Photo Waiver on record, just need General Waiver");
-      $location.path('/waiver-adult');
-    } else {
-      $location.path('/waiver-adult');
-    }
-  }
+    $http.post('/volunteer', volunteer).then(function(){
+      if(volunteer.under_18 === true){
+        console.log("General Waiver Needed- youth", volunteer.dob);
+        $location.path('/waiver-youth');
+      } else if (volunteer.has_signed_waiver === true && volunteer.has_allowed_photos === true) {
+        console.log("Adult General Waiver & Photo Waiver on record");
+        $location.path('/confirmation');
+      } else if (volunteer.has_signed_waiver === true && volunteer.has_allowed_photos === false) {
+        console.log("General Waiver on record, just need Photo Waiver");
+        $location.path('/waiver-photo');
+      } else if (volunteer.has_signed_waiver === false && volunteer.has_allowed_photos === true) {
+        console.log("Photo Waiver on record, just need General Waiver");
+        $location.path('/waiver-adult');
+      } else {
+        $location.path('/waiver-adult');
+      }
+    });
+
+
+  }//end volunteerCheckIn
 
 
   return {
