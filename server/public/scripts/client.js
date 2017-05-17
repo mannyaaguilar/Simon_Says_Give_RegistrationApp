@@ -230,10 +230,8 @@ myApp.controller('VolunteerController', ['$scope', '$http', '$location', 'UserSe
 console.log("VolunteerController Loaded");
 
 $scope.redirect = UserService.redirect;
-//need
-$scope.volunteerCheckIn = function(){
-   console.log('volunteerCheckIn accessed');
- };
+$scope.volunteerCheckIn = UserService.volunteerCheckIn;
+
 
 var volunteer = {
   email: '',
@@ -258,12 +256,18 @@ var volunteer = {
 //   );
 
 //if under_18 = true, redirect to childWaiver, if false, redirect to adultWaiver
-
-volunteerCheckIn = function(){
-  if(volunteer.under_18 === true){
-    $location.path('/youthWaiver')
-  }
-}
+//
+// $scope.volunteerCheckIn = function(volunteer){
+//   console.log("volunteerCheckIn function accessed");
+//   if(volunteer.under_18 === true){
+//     console.log(volunteer.first_name);
+//     $location.path('/waiver-youth');
+//   } else if (volunteer.has_signed_waiver === true) {
+//     $location.path('/waiver-photo');
+//   } else {
+//     $location.path('/waiver-adult');
+//   }
+// };
 }]);
 
 myApp.controller('WaiverController', ['$scope', '$http', '$location',
@@ -298,9 +302,30 @@ myApp.factory('UserService', ['$http', '$location', function($http, $location){
     $location.url(page);
   }
 
+  function volunteerCheckIn(volunteer){
+    console.log("volunteerCheckIn function accessed", volunteer);
+    if(volunteer.under_18 === true){
+      console.log("General Waiver Needed- youth", volunteer.dob);
+      $location.path('/waiver-youth');
+    } else if (volunteer.has_signed_waiver === true && volunteer.has_allowed_photos === true) {
+      console.log("Adult General Waiver & Photo Waiver on record");
+      $location.path('/confirmation');
+    } else if (volunteer.has_signed_waiver === true && volunteer.has_allowed_photos === false) {
+      console.log("General Waiver on record, just need Photo Waiver");
+      $location.path('/waiver-photo');
+    } else if (volunteer.has_signed_waiver === false && volunteer.has_allowed_photos === true) {
+      console.log("Photo Waiver on record, just need General Waiver");
+      $location.path('/waiver-adult');
+    } else {
+      $location.path('/waiver-adult');
+    }
+  }
+
+
   return {
     userObject : userObject,
     redirect : redirect,
+    volunteerCheckIn: volunteerCheckIn,
 
     getuser : function(){
       $http.get('/user').then(function(response) {
