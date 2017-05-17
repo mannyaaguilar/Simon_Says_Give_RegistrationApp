@@ -22,7 +22,7 @@ myApp.config(['$routeProvider', '$locationProvider',
     })
     .when('/export', {
       templateUrl: '/views/templates/export.html',
-      controller: 'AdminController',
+      controller: 'ExportController',
     })
     // Register new user View
     .when('/register', {

@@ -14,8 +14,18 @@ myApp.factory('CSVService', ['$http', function($http){
     });
   };
 
+  // Requests CSV file from server
+  requestCSV = function(option) {
+    console.log('Getting csv option: ', option);
+    $http.get('/csv/export/' + option ).then(function(response) {
+      console.log('Back from server after getting csv content', response);
+      // serverResponseObject.response = response;
+    });
+  };
+
   return {
-    sendCSV: sendCSV,
+    sendCSV : sendCSV,
+    requestCSV : requestCSV,
     serverResponseObject : serverResponseObject
   };
 }]);

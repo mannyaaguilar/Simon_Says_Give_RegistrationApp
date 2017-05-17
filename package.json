@@ -28,6 +28,7 @@
     "grunt-contrib-uglify": "^2.3.0",
     "grunt-contrib-watch": "^1.0.0",
     "jquery": "^2.1.4",
+    "json2csv": "^3.7.3",
     "pag": "^1.0.1",
     "passport": "^0.2.2",
     "passport-local": "^1.0.0",

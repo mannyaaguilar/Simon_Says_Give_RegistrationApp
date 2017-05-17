@@ -1,9 +1,58 @@
 var express = require('express');
 var router = express.Router();
 var csv = require('csvtojson')
+var json2csv = require('json2csv');
 var pool = require('../modules/pool');
 
-// Handles POST request with new user data
+// Handles GET request of information from the DB
+router.get('/export/:option', function(req, res, next) {
+  var option = req.params.option;
+
+  var message = '/export route option: ' + option
+
+  // SELECT * FROM "volunteer";
+  pool.connect(function(errorConnectingToDatabase,db,done) {
+    if(errorConnectingToDatabase) {
+      console.log('Error connecting to the database');
+      res.sendStatus(500);
+    } else {
+      var jsonQuery = 'SELECT first_name as "First Name", last_name as "Last Name", email as "Email" FROM volunteer';
+      db.query(jsonQuery,function(queryError,result) {
+        done();
+        if (queryError) {
+          console.log('Error making query');
+          res.sendStatus(500);
+        } else {
+          console.log('QUERY RESULT:', result);
+
+          var jsonString = JSON.stringify(result.rows);
+          var json = JSON.parse(jsonString);
+
+          console.log('JSON QUERY RESULT:', json);
+
+          // res.send(result.rows);
+
+          var opts = {
+            data: json,
+            fields: ['First Name', 'Last Name', 'Email'],
+            quotes: ''
+          };
+
+          var result = json2csv(opts);
+          console.log(result);
+
+        }
+      });
+    }
+  });
+
+
+  res.send(message);
+
+});
+
+
+// Handles POST request with new volunteer data
 router.post('/upload', function(req, res, next) {
   var fileContent = req.body.fileContent;
   var message = '';

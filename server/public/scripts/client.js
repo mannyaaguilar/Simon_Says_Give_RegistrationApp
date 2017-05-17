@@ -22,7 +22,7 @@ myApp.config(['$routeProvider', '$locationProvider',
     })
     .when('/export', {
       templateUrl: '/views/templates/export.html',
-      controller: 'AdminController',
+      controller: 'ExportController',
     })
     // Register new user View
     .when('/register', {
@@ -136,6 +136,22 @@ myApp.controller('ConfirmationController', ['$scope', '$http', '$location', '$in
 
   // timeOut function runs when confirmation view is loaded
   $scope.timeOut();
+
+}]);
+
+myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserService', 'CSVService', function($scope, $http, $location, UserService, CSVService) {
+
+  $scope.userObject = UserService.userObject;
+  $scope.logout = UserService.logout;
+  $scope.redirect = UserService.redirect;
+  $scope.serverResponseObject = CSVService.serverResponseObject;
+
+  console.log('ExportController loaded');
+
+  $scope.exportInformation = function(option) {
+    console.log('Export Information clicked, exporting: ', option);
+    CSVService.requestCSV(option);
+  };
 
 }]);
 
@@ -375,8 +391,18 @@ myApp.factory('CSVService', ['$http', function($http){
     });
   };
 
+  // Requests CSV file from server
+  requestCSV = function(option) {
+    console.log('Getting csv option: ', option);
+    $http.get('/csv/export/' + option ).then(function(response) {
+      console.log('Back from server after getting csv content', response);
+      // serverResponseObject.response = response;
+    });
+  };
+
   return {
-    sendCSV: sendCSV,
+    sendCSV : sendCSV,
+    requestCSV : requestCSV,
     serverResponseObject : serverResponseObject
   };
 }]);

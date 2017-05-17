@@ -1,1 +1,18 @@
-<p>Export Data</p>
+<!-- HEADER INCLUDED -->
+<div ng-include="'views/partials/header.html'"></div>
+
+<!-- EXPORT VIEW -->
+<div layout="row">
+  <div layout-md="column" flex="5"></div>
+  <div layout="column" flex="90">
+    <div class="importFileContainer">
+      <h1>EXPORT SSG VOLUNTEER DATABASE TO .CSV FILE </h1>
+      <p>1. Export volunteer information (First Name, Last Name, Email)</p>
+      <md-button class="themed-Btn" ng-click="exportInformation('volunteer')">Export Volunteers</md-button><br>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER INCLUDED -->
+<div ng-include="'views/partials/footer.html'"></div>
