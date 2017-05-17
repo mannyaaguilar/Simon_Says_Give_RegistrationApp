@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var csv = require('csvtojson')
+var csvtojson = require('csvtojson')
 var json2csv = require('json2csv');
 var pool = require('../modules/pool');
 
@@ -8,14 +8,12 @@ var pool = require('../modules/pool');
 router.get('/export/:option', function(req, res, next) {
   var option = req.params.option;
 
-  var message = '/export route option: ' + option
-
-  // SELECT * FROM "volunteer";
   pool.connect(function(errorConnectingToDatabase,db,done) {
     if(errorConnectingToDatabase) {
       console.log('Error connecting to the database');
       res.sendStatus(500);
     } else {
+      // query that selects all volunteers registered on the system
       var jsonQuery = 'SELECT first_name as "First Name", last_name as "Last Name", email as "Email" FROM volunteer';
       db.query(jsonQuery,function(queryError,result) {
         done();
@@ -25,30 +23,27 @@ router.get('/export/:option', function(req, res, next) {
         } else {
           console.log('QUERY RESULT:', result);
 
+          // converts query resutl to JSON
           var jsonString = JSON.stringify(result.rows);
           var json = JSON.parse(jsonString);
-
           console.log('JSON QUERY RESULT:', json);
 
-          // res.send(result.rows);
-
+          // parameters for json2csv function
           var opts = {
             data: json,
             fields: ['First Name', 'Last Name', 'Email'],
             quotes: ''
           };
-
+          // converts json data to csv
           var result = json2csv(opts);
           console.log(result);
-
+          // sends csv file to client
+          res.attachment('volunteers.csv');
+          res.status(200).send(result);
         }
       });
     }
   });
-
-
-  res.send(message);
-
 });
 
 
@@ -62,7 +57,7 @@ router.post('/upload', function(req, res, next) {
 
   // converts fileContent to JSON
   console.log('Converting to JSON');
-  csv({noheader:false})
+  csvtojson({noheader:false})
   .fromString(fileContent)
   .on('end_parsed',function(jsonArrObj) {
     console.log('Finished conversion', jsonArrObj);
@@ -103,7 +98,7 @@ router.post('/upload', function(req, res, next) {
         });
       };
     }); // pool.connect
-  }); // end of csv
+  }); // end of csvtojson
 
 });
 
