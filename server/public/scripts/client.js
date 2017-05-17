@@ -433,17 +433,50 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location',
   $scope.adultWaiver = {};
   $scope.submitAdultWaiver = function(waiverObj) {
     console.log("Adult waiver object: ", waiverObj);
-    $location.path("/waiver-photo");
+
+    let filledOut;
+
+    filledOut = waiverObj.dateTop && waiverObj.nameTop && waiverObj.agreed &&
+                waiverObj.nameBottom && waiverObj.dateBottom;
+
+    if ( filledOut ) {
+      $location.path("/waiver-photo");
+    }
+    else {
+      alert("Please complete all fields");
+    }
   };
 
   $scope.youthWaiver = {};
   $scope.submitYouthWaiver = function(waiverObj) {
     console.log("Youth waiver object: ", waiverObj);
-    if ( waiverObj.noParent ) {
-      $location.path("/override");
+    let noParentAll,
+        parentAll,
+        filledOut;
+
+    noParentAll = waiverObj.noParent && waiverObj.nameBottom &&
+                  waiverObj.dateBottomVol && waiverObj.guardianEmail;
+
+    parentAll = waiverObj.dateTop && waiverObj.nameTop &&
+                waiverObj.guardianTop && waiverObj.agreed &&
+                waiverObj.nameBottom && waiverObj.dateBottomVol &&
+                waiverObj.guardianBottom && waiverObj.dateBottomGuard;
+
+    filledOut = noParentAll || parentAll;
+
+    if ( filledOut ) {
+      if ( noParentAll ) {
+        $location.path("/override");
+      }
+      else if ( parentAll ) {
+        $location.path("/waiver-photo");
+      }
+      else {
+        alert("Weird error!");
+      }
     }
     else {
-      $location.path("/waiver-photo");
+      alert("Please complete all fields");
     }
   };
 

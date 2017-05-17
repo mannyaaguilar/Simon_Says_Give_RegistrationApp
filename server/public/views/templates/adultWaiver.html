@@ -13,14 +13,16 @@
     <div layout="column" flex="70">
       <p>
         This Release and Waiver of Liability (the “release”) executed on
-        <md-input-container md-no-float class="noMargins">
-          <input required type="text" name="adultWaiverDateTop" value=""
-            ng-model="adultWaiver.dateTop" placeholder="date">
+        <md-input-container class="noMargins">
+          <label>Enter date *</label>
+          <md-datepicker ng-model="adultWaiver.dateTop"
+            name="adultWaiverDateTop" md-min-date="ctrl.minDate"
+            md-max-date="ctrl.maxDate"></md-datepicker>
         </md-input-container>
         (date) by
         <md-input-container md-no-float class="noMargins">
           <input required type="text" name="adultWaiverNameTop" value=""
-            ng-model="adultWaiver.nameTop" placeholder="name">
+            ng-model="adultWaiver.nameTop" placeholder="name *">
         </md-input-container>
         (“Volunteer”) releases Simon Says Give (hereafter referred to as the
         “Nonprofit”), a nonprofit corporation organized and existing under the
@@ -134,9 +136,10 @@
           <span>Today's Date:</span>
         </div>
         <md-input-container class="noMargins" flex="85">
-          <label>MM/DD/YYYY</label>
-          <input required type="text" name="adultWaiverDateBottom" value=""
-            ng-model="adultWaiver.dateBottom">
+          <label>Enter date *</label>
+          <md-datepicker ng-model="adultWaiver.dateBottom"
+            name="adultWaiverDateBottom" md-min-date="ctrl.minDate"
+            md-max-date="ctrl.maxDate"></md-datepicker>
         </md-input-container>
       </div>
       <div layout="row" class="bufferDiv">
