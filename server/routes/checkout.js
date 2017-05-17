@@ -12,18 +12,19 @@ router.get('/', function(req, res) {
       res.send(500);
 
     } else {
-      console.log('connected to get check out route');
-      // db.query('', function(queryError, result){
-      //   done();
-      //   if (queryError) {
-      //     console.log('Error making query.');
-      //     res.send(500);
-      //   } else {
-      //
-      //     res.send(result.rows);
-      //
-      //   } //ends else
-      // }); //ends db query
+      console.log('connected to get checkout get route');
+      //NEED TO UPDATE QUERY BELOW
+      db.query('', function(queryError, result){
+        done();
+        if (queryError) {
+          console.log('Error making query.');
+          res.send(500);
+        } else {
+
+          res.send(result.rows);
+
+        } //ends else
+      }); //ends db query
     } //ends else
   }); //ends pool.connect
 }); //ends router.get
@@ -36,18 +37,17 @@ router.put('/', function(req, res){
       console.log('Error connecting to the database.');
       res.send(500);
     } else {
-      //
-      db.query("" + id, [], function(queryError, result){
-
-        done();
-        if(queryError) {
-          console.log('Error making query.');
-          res.sendStatus(500);
-        } else {
-          console.log(result);
-          res.sendStatus(201);
-        } //ends else
-      }); //ends db query
+      //NEED TO UPDATE QUERY BELOW
+      // db.query("" + id, [], function(queryError, result){
+      //   done();
+      //   if(queryError) {
+      //     console.log('Error making query.');
+      //     res.sendStatus(500);
+      //   } else {
+      //     console.log(result);
+      //     res.sendStatus(201);
+      //   } //ends else
+      // }); //ends db query
     } //ends else
   }); //ends pool.connect
 }); //ends router

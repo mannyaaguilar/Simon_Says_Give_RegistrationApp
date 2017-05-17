@@ -136,10 +136,10 @@ $scope.getVolunteers = function() {
     });
 };
 
-
 $scope.checkout = function() {
   //NEED TO ADD: PUT ROUTE to add checkout time to chosen volunteer hours record
   console.log('Logging checkout time on click: ', new Date());
+  $scope.checkoutVolunteers();
   //changes view to confirmation page:
   $scope.changeView();
 };
@@ -151,12 +151,10 @@ $scope.checkoutVolunteers = function() {
     });
 };
 
-
 //changes view to confirmation page
 $scope.changeView = function() {
   $location.path('/confirmation');
 };
-
 
 }]);
 
