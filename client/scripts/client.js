@@ -77,6 +77,11 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/override.html',
       controller: 'OverrideController',
     })
+    // Checkout View
+    .when('/checkout', {
+      templateUrl: '/views/templates/checkout.html',
+      controller: 'CheckoutController',
+    })
     // Import View of the app
     .when('/import', {
       templateUrl: '/views/templates/import.html',

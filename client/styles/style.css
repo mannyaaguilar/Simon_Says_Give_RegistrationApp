@@ -241,7 +241,7 @@ footer {
   min-height: 40px;
 }
 
-md-input-container .md-errors-spacer:empty {
+.md-errors-spacer:empty {
     display: none;
 }
 
