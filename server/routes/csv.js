@@ -4,7 +4,7 @@ var csvtojson = require('csvtojson');
 var json2csv = require('json2csv');
 var pool = require('../modules/pool');
 
-// Handles GET request of information from the DB
+// GET request - volunteer hours .csv file
 router.get('/export/hours/:fromDate/:toDate', function(req, res, next) {
   console.log('/export/hours hit');
   var fromDate = req.params.fromDate;
@@ -22,20 +22,15 @@ router.get('/export/hours/:fromDate/:toDate', function(req, res, next) {
       'volunteer_hours.date as "Date", volunteer_hours.time_in as "Time in", volunteer_hours.time_out as "Time out" ' +
       'FROM volunteer JOIN volunteer_hours ON volunteer.id = volunteer_hours.volunteer_id ' +
       'WHERE volunteer_hours.date >= $1 and volunteer_hours.date <= $2';
-
       db.query(jsonQuery, [fromDate, toDate], function(queryError,result) {
         done();
         if (queryError) {
           console.log('Error making query');
           res.sendStatus(500);
         } else {
-          // console.log('QUERY RESULT:', result);
-
           // converts query resutl to JSON
           var jsonString = JSON.stringify(result.rows);
           var json = JSON.parse(jsonString);
-          // console.log('JSON QUERY RESULT:', json);
-
           // parameters for json2csv function
           var opts = {
             data: json,
@@ -44,7 +39,6 @@ router.get('/export/hours/:fromDate/:toDate', function(req, res, next) {
           };
           // converts json data to csv
           var result = json2csv(opts);
-          // console.log(result);
           // sends csv file to client
           res.attachment('volunteer_hours.csv');
           res.status(200).send(result);
@@ -54,7 +48,7 @@ router.get('/export/hours/:fromDate/:toDate', function(req, res, next) {
   }); // pool.connect
 });
 
-// Handles GET request of volunteer information from the DB
+// GET request - volunteer .csv file
 router.get('/export/volunteer', function(req, res, next) {
   console.log('/export/volunteer hit');
   // connects to the pool
@@ -71,13 +65,9 @@ router.get('/export/volunteer', function(req, res, next) {
           console.log('Error making query');
           res.sendStatus(500);
         } else {
-          // console.log('QUERY RESULT:', result);
-
           // converts query resutl to JSON
           var jsonString = JSON.stringify(result.rows);
           var json = JSON.parse(jsonString);
-          // console.log('JSON QUERY RESULT:', json);
-
           // parameters for json2csv function
           var opts = {
             data: json,
@@ -86,7 +76,6 @@ router.get('/export/volunteer', function(req, res, next) {
           };
           // converts json data to csv
           var result = json2csv(opts);
-          // console.log(result);
           // sends csv file to client
           res.attachment('volunteers.csv');
           res.status(200).send(result);
@@ -111,7 +100,6 @@ router.post('/upload', function(req, res, next) {
   .fromString(fileContent)
   .on('end_parsed',function(jsonArrObj) {
     console.log('Finished conversion', jsonArrObj);
-
     // Inserts into json_volunteer table
     pool.connect(function(errorConnectingToDatabase,db,done) {
       if(errorConnectingToDatabase) {
@@ -149,7 +137,6 @@ router.post('/upload', function(req, res, next) {
       };
     }); // pool.connect
   }); // end of csvtojson
-
 });
 
 // Deletes JSON formatted volunteer table

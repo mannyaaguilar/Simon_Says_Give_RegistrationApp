@@ -6,6 +6,7 @@ myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserServi
   $scope.serverResponseObject = CSVService.serverResponseObject;
   $scope.exportOption = '';
   $scope.datesEnabledValue = true;
+  $scope.errorMessage = "";
   $scope.fromDate;
   $scope.toDate;
 
@@ -25,10 +26,26 @@ myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserServi
       console.log('To Date', $scope.toDate);
       data.fromDate = $scope.fromDate;
       data.toDate = $scope.toDate;
-      // calls function in factory that requests data from the server
-      CSVService.requestHoursCSV(data);
+      if (validDates (data.fromDate, data.toDate)) {
+        // calls function in factory that requests data from the server
+        CSVService.requestHoursCSV(data);
+      }
     } else {
       CSVService.requestVolunteerCSV();
+    }
+  };
+
+  function validDates(fromDate, toDate) {
+    if (fromDate && toDate) {
+      if(toDate < fromDate) {
+        $scope.errorMessage = 'Invalid date Selection';
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      $scope.errorMessage = 'Invalid date Selection';
+      return false;
     }
   };
 
@@ -37,11 +54,9 @@ myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserServi
     if ($scope.exportOption === 'hours'){
       if ($scope.datesEnabledValue) {
         $scope.datesEnabledValue = false;
-        console.log("if true");
       }
     } else {
       $scope.datesEnabledValue = true;
-      console.log("if false");
     }
   }
 
