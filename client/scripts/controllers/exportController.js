@@ -15,7 +15,6 @@ myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserServi
   // prepares information (parameter dates) and calls function in factory
   $scope.exportInformation = function(option) {
     console.log('Export Information clicked, exporting: ', option);
-
     data = {
       fromDate : new Date(),
       toDate : new Date()
@@ -35,6 +34,7 @@ myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserServi
     }
   };
 
+  // validates the date selection
   function validDates(fromDate, toDate) {
     if (fromDate && toDate) {
       if(toDate < fromDate) {

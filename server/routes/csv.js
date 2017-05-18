@@ -85,15 +85,12 @@ router.get('/export/volunteer', function(req, res, next) {
   }); // pool.connect
 });
 
-
 // Handles POST request with new volunteer data
 router.post('/upload', function(req, res, next) {
   var fileContent = req.body.fileContent;
   var message = '';
-
   // deletes temporary table
   deleteJSONTable();
-
   // converts fileContent to JSON
   console.log('Converting to JSON');
   csvtojson({noheader:false})
@@ -115,7 +112,6 @@ router.post('/upload', function(req, res, next) {
             }
           });
         } // end of for loop
-
         // Moves information into volunteer table
         console.log('INSERT INTO volunteer STARTED!');
         db.query("INSERT INTO volunteer (first_name, last_name, email) " +
