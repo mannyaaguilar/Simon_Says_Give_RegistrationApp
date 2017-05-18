@@ -174,7 +174,7 @@ footer {
   height: auto;
 }
 
-/*Import .CSV file styles*/
+/*Import/Export .CSV file styles*/
 #progress_bar {
    margin: 10px 0;
    padding: 3px;
@@ -200,7 +200,13 @@ footer {
  .importFileContainer {
    padding-top: 30px;
  }
- /*Import .CSV file styles*/
+
+ .exportDatesContainer {
+   padding-top: 10px;
+   padding-left: 30px;
+   padding-bottom: 30px;
+ }
+ /*Import/Export .CSV file styles*/
 
 /*center buttons in checkInOut View*/
 .checkInOutContainer {

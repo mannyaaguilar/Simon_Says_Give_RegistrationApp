@@ -1,13 +1,63 @@
 var express = require('express');
 var router = express.Router();
-var csvtojson = require('csvtojson')
+var csvtojson = require('csvtojson');
 var json2csv = require('json2csv');
 var pool = require('../modules/pool');
 
 // Handles GET request of information from the DB
-router.get('/export/:option', function(req, res, next) {
-  var option = req.params.option;
+router.get('/export/hours/:fromDate/:toDate', function(req, res, next) {
+  console.log('/export/hours hit');
+  var fromDate = req.params.fromDate;
+  var toDate = req.params.toDate;
+  console.log('FROM DATE', fromDate);
+  console.log('TO DATE', toDate);
+  // connects to the pool
+  pool.connect(function(errorConnectingToDatabase,db,done) {
+    if(errorConnectingToDatabase) {
+      console.log('Error connecting to the database');
+      res.sendStatus(500);
+    } else {
+      // query that selects all volunteer hours for a selected period of time
+      var jsonQuery = 'SELECT volunteer.first_name as "First Name", volunteer.last_name as "Last Name", volunteer.email as "Email", ' +
+      'volunteer_hours.date as "Date", volunteer_hours.time_in as "Time in", volunteer_hours.time_out as "Time out" ' +
+      'FROM volunteer JOIN volunteer_hours ON volunteer.id = volunteer_hours.volunteer_id ' +
+      'WHERE volunteer_hours.date >= $1 and volunteer_hours.date <= $2';
 
+      db.query(jsonQuery, [fromDate, toDate], function(queryError,result) {
+        done();
+        if (queryError) {
+          console.log('Error making query');
+          res.sendStatus(500);
+        } else {
+          // console.log('QUERY RESULT:', result);
+
+          // converts query resutl to JSON
+          var jsonString = JSON.stringify(result.rows);
+          var json = JSON.parse(jsonString);
+          // console.log('JSON QUERY RESULT:', json);
+
+          // parameters for json2csv function
+          var opts = {
+            data: json,
+            fields: ['First Name', 'Last Name', 'Email', 'Date', 'Time in', 'Time out'],
+            quotes: ''
+          };
+          // converts json data to csv
+          var result = json2csv(opts);
+          // console.log(result);
+          // sends csv file to client
+          res.attachment('volunteer_hours.csv');
+          res.status(200).send(result);
+        } // else
+      }); // db.query
+    } // else
+  }); // pool.connect
+});
+
+// Handles GET request of volunteer information from the DB
+router.get('/export/volunteer', function(req, res, next) {
+  console.log('/export/volunteer hit');
+  // connects to the pool
   pool.connect(function(errorConnectingToDatabase,db,done) {
     if(errorConnectingToDatabase) {
       console.log('Error connecting to the database');
@@ -21,12 +71,12 @@ router.get('/export/:option', function(req, res, next) {
           console.log('Error making query');
           res.sendStatus(500);
         } else {
-          console.log('QUERY RESULT:', result);
+          // console.log('QUERY RESULT:', result);
 
           // converts query resutl to JSON
           var jsonString = JSON.stringify(result.rows);
           var json = JSON.parse(jsonString);
-          console.log('JSON QUERY RESULT:', json);
+          // console.log('JSON QUERY RESULT:', json);
 
           // parameters for json2csv function
           var opts = {
@@ -36,14 +86,14 @@ router.get('/export/:option', function(req, res, next) {
           };
           // converts json data to csv
           var result = json2csv(opts);
-          console.log(result);
+          // console.log(result);
           // sends csv file to client
           res.attachment('volunteers.csv');
           res.status(200).send(result);
-        }
-      });
-    }
-  });
+        } // else
+      }); // db.query
+    } // else
+  }); // pool.connect
 });
 
 
