@@ -1,6 +1,5 @@
 .DS_STORE/
 node_modules/
-server/public/
 .idea/
 server/public/
 *.log
