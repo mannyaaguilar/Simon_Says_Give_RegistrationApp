@@ -2,7 +2,7 @@ var myApp = angular.module('myApp', ['ngRoute', 'ngMaterial']);
 
 // Angular Material Theme
 myApp.config(['$mdThemingProvider', function($mdThemingProvider){
-  $mdThemingProvider.theme('altTheme').primaryPalette('grey').accentPalette('blue-grey');
+  $mdThemingProvider.theme('altTheme').primaryPalette('blue').accentPalette('blue');
 }]);
 
 /// Routes ///
@@ -22,7 +22,7 @@ myApp.config(['$routeProvider', '$locationProvider',
     })
     .when('/export', {
       templateUrl: '/views/templates/export.html',
-      controller: 'AdminController',
+      controller: 'ExportController',
     })
     // Register new user View
     .when('/register', {

@@ -2,7 +2,7 @@ var myApp = angular.module('myApp', ['ngRoute', 'ngMaterial']);
 
 // Angular Material Theme
 myApp.config(['$mdThemingProvider', function($mdThemingProvider){
-  $mdThemingProvider.theme('altTheme').primaryPalette('grey').accentPalette('blue-grey');
+  $mdThemingProvider.theme('altTheme').primaryPalette('blue').accentPalette('blue');
 }]);
 
 /// Routes ///
@@ -22,7 +22,7 @@ myApp.config(['$routeProvider', '$locationProvider',
     })
     .when('/export', {
       templateUrl: '/views/templates/export.html',
-      controller: 'AdminController',
+      controller: 'ExportController',
     })
     // Register new user View
     .when('/register', {
@@ -110,7 +110,7 @@ myApp.controller('checkInOutController', ['$scope', '$location', function($scope
   };
 }]);
 
-myApp.controller('CheckoutController', ['$scope', '$location', function($scope, $location) {
+myApp.controller('CheckoutController', ['$scope', '$location', '$http', function($scope, $location, $http) {
 
 //object for input items to bind to
 $scope.volunteerObject = {};
@@ -126,14 +126,29 @@ $scope.volunteerList = [1,2,3,4,5];
 $scope.search = function() {
   console.log('volunteerObject: ', $scope.volunteerObject);
   //NEED TO ADD: GET to collect matching records by email and/or name
+  $scope.getVolunteers();
   $scope.success = true;
+};
+
+$scope.getVolunteers = function() {
+  $http.get('/checkout').then(function(response){
+    console.log(response);
+    });
 };
 
 $scope.checkout = function() {
   //NEED TO ADD: PUT ROUTE to add checkout time to chosen volunteer hours record
   console.log('Logging checkout time on click: ', new Date());
+  $scope.checkoutVolunteers();
   //changes view to confirmation page:
   $scope.changeView();
+};
+
+//PUT Route that updates the checkout time of chosen volunteer record(s)
+$scope.checkoutVolunteers = function() {
+  $http.put('/checkout').then(function(response){
+    console.log(response);
+    });
 };
 
 //changes view to confirmation page
@@ -174,6 +189,70 @@ myApp.controller('ConfirmationController', ['$scope', '$http', '$location', '$in
 
   // timeOut function runs when confirmation view is loaded
   $scope.timeOut();
+
+}]);
+
+myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserService', 'CSVService', function($scope, $http, $location, UserService, CSVService) {
+
+  $scope.userObject = UserService.userObject;
+  $scope.logout = UserService.logout;
+  $scope.redirect = UserService.redirect;
+  $scope.serverResponseObject = CSVService.serverResponseObject;
+  $scope.exportOption = '';
+  $scope.datesEnabledValue = true;
+  $scope.errorMessage = "";
+  $scope.fromDate;
+  $scope.toDate;
+
+  console.log('ExportController loaded');
+
+  // prepares information (parameter dates) and calls function in factory
+  $scope.exportInformation = function(option) {
+    console.log('Export Information clicked, exporting: ', option);
+    data = {
+      fromDate : new Date(),
+      toDate : new Date()
+    };
+    // checks if option selected was hours and prepares data object of parameters
+    if ($scope.exportOption === 'hours'){
+      console.log('From Date', $scope.fromDate);
+      console.log('To Date', $scope.toDate);
+      data.fromDate = $scope.fromDate;
+      data.toDate = $scope.toDate;
+      if (validDates (data.fromDate, data.toDate)) {
+        // calls function in factory that requests data from the server
+        CSVService.requestHoursCSV(data);
+      }
+    } else {
+      CSVService.requestVolunteerCSV();
+    }
+  };
+
+  // validates the date selection
+  function validDates(fromDate, toDate) {
+    if (fromDate && toDate) {
+      if(toDate < fromDate) {
+        $scope.errorMessage = 'Invalid date Selection';
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      $scope.errorMessage = 'Invalid date Selection';
+      return false;
+    }
+  };
+
+  // enables/disables datepickers depending on option selected
+  $scope.toggleEnableDates = function() {
+    if ($scope.exportOption === 'hours'){
+      if ($scope.datesEnabledValue) {
+        $scope.datesEnabledValue = false;
+      }
+    } else {
+      $scope.datesEnabledValue = true;
+    }
+  }
 
 }]);
 
@@ -502,15 +581,50 @@ myApp.factory('CSVService', ['$http', function($http){
   sendCSV = function(csv) {
     var csvToPost = {};
     csvToPost.fileContent = csv;
-    console.log('Posting csv ', csvToPost);
+    // console.log('Posting csv ', csvToPost);
     $http.post('/csv/upload', csvToPost).then(function(response) {
       console.log('Back from server after posting csv content', response);
       serverResponseObject.response = response;
     });
   };
 
+  // Requests CSV file from server
+  requestVolunteerCSV = function() {
+    console.log('Getting volunteer .csv');
+    $http.get('/csv/export/volunteer').then(function(response) {
+      console.log('Back from server after getting csv content');
+      // opens the route - downloads the file
+      window.open('/csv/export/volunteer');
+    });
+  };
+
+  // Requests CSV file from server
+  requestHoursCSV = function(data) {
+    console.log('Getting hours .csv ');
+    console.log('Data: ', data);
+    var formattedFromDate = formatDate(data.fromDate);
+    var formattedToDate = formatDate(data.toDate);
+    $http.get('/csv/export/hours/' + formattedFromDate + '/' + formattedToDate).then(function(response) {
+      console.log('Back from server after getting csv content',response);
+      // opens the route - downloads the file
+      var route = '/csv/export/hours/' + formattedFromDate + '/' + formattedToDate;
+      window.open(route);
+    });
+  };
+
+  // Formats date to DB format
+  formatDate = function(date) {
+    var curr_date = date.getDate();
+    var curr_month = date.getMonth() + 1; //Months are zero based
+    var curr_year = date.getFullYear();
+    var formattedDate = curr_year + "-" + curr_month + "-" + curr_date;
+    return formattedDate;
+  }
+
   return {
-    sendCSV: sendCSV,
+    sendCSV : sendCSV,
+    requestVolunteerCSV : requestVolunteerCSV,
+    requestHoursCSV :requestHoursCSV,
     serverResponseObject : serverResponseObject
   };
 }]);
