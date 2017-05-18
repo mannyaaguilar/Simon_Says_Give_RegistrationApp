@@ -13,9 +13,11 @@
     <div layout="column" flex="70" ng-hide="adultWaiver">
       <p>
         This Release and Waiver of Liability (the “release”) executed on
-        <md-input-container md-no-float class="noMargins">
-          <input type="text" name="photoWaiverDateTop" value=""
-            ng-model="photoWaiver.dateTop" placeholder="date">
+        <md-input-container class="noMargins">
+          <label>Enter date *</label>
+          <md-datepicker ng-model="photoWaiver.dateTop"
+            name="photoWaiverDateTop" md-min-date="ctrl.minDate"
+            md-max-date="ctrl.maxDate"></md-datepicker>
         </md-input-container>
         (date) by
         <md-input-container md-no-float class="noMargins">
@@ -33,9 +35,11 @@
     <div layout="column" flex="70" ng-show="youthWaiver">
       <p>
         This Release and Waiver of Liability (the “release”) executed on
-        <md-input-container md-no-float class="noMargins">
-          <input type="text" name="photoWaiverDateTop" value=""
-            ng-model="photoWaiver.dateTop" placeholder="date">
+        <md-input-container class="noMargins">
+          <label>Enter date *</label>
+          <md-datepicker ng-model="photoWaiver.dateTop"
+            name="photoWaiverDateTop" md-min-date="ctrl.minDate"
+            md-max-date="ctrl.maxDate"></md-datepicker>
         </md-input-container>
         (date) by
         <md-input-container md-no-float class="noMargins">
@@ -171,9 +175,10 @@
           <span>Today's Date:</span>
         </div>
         <md-input-container class="noMargins" flex="85">
-          <label>MM/DD/YYYY</label>
-          <input type="text" name="photoWaiverDateBottom" value=""
-            ng-model="photoWaiver.dateBottom">
+          <label>Enter date *</label>
+          <md-datepicker ng-model="photoWaiver.dateBottom"
+            name="photoWaiverDateBottom" md-min-date="ctrl.minDate"
+            md-max-date="ctrl.maxDate"></md-datepicker>
         </md-input-container>
       </div>
       <div layout="row" class="bufferDiv">
@@ -209,9 +214,10 @@
           <span>Today's Date:</span>
         </div>
         <md-input-container class="noMargins" flex="85">
-          <label>MM/DD/YYYY</label>
-          <input type="text" name="photoWaiverDateBottomVol" value=""
-            ng-model="photoWaiver.dateBottomVol">
+          <label>Enter date *</label>
+          <md-datepicker ng-model="photoWaiver.dateBottomVol"
+            name="photoWaiverDateBottomVol" md-min-date="ctrl.minDate"
+            md-max-date="ctrl.maxDate"></md-datepicker>
         </md-input-container>
       </div>
       <div layout="row" class="bufferDiv">
@@ -233,17 +239,25 @@
           <span>Today's Date:</span>
         </div>
         <md-input-container class="noMargins" flex="85">
-          <label>MM/DD/YYYY</label>
-          <input type="text" name="photoWaiverDateBottomGuard" value=""
-            ng-model="photoWaiver.dateBottomGuard">
+          <label>Enter date *</label>
+          <md-datepicker ng-model="photoWaiver.dateBottomGuard"
+            name="photoWaiverDateBottomGuard" md-min-date="ctrl.minDate"
+            md-max-date="ctrl.maxDate"></md-datepicker>
         </md-input-container>
       </div>
       <div layout="row" class="bufferDiv">
       </div>
-      <div flex="66">
+
+      <div flex="66" ng-hide="photoWaiver.agreed">
+        <button type="button" name="button" class="themed-Btn"
+          ng-click="submitPhotoWaiver(photoWaiver)">Decline</button>
+      </div>
+
+      <div flex="66" ng-show="photoWaiver.agreed">
         <button type="button" name="button" class="themed-Btn"
           ng-click="submitPhotoWaiver(photoWaiver)">Submit</button>
       </div>
+
     </div>
 
     <div flex="15"></div>
