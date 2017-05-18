@@ -14,13 +14,12 @@
       <p>
         This Release and Waiver of Liability (the “release”) executed on
         <md-input-container class="noMargins">
-          <label>Enter date *</label>
-          <md-datepicker ng-model="adultWaiver.dateTop"
+          <md-datepicker ng-model="waiverDefault"
             name="adultWaiverDateTop" md-min-date="ctrl.minDate"
             md-max-date="ctrl.maxDate"></md-datepicker>
         </md-input-container>
         (date) by
-        <md-input-container md-no-float class="noMargins">
+        <md-input-container md-no-float class="noMargins yellowBack">
           <input required type="text" name="adultWaiverNameTop" value=""
             ng-model="adultWaiver.nameTop" placeholder="name *">
         </md-input-container>
@@ -123,7 +122,7 @@
         <div flex="15">
           <span>Signature:</span>
         </div>
-        <md-input-container class="noMargins" flex="85">
+        <md-input-container class="noMargins yellowBack" flex="85">
           <label>Please enter your name between slash marks: /John Doe/</label>
           <input required type="text" name="adultWaiverNameBottom" value=""
             ng-model="adultWaiver.nameBottom">
@@ -136,8 +135,7 @@
           <span>Today's Date:</span>
         </div>
         <md-input-container class="noMargins" flex="85">
-          <label>Enter date *</label>
-          <md-datepicker ng-model="adultWaiver.dateBottom"
+          <md-datepicker ng-model="waiverDefault"
             name="adultWaiverDateBottom" md-min-date="ctrl.minDate"
             md-max-date="ctrl.maxDate"></md-datepicker>
         </md-input-container>
@@ -145,11 +143,11 @@
       <div layout="row" class="bufferDiv">
       </div>
       <div layout="row" flex="33">
-        <button type="button" name="button" class="themed-Btn"
+        <button type="button" name="button" class="themed-Btn goodButton"
           ng-click="submitAdultWaiver(adultWaiver); captureTime()">Submit</button>
         <div class="bufferDiv">
         </div>
-        <button type="button" name="button" class="themed-Btn declineButton"
+        <button type="button" name="button" class="themed-Btn badButton"
           ng-click="declineWaiver(); captureTime()">Decline</button>
       </div>
     </div>

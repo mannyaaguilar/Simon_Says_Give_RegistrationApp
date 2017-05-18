@@ -28,18 +28,18 @@
         This Release and Waiver of Liability (the “release”) executed on
         <md-input-container class="noMargins">
           <label>Enter date *</label>
-          <md-datepicker ng-model="youthWaiver.dateTop"
+          <md-datepicker ng-model="waiverDefault"
             name="youthWaiverDateTop" md-min-date="ctrl.minDate"
             md-max-date="ctrl.maxDate"></md-datepicker>
         </md-input-container>
         (date) by
-        <md-input-container md-no-float class="noMargins">
+        <md-input-container md-no-float class="noMargins yellowBack">
           <input ng-required="!youthWaiver.noParent"
             type="text" name="youthWaiverNameTop" value=""
             ng-model="youthWaiver.nameTop" placeholder="name">
         </md-input-container>
         (“Volunteer”), and
-        <md-input-container md-no-float class="noMargins">
+        <md-input-container md-no-float class="noMargins yellowBack">
           <input ng-required="!youthWaiver.noParent"
             type="text" name="youthWaiverGuardianTop" value=""
             ng-model="youthWaiver.guardianTop" placeholder="name">
@@ -163,7 +163,7 @@
           <div flex="15">
             <span>Signature of Volunteer:</span>
           </div>
-          <md-input-container class="noMargins" flex="85">
+          <md-input-container class="noMargins yellowBack" flex="85">
             <label>Please enter your name between slash marks: /John Doe/</label>
             <input required type="text" name="youthWaiverNameBottom" value=""
               ng-model="youthWaiver.nameBottom">
@@ -177,7 +177,7 @@
           </div>
           <md-input-container class="noMargins" flex="85">
             <label>Enter date *</label>
-            <md-datepicker ng-model="youthWaiver.dateBottomVol"
+            <md-datepicker ng-model="waiverDefault"
               name="youthWaiverDateBottomVol" md-min-date="ctrl.minDate"
               md-max-date="ctrl.maxDate"></md-datepicker>
           </md-input-container>
@@ -189,7 +189,7 @@
           <div flex="15">
             <span>Signature of Guardian:</span>
           </div>
-          <md-input-container class="noMargins" flex="85">
+          <md-input-container class="noMargins yellowBack" flex="85">
             <label>Please enter your name between slash marks: /John Doe/</label>
             <input ng-required="!youthWaiver.noParent"
               type="text" name="youthWaiverGuardianBottom" value=""
@@ -205,7 +205,7 @@
           </div>
           <md-input-container class="noMargins" flex="85">
             <label>Enter date *</label>
-            <md-datepicker ng-model="youthWaiver.dateBottomGuard"
+            <md-datepicker ng-model="waiverDefault"
               name="youthWaiverDateBottomGuard" md-min-date="ctrl.minDate"
               md-max-date="ctrl.maxDate"></md-datepicker>
           </md-input-container>
@@ -215,7 +215,7 @@
           <div flex="15">
             <span>Guardian Email Address:</span>
           </div>
-          <md-input-container class="noMargins" flex="85">
+          <md-input-container class="noMargins yellowBack" flex="85">
             <label>Please type the email for your parent or guardian:</label>
             <input ng-required="youthWaiver.noParent"
               type="text" name="youthWaiverGuardianEmail" value=""

@@ -373,6 +373,9 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location',
 
   //BEGIN TIMER STUFF
   let inDate;
+
+  $scope.waiverDefault = new Date();
+
   const NUM_MILIS_IN_HOUR = 3600000;
   $scope.setCheckIn = function() {
     inDate = new Date();
