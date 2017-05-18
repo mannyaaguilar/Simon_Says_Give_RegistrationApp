@@ -12,7 +12,7 @@ myApp.factory('UserService', ['$http', '$location', function($http, $location){
     console.log("volunteerCheckIn function accessed", volunteer);
     $http.post('/volunteer', volunteer).then(function(){
       if(volunteer.under_18 === true){
-        console.log("General Waiver Needed- youth", volunteer.dob);
+        console.log("General Waiver Needed- youth", volunteer.birthdate);
         $location.path('/waiver-youth');
       } else if (volunteer.has_signed_waiver === true && volunteer.has_allowed_photos === true) {
         console.log("Adult General Waiver & Photo Waiver on record");
