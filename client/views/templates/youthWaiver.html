@@ -22,10 +22,11 @@
     <div layout="column" flex="70">
       <p>
         This Release and Waiver of Liability (the “release”) executed on
-        <md-input-container md-no-float class="noMargins">
-          <input ng-required="!youthWaiver.noParent"
-            type="text" name="youthWaiverDateTop" value=""
-            ng-model="youthWaiver.dateTop" placeholder="date">
+        <md-input-container class="noMargins">
+          <label>Enter date *</label>
+          <md-datepicker ng-model="youthWaiver.dateTop"
+            name="youthWaiverDateTop" md-min-date="ctrl.minDate"
+            md-max-date="ctrl.maxDate"></md-datepicker>
         </md-input-container>
         (date) by
         <md-input-container md-no-float class="noMargins">
@@ -163,9 +164,10 @@
           <span>Today's Date:</span>
         </div>
         <md-input-container class="noMargins" flex="85">
-          <label>MM/DD/YYYY</label>
-          <input required type="text" name="youthWaiverDateBottomVol" value=""
-            ng-model="youthWaiver.dateBottomVol">
+          <label>Enter date *</label>
+          <md-datepicker ng-model="youthWaiver.dateBottomVol"
+            name="youthWaiverDateBottomVol" md-min-date="ctrl.minDate"
+            md-max-date="ctrl.maxDate"></md-datepicker>
         </md-input-container>
       </div>
       <div layout="row" class="bufferDiv">
@@ -190,10 +192,10 @@
           <span>Today's Date:</span>
         </div>
         <md-input-container class="noMargins" flex="85">
-          <label>MM/DD/YYYY</label>
-          <input ng-required="!youthWaiver.noParent"
-            type="text" name="youthWaiverDateBottomGuard" value=""
-            ng-model="youthWaiver.dateBottomGuard">
+          <label>Enter date *</label>
+          <md-datepicker ng-model="youthWaiver.dateBottomGuard"
+            name="youthWaiverDateBottomGuard" md-min-date="ctrl.minDate"
+            md-max-date="ctrl.maxDate"></md-datepicker>
         </md-input-container>
       </div>
 

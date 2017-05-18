@@ -110,7 +110,7 @@ myApp.controller('checkInOutController', ['$scope', '$location', function($scope
   };
 }]);
 
-myApp.controller('CheckoutController', ['$scope', '$location', function($scope, $location) {
+myApp.controller('CheckoutController', ['$scope', '$location', '$http', function($scope, $location, $http) {
 
 //object for input items to bind to
 $scope.volunteerObject = {};
@@ -126,14 +126,29 @@ $scope.volunteerList = [1,2,3,4,5];
 $scope.search = function() {
   console.log('volunteerObject: ', $scope.volunteerObject);
   //NEED TO ADD: GET to collect matching records by email and/or name
+  $scope.getVolunteers();
   $scope.success = true;
+};
+
+$scope.getVolunteers = function() {
+  $http.get('/checkout').then(function(response){
+    console.log(response);
+    });
 };
 
 $scope.checkout = function() {
   //NEED TO ADD: PUT ROUTE to add checkout time to chosen volunteer hours record
   console.log('Logging checkout time on click: ', new Date());
+  $scope.checkoutVolunteers();
   //changes view to confirmation page:
   $scope.changeView();
+};
+
+//PUT Route that updates the checkout time of chosen volunteer record(s)
+$scope.checkoutVolunteers = function() {
+  $http.put('/checkout').then(function(response){
+    console.log(response);
+    });
 };
 
 //changes view to confirmation page
@@ -297,9 +312,13 @@ myApp.controller('LoginController', ['$scope', '$http', '$location', function($s
 
 myApp.controller('OverrideController', ['$scope', '$http', '$location', 'UserService', function($scope, $http, $location, UserService) {
 console.log('OverrideController loaded');
-
 $scope.redirect = UserService.redirect;
 
+var adminCodeHardCoded = 1234;
+$scope.adminCode = {
+  thisCode: ''
+};
+$scope.message = '';
 //function to send user back to the appropriate waiver view
 $scope.waiverView = function() {
   console.log('need to add appropriate $location logic');
@@ -307,32 +326,43 @@ $scope.waiverView = function() {
 };
 
 //function to validate admin code and bring user to confirmation view
-$scope.finish = function() {
+$scope.finish = function(adminCode) {
   //NEED TO ADD CODE VALIDATION!!! If/else logic?
-  console.log('sending to confirmation without code for now');
-  $location.path('/confirmation');
+  if (adminCode.thisCode == false) {
+    $scope.message = 'Please enter admin code';
+  }
+  else if (adminCode.thisCode == adminCodeHardCoded) {
+    $location.path('/confirmation');
+  }
+  else {
+    $scope.message = 'Please try again.';
+  }
 };
-
 }]);
 
 myApp.controller('startEventController', ['$scope', '$location', function($scope, $location) {
   // REMOVE DUMMY DATA LATER //
   // hard coded event
   // will need to compare code stored in a session somehow which needs to be figured out
-  var eventCodeHardCoded = 4783;
+  var eventCodeHardCoded = 1234;
   // code entered in input field by Admin
   $scope.code = {
     thisCode: ''
   };
-  $scope.eventCode = function(code){
-    console.log("Event Code button clicked", code.thisCode);
-    if (code.thisCode == eventCodeHardCoded) {
-      $location.path('/checkInOut');
+  $scope.message = '';
+
+  $scope.eventCode = function(code) {
+    if(code.thisCode == false) {
+      $scope.message = 'Please enter an event code';
+    }
+    else if (code.thisCode == eventCodeHardCoded){
+      $location.path('checkInOut');
     }
     else {
-      console.log('try again');
-  }
-};
+        console.log(code.thisCode);
+        $scope.message = 'Please try again.';
+    }
+  };
 }]);
 
 myApp.controller('UserController', ['$scope', '$http', '$location', 'UserService', function($scope, $http, $location, UserService) {
@@ -400,26 +430,109 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location',
 
   //ALL OF THESE WILL NEED TO BE IN A FACTORY
 
+  //BEGIN TIMER STUFF
+  let inDate;
+  const NUM_MILIS_IN_HOUR = 3600000;
+  $scope.setCheckIn = function() {
+    inDate = new Date();
+  };
+  $scope.captureTime = function() {
+    let newDate,
+        inMonth,
+        inDay,
+        inYear,
+        inHour,
+        inMinute,
+        prettyInDate,
+        newMonth,
+        newDay,
+        newYear,
+        newHour,
+        newMinute,
+        prettyNewDate,
+        millisJustVolunteered,
+        hoursJustVolunteered;
+
+    console.log("inDate: ", inDate);
+    inMonth = inDate.getMonth();
+    inDay = inDate.getDate();
+    inYear = inDate.getFullYear();
+    inHour = inDate.getHours();
+    inMinute = inDate.getMinutes();
+    prettyInDate = inMonth + "/" + inDay + "/" + inYear +
+      ", at " + inHour + ":" + inMinute;
+    console.log("prettyInDate: ", prettyInDate);
+
+    newDate = new Date();
+    console.log("newDate: ", newDate);
+    newMonth = newDate.getMonth();
+    newDay = newDate.getDate();
+    newYear = newDate.getFullYear();
+    newHour = newDate.getHours();
+    newMinute = newDate.getMinutes();
+    prettyNewDate = newMonth + "/" + newDay + "/" + newYear +
+      ", at " + newHour + ":" + newMinute;
+    console.log("prettyNewDate: ", prettyNewDate);
+
+    millisJustVolunteered = newDate - inDate;
+    hoursJustVolunteered = millisJustVolunteered / NUM_MILIS_IN_HOUR;
+    console.log("hoursJustVolunteered: ", hoursJustVolunteered);
+  };
+  //END TIMER STUFF
+
   $scope.adultWaiver = {};
   $scope.submitAdultWaiver = function(waiverObj) {
     console.log("Adult waiver object: ", waiverObj);
-    $location.path("/waiver-photo");
+
+    let filledOut;
+
+    filledOut = waiverObj.dateTop && waiverObj.nameTop && waiverObj.agreed &&
+                waiverObj.nameBottom && waiverObj.dateBottom;
+
+    if ( filledOut ) {
+      $location.path("/waiver-photo");
+    }
+    else {
+      alert("Please complete all fields");
+    }
   };
 
   $scope.youthWaiver = {};
   $scope.submitYouthWaiver = function(waiverObj) {
-    console.log("Adult waiver object: ", waiverObj);
-    if ( waiverObj.noParent ) {
-      $location.path("/override");
+    console.log("Youth waiver object: ", waiverObj);
+    let noParentAll,
+        parentAll,
+        filledOut;
+
+    noParentAll = waiverObj.noParent && waiverObj.nameBottom &&
+                  waiverObj.dateBottomVol && waiverObj.guardianEmail;
+
+    parentAll = waiverObj.dateTop && waiverObj.nameTop &&
+                waiverObj.guardianTop && waiverObj.agreed &&
+                waiverObj.nameBottom && waiverObj.dateBottomVol &&
+                waiverObj.guardianBottom && waiverObj.dateBottomGuard;
+
+    filledOut = noParentAll || parentAll;
+
+    if ( filledOut ) {
+      if ( noParentAll ) {
+        $location.path("/override");
+      }
+      else if ( parentAll ) {
+        $location.path("/waiver-photo");
+      }
+      else {
+        alert("Weird error!");
+      }
     }
     else {
-      $location.path("/waiver-photo");
+      alert("Please complete all fields");
     }
   };
 
   $scope.photoWaiver = {};
   $scope.submitPhotoWaiver = function(waiverObj) {
-    console.log("Adult waiver object: ", waiverObj);
+    console.log("Photo waiver object: ", waiverObj);
     if ( waiverObj.agreed ) {
       $location.path("/confirmation");
     }
