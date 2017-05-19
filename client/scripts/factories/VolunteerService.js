@@ -21,7 +21,7 @@ var volunteerToDB = {
     // employer: '',
     // employer_match: false
   };
-
+    
   volunteerCheckIn = function(volunteer){
   console.log("volunteerCheckIn function accessed", volunteer);
   $http.post('/volunteer', volunteer).then(function(){
