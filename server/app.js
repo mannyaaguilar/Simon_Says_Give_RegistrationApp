@@ -11,6 +11,8 @@ var index = require('./routes/index');
 var user = require('./routes/user');
 var register = require('./routes/register');
 var csv = require('./routes/csv');
+var volunteer = require('./routes/volunteer');
+var checkout = require('./routes/checkout');
 
 // Limit set to 50mb to avoid error on large cvs files
 app.use(bodyParser.json({limit: '50mb'}));
@@ -33,6 +35,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
+app.use('/volunteer', volunteer);
+app.use('/checkout', checkout);
 app.use('/register', register);
 app.use('/user', user);
 app.use('/csv', csv);
