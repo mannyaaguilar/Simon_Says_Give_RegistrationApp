@@ -1,6 +1,7 @@
 myApp.controller('CheckoutController', ['$scope', '$location', '$http', function($scope, $location, $http) {
 
 //object for input items to bind to
+//NEED TO UPDATE, BRING IN VOLUNTEER OBJECT FROM FACTORY
 $scope.volunteerObject = {};
 
 //variable to inform the ng-show on the search results div
@@ -11,14 +12,14 @@ $scope.volunteerList = [1,2,3,4,5];
 
 //Connected to Search button - take inputs and check for records in database,
 // append results to DOM
-$scope.search = function() {
+$scope.search = function(volunteer) {
   console.log('volunteerObject: ', $scope.volunteerObject);
   //NEED TO ADD: GET to collect matching records by email and/or name
   $scope.getVolunteers();
   $scope.success = true;
 };
 
-$scope.getVolunteers = function() {
+$scope.getVolunteers = function(volunteer) {
   $http.get('/checkout').then(function(response){
     console.log(response);
     });
