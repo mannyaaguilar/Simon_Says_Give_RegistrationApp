@@ -2,23 +2,24 @@ myApp.factory('VolunteerService', ['$http', '$location', function($http, $locati
 console.log("Volunteer Service loaded");
 
 var volunteerToDB = {
-    email: angular.copy(volunteer.email),
-    first_name: angular.copy(volunteer.first_name),
-    last_name: angular.copy(volunteer.last_name),
-    // address1: angular.copy(volunteer.address1),
-    // address2: 'angular.copy(volunteer.address2)',
-    // city: 'angular.copy(volunteer.city)',
-    // state: 'angular.copy(volunteer.state)',
-    // zip: 'angular.copy(volunteer.zip)',
-    under_18: angular.copy(volunteer.under_18),
-    birthdate: angular.copy(volunteer.birtdateToDB),
+    email: '',
+    first_name: '',
+    last_name: '',
+    // address1: '',
+    // address2: '',
+    // city: '',
+    // state: '',
+    // zip: '',
+    under_18: true,
+    birthdate: '',
+    // birthdate: '3000-12-01',
     has_signed_waiver: false,
     has_allowed_photos: false,
     parent_email: '',
-    // validation_required: angular.copy(volunteer.validation_required),
-    // school: angular.copy(volunteer.school),
-    // employer: angular.copy(volunteer.employer),
-    // employer_match: angular.copy(volunteer.employer_match)
+    // validation_required: false,
+    // school: '',
+    // employer: '',
+    // employer_match: false
   };
 
   volunteerCheckIn = function(volunteer){

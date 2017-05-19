@@ -5,6 +5,7 @@ $scope.redirect = UserService.redirect;
 $scope.volunteerCheckIn = VolunteerService.volunteerCheckIn;
 $scope.volunteer = VolunteerService.volunteer;
 $scope.minmaxDate();
+$scope.volunteerData();
 
 var birtdateToDB;
 
@@ -50,6 +51,11 @@ $scope.minmaxDate = function() {
   console.log(this.maxDate);
 };
 
-
-
+$scope.volunteerData = function(){
+VolunteerService.volunteerToDB.email = angular.copy(volunteer.email);
+VolunteerService.volunteerToDB.first_name = angular.copy(volunteer.first_name);
+VolunteerService.volunteerToDB.last_name = angular.copy(volunteer.last_name);
+VolunteerService.volunteerToDB.under_18 = angular.copy(volunteer.under_18);
+VolunteerService.volunteerToDB.birtdateToDB = angular.copy(volunteer.birtdateToDB);
+};
 }]);//end VolunteerController
