@@ -27,6 +27,11 @@ $scope.formatdob = function() {
     console.log("Default DOB");
   }
 };
+
+$scope.cancel = function(){
+  $location.path('/checkInOut');
+};
+
 //***
 
 // $scope.initial = {

@@ -7,62 +7,7 @@
     </div>
     <div flex="15"></div>
   </div>
-  <div layout="row">
-    <div flex="15"></div>
 
-    <div layout="column" flex="70" ng-hide="adultWaiver">
-      <p>
-        This Release and Waiver of Liability (the “release”) executed on
-        <md-input-container class="noMargins">
-          <label>Enter date *</label>
-          <md-datepicker ng-model="photoWaiver.dateTop"
-            name="photoWaiverDateTop" md-min-date="ctrl.minDate"
-            md-max-date="ctrl.maxDate"></md-datepicker>
-        </md-input-container>
-        (date) by
-        <md-input-container md-no-float class="noMargins">
-          <input type="text" name="photoWaiverNameTop" value=""
-            ng-model="photoWaiver.nameTop" placeholder="name">
-        </md-input-container>
-        (“Volunteer”) releases Simon Says Give (hereafter referred to as the
-        “Nonprofit”), a nonprofit corporation organized and existing under the
-        laws of the State of Minnesota and each of its directors, officers,
-        employees and agents. The Volunteer desires to provide volunteer services
-        for Nonprofit and engage in activities related to serving as a volunteer.
-      </p>
-    </div>
-
-    <div layout="column" flex="70" ng-show="youthWaiver">
-      <p>
-        This Release and Waiver of Liability (the “release”) executed on
-        <md-input-container class="noMargins">
-          <label>Enter date *</label>
-          <md-datepicker ng-model="photoWaiver.dateTop"
-            name="photoWaiverDateTop" md-min-date="ctrl.minDate"
-            md-max-date="ctrl.maxDate"></md-datepicker>
-        </md-input-container>
-        (date) by
-        <md-input-container md-no-float class="noMargins">
-          <input type="text" name="photoWaiverNameTop" value=""
-            ng-model="photoWaiver.nameTop" placeholder="name">
-        </md-input-container>
-        (“Volunteer”), and
-        <md-input-container md-no-float class="noMargins">
-          <input type="text" name="photoWaiverGuardianTop" value=""
-            ng-model="photoWaiver.guardianTop" placeholder="name">
-        </md-input-container>
-        ("Guardian") releases Simon Says Give (hereafter referred to as the
-        “Nonprofit”), a nonprofit corporation organized and existing under the
-        laws of the State of Minnesota and each of its directors, officers,
-        employees and agents. The Volunteer desires to provide volunteer
-        services for Nonprofit and engage in activities related to serving as
-        a volunteer and Guardian wishes to execute this Release to enable
-        Volunteer to provide such services.
-      </p>
-    </div>
-
-    <div flex="15"></div>
-  </div>
   <div layout="row">
     <div flex="15"></div>
 
@@ -147,22 +92,37 @@
 
     <div flex="15"></div>
   </div>
+
+<div layout="row" class="bufferDiv">
+</div>
+<div layout="row">
+  <div flex="15" class="bufferDiv">
+  </div>
+  <div layout="row" flex="33">
+    <button type="button" name="button" class="themed-Btn goodButton"
+      ng-click="photoWaiver.agreed = true">Accept</button>
+    <div class="bufferDiv">
+    </div>
+    <button type="button" name="button" class="themed-Btn badButton"
+      ng-click="declineWaiver()">Decline</button>
+  </div>
+  <div flex="15" class="bufferDiv">
+  </div>
+</div>
+<div layout="row" class="bufferDiv">
+</div>
+
   <div layout="row">
     <div flex="15"></div>
 
-    <div layout="column" flex="70" ng-hide="adultWaiver">
-      <div layout="row">
-        <input type="checkbox" ng-check="photoWaiver.agreed = true"
-          ng-model="photoWaiver.agreed">
-        <span>I acknowledge the above</span>
-      </div>
+    <div layout="column" flex="70" ng-hide="adultWaiver && photoWaiver.agreed">
       <div layout="row" class="bufferDiv">
       </div>
       <div layout="row">
         <div flex="15">
           <span>Signature:</span>
         </div>
-        <md-input-container class="noMargins" flex="85">
+        <md-input-container class="noMargins yellowBack" flex="85">
           <label>Please enter your name between slash marks: /John Doe/</label>
           <input type="text" name="photoWaiverNameBottom" value=""
             ng-model="photoWaiver.nameBottom">
@@ -175,33 +135,33 @@
           <span>Today's Date:</span>
         </div>
         <md-input-container class="noMargins" flex="85">
-          <label>Enter date *</label>
-          <md-datepicker ng-model="photoWaiver.dateBottom"
+          <md-datepicker ng-model="waiverDefault"
             name="photoWaiverDateBottom" md-min-date="ctrl.minDate"
             md-max-date="ctrl.maxDate"></md-datepicker>
         </md-input-container>
       </div>
       <div layout="row" class="bufferDiv">
       </div>
-      <div flex="66">
-        <button type="button" name="button" class="themed-Btn"
+
+      <div flex="66" layout="row">
+        <button type="button" name="button" class="themed-Btn goodButton"
           ng-click="submitPhotoWaiver(photoWaiver)">Submit</button>
+        <div class="bufferDiv">
+        </div>
+        <button type="button" name="button" class="themed-Btn badButton"
+          ng-click="submitPhotoWaiver(photoWaiver)">Decline</button>
       </div>
+
     </div>
 
-    <div layout="column" flex="70" ng-show="youthWaiver">
-      <div layout="row">
-        <input type="checkbox" ng-check="photoWaiver.agreed = true"
-          ng-model="photoWaiver.agreed">
-        <span>I acknowledge the above</span>
-      </div>
+    <div layout="column" flex="70" ng-show="youthWaiver && photoWaiver.agreed">
       <div layout="row" class="bufferDiv">
       </div>
       <div layout="row">
         <div flex="15">
           <span>Signature of Volunteer:</span>
         </div>
-        <md-input-container class="noMargins" flex="85">
+        <md-input-container class="noMargins yellowBack" flex="85">
           <label>Please enter your name between slash marks: /John Doe/</label>
           <input type="text" name="photoWaiverNameBottom" value=""
             ng-model="photoWaiver.nameBottom">
@@ -214,8 +174,7 @@
           <span>Today's Date:</span>
         </div>
         <md-input-container class="noMargins" flex="85">
-          <label>Enter date *</label>
-          <md-datepicker ng-model="photoWaiver.dateBottomVol"
+          <md-datepicker ng-model="waiverDefault"
             name="photoWaiverDateBottomVol" md-min-date="ctrl.minDate"
             md-max-date="ctrl.maxDate"></md-datepicker>
         </md-input-container>
@@ -226,7 +185,7 @@
         <div flex="15">
           <span>Signature of Guardian:</span>
         </div>
-        <md-input-container class="noMargins" flex="85">
+        <md-input-container class="noMargins yellowBack" flex="85">
           <label>Please enter your name between slash marks: /John Doe/</label>
           <input type="text" name="photoWaiverGuardianBottom" value=""
             ng-model="photoWaiver.guardianBottom">
@@ -239,8 +198,7 @@
           <span>Today's Date:</span>
         </div>
         <md-input-container class="noMargins" flex="85">
-          <label>Enter date *</label>
-          <md-datepicker ng-model="photoWaiver.dateBottomGuard"
+          <md-datepicker ng-model="waiverDefault"
             name="photoWaiverDateBottomGuard" md-min-date="ctrl.minDate"
             md-max-date="ctrl.maxDate"></md-datepicker>
         </md-input-container>
@@ -248,14 +206,13 @@
       <div layout="row" class="bufferDiv">
       </div>
 
-      <div flex="66" ng-hide="photoWaiver.agreed">
-        <button type="button" name="button" class="themed-Btn"
-          ng-click="submitPhotoWaiver(photoWaiver)">Decline</button>
-      </div>
-
-      <div flex="66" ng-show="photoWaiver.agreed">
-        <button type="button" name="button" class="themed-Btn"
+      <div flex="66" layout="row">
+        <button type="button" name="button" class="themed-Btn goodButton"
           ng-click="submitPhotoWaiver(photoWaiver)">Submit</button>
+        <div class="bufferDiv">
+        </div>
+        <button type="button" name="button" class="themed-Btn badButton"
+          ng-click="submitPhotoWaiver(photoWaiver)">Decline</button>
       </div>
 
     </div>

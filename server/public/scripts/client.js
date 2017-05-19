@@ -465,6 +465,11 @@ $scope.formatdob = function() {
     console.log("Default DOB");
   }
 };
+
+$scope.cancel = function(){
+  $location.path('/checkInOut');
+};
+
 //***
 
 // $scope.initial = {
@@ -495,6 +500,9 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location',
 
   //BEGIN TIMER STUFF
   let inDate;
+
+  $scope.waiverDefault = new Date();
+
   const NUM_MILIS_IN_HOUR = 3600000;
   $scope.setCheckIn = function() {
     inDate = new Date();
@@ -602,6 +610,10 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location',
     else {
       $location.path("/override");
     }
+  };
+
+  $scope.declineWaiver = function() {
+    $location.path("/override");
   };
 
 }]);
