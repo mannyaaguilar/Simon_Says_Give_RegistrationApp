@@ -150,6 +150,8 @@
         ng-hide="youthWaiver.noParent || youthWaiver.agreed">
         <button type="button" name="button" class="themed-Btn badButton"
           ng-click="declineWaiver()">Decline</button>
+        <div class="bufferDiv">
+        </div>
         <button type="button" name="button" class="themed-Btn goodButton"
           ng-click="youthWaiver.agreed = true">Accept</button>
       </div>
@@ -227,6 +229,7 @@
         <div layout="row" flex="33">
           <button type="button" name="button" class="themed-Btn badButton"
             ng-click="declineWaiver()">Decline</button>
+          <div class="bufferDiv">
           <button type="button" name="button" class="themed-Btn goodButton"
             ng-click="submitYouthWaiver(youthWaiver)">Accept</button>
         </div>

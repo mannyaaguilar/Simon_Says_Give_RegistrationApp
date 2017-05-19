@@ -35,7 +35,6 @@
   <div layout="row">
     <div flex="15"></div>
     <div layout="column" flex="70">
-      <br>
       <p>
         Volunteer understands that the scope of Volunteer’s relationship
         with Nonprofit is limited to a volunteer position and that no
@@ -116,7 +115,8 @@
           ng-model="adultWaiver.agreed">
         <span>I acknowledge the above</span>
       </div>
-      <br>
+      <div layout="row" class="bufferDiv">
+      </div>
       <div layout="row">
         <div flex="15">
           <span>Signature:</span>
@@ -144,6 +144,8 @@
       <div layout="row" flex="33">
         <button type="button" name="button" class="themed-Btn badButton"
           ng-click="declineWaiver(); captureTime()">Decline</button>
+          <div class="bufferDiv">
+          </div>
         <button type="button" name="button" class="themed-Btn goodButton"
           ng-click="submitAdultWaiver(adultWaiver); captureTime()">Submit</button>
       </div>

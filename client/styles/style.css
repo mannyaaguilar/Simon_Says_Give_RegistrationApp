@@ -139,6 +139,8 @@ background-clip: padding-box;
   align-items:flex-end;
 }
 
+/*styling for big logo on checkInOut and confirmation views
+not sure we need anymore*/
 /*.mainLogo {
   padding-top: 30px;
   max-height: 60%;
@@ -247,6 +249,11 @@ footer {
   margin: 0;
 }
 
+.bufferDiv {
+  min-height: 40px;
+  min-width: 40px;
+}
+
 .md-errors-spacer:empty {
     display: none;
 }
@@ -270,6 +277,7 @@ footer {
   padding-right: 25px;
   padding-left: 25px;
   margin-right: 25px;
+  margin-left: 25px;
 }
 
 .goodButton {
@@ -277,6 +285,16 @@ footer {
   background-image: none;
   padding-right: 25px;
   padding-left: 25px;
+  margin-right: 25px;
+  margin-left: 25px;
+}
+
+.blueButton {
+  background-color: #3691df;
+  background-image: none;
+  padding-right: 25px;
+  padding-left: 25px;
+  margin-right: 25px;
   margin-left: 25px;
 }
 
