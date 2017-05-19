@@ -39,6 +39,30 @@ $scope.formatdob = function() {
   }
 };
 
+
+$scope.cancel = function(){
+  $location.path('/checkInOut');
+};
+
+//***
+
+// $scope.initial = {
+//   dob: new Date()
+// };
+// var stringDate = toString()
+// $scope.formatdob = function(initial){
+// console.log(typeof(inital));
+// console.log("Initial DOB: ", initial);
+// var formattedDOB = $scope.initial.slice(0, 10);
+// console.log(formattedDOB);
+// };
+$scope.volunteer = {
+  email: '',
+  first_name: '',
+  last_name: '',
+  under_18: true,
+  birthdate: '3000-12-01'
+};
 $scope.minmaxDate = function() {
   this.myDate = new Date();
   // console.log(this.myDate);
