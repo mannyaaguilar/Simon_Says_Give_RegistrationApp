@@ -5,8 +5,6 @@ $scope.redirect = UserService.redirect;
 $scope.volunteerCheckIn = VolunteerService.volunteerCheckIn;
 $scope.volunteer = VolunteerService.volunteer;
 
-
-
 var birtdateToDB;
 
 $scope.volunteer = {

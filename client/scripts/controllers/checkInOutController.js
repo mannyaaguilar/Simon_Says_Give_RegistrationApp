@@ -1,4 +1,4 @@
-myApp.controller('checkInOutController', ['$scope', '$location', function($scope, $location) {
+myApp.controller('checkInOutController', ['$scope', '$location', '$http', function($scope, $location, $http) {
   // when check in btn clicked, route to volunteer view
   $scope.checkIn = function(){
     $location.path('/volunteer');
