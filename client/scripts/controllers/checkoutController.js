@@ -10,9 +10,10 @@ $scope.success = false;
 //Array to store search results
 $scope.volunteerList = [];
 
-// $scope.checkbox = {
-//     status: FALSE
-// };
+//Array to store selected volunteers to checkout
+$scope.checkoutList = {
+  volunteer:''
+};
 
 //Connected to Search button - take inputs and check for records in database,
 // append results to DOM
@@ -21,6 +22,7 @@ $scope.search = function(volunteer) {
   $scope.success = true;
 };
 
+//http post to server - takes response and sets it equal to the volunteerList array
 $scope.getVolunteers = function(volunteer) {
   console.log('volunteerObject in http: ', $scope.volunteerObject);
   console.log('logging volunteer in htpp function', volunteer);
@@ -34,10 +36,11 @@ $scope.checkout = function() {
   //NEED TO ADD: PUT ROUTE to add checkout time to chosen volunteer hours record
   // checkoutTime = new Date();
   console.log('Logging checkout time on click: ', new Date());
+  console.log('logging checkoutList: ', $scope.checkoutList);
   $scope.checkoutVolunteers();
 
   //changes view to confirmation page:
-  // $scope.changeView();
+  $scope.changeView();
 };
 
 //PUT Route that updates the checkout time of chosen volunteer record(s)

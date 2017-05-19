@@ -46,7 +46,7 @@
   <div layout-md="column" flex="80">
     <h3>Select Who You Want to Check Out!</h3>
     <div ng-repeat="volunteer in volunteerList">
-      <md-checkbox ng-model="changelater" aria-label="{{volunteer}}">
+      <md-checkbox ng-model="checkoutList.volunteer" aria-label="{{volunteer}}">
             {{volunteer.first_name}} {{volunteer.last_name}}   ({{volunteer.email}})
       </md-checkbox>
     </div>
