@@ -3,10 +3,38 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location',
 
   //ALL OF THESE WILL NEED TO BE IN A FACTORY
 
+  let todaysDate = new Date();
+
+  $scope.waiverObj = {
+    //Adult waiver
+    dateTopAdult: todaysDate,
+    nameTopAdult: "",
+    agreedAdult: false,
+    nameBottomAdult: "",
+    dateBottomAdult: todaysDate,
+    //Youth waiver
+    dateTopYouth: todaysDate,
+    nameTopYouth: "",
+    agreedYouth: false,
+    nameBottomYouth: "",
+    dateBottomYouth: todaysDate,
+    noParentYouth: "",
+    dateBottomVolYouth: todaysDate,
+    guardianEmailYouth: "",
+    guardianTopYouth: "",
+    guardianBottomYouth: "",
+    dateBottomGuardYouth: todaysDate,
+    //Photo waiver
+    agreedPhoto: false,
+    nameBottomPhoto: "",
+    dateBottomPhoto: todaysDate,
+    dateBottomVolPhoto: todaysDate,
+    guardianBottomPhoto: "",
+    dateBottomGuardPhoto: todaysDate
+  };
+
   //BEGIN TIMER STUFF
   let inDate;
-
-  $scope.waiverDefault = new Date();
 
   const NUM_MILIS_IN_HOUR = 3600000;
   $scope.setCheckIn = function() {
@@ -56,14 +84,15 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location',
   };
   //END TIMER STUFF
 
-  $scope.adultWaiver = {};
-  $scope.submitAdultWaiver = function(waiverObj) {
-    console.log("Adult waiver object: ", waiverObj);
-
+  $scope.submitAdultWaiver = function() {
+    console.log("current waiverObj: ", $scope.waiverObj);
     let filledOut;
 
-    filledOut = waiverObj.dateTop && waiverObj.nameTop && waiverObj.agreed &&
-                waiverObj.nameBottom && waiverObj.dateBottom;
+    filledOut = $scope.waiverObj.dateTopAdult &&
+                $scope.waiverObj.nameTopAdult &&
+                $scope.waiverObj.agreedAdult &&
+                $scope.waiverObj.nameBottomAdult &&
+                $scope.waiverObj.dateBottomAdult;
 
     if ( filledOut ) {
       $location.path("/waiver-photo");
@@ -73,20 +102,25 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location',
     }
   };
 
-  $scope.youthWaiver = {};
-  $scope.submitYouthWaiver = function(waiverObj) {
-    console.log("Youth waiver object: ", waiverObj);
+  $scope.submitYouthWaiver = function() {
+    console.log("current waiverObj: ", $scope.waiverObj);
     let noParentAll,
         parentAll,
         filledOut;
 
-    noParentAll = waiverObj.noParent && waiverObj.nameBottom &&
-                  waiverObj.dateBottomVol && waiverObj.guardianEmail;
+    noParentAll = $scope.waiverObj.noParentYouth &&
+                  $scope.waiverObj.nameBottomYouth &&
+                  $scope.waiverObj.dateBottomVolYouth &&
+                  $scope.waiverObj.guardianEmailYouth;
 
-    parentAll = waiverObj.dateTop && waiverObj.nameTop &&
-                waiverObj.guardianTop && waiverObj.agreed &&
-                waiverObj.nameBottom && waiverObj.dateBottomVol &&
-                waiverObj.guardianBottom && waiverObj.dateBottomGuard;
+    parentAll = $scope.waiverObj.dateTopYouth &&
+                $scope.waiverObj.nameTopYouth &&
+                $scope.waiverObj.guardianTopYouth &&
+                $scope.waiverObj.agreedYouth &&
+                $scope.waiverObj.nameBottomYouth &&
+                $scope.waiverObj.dateBottomVolYouth &&
+                $scope.waiverObj.guardianBottomYouth &&
+                $scope.waiverObj.dateBottomGuardYouth;
 
     filledOut = noParentAll || parentAll;
 
@@ -106,10 +140,10 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location',
     }
   };
 
-  $scope.photoWaiver = {};
-  $scope.submitPhotoWaiver = function(waiverObj) {
-    console.log("Photo waiver object: ", waiverObj);
-    if ( waiverObj.agreed ) {
+  $scope.submitPhotoWaiver = function() {
+    console.log("current waiverObj: ", $scope.waiverObj);
+
+    if ( $scope.waiverObj.agreedPhoto ) {
       $location.path("/confirmation");
     }
     else {
