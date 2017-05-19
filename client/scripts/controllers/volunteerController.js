@@ -1,32 +1,44 @@
-myApp.controller('VolunteerController', ['$scope', '$http', '$location', 'UserService', function($scope, $http, $location, UserService) {
+myApp.controller('VolunteerController', ['$scope', '$http', '$location', 'UserService', 'VolunteerService', 'UtilitesService', function($scope, $http, $location, UserService, VolunteerService, UtilitesService){
 console.log("VolunteerController Loaded");
 
 $scope.redirect = UserService.redirect;
-$scope.volunteerCheckIn = UserService.volunteerCheckIn;
+$scope.volunteerCheckIn = VolunteerService.volunteerCheckIn;
+$scope.volunteer = VolunteerService.volunteer;
 
-//***
+
+
+var birtdateToDB;
+
+$scope.volunteer = {
+    email: '',
+    first_name: '',
+    last_name: '',
+    // address1: '',
+    // address2: '',
+    // city: '',
+    // state: '',
+    // zip: '',
+    under_18: true,
+    birthdate: '',
+    // birthdate: '3000-12-01',
+    // validation_required: false,
+    // school: '',
+    // employer: '',
+    // employer_match: false
+  };
 
 $scope.formatdob = function() {
   console.log("1 formatdob", $scope.volunteer.birthdate);
-
-  if ( $scope.volunteer.birthdate !== "3000-12-01" ) {
-    var volDOB = $scope.volunteer.birthdate;
-    var numMonth = volDOB.getMonth();
-    var monthString = numMonth.toString();
-    if ( monthString.length === 1 ) {
-      monthString = "0" + monthString;
-    }
-    var dateString = volDOB.toString();
-    var dayString = dateString.slice(8, 10);
-    var yearString = dateString.slice(11, 15);
-
-    var superDate = yearString + " " + monthString + " " + dayString;
-    $scope.volunteer.birthdate = superDate;
+  if ( $scope.volunteer.birthdate) {
+    birtdateToDB = UtilitesService.formatDate(angular.copy($scope.volunteer.birthdate));
+    console.log('birthdate', birtdateToDB);
   }
   else {
-    console.log("Default DOB");
+    $scope.volunteer.birthdate = '1900-01-01';
+    console.log("default birthdate", birtdateToDB);
   }
 };
+
 
 $scope.cancel = function(){
   $location.path('/checkInOut');
@@ -51,6 +63,26 @@ $scope.volunteer = {
   under_18: true,
   birthdate: '3000-12-01'
 };
+$scope.minmaxDate = function() {
+  this.myDate = new Date();
+  // console.log(this.myDate);
 
+  this.maxDate = new Date(
+    this.myDate.getFullYear() - 8,
+    this.myDate.getMonth(),
+    this.myDate.getDate()
+  );
+  // console.log(this.maxDate);
+};
 
-}]);
+$scope.volunteerData = function(){
+VolunteerService.volunteerToDB.email = angular.copy($scope.volunteer.email);
+VolunteerService.volunteerToDB.first_name = angular.copy($scope.volunteer.first_name);
+VolunteerService.volunteerToDB.last_name = angular.copy($scope.volunteer.last_name);
+VolunteerService.volunteerToDB.under_18 = angular.copy($scope.volunteer.under_18);
+VolunteerService.volunteerToDB.birtdateToDB = angular.copy($scope.volunteer.birthdate);
+};
+
+$scope.minmaxDate();
+$scope.volunteerData();
+}]);//end VolunteerController

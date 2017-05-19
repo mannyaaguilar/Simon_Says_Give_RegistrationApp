@@ -5,6 +5,20 @@ var passport = require('passport');
 var path = require('path');
 var pool = require('../modules/pool');
 
+// *****************
+// *** STRUCTURE ***
+// *****************
+// CHECK-IN
+// 1. GET by email, first_name, last_name
+// 2. If not in "volunteer", POST email, first_name, last_name, under_18, birthdate
+// 3. Waiver object info POST to "waiver" with appropriate fields
+// 4. PUT to "volunteer" with has_signed_waiver, has_allowed_photos, parent_email
+// 5. POST "volunteer_hours" with volunteer_id, event_id, date, time_in
+// CHECK-OUT
+// 1. ( GET by email, first_name, last_name )
+// 6. PUT to "volunteer_hours" with time_out
+// *****************
+
 // Handles POST request with volunteer data
 router.post('/', function(req, res, next) {
 console.log("inside volunteer post: req.body = ", req.body);
@@ -36,34 +50,7 @@ console.log("inside volunteer post: req.body = ", req.body);
           }
         });//end of client.query
   });//end of pg.connect
+});//end of post
 
-});
-
-// router.get('/:secondaryUser', function(req, res, next) {
-//   console.log("inside secondaryUser ", req.params.secondaryUser);
-//     pool.connect(function(errorConnectingToDB, client, done){
-//       if(errorConnectingToDB){
-//         console.log("Error Connecting to DB for secondaryUser List");
-//         res.send(500);
-//       } else {
-//         client.query('SELECT "secondary_user"."first_name", "secondary_user"."last_name","secondary_user"."id"'  +
-//         'FROM "secondary_user" JOIN "users" ON "secondary_user"."account_id" = "users"."id" '+
-//         'AND "secondary_user"."account_id"= $1', [req.params.secondaryUser],
-//         function(queryError, result){
-//           console.log("GET SECONDARY success******", result);
-//
-//           done();
-//           if(queryError){
-//             console.log('Error making query for tasks on DB ');
-//             res.send(500);
-//           } else {
-//             console.log('result in query: ', result);
-//
-//             res.send(result.rows);
-//           }//end of 2nd else
-//         });//end of client.query
-//       }//end of 1st else
-//     });//end of pool.connect
-// });//end of .get
 
 module.exports = router;

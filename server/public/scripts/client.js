@@ -436,35 +436,47 @@ myApp.controller('UserController', ['$scope', '$http', '$location', 'UserService
 
 }]);
 
-myApp.controller('VolunteerController', ['$scope', '$http', '$location', 'UserService', function($scope, $http, $location, UserService) {
+myApp.controller('VolunteerController', ['$scope', '$http', '$location', 'UserService', 'VolunteerService', 'UtilitesService', function($scope, $http, $location, UserService, VolunteerService, UtilitesService){
 console.log("VolunteerController Loaded");
 
 $scope.redirect = UserService.redirect;
-$scope.volunteerCheckIn = UserService.volunteerCheckIn;
+$scope.volunteerCheckIn = VolunteerService.volunteerCheckIn;
+$scope.volunteer = VolunteerService.volunteer;
 
-//***
+
+
+var birtdateToDB;
+
+$scope.volunteer = {
+    email: '',
+    first_name: '',
+    last_name: '',
+    // address1: '',
+    // address2: '',
+    // city: '',
+    // state: '',
+    // zip: '',
+    under_18: true,
+    birthdate: '',
+    // birthdate: '3000-12-01',
+    // validation_required: false,
+    // school: '',
+    // employer: '',
+    // employer_match: false
+  };
 
 $scope.formatdob = function() {
   console.log("1 formatdob", $scope.volunteer.birthdate);
-
-  if ( $scope.volunteer.birthdate !== "3000-12-01" ) {
-    var volDOB = $scope.volunteer.birthdate;
-    var numMonth = volDOB.getMonth();
-    var monthString = numMonth.toString();
-    if ( monthString.length === 1 ) {
-      monthString = "0" + monthString;
-    }
-    var dateString = volDOB.toString();
-    var dayString = dateString.slice(8, 10);
-    var yearString = dateString.slice(11, 15);
-
-    var superDate = yearString + " " + monthString + " " + dayString;
-    $scope.volunteer.birthdate = superDate;
+  if ( $scope.volunteer.birthdate) {
+    birtdateToDB = UtilitesService.formatDate(angular.copy($scope.volunteer.birthdate));
+    console.log('birthdate', birtdateToDB);
   }
   else {
-    console.log("Default DOB");
+    $scope.volunteer.birthdate = '1900-01-01';
+    console.log("default birthdate", birtdateToDB);
   }
 };
+
 
 $scope.cancel = function(){
   $location.path('/checkInOut');
@@ -489,19 +501,67 @@ $scope.volunteer = {
   under_18: true,
   birthdate: '3000-12-01'
 };
+$scope.minmaxDate = function() {
+  this.myDate = new Date();
+  // console.log(this.myDate);
 
+  this.maxDate = new Date(
+    this.myDate.getFullYear() - 8,
+    this.myDate.getMonth(),
+    this.myDate.getDate()
+  );
+  // console.log(this.maxDate);
+};
 
-}]);
+$scope.volunteerData = function(){
+VolunteerService.volunteerToDB.email = angular.copy($scope.volunteer.email);
+VolunteerService.volunteerToDB.first_name = angular.copy($scope.volunteer.first_name);
+VolunteerService.volunteerToDB.last_name = angular.copy($scope.volunteer.last_name);
+VolunteerService.volunteerToDB.under_18 = angular.copy($scope.volunteer.under_18);
+VolunteerService.volunteerToDB.birtdateToDB = angular.copy($scope.volunteer.birthdate);
+};
+
+$scope.minmaxDate();
+$scope.volunteerData();
+}]);//end VolunteerController
 
 myApp.controller('WaiverController', ['$scope', '$http', '$location',
   function($scope, $http, $location) {
 
   //ALL OF THESE WILL NEED TO BE IN A FACTORY
 
+  let todaysDate = new Date();
+
+  $scope.waiverObj = {
+    //Adult waiver
+    dateTopAdult: todaysDate,
+    nameTopAdult: "",
+    agreedAdult: false,
+    nameBottomAdult: "",
+    dateBottomAdult: todaysDate,
+    //Youth waiver
+    dateTopYouth: todaysDate,
+    nameTopYouth: "",
+    agreedYouth: false,
+    nameBottomYouth: "",
+    dateBottomYouth: todaysDate,
+    noParentYouth: "",
+    dateBottomVolYouth: todaysDate,
+    guardianEmailYouth: "",
+    guardianTopYouth: "",
+    guardianBottomYouth: "",
+    dateBottomGuardYouth: todaysDate,
+    //Photo waiver
+    agreedPhoto: false,
+    nameBottomPhoto: "",
+    dateBottomPhoto: todaysDate,
+    dateBottomVolPhoto: todaysDate,
+    guardianBottomPhoto: "",
+    dateBottomGuardPhoto: todaysDate
+  };
+
   //BEGIN TIMER STUFF
   let inDate;
-
-  $scope.waiverDefault = new Date();
 
   const NUM_MILIS_IN_HOUR = 3600000;
   $scope.setCheckIn = function() {
@@ -551,14 +611,15 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location',
   };
   //END TIMER STUFF
 
-  $scope.adultWaiver = {};
-  $scope.submitAdultWaiver = function(waiverObj) {
-    console.log("Adult waiver object: ", waiverObj);
-
+  $scope.submitAdultWaiver = function() {
+    console.log("current waiverObj: ", $scope.waiverObj);
     let filledOut;
 
-    filledOut = waiverObj.dateTop && waiverObj.nameTop && waiverObj.agreed &&
-                waiverObj.nameBottom && waiverObj.dateBottom;
+    filledOut = $scope.waiverObj.dateTopAdult &&
+                $scope.waiverObj.nameTopAdult &&
+                $scope.waiverObj.agreedAdult &&
+                $scope.waiverObj.nameBottomAdult &&
+                $scope.waiverObj.dateBottomAdult;
 
     if ( filledOut ) {
       $location.path("/waiver-photo");
@@ -568,20 +629,25 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location',
     }
   };
 
-  $scope.youthWaiver = {};
-  $scope.submitYouthWaiver = function(waiverObj) {
-    console.log("Youth waiver object: ", waiverObj);
+  $scope.submitYouthWaiver = function() {
+    console.log("current waiverObj: ", $scope.waiverObj);
     let noParentAll,
         parentAll,
         filledOut;
 
-    noParentAll = waiverObj.noParent && waiverObj.nameBottom &&
-                  waiverObj.dateBottomVol && waiverObj.guardianEmail;
+    noParentAll = $scope.waiverObj.noParentYouth &&
+                  $scope.waiverObj.nameBottomYouth &&
+                  $scope.waiverObj.dateBottomVolYouth &&
+                  $scope.waiverObj.guardianEmailYouth;
 
-    parentAll = waiverObj.dateTop && waiverObj.nameTop &&
-                waiverObj.guardianTop && waiverObj.agreed &&
-                waiverObj.nameBottom && waiverObj.dateBottomVol &&
-                waiverObj.guardianBottom && waiverObj.dateBottomGuard;
+    parentAll = $scope.waiverObj.dateTopYouth &&
+                $scope.waiverObj.nameTopYouth &&
+                $scope.waiverObj.guardianTopYouth &&
+                $scope.waiverObj.agreedYouth &&
+                $scope.waiverObj.nameBottomYouth &&
+                $scope.waiverObj.dateBottomVolYouth &&
+                $scope.waiverObj.guardianBottomYouth &&
+                $scope.waiverObj.dateBottomGuardYouth;
 
     filledOut = noParentAll || parentAll;
 
@@ -601,10 +667,10 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location',
     }
   };
 
-  $scope.photoWaiver = {};
-  $scope.submitPhotoWaiver = function(waiverObj) {
-    console.log("Photo waiver object: ", waiverObj);
-    if ( waiverObj.agreed ) {
+  $scope.submitPhotoWaiver = function() {
+    console.log("current waiverObj: ", $scope.waiverObj);
+
+    if ( $scope.waiverObj.agreedPhoto ) {
       $location.path("/confirmation");
     }
     else {
@@ -685,34 +751,11 @@ myApp.factory('UserService', ['$http', '$location', function($http, $location){
     $location.url(page);
   }
 
-  function volunteerCheckIn(volunteer){
-    console.log("volunteerCheckIn function accessed", volunteer);
-    $http.post('/volunteer', volunteer).then(function(){
-      if(volunteer.under_18 === true){
-        console.log("General Waiver Needed- youth", volunteer.birthdate);
-        $location.path('/waiver-youth');
-      } else if (volunteer.has_signed_waiver === true && volunteer.has_allowed_photos === true) {
-        console.log("Adult General Waiver & Photo Waiver on record");
-        $location.path('/confirmation');
-      } else if (volunteer.has_signed_waiver === true && volunteer.has_allowed_photos === false) {
-        console.log("General Waiver on record, just need Photo Waiver");
-        $location.path('/waiver-photo');
-      } else if (volunteer.has_signed_waiver === false && volunteer.has_allowed_photos === true) {
-        console.log("Photo Waiver on record, just need General Waiver");
-        $location.path('/waiver-adult');
-      } else {
-        $location.path('/waiver-adult');
-      }
-    });
-
-
-  }//end volunteerCheckIn
 
 
   return {
     userObject : userObject,
     redirect : redirect,
-    volunteerCheckIn: volunteerCheckIn,
 
     getuser : function(){
       $http.get('/user').then(function(response) {
@@ -737,3 +780,80 @@ myApp.factory('UserService', ['$http', '$location', function($http, $location){
     }
   };
 }]);
+
+myApp.factory('UtilitesService', ['$http', function($http){
+console.log('UtilitesService loaded');
+
+let todaysDate = new Date();
+
+formatDate = function(date) {
+    var curr_date = date.getDate();
+    var curr_month = date.getMonth() + 1; //Months are zero based
+    var curr_year = date.getFullYear();
+    var formattedDate = curr_year + "-" + curr_month + "-" + curr_date;
+    return formattedDate;
+  };
+
+return {
+    formatDate: formatDate
+  };
+
+
+}]);//end of UtilitesService
+
+myApp.factory('VolunteerService', ['$http', '$location', function($http, $location){
+console.log("Volunteer Service loaded");
+
+var volunteerToDB = {
+    email: '',
+    first_name: '',
+    last_name: '',
+    // address1: '',
+    // address2: '',
+    // city: '',
+    // state: '',
+    // zip: '',
+    under_18: true,
+    birthdate: '',
+    // birthdate: '3000-12-01',
+    has_signed_waiver: false,
+    has_allowed_photos: false,
+    parent_email: '',
+    // validation_required: false,
+    // school: '',
+    // employer: '',
+    // employer_match: false
+  };
+    
+  volunteerCheckIn = function(volunteer){
+  console.log("volunteerCheckIn function accessed", volunteer);
+  $http.post('/volunteer', volunteer).then(function(){
+    if(volunteer.under_18 === true){
+      console.log("General Waiver Needed- youth", volunteer.birthdate);
+      $location.path('/waiver-youth');
+    } else if (volunteer.has_signed_waiver === true && volunteer.has_allowed_photos === true) {
+      console.log("Adult General Waiver & Photo Waiver on record");
+      $location.path('/confirmation');
+    } else if (volunteer.has_signed_waiver === true && volunteer.has_allowed_photos === false) {
+      console.log("General Waiver on record, just need Photo Waiver");
+      $location.path('/waiver-photo');
+    } else if (volunteer.has_signed_waiver === false && volunteer.has_allowed_photos === true) {
+      console.log("Photo Waiver on record, just need General Waiver");
+      $location.path('/waiver-adult');
+    } else {
+      $location.path('/waiver-adult');
+    }
+  });
+};//end volunteerCheckIn
+
+clearVolunteerObject = function(){
+  volunteer = {};
+};
+
+ return {
+   volunteerToDB: volunteerToDB,
+   volunteerCheckIn: volunteerCheckIn,
+   clearVolunteerObject: clearVolunteerObject
+ };
+
+}]); //end of VolunteerService

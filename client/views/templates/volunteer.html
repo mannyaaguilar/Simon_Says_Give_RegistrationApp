@@ -31,9 +31,10 @@
         </div>
       </md-input-container>
       <md-input-container layout="column">
-        <div ng-show="volunteer.under_18">
+        <div ng-show="volunteer.under_18">  
           <label for="birthdate">Date of Birth:</label>
-          <md-datepicker ng-model="volunteer.birthdate" md-current-view="year" md-placeholder="Enter date" ></md-datepicker>
+           <!-- md-min-date="minDate" md-max-date="maxDate" -->
+          <md-datepicker ng-model="volunteer.birthdate" md-current-view="year" md-placeholder="Enter date" md-max-date="maxDate"></md-datepicker>
         </div>
       </md-input-container>
       <md-input-container layout="row" layout-align="center center">
