@@ -21,13 +21,13 @@
   <md-input-container layout="column" flex="25" >
     <div>
       <label for="first_name" >First Name:</label>
-      <input type="text" ng-model="volunteerObject.firstName"/>
+      <input type="text" ng-model="volunteerObject.first_name"/>
     </div>
   </md-input-container>
   <md-input-container layout="column" flex="25" >
     <div>
       <label for="last_name">Last Name:</label>
-      <input type="text" ng-model="volunteerObject.lastName"/>
+      <input type="text" ng-model="volunteerObject.last_name"/>
     </div>
   </md-input-container>
 </div>
@@ -35,8 +35,8 @@
   <div layout-md="column" flex="10" ></div>
   <md-input-container layout="column" layout-align="center center" flex="80">
     <div>
-      <md-button class="themed-Btn" type="submit" name="submit" aria-label="Checkout"
-      value="Search" ng-click="search()">Search</md-button>
+      <md-button class="biggerButton themed-Btn blueButton" type="submit" name="submit" aria-label="Checkout"
+      value="Search" ng-click="search(volunteerObject)">Search</md-button>
     </div>
   </md-input-container>
 </div>
@@ -45,22 +45,22 @@
   <div layout-md="column" flex="10" ></div>
   <div layout-md="column" flex="80">
     <h3>Select Who You Want to Check Out!</h3>
-    <!-- should add ng-repeat for items returned from DB, need to include checkboxes -->
     <div ng-repeat="volunteer in volunteerList">
-      <md-checkbox ng-model="updatelater" aria-label="{{volunteer}}" >
-            {{volunteer}}
+      <md-checkbox ng-model="checkoutList.volunteer" aria-label="{{volunteer}}">
+            {{volunteer.first_name}} {{volunteer.last_name}}   ({{volunteer.email}})
       </md-checkbox>
     </div>
   </div>
 </div>
-<div layout="row">
+<div layout="row" ng-show="success">
   <div layout-md="column" flex="10" ></div>
   <md-input-container layout="column" layout-align="center center" flex="80">
     <div>
-      <md-button class="themed-Btn" type="submit" name="submit" aria-label="Checkout"
-      value="Checkout" ng-click="checkout()">Checkout</md-button>
+      <md-button class="biggerButton themed-Btn blueButton" type="submit" name="submit" aria-label="Checkout"
+      value="Checkout" ng-click="checkout(volunteerList)">Checkout</md-button>
     </div>
   </md-input-container>
 </div>
+
 
 <div ng-include="'views/partials/footer.html'"></div>

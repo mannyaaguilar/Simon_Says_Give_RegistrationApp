@@ -35,7 +35,6 @@
   <div layout="row">
     <div flex="15"></div>
     <div layout="column" flex="70">
-      <br>
       <p>
         Volunteer understands that the scope of Volunteer’s relationship
         with Nonprofit is limited to a volunteer position and that no
@@ -111,7 +110,7 @@
   <div layout="row">
     <div flex="15"></div>
     <div layout="column" flex="70">
-      <div layout="row">
+      <div class="yellowBack" layout="row">
         <input required type="checkbox" ng-check="waiverObj.agreedAdult = true"
           ng-model="waiverObj.agreedAdult">
         <span>I acknowledge the above</span>
@@ -143,12 +142,12 @@
       <div layout="row" class="bufferDiv">
       </div>
       <div layout="row" flex="33">
-        <button type="button" name="button" class="themed-Btn goodButton"
-          ng-click="submitAdultWaiver(waiverObj); captureTime()">Submit</button>
-        <div class="bufferDiv">
-        </div>
         <button type="button" name="button" class="themed-Btn badButton"
           ng-click="declineWaiver(); captureTime()">Decline</button>
+          <div class="bufferDiv">
+          </div>
+        <button type="button" name="button" class="themed-Btn goodButton"
+          ng-click="submitAdultWaiver(adultWaiver); captureTime()">Submit</button>
       </div>
     </div>
     <div flex="15"></div>

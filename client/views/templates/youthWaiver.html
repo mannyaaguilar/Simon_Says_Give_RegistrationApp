@@ -7,12 +7,13 @@
       <div layout="row" class="bufferDiv">
       </div>
       <div layout="column" ng-hide="hideQuestion">
-        <span>Is your parent or guardian here?</span>
+        <span><b>Is your parent or guardian here?</b></span>
+        <br>
         <div layout="row">
-          <button type="button" name="button" class="themed-Btn goodButton"
-            ng-click="waiverObj.noParentYouth = false; hideQuestion = true">Yes</button>
           <button type="button" name="button" class="themed-Btn badButton"
-            ng-click="waiverObj.noParentYouth = true; hideQuestion = true">No</button>
+            ng-click="youthWaiver.noParent = true; hideQuestion = true">No</button>
+          <button type="button" name="button" class="themed-Btn goodButton"
+            ng-click="youthWaiver.noParent = false; hideQuestion = true">Yes</button>
         </div>
       </div>
       <div layout="row" class="bufferDiv">
@@ -146,13 +147,13 @@
       <div layout="row" class="bufferDiv">
       </div>
       <div layout="row" flex="33"
-        ng-hide="waiverObj.noParentYouth || waiverObj.agreedYouth">
-        <button type="button" name="button" class="themed-Btn goodButton"
-          ng-click="waiverObj.agreedYouth = true">Accept</button>
-        <div class="bufferDiv">
-        </div>
+        ng-hide="youthWaiver.noParentYouth || youthWaiver.agreedYouth">
         <button type="button" name="button" class="themed-Btn badButton"
           ng-click="declineWaiver()">Decline</button>
+        <div class="bufferDiv">
+        </div>
+        <button type="button" name="button" class="themed-Btn goodButton"
+          ng-click="youthWaiver.agreed = true">Accept</button>
       </div>
 
       <div ng-show="waiverObj.agreedYouth || waiverObj.noParentYouth">
@@ -226,12 +227,11 @@
         <div layout="row" class="bufferDiv">
         </div>
         <div layout="row" flex="33">
-          <button type="button" name="button" class="themed-Btn goodButton"
-            ng-click="submitYouthWaiver(waiverObj)">Accept</button>
-          <div class="bufferDiv">
-          </div>
           <button type="button" name="button" class="themed-Btn badButton"
             ng-click="declineWaiver()">Decline</button>
+          <div class="bufferDiv">
+          <button type="button" name="button" class="themed-Btn goodButton"
+            ng-click="submitYouthWaiver(youthWaiver)">Accept</button>
         </div>
 
       </div>
