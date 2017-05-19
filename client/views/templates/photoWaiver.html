@@ -11,7 +11,7 @@
   <div layout="row">
     <div flex="15"></div>
 
-    <div layout="column" flex="70" ng-show="youthWaiver">
+    <div layout="column" flex="70" ng-show="waiverObj">
       <br>
       <p>
         <strong>Publicity Release:</strong> Volunteer and Guardian grant and
@@ -51,7 +51,7 @@
       </div>
     </div>
 
-    <div layout="column" flex="70" ng-hide="adultWaiver">
+    <div layout="column" flex="70" ng-hide="waiverObj">
       <br>
       <p>
         <strong>Publicity Release:</strong> Volunteer grants and conveys to
@@ -100,7 +100,7 @@
   </div>
   <div layout="row" flex="33">
     <button type="button" name="button" class="themed-Btn goodButton"
-      ng-click="photoWaiver.agreed = true">Accept</button>
+      ng-click="waiverObj.agreedPhoto = true">Accept</button>
     <div class="bufferDiv">
     </div>
     <button type="button" name="button" class="themed-Btn badButton"
@@ -115,7 +115,7 @@
   <div layout="row">
     <div flex="15"></div>
 
-    <div layout="column" flex="70" ng-hide="adultWaiver && photoWaiver.agreed">
+    <div layout="column" flex="70" ng-hide="waiverObj && waiverObj.agreedPhoto">
       <div layout="row" class="bufferDiv">
       </div>
       <div layout="row">
@@ -125,7 +125,7 @@
         <md-input-container class="noMargins yellowBack" flex="85">
           <label>Please enter your name between slash marks: /John Doe/</label>
           <input type="text" name="photoWaiverNameBottom" value=""
-            ng-model="photoWaiver.nameBottom">
+            ng-model="waiverObj.nameBottomPhoto">
         </md-input-container>
       </div>
       <div layout="row" class="bufferDiv">
@@ -135,7 +135,7 @@
           <span>Today's Date:</span>
         </div>
         <md-input-container class="noMargins" flex="85">
-          <md-datepicker ng-model="waiverDefault"
+          <md-datepicker ng-model="waiverObj.dateBottomPhoto"
             name="photoWaiverDateBottom" md-min-date="ctrl.minDate"
             md-max-date="ctrl.maxDate"></md-datepicker>
         </md-input-container>
@@ -145,7 +145,7 @@
 
       <div flex="66" layout="row">
         <button type="button" name="button" class="themed-Btn goodButton"
-          ng-click="submitPhotoWaiver(photoWaiver)">Submit</button>
+          ng-click="submitPhotoWaiver(waiverObj)">Submit</button>
         <div class="bufferDiv">
         </div>
         <button type="button" name="button" class="themed-Btn badButton"
@@ -154,7 +154,7 @@
 
     </div>
 
-    <div layout="column" flex="70" ng-show="youthWaiver && photoWaiver.agreed">
+    <div layout="column" flex="70" ng-show="waiverObj && waiverObj.agreedPhoto">
       <div layout="row" class="bufferDiv">
       </div>
       <div layout="row">
@@ -164,7 +164,7 @@
         <md-input-container class="noMargins yellowBack" flex="85">
           <label>Please enter your name between slash marks: /John Doe/</label>
           <input type="text" name="photoWaiverNameBottom" value=""
-            ng-model="photoWaiver.nameBottom">
+            ng-model="waiverObj.nameBottomPhoto">
         </md-input-container>
       </div>
       <div layout="row" class="bufferDiv">
@@ -174,7 +174,7 @@
           <span>Today's Date:</span>
         </div>
         <md-input-container class="noMargins" flex="85">
-          <md-datepicker ng-model="waiverDefault"
+          <md-datepicker ng-model="waiverObj.dateBottomVolPhoto"
             name="photoWaiverDateBottomVol" md-min-date="ctrl.minDate"
             md-max-date="ctrl.maxDate"></md-datepicker>
         </md-input-container>
@@ -188,7 +188,7 @@
         <md-input-container class="noMargins yellowBack" flex="85">
           <label>Please enter your name between slash marks: /John Doe/</label>
           <input type="text" name="photoWaiverGuardianBottom" value=""
-            ng-model="photoWaiver.guardianBottom">
+            ng-model="waiverObj.guardianBottomPhoto">
         </md-input-container>
       </div>
       <div layout="row" class="bufferDiv">
@@ -198,7 +198,7 @@
           <span>Today's Date:</span>
         </div>
         <md-input-container class="noMargins" flex="85">
-          <md-datepicker ng-model="waiverDefault"
+          <md-datepicker ng-model="waiverObj.dateBottomGuardPhoto"
             name="photoWaiverDateBottomGuard" md-min-date="ctrl.minDate"
             md-max-date="ctrl.maxDate"></md-datepicker>
         </md-input-container>
@@ -208,11 +208,11 @@
 
       <div flex="66" layout="row">
         <button type="button" name="button" class="themed-Btn goodButton"
-          ng-click="submitPhotoWaiver(photoWaiver)">Submit</button>
+          ng-click="submitPhotoWaiver(waiverObj)">Submit</button>
         <div class="bufferDiv">
         </div>
         <button type="button" name="button" class="themed-Btn badButton"
-          ng-click="submitPhotoWaiver(photoWaiver)">Decline</button>
+          ng-click="declineWaiver()">Decline</button>
       </div>
 
     </div>
