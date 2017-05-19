@@ -15,20 +15,20 @@ router.post('/', function(req, res) {
       console.log('connected to get checkout get route');
       console.log('req.body in get: ', req.body);
       //NEED TO UPDATE QUERY BELOW
-      db.query('', function(queryError, result){
+      db.query("SELECT volunteer.first_name, volunteer.last_name, volunteer.email FROM volunteer JOIN volunteer_hours ON volunteer.id = volunteer_hours.volunteer_id WHERE volunteer.first_name = $1 OR volunteer.last_name = $2 OR volunteer.email = $3;", [req.body.first_name, req.body.last_name, req.body.email], function(queryError, result){
         done();
         if (queryError) {
           console.log('Error making query.');
           res.send(500);
         } else {
-
+          console.log('logging result.rows', result.rows);
           res.send(result.rows);
 
         } //ends else
       }); //ends db query
     } //ends else
   }); //ends pool.connect
-}); //ends router.get
+}); //ends router.post
 
 //PUT Route that updates the checkout time of chosen volunteer record(s)
 router.put('/', function(req, res){

@@ -21,7 +21,7 @@ $scope.getVolunteers = function(volunteer) {
   console.log('volunteerObject in http: ', $scope.volunteerObject);
   console.log('logging volunteer in htpp function', volunteer);
   $http.post('/checkout', volunteer).then(function(response){
-    console.log(response);
+    console.log('logging checkout response: ', response);
     });
 };
 
