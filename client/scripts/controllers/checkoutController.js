@@ -7,9 +7,12 @@ $scope.volunteerObject = {};
 //variable to inform the ng-show on the search results div
 $scope.success = false;
 
-//Array to assign search results to - has dummy info for now
-// $scope.volunteerList = [1,2,3,4,5];
+//Array to store search results
 $scope.volunteerList = [];
+
+// $scope.checkbox = {
+//     status: FALSE
+// };
 
 //Connected to Search button - take inputs and check for records in database,
 // append results to DOM
@@ -29,10 +32,12 @@ $scope.getVolunteers = function(volunteer) {
 
 $scope.checkout = function() {
   //NEED TO ADD: PUT ROUTE to add checkout time to chosen volunteer hours record
+  // checkoutTime = new Date();
   console.log('Logging checkout time on click: ', new Date());
   $scope.checkoutVolunteers();
+
   //changes view to confirmation page:
-  $scope.changeView();
+  // $scope.changeView();
 };
 
 //PUT Route that updates the checkout time of chosen volunteer record(s)
