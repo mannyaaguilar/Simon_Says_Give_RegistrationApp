@@ -131,6 +131,8 @@ background-clip: padding-box;
 -webkit-font-smoothing: antialiased;*/
 
 .mainImageDiv {
+  margin-top: 70px;
+  margin-bottom: 40px;
   height: 220px;
   display:flex;
   justify-content:center;
@@ -138,12 +140,12 @@ background-clip: padding-box;
 }
 
 .mainLogo {
-  padding-top: 30px;
-  max-height: 60%;
+  /*padding-top: 30px;*/
+  /*max-height: 60%;
   max-width: 60%;
-  display:flex;
-  justify-content:center;
-  align-items:flex-end;
+  display:flex;*/
+  /*justify-content:center;
+  align-items:flex-end;*/
 }
 
 .navbarLogo {
@@ -209,11 +211,11 @@ footer {
  /*Import/Export .CSV file styles*/
 
 /*center buttons in checkInOut View*/
-.checkInOutContainer {
+/*.checkInOutContainer {
   display: flex;
   justify-content: center;
   align-items: center;
-}
+}*/
 
 /*check in button styling*/
 .checkInBtn {

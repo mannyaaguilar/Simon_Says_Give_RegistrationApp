@@ -2,15 +2,18 @@
 
 <div layout="row">
   <div layout-md="column" flex="33"></div>
-  <div class=checkInOutContainer layout="column" flex="33">
-    <md-input-container layout="column">
-      <div>
-        <md-button class="checkInBtn" class="md-raised" type="submit" name="checkIn" aria-label="Check In" value="Check In" ng-click="checkIn()">Check In</md-button>
-        <br>
-        <md-button class="checkOutBtn" class="md-raised" type="submit" name="checkOut" aria-label="Check Out" value="Check Out"ng-click="checkOut()">Check Out</md-button>
+    <div class=checkInOutContainer layout="column" flex="33">
+      <div class="mainImageDiv">
+        <img class="mainLogo" src="views/assets/SSG_Logo_Drawn_Primary.png" alt="Simon Says Give">
       </div>
-    </md-input-container>
+      <md-input-container layout="column">
+        <div>
+          <md-button class="checkInBtn" class="md-raised" type="submit" name="checkIn" aria-label="Check In" value="Check In" ng-click="checkIn()">Check In</md-button>
+          <br>
+          <md-button class="checkOutBtn" class="md-raised" type="submit" name="checkOut" aria-label="Check Out" value="Check Out"ng-click="checkOut()">Check Out</md-button>
+        </div>
+      </md-input-container>
+    </div>
   </div>
-</div>
 
 <div ng-include="'views/partials/footer.html'"></div>
