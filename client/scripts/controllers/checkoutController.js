@@ -8,7 +8,8 @@ $scope.volunteerObject = {};
 $scope.success = false;
 
 //Array to assign search results to - has dummy info for now
-$scope.volunteerList = [1,2,3,4,5];
+// $scope.volunteerList = [1,2,3,4,5];
+$scope.volunteerList = [];
 
 //Connected to Search button - take inputs and check for records in database,
 // append results to DOM
@@ -21,6 +22,7 @@ $scope.getVolunteers = function(volunteer) {
   console.log('volunteerObject in http: ', $scope.volunteerObject);
   console.log('logging volunteer in htpp function', volunteer);
   $http.post('/checkout', volunteer).then(function(response){
+    $scope.volunteerList = response.data;
     console.log('logging checkout response: ', response);
     });
 };
