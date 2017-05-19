@@ -45,7 +45,6 @@
   <div layout-md="column" flex="10" ></div>
   <div layout-md="column" flex="80">
     <h3>Select Who You Want to Check Out!</h3>
-    <!-- should add ng-repeat for items returned from DB, need to include checkboxes -->
     <div ng-repeat="volunteer in volunteerList">
       <md-checkbox ng-model="updatelater" aria-label="{{volunteer}}" >
             {{volunteer}}
@@ -53,6 +52,7 @@
     </div>
   </div>
 </div>
+
 <div layout="row">
   <div layout-md="column" flex="10" ></div>
   <md-input-container layout="column" layout-align="center center" flex="80">

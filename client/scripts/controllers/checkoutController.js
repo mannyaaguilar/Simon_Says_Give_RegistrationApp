@@ -13,14 +13,14 @@ $scope.volunteerList = [1,2,3,4,5];
 //Connected to Search button - take inputs and check for records in database,
 // append results to DOM
 $scope.search = function(volunteer) {
-  console.log('volunteerObject: ', $scope.volunteerObject);
-  //NEED TO ADD: GET to collect matching records by email and/or name
-  $scope.getVolunteers();
+  $scope.getVolunteers(volunteer);
   $scope.success = true;
 };
 
 $scope.getVolunteers = function(volunteer) {
-  $http.get('/checkout').then(function(response){
+  console.log('volunteerObject in http: ', $scope.volunteerObject);
+  console.log('logging volunteer in htpp function', volunteer);
+  $http.post('/checkout', volunteer).then(function(response){
     console.log(response);
     });
 };

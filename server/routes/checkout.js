@@ -4,7 +4,7 @@ var path = require('path');
 var pool = require('../modules/pool');
 
 //Gets matching volunteers from database
-router.get('/', function(req, res) {
+router.post('/', function(req, res) {
 
   pool.connect(function(error, db, done){
     if(error) {
@@ -13,6 +13,7 @@ router.get('/', function(req, res) {
 
     } else {
       console.log('connected to get checkout get route');
+      console.log('req.body in get: ', req.body);
       //NEED TO UPDATE QUERY BELOW
       db.query('', function(queryError, result){
         done();
