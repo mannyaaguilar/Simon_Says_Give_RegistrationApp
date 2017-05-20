@@ -14,15 +14,14 @@
       <p>
         This Release and Waiver of Liability (the “release”) executed on
         <md-input-container class="noMargins">
-          <label>Enter date *</label>
-          <md-datepicker ng-model="adultWaiver.dateTop"
+          <md-datepicker ng-model="waiverObj.dateTopAdult"
             name="adultWaiverDateTop" md-min-date="ctrl.minDate"
             md-max-date="ctrl.maxDate"></md-datepicker>
         </md-input-container>
         (date) by
-        <md-input-container md-no-float class="noMargins">
+        <md-input-container md-no-float class="noMargins yellowBack">
           <input required type="text" name="adultWaiverNameTop" value=""
-            ng-model="adultWaiver.nameTop" placeholder="name *">
+            ng-model="waiverObj.nameTopAdult" placeholder="name *">
         </md-input-container>
         (“Volunteer”) releases Simon Says Give (hereafter referred to as the
         “Nonprofit”), a nonprofit corporation organized and existing under the
@@ -36,7 +35,6 @@
   <div layout="row">
     <div flex="15"></div>
     <div layout="column" flex="70">
-      <br>
       <p>
         Volunteer understands that the scope of Volunteer’s relationship
         with Nonprofit is limited to a volunteer position and that no
@@ -112,9 +110,9 @@
   <div layout="row">
     <div flex="15"></div>
     <div layout="column" flex="70">
-      <div layout="row">
-        <input required type="checkbox" ng-check="adultWaiver.agreed = true"
-          ng-model="adultWaiver.agreed">
+      <div class="yellowBack" layout="row">
+        <input required type="checkbox" ng-check="waiverObj.agreedAdult = true"
+          ng-model="waiverObj.agreedAdult">
         <span>I acknowledge the above</span>
       </div>
       <div layout="row" class="bufferDiv">
@@ -123,10 +121,10 @@
         <div flex="15">
           <span>Signature:</span>
         </div>
-        <md-input-container class="noMargins" flex="85">
+        <md-input-container class="noMargins yellowBack" flex="85">
           <label>Please enter your name between slash marks: /John Doe/</label>
           <input required type="text" name="adultWaiverNameBottom" value=""
-            ng-model="adultWaiver.nameBottom">
+            ng-model="waiverObj.nameBottomAdult">
         </md-input-container>
       </div>
       <div layout="row" class="bufferDiv">
@@ -136,16 +134,19 @@
           <span>Today's Date:</span>
         </div>
         <md-input-container class="noMargins" flex="85">
-          <label>Enter date *</label>
-          <md-datepicker ng-model="adultWaiver.dateBottom"
+          <md-datepicker ng-model="waiverObj.dateBottomAdult"
             name="adultWaiverDateBottom" md-min-date="ctrl.minDate"
             md-max-date="ctrl.maxDate"></md-datepicker>
         </md-input-container>
       </div>
       <div layout="row" class="bufferDiv">
       </div>
-      <div flex="66">
-        <button type="button" name="button" class="themed-Btn"
+      <div layout="row" flex="33">
+        <button type="button" name="button" class="themed-Btn badButton"
+          ng-click="declineWaiver(); captureTime()">Decline</button>
+          <div class="bufferDiv">
+          </div>
+        <button type="button" name="button" class="themed-Btn goodButton"
           ng-click="submitAdultWaiver(adultWaiver); captureTime()">Submit</button>
       </div>
     </div>

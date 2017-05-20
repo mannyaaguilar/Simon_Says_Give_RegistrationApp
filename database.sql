@@ -41,3 +41,17 @@ CREATE TABLE "volunteer_hours" (
 "time_in" time,
 "time_out" time
 );
+
+CREATE TABLE "waiver" (
+"id" serial not null PRIMARY KEY,
+"volunteer_id" integer not null,
+"adult_lw_signature" varchar(80),
+"adult_lw_date" date,
+"minor_lw_signature" varchar(80),
+"minor_lw_date" date,
+"minor_lw_guardian_name" varchar(80),
+"minor_lw_guardian_signature" varchar(80),
+"pw_signature" varchar(80),
+"pw_date" date,
+"pw_guardian_signature" varchar(80)
+);

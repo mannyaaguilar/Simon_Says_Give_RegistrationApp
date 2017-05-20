@@ -4,6 +4,7 @@
 <div layout="row">
   <div layout-md="column" flex="20"></div>
   <div layout="column" flex="60">
+    <h1>You are just a few steps away from being checked in!</h1>
     <form form name="volunteerView" ng-submit=" formatdob(); volunteerCheckIn(volunteer)">
       <md-input-container layout="column">
         <div>
@@ -30,17 +31,18 @@
         </div>
       </md-input-container>
       <md-input-container layout="column">
-        <div ng-show="volunteer.under_18">
+        <div ng-show="volunteer.under_18">  
           <label for="birthdate">Date of Birth:</label>
-          <md-datepicker ng-model="volunteer.birthdate" md-current-view="year" md-placeholder="Enter date" ></md-datepicker>
+           <!-- md-min-date="minDate" md-max-date="maxDate" -->
+          <md-datepicker ng-model="volunteer.birthdate" md-current-view="year" md-placeholder="Enter date" md-max-date="maxDate"></md-datepicker>
         </div>
       </md-input-container>
       <md-input-container layout="row" layout-align="center center">
         <div>
-          <button class="themed-Btn" type="submit" name="submit" aria-label="Register" value="Register">Next</md-button>
+          <md-button ng-click="cancel()" class="biggerButton themed-Btn badButton" name="cancel" aria-label="Cancel" value="Cancel">Cancel</md-button>
         </div>
-        <div >
-          <a href="#home">Cancel</a>
+        <div>
+          <md-button class="biggerButton themed-Btn goodButton" type="submit" name="submit" aria-label="Register" value="Register">Next</md-button>
         </div>
       </md-input-container>
     </form>
