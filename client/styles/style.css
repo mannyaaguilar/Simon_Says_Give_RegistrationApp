@@ -210,6 +210,11 @@ footer {
    padding-left: 30px;
    padding-bottom: 30px;
  }
+
+.addAdminContainer {
+  padding-top: 30px;
+}
+
  /*Import/Export .CSV file styles*/
 
 /*center buttons in checkInOut View*/

@@ -21,6 +21,16 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/register.html',
       controller: 'LoginController'
     })
+    // Register new user View
+    .when('/addAdminUser', {
+      templateUrl: '/views/templates/addAdminUser.html',
+      controller: 'addAdminController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser('ADMIN');
+        }]
+      }
+    })
     // admin landing View
     .when('/admin', {
       templateUrl: '/views/templates/admin.html',

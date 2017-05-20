@@ -14,23 +14,21 @@ router.get('/', function(req, res, next) {
 
 // Handles POST request with new user data
 router.post('/', function(req, res, next) {
-
   var saveUser = {
     username: req.body.username,
-    password: encryptLib.encryptPassword(req.body.password)
+    password: encryptLib.encryptPassword(req.body.password),
+    role : req.body.role
   };
   console.log('new user:', saveUser);
-
   pool.connect(function(err, client, done) {
     if(err) {
       console.log("Error connecting: ", err);
       next(err);
     }
     client.query("INSERT INTO users (username, password, role) VALUES ($1, $2, $3) RETURNING id",
-      [saveUser.username, saveUser.password,'ADMIN'],
+      [saveUser.username, saveUser.password,saveUser.role],
         function (err, result) {
           client.end();
-
           if(err) {
             console.log("Error inserting data: ", err);
             next(err);
@@ -39,7 +37,6 @@ router.post('/', function(req, res, next) {
           }
         });
   });
-
 });
 
 
