@@ -131,20 +131,24 @@ background-clip: padding-box;
 -webkit-font-smoothing: antialiased;*/
 
 .mainImageDiv {
+  margin-top: 150px;
+  margin-bottom: 50px;
   height: 220px;
   display:flex;
   justify-content:center;
   align-items:flex-end;
 }
 
-.mainLogo {
+/*styling for big logo on checkInOut and confirmation views
+not sure we need anymore*/
+/*.mainLogo {
   padding-top: 30px;
   max-height: 60%;
   max-width: 60%;
   display:flex;
   justify-content:center;
   align-items:flex-end;
-}
+}*/
 
 .navbarLogo {
   max-height: 18%;
@@ -219,8 +223,9 @@ footer {
 .checkInBtn {
   height: 250px;
   width: 400px;
-  font-size: 30px;
+  font-size: 50px;
   color: white;
+  border-radius: 20px 20px 20px 20px;
   margin-bottom: 30px;
   background-color: rgb(65,182,73);
 }
@@ -229,8 +234,9 @@ footer {
 .checkOutBtn {
   height: 250px;
   width: 400px;
-  font-size: 30px;
+  font-size: 50px;
   color: white;
+  border-radius: 20px 20px 20px 20px;
   margin-bottom: 30px;
   background-color: rgb(237,39,44);
 }
@@ -258,7 +264,7 @@ footer {
 
 /*input font size in startEvent view*/
 .eventCode {
-  font-size: 30px;
+  font-size: 70px;
 }
 
 .eventCodeError {
@@ -269,14 +275,36 @@ footer {
   background-color: rgb(237,39,44);
   background-image: none;
   padding-right: 25px;
+  padding-left: 25px;
+  margin-right: 25px;
+  margin-left: 25px;
 }
 
 .goodButton {
   background-color: rgb(65,182,73);
   background-image: none;
   padding-right: 25px;
+  padding-left: 25px;
+  margin-right: 25px;
+  margin-left: 25px;
 }
 
+.blueButton {
+  background-color: #3691df;
+  background-image: none;
+  padding-right: 25px;
+  padding-left: 25px;
+  margin-right: 25px;
+  margin-left: 25px;
+}
+
+/*yellow background highlighting fields*/
 .yellowBack {
   background-color: #ffff80;
+}
+
+.biggerButton {
+  height: 75px;
+  width: auto;
+  font-size: 30px;
 }
