@@ -113,33 +113,44 @@ myApp.controller('checkInOutController', ['$scope', '$location', function($scope
 myApp.controller('CheckoutController', ['$scope', '$location', '$http', function($scope, $location, $http) {
 
 //object for input items to bind to
+//NEED TO UPDATE, BRING IN VOLUNTEER OBJECT FROM FACTORY
 $scope.volunteerObject = {};
 
 //variable to inform the ng-show on the search results div
 $scope.success = false;
 
-//Array to assign search results to - has dummy info for now
-$scope.volunteerList = [1,2,3,4,5];
+//Array to store search results
+$scope.volunteerList = [];
+
+//Array to store selected volunteers to checkout
+$scope.checkoutList = {
+  volunteer:''
+};
 
 //Connected to Search button - take inputs and check for records in database,
 // append results to DOM
-$scope.search = function() {
-  console.log('volunteerObject: ', $scope.volunteerObject);
-  //NEED TO ADD: GET to collect matching records by email and/or name
-  $scope.getVolunteers();
+$scope.search = function(volunteer) {
+  $scope.getVolunteers(volunteer);
   $scope.success = true;
 };
 
-$scope.getVolunteers = function() {
-  $http.get('/checkout').then(function(response){
-    console.log(response);
+//http post to server - takes response and sets it equal to the volunteerList array
+$scope.getVolunteers = function(volunteer) {
+  console.log('volunteerObject in http: ', $scope.volunteerObject);
+  console.log('logging volunteer in htpp function', volunteer);
+  $http.post('/checkout', volunteer).then(function(response){
+    $scope.volunteerList = response.data;
+    console.log('logging checkout response: ', response);
     });
 };
 
 $scope.checkout = function() {
   //NEED TO ADD: PUT ROUTE to add checkout time to chosen volunteer hours record
+  // checkoutTime = new Date();
   console.log('Logging checkout time on click: ', new Date());
+  console.log('logging checkoutList: ', $scope.checkoutList);
   $scope.checkoutVolunteers();
+
   //changes view to confirmation page:
   $scope.changeView();
 };
@@ -252,7 +263,7 @@ myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserServi
     } else {
       $scope.datesEnabledValue = true;
     }
-  }
+  };
 
 }]);
 
