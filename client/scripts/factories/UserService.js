@@ -8,23 +8,35 @@ myApp.factory('UserService', ['$http', '$location', function($http, $location){
     $location.url(page);
   }
 
-
-
   return {
     userObject : userObject,
     redirect : redirect,
 
-    getuser : function(){
+    getuser : function(adminRequired){
       $http.get('/user').then(function(response) {
-        // console.log('logging response.data in get user: ', response.data);
-          if(response.data.username) {
-              // user has a curret session on the server
-              userObject.id = response.data.id;
-              userObject.userName = response.data.username;
-              console.log('User userName, id: ', userObject.userName, userObject.id);
+        console.log('logging response.data in get user: ', response.data);
+          // validates that the user has a current session and is allowed to see
+          // current view
+          if (adminRequired) {
+            if(response.data.username && (response.data.role === adminRequired)) {
+                // user has a curret session on the server
+                userObject.id = response.data.id;
+                userObject.userName = response.data.username;
+                console.log('User userName, id: ', userObject.userName, userObject.id);
+            } else {
+                // user has no session or current view access is not permitted, bounce them back to the login page
+                $location.path('/login');
+            }
           } else {
-              // user has no session, bounce them back to the login page
-              $location.path('/login');
+            if(response.data.username) {
+                // user has a curret session on the server
+                userObject.id = response.data.id;
+                userObject.userName = response.data.username;
+                console.log('User userName, id: ', userObject.userName, userObject.id);
+            } else {
+                // user has no session, bounce them back to the login page
+                $location.path('/login');
+            }
           }
       });
     },

@@ -15,10 +15,14 @@ myApp.controller('LoginController', ['$scope', '$http', '$location', function($s
             console.log('success: ', response.data);
             // location works with SPA (ng-route)
             console.log('redirecting to admin page');
-            $location.path('/admin');
+            if (response.data.role === 'ADMIN') {
+              $location.path('/admin');
+            } else {
+              $location.path('/checkInOut');
+            }
           } else {
             console.log('failure: ', response);
-            $scope.message = "Wrong!!";
+            $scope.message = "Invalid username and password combination.";
           }
         });
       }
@@ -26,7 +30,7 @@ myApp.controller('LoginController', ['$scope', '$http', '$location', function($s
 
     $scope.registerUser = function() {
       if($scope.user.username == '' || $scope.user.password == '') {
-        $scope.message = "Choose a username and password!";
+        $scope.message = "Choose a username and password.";
       } else {
         console.log('sending to server...', $scope.user);
         $http.post('/register', $scope.user).then(function(response) {
