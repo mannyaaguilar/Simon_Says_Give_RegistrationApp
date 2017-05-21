@@ -17,7 +17,7 @@
               <md-option value="MA">Massachusetts</md-option>
               <md-option value="SD">South Dakota</md-option>
             </md-select>
-            <div class="errors" ng-messages="createEventForm.event.team.$error">
+            <div class="errors" ng-messages="createEventForm.event.eventTeam.$error" ng-if='submitted'>
               <div ng-message="required">Required</div>
             </div>
           </md-input-container>
@@ -28,7 +28,7 @@
               <div>
                 <label for="event.eventName">Event Name:</label>
                 <input type="text" ng-model="event.eventName" required/>
-                <div ng-messages="createEventForm.event.eventName.$error">
+                <div ng-messages="createEventForm.event.eventName.$error" ng-if='submitted'>
                   <div ng-message="required">An event name is required!</div>
                 </div>
               </div>
@@ -41,7 +41,7 @@
               <div>
                 <label for="event.eventDate">Date:</label>
                 <md-datepicker ng-model="event.eventDate" md-current-view="year" md-placeholder="Enter date" required></md-datepicker>
-                <div ng-messages="eventDate.$error">
+                <div ng-messages="event.eventDate.$error" ng-if='submitted'>
                   <div ng-message="required">A date is required!</div>
                 </div>
               </div>
@@ -54,7 +54,7 @@
               <div>
                 <label for="event.eventFromTime">From:</label>
                 <input type="time" ng-model="event.eventFromTime" required/>
-                <div ng-messages="event.eventFromTime.$error">
+                <div ng-messages="event.eventFromTime.$error" ng-if='submitted'>
                   <div ng-message="required">A time is required!</div>
                 </div>
               </div>
@@ -68,7 +68,7 @@
               <div>
                 <label for="event.eventUntilTime">To:</label>
                 <input type="time" ng-model="event.eventUntilTime" required/>
-                <div ng-messages="event.eventUntilTime.$error">
+                <div ng-messages="event.eventUntilTime.$error" ng-if='submitted'>
                   <div ng-message="required">A time is required!</div>
                 </div>
               </div>
@@ -91,16 +91,15 @@
             </div>
           </md-input-container>
 
-
           <!-- BUTTONS -->
           <md-input-container layout="row" layout-align="center center">
             <div>
-              <md-button ng-if="message === ''" class="themed-Btn" type="submit" name="submit" aria-label="Create Event" value="Create Event">Create Event</md-button>
-              <md-button ng-if="message === ''" class="themed-Btn" aria-label="Cancel" value="Cancel" ng-click="redirect('/admin')">Cancel</md-button>
+              <md-button class="themed-Btn" type="submit" name="submit" aria-label="Create Event" value="Create Event">Create Event</md-button>
+              <md-button class="themed-Btn" aria-label="Cancel" value="Cancel" ng-click="redirect('/admin')">Cancel</md-button>
             </div>
           </md-input-container>
           <p ng-if="message != ''">{{message}}</p>
-          <md-button ng-if="message != ''" class="themed-Btn" aria-label="Back to Admin" value="Back to Admin" ng-click="redirect('/admin')">Back</md-button>
+          <md-button ng-if="" class="themed-Btn" aria-label="Back to Admin" value="Back to Admin" ng-click="redirect('/admin')">Back</md-button>
         </form>
       </div>
     </div>
