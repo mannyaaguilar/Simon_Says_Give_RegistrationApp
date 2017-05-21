@@ -2,10 +2,15 @@
 
 --create user table
 CREATE TABLE "users" (
-  "id" serial primary key,
-  "username" varchar(80) not null,
-  "password" varchar(120) not null
+  "id" serial,
+  "username" varchar(80) primary key not null,
+  "password" varchar(120) not null,
+  "role" varchar(20) not null
 );
+
+--INSERTS username: ADMIN password: SSG
+INSERT INTO users (username, password, role) VALUES
+('ADMIN','$2a$10$gh.g4NFfLSVFFUxsLolS3OxJi0GgBTd2a86L/LKL.bp0WNH/5KEYS','ADMIN');
 
 CREATE TABLE "json_volunteer" (
  ID serial NOT NULL PRIMARY KEY,
@@ -55,3 +60,14 @@ CREATE TABLE "waiver" (
 "pw_date" date,
 "pw_guardian_signature" varchar(80)
 );
+
+CREATE TABLE "ssg_teams" (
+  "id" serial primary key,
+  "state_abbreviation" varchar(2) not null,
+  "state" varchar(30) not null
+);
+
+INSERT INTO ssg_teams (state_abbreviation, state) VALUES
+('MN', 'Minnesota'),
+('MA', 'Massachusetts'),
+('SD', 'South Dakota');

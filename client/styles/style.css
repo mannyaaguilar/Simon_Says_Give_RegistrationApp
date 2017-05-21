@@ -215,6 +215,14 @@ footer {
   padding-top: 30px;
 }
 
+.eventInputs {
+  width: 100%;
+}
+
+.eventLocationInput {
+  padding-bottom: 19px;
+}
+
  /*Import/Export .CSV file styles*/
 
 /*center buttons in checkInOut View*/

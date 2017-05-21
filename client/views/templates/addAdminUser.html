@@ -8,7 +8,7 @@
     <div class="addAdminContainer">
       <h1>ADD A NEW ADMIN USER</h1>
       <div layout="row">
-        <form form name="registerView" ng-submit="registerAdminUser()">
+        <form name="registerView" ng-submit="registerAdminUser()">
           <md-input-container layout="column">
             <div>
               <label for="username">Username:</label>
@@ -30,7 +30,7 @@
           <md-input-container layout="row" layout-align="center center">
             <div>
               <md-button ng-if="message === ''" class="themed-Btn" type="submit" name="submit" aria-label="Register" value="Register">Register</md-button>
-              <md-button ng-if="message === ''" class="themed-Btn" name="submit" aria-label="Cancel" value="Cancel" ng-click="redirect('/admin')">Cancel</md-button>
+              <md-button ng-if="message === ''" class="themed-Btn" aria-label="Cancel" value="Cancel" ng-click="redirect('/admin')">Cancel</md-button>
             </div>
           </md-input-container>
           <p ng-if="message != ''">{{message}}</p>

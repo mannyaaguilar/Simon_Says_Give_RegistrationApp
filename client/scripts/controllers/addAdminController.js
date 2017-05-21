@@ -1,4 +1,4 @@
-myApp.controller('addAdminController', ['$scope', '$http', '$location', 'UserService', function($scope, $http, $location, UserService) {
+myApp.controller('AddAdminController', ['$scope', '$http', '$location', 'UserService', function($scope, $http, $location, UserService) {
 
   $scope.redirect = UserService.redirect;
   $scope.message = '';

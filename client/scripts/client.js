@@ -21,10 +21,20 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/register.html',
       controller: 'LoginController'
     })
+    // admin landing View
+    .when('/admin', {
+      templateUrl: '/views/templates/admin.html',
+      controller: 'AdminController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser('ADMIN');
+        }]
+      }
+    })
     // Register new user View
     .when('/addAdminUser', {
       templateUrl: '/views/templates/addAdminUser.html',
-      controller: 'addAdminController',
+      controller: 'AddAdminController',
       resolve: {
         getuser : ['UserService', function(UserService){
           return UserService.getuser('ADMIN');
@@ -32,9 +42,9 @@ myApp.config(['$routeProvider', '$locationProvider',
       }
     })
     // admin landing View
-    .when('/admin', {
-      templateUrl: '/views/templates/admin.html',
-      controller: 'AdminController',
+    .when('/createEvent', {
+      templateUrl: '/views/templates/createEvent.html',
+      controller: 'CreateEventController',
       resolve: {
         getuser : ['UserService', function(UserService){
           return UserService.getuser('ADMIN');
