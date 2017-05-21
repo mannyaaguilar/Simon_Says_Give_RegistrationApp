@@ -4,7 +4,7 @@ console.log("VolunteerController Loaded");
 $scope.redirect = UserService.redirect;
 $scope.volunteerCheckIn = VolunteerService.volunteerCheckIn;
 $scope.volunteer = VolunteerService.volunteer;
-
+// VolunteerService.postNewVolunteer();
 var birtdateToDB;
 
 $scope.volunteer = {
