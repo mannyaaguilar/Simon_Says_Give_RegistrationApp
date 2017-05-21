@@ -99,9 +99,12 @@ console.log("adminController Loaded");
 $scope.redirect = UserService.redirect;
 }]);
 
-myApp.controller('checkInOutController', ['$scope', '$location', function($scope, $location) {
-  // when check in btn clicked, route to volunteer view
+myApp.controller('checkInOutController', ['$scope', '$location', '$http', 'VolunteerService', function($scope, $location, $http, VolunteerService) {
+
+  // when check in btn clicked, get for preregistered volunteers triggered and routes to volunteer view
   $scope.checkIn = function(){
+    console.log('inside checkIn function');
+    VolunteerService.preregisteredVolunteer();
     $location.path('/volunteer');
   };
   // when check out btn clicked, route to confirmation view
@@ -113,33 +116,44 @@ myApp.controller('checkInOutController', ['$scope', '$location', function($scope
 myApp.controller('CheckoutController', ['$scope', '$location', '$http', function($scope, $location, $http) {
 
 //object for input items to bind to
+//NEED TO UPDATE, BRING IN VOLUNTEER OBJECT FROM FACTORY
 $scope.volunteerObject = {};
 
 //variable to inform the ng-show on the search results div
 $scope.success = false;
 
-//Array to assign search results to - has dummy info for now
-$scope.volunteerList = [1,2,3,4,5];
+//Array to store search results
+$scope.volunteerList = [];
+
+//Array to store selected volunteers to checkout
+$scope.checkoutList = {
+  volunteer:''
+};
 
 //Connected to Search button - take inputs and check for records in database,
 // append results to DOM
-$scope.search = function() {
-  console.log('volunteerObject: ', $scope.volunteerObject);
-  //NEED TO ADD: GET to collect matching records by email and/or name
-  $scope.getVolunteers();
+$scope.search = function(volunteer) {
+  $scope.getVolunteers(volunteer);
   $scope.success = true;
 };
 
-$scope.getVolunteers = function() {
-  $http.get('/checkout').then(function(response){
-    console.log(response);
+//http post to server - takes response and sets it equal to the volunteerList array
+$scope.getVolunteers = function(volunteer) {
+  console.log('volunteerObject in http: ', $scope.volunteerObject);
+  console.log('logging volunteer in htpp function', volunteer);
+  $http.post('/checkout', volunteer).then(function(response){
+    $scope.volunteerList = response.data;
+    console.log('logging checkout response: ', response);
     });
 };
 
 $scope.checkout = function() {
   //NEED TO ADD: PUT ROUTE to add checkout time to chosen volunteer hours record
+  // checkoutTime = new Date();
   console.log('Logging checkout time on click: ', new Date());
+  console.log('logging checkoutList: ', $scope.checkoutList);
   $scope.checkoutVolunteers();
+
   //changes view to confirmation page:
   $scope.changeView();
 };
@@ -442,8 +456,6 @@ console.log("VolunteerController Loaded");
 $scope.redirect = UserService.redirect;
 $scope.volunteerCheckIn = VolunteerService.volunteerCheckIn;
 $scope.volunteer = VolunteerService.volunteer;
-
-
 
 var birtdateToDB;
 
@@ -824,26 +836,72 @@ var volunteerToDB = {
     // employer: '',
     // employer_match: false
   };
-    
+
+  var preregisteredVolunteer = {
+    email: '',
+    first_name: '',
+    last_name: '',
+    // address1: '',
+    // address2: '',
+    // city: '',
+    // state: '',
+    // zip: '',
+    under_18: '',
+    birthdate: '',
+    // birthdate: '3000-12-01',
+    has_signed_waiver: '',
+    has_allowed_photos: '',
+    parent_email: '',
+    // validation_required: false,
+    // school: '',
+    // employer: '',
+    // employer_match: false
+  };
+
+
+  preregisteredVolunteer = function(){
+      console.log("inside preregisteredVolunteer function");
+      $http.get('/volunteer')
+      .then(function(response){
+        preregisteredVolunteer = response.data;
+        console.log('PREREGISTERED VOLUNTEER: ', preregisteredVolunteer);
+      });
+    };
+
+
+
+
+
   volunteerCheckIn = function(volunteer){
-  console.log("volunteerCheckIn function accessed", volunteer);
-  $http.post('/volunteer', volunteer).then(function(){
-    if(volunteer.under_18 === true){
-      console.log("General Waiver Needed- youth", volunteer.birthdate);
-      $location.path('/waiver-youth');
-    } else if (volunteer.has_signed_waiver === true && volunteer.has_allowed_photos === true) {
-      console.log("Adult General Waiver & Photo Waiver on record");
-      $location.path('/confirmation');
-    } else if (volunteer.has_signed_waiver === true && volunteer.has_allowed_photos === false) {
-      console.log("General Waiver on record, just need Photo Waiver");
-      $location.path('/waiver-photo');
-    } else if (volunteer.has_signed_waiver === false && volunteer.has_allowed_photos === true) {
-      console.log("Photo Waiver on record, just need General Waiver");
-      $location.path('/waiver-adult');
-    } else {
-      $location.path('/waiver-adult');
-    }
-  });
+  console.log("volunteerCheckIn function accessed Email:", volunteer.email + " " + "First Name:", volunteer.first_name + " " + "Last Name:", volunteer.last_name);
+  for(i=0; i < preregisteredVolunteer.length; i++){
+    console.log("preregisteredVolunteer.email: ", preregisteredVolunteer[i].email);
+    if(volunteer.email === preregisteredVolunteer[i].email && volunteer.first_name === preregisteredVolunteer[i].first_name && volunteer.last_name === preregisteredVolunteer[i].last_name){
+      console.log("MATCH FOUND");
+    }//end of if
+  }//end of for loop
+
+
+
+    // $http.post('/volunteer', volunteer).then(function(){
+    //   if(volunteer.under_18 === true){
+    //     console.log("General Waiver Needed- youth", volunteer.birthdate);
+    //     $location.path('/waiver-youth');
+    //   } else if (volunteer.has_signed_waiver === true && volunteer.has_allowed_photos === true) {
+    //     console.log("Adult General Waiver & Photo Waiver on record");
+    //     $location.path('/confirmation');
+    //   } else if (volunteer.has_signed_waiver === true && volunteer.has_allowed_photos === false) {
+    //     console.log("General Waiver on record, just need Photo Waiver");
+    //     $location.path('/waiver-photo');
+    //   } else if (volunteer.has_signed_waiver === false && volunteer.has_allowed_photos === true) {
+    //     console.log("Photo Waiver on record, just need General Waiver");
+    //     $location.path('/waiver-adult');
+    //   } else {
+    //     $location.path('/waiver-adult');
+    //   }
+    // });
+  // });
+
 };//end volunteerCheckIn
 
 clearVolunteerObject = function(){
@@ -853,7 +911,8 @@ clearVolunteerObject = function(){
  return {
    volunteerToDB: volunteerToDB,
    volunteerCheckIn: volunteerCheckIn,
-   clearVolunteerObject: clearVolunteerObject
+   clearVolunteerObject: clearVolunteerObject,
+   preregisteredVolunteer: preregisteredVolunteer
  };
 
 }]); //end of VolunteerService

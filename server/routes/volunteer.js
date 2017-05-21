@@ -15,36 +15,65 @@ var pool = require('../modules/pool');
 //X5. POST "volunteer_hours" with volunteer_id, event_id, date, time_in
 //-*****************
 
-
-// GET by email, first_name, last_name
-router.get('/', function(req, res, next) {
-  console.log("inside volunteer GET: req.body = ", req.body);
-  var newVolunteer = {
-    email: req.body.email,
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-  };
-
-  pool.connect(function(err, client, done) {
-    if(err) {
-      console.log("Error connecting: ", err);
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+//Erin's get
+router.get('/', function(req, res, next){
+  console.log("inside VOLUNTEER GET");
+  pool.connect(function(err, client, done){
+    if(err){
+      console.log('Error connecting in VOLUNTEER GET: ', err);
       next(err);
-    }
-    client.query("SELECT * FROM volunteer WHERE (email = $1 AND " +
-      "first_name = $2 AND last_name = $3);",
-      [newVolunteer.email, newVolunteer.first_name, newVolunteer.last_name],
-        function (err, result) {
+    } else {//end of if(err)
+      client.query('SELECT * FROM "volunteer"',
+        function(queryError, result){
+          console.log("GET VOLUNTEER success******", result);
           done();
-          console.log("success in GET from volunteer table", result);
-          if(err) {
-            console.log("Error getting data from volunteer table: ", err);
-            next(err);
+          if(queryError){
+            console.log('Error making query for VOLUNTEER on DB ');
+            res.send(500);
           } else {
-            res.redirect('/');
-          }
+            console.log('result in query: ', result);
+            res.send(result.rows);
+          }//end of 2nd else
         });//end of client.query
-  });//end of pg.connect
-});//end of GET
+    }//end of else
+  });//end pool.connect
+});//end of router.get
+
+
+
+
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+// GET by email, first_name, last_name
+// router.get('/', function(req, res, next) {
+//   console.log("inside volunteer GET: req.body = ", req.body);
+//   var newVolunteer = {
+//     email: req.body.email,
+//     first_name: req.body.first_name,
+//     last_name: req.body.last_name,
+//   };
+//
+//   pool.connect(function(err, client, done) {
+//     if(err) {
+//       console.log("Error connecting: ", err);
+//       next(err);
+//     }
+//     client.query("SELECT * FROM volunteer WHERE (email = $1 AND " +
+//       "first_name = $2 AND last_name = $3);",
+//       [newVolunteer.email, newVolunteer.first_name, newVolunteer.last_name],
+//         function (err, result) {
+//           done();
+//           console.log("success in GET from volunteer table", result);
+//           if(err) {
+//             console.log("Error getting data from volunteer table: ", err);
+//             next(err);
+//           } else {
+//             res.redirect('/');
+//           }
+//         });//end of client.query
+//   });//end of pg.connect
+// });//end of GET
 
 
 // POST email, first_name, last_name, under_18, birthdate
@@ -84,7 +113,7 @@ router.post('/', function(req, res, next) {
 // POST to "waiver" table
 router.post('/', function(req, res, next) {
   console.log("inside waiver POST: req.body = ", req.body);
-  let signedAdult,
+  var signedAdult,
       signedYouth,
       liabilitySigned,
       saveWaiver;
