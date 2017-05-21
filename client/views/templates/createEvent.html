@@ -84,7 +84,7 @@
           </md-input-container>
 
           <!-- EVENT DESCRIPTION -->
-          <md-input-container layout="column">
+          <md-input-container layout="column" class="eventInputs eventLocationInput">
             <div>
               <label for="event.eventDescription">Event Description:</label>
               <input type="text" ng-model="event.eventDescription" />
@@ -92,14 +92,13 @@
           </md-input-container>
 
           <!-- BUTTONS -->
-          <md-input-container layout="row" layout-align="center center">
+          <md-input-container layout="row">
             <div>
+              <md-button class="themed-Btn" aria-label="Cancel" value="Cancel" ng-click="redirect('/admin')">Back to Admin Home</md-button>
               <md-button class="themed-Btn" type="submit" name="submit" aria-label="Create Event" value="Create Event">Create Event</md-button>
-              <md-button class="themed-Btn" aria-label="Cancel" value="Cancel" ng-click="redirect('/admin')">Cancel</md-button>
             </div>
           </md-input-container>
           <p ng-if="message != ''">{{message}}</p>
-          <md-button ng-if="" class="themed-Btn" aria-label="Back to Admin" value="Back to Admin" ng-click="redirect('/admin')">Back</md-button>
         </form>
       </div>
     </div>

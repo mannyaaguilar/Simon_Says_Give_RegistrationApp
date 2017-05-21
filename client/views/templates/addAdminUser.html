@@ -27,14 +27,15 @@
               </div>
             </div>
           </md-input-container>
-          <md-input-container layout="row" layout-align="center center">
+          <!-- BUTTONS -->
+          <md-input-container layout="row">
             <div>
+              <md-button ng-if="message === ''" class="themed-Btn" aria-label="Cancel" value="Cancel" ng-click="redirect('/admin')">Back to Admin Home</md-button>
               <md-button ng-if="message === ''" class="themed-Btn" type="submit" name="submit" aria-label="Register" value="Register">Register</md-button>
-              <md-button ng-if="message === ''" class="themed-Btn" aria-label="Cancel" value="Cancel" ng-click="redirect('/admin')">Cancel</md-button>
             </div>
           </md-input-container>
           <p ng-if="message != ''">{{message}}</p>
-          <md-button ng-if="message != ''" class="themed-Btn" aria-label="Back to Admin" value="Back to Admin" ng-click="redirect('/admin')">Back</md-button>
+          <md-button ng-if="message != ''" class="themed-Btn" aria-label="Back to Admin" value="Back to Admin" ng-click="redirect('/admin')">Back to Admin Home</md-button>
         </form>
       </div>
     </div>
