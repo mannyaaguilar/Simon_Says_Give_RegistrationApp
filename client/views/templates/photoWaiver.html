@@ -99,12 +99,12 @@
   <div flex="15" class="bufferDiv">
   </div>
   <div layout="row" flex="33">
-    <button type="button" name="button" class="themed-Btn goodButton"
-      ng-click="waiverObj.agreedPhoto = true">Accept</button>
+    <button type="button" name="button" class="biggerButton themed-Btn badButton"
+      ng-click="declineWaiver()">Decline</button>
     <div class="bufferDiv">
     </div>
-    <button type="button" name="button" class="themed-Btn badButton"
-      ng-click="declineWaiver()">Decline</button>
+    <button type="button" name="button" class="biggerButton themed-Btn goodButton"
+      ng-click="waiverObj.agreedPhoto = true">Accept</button>
   </div>
   <div flex="15" class="bufferDiv">
   </div>
@@ -144,12 +144,12 @@
       </div>
 
       <div flex="66" layout="row">
-        <button type="button" name="button" class="themed-Btn goodButton"
-          ng-click="submitPhotoWaiver(waiverObj)">Submit</button>
+        <button type="button" name="button" class="biggerButton themed-Btn badButton"
+          ng-click="submitPhotoWaiver(photoWaiver)">Decline</button>
         <div class="bufferDiv">
         </div>
-        <button type="button" name="button" class="themed-Btn badButton"
-          ng-click="submitPhotoWaiver(photoWaiver)">Decline</button>
+        <button type="button" name="button" class="biggerButton themed-Btn goodButton"
+          ng-click="submitPhotoWaiver(waiverObj)">Submit</button>
       </div>
 
     </div>
