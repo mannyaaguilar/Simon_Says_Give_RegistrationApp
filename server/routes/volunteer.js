@@ -126,19 +126,19 @@ router.post('/', function(req, res, next) {
       next(err);
     }
     client.query("WITH volunteer_hours AS (INSERT INTO waiver " +
-      "(adult_lw_signature, adult_lw_date, minor_lw_guardian_name, " +
+      "(volunteer_id, adult_lw_signature, adult_lw_date, minor_lw_guardian_name, " +
       "minor_lw_signature, minor_lw_date, minor_lw_guardian_signature, " +
-      "pw_signature, pw_date, pw_guardian_signature) VALUES ($1, $2, $3, $4, " +
-      "$5, $6, $7, $8, $9) RETURNING id) UPDATE volunteer SET " +
-      "(has_signed_waiver, has_allowed_photos, parent_email) VALUES " +
-      "($10, $11, $12) WHERE id = $13;",
-      [saveWaiver.adult_lw_signature, saveWaiver.adult_lw_date,
-        saveWaiver.minor_lw_guardian_name, saveWaiver.minor_lw_signature,
-        saveWaiver.minor_lw_date, saveWaiver.minor_lw_guardian_signature,
-        saveWaiver.pw_signature, saveWaiver.pw_date,
-        saveWaiver.pw_guardian_signature, saveWaiver.has_signed_waiver,
-        saveWaiver.has_allowed_photos, saveWaiver.parent_email,
-        saveWaiver.volunteer_id],
+      "pw_signature, pw_date, pw_guardian_signature) VALUES ($1, $2, $3, $4, $5, " +
+      "$6, $7, $8, $9, $10) RETURNING id) UPDATE volunteer SET " +
+      "has_signed_waiver = $11, has_allowed_photos = $12, parent_email = $13 " +
+      "WHERE id = $14;",
+      [saveWaiver.volunteer_id, saveWaiver.adult_lw_signature,
+        saveWaiver.adult_lw_date, saveWaiver.minor_lw_guardian_name,
+        saveWaiver.minor_lw_signature, saveWaiver.minor_lw_date,
+        saveWaiver.minor_lw_guardian_signature, saveWaiver.pw_signature,
+        saveWaiver.pw_date, saveWaiver.pw_guardian_signature,
+        saveWaiver.has_signed_waiver, saveWaiver.has_allowed_photos, 
+        saveWaiver.parent_email, saveWaiver.volunteer_id],
         function (err, result) {
 
           //PUT
