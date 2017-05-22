@@ -15,73 +15,56 @@ var pool = require('../modules/pool');
 //X5. POST "volunteer_hours" with volunteer_id, event_id, date, time_in
 //-*****************
 
-
 // GET by email, first_name, last_name
-router.get('/', function(req, res, next) {
+router.post('/', function(req, res, next) {
   console.log("inside volunteer GET: req.body = ", req.body);
-  var newVolunteer = {
-    email: req.body.email,
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-  };
-
+  var newVolunteer = {};
+  newVolunteer.email = req.body.email;
+  newVolunteer.first_name = req.body.first_name;
+  newVolunteer.last_name = req.body.last_name;
+  newVolunteer.under_18 = req.body.under_18;
+  newVolunteer.birthdate = req.body.birthdate;
+console.log("x NEW VOLUNTEER :", newVolunteer.email, newVolunteer.first_name, newVolunteer.last_name);
   pool.connect(function(err, client, done) {
     if(err) {
       console.log("Error connecting: ", err);
       next(err);
     }
-    client.query("SELECT * FROM volunteer WHERE (email = $1 AND " +
-      "first_name = $2 AND last_name = $3);",
+    console.log("No err in connecting");
+    client.query("SELECT * FROM volunteer WHERE email = '$1' AND " +
+      "first_name = '$2' AND last_name = '$3';",
       [newVolunteer.email, newVolunteer.first_name, newVolunteer.last_name],
         function (err, result) {
-          done();
-          console.log("success in GET from volunteer table", result);
+          // done();
+          // console.log("success in GET from volunteer table", result);
+          console.log(err);
           if(err) {
-            console.log("Error getting data from volunteer table: ", err);
-            next(err);
+            console.log("1 Error getting data from volunteer table: ", err);
+            client.query("INSERT INTO volunteer (email, first_name, last_name, " +
+              "under_18, birthdate) VALUES ($1, $2, $3, $4, $5) RETURNING *;",
+              [newVolunteer.email, newVolunteer.first_name, newVolunteer.last_name,
+                newVolunteer.under_18, newVolunteer.birthdate],
+                function (err, result) {
+                  console.log("success in INSERT to volunteer table", result);
+                  if(err) {
+                    console.log("2 Error inserting data on volunteer table: ", err);
+                    next(err);
+                  } else {
+                    console.log("Result here: ", result.rows);
+                    res.send(result.rows);
+                    done();
+                  }
+                });
           } else {
-            res.redirect('/');
+            console.log("here is the result: ", result);
+            console.log("no err in second post");
+            res.send(result.rows);
+            done();
           }
         });//end of client.query
   });//end of pg.connect
 });//end of GET
 
-
-// POST email, first_name, last_name, under_18, birthdate
-router.post('/', function(req, res, next) {
-  console.log("inside volunteer POST: req.body = ", req.body);
-  var saveVolunteer = {
-    email: req.body.email,
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-    under_18: req.body.under_18,
-    birthdate: req.body.birthdate
-  };
-
-  pool.connect(function(err, client, done) {
-    if(err) {
-      console.log("Error connecting: ", err);
-      next(err);
-    }
-    client.query("INSERT INTO volunteer (email, first_name, last_name, " +
-      "under_18, birthdate) VALUES ($1, $2, $3, $4, $5) RETURNING id",
-      [saveVolunteer.email, saveVolunteer.first_name, saveVolunteer.last_name,
-        saveVolunteer.under_18, saveVolunteer.birthdate],
-        function (err, result) {
-          done();
-          console.log("success in INSERT to volunteer table", result);
-          if(err) {
-            console.log("Error inserting data on volunteer table: ", err);
-            next(err);
-          } else {
-            res.redirect('/');
-          }
-        });//end of client.query
-  });//end of pg.connect
-});//end of POST
-
-
-// POST to "waiver" table
 router.post('/', function(req, res, next) {
   console.log("inside waiver POST: req.body = ", req.body);
   let signedAdult,
@@ -137,7 +120,7 @@ router.post('/', function(req, res, next) {
         saveWaiver.minor_lw_signature, saveWaiver.minor_lw_date,
         saveWaiver.minor_lw_guardian_signature, saveWaiver.pw_signature,
         saveWaiver.pw_date, saveWaiver.pw_guardian_signature,
-        saveWaiver.has_signed_waiver, saveWaiver.has_allowed_photos, 
+        saveWaiver.has_signed_waiver, saveWaiver.has_allowed_photos,
         saveWaiver.parent_email, saveWaiver.volunteer_id],
         function (err, result) {
 
@@ -187,5 +170,6 @@ router.post('/', function(req, res, next) {
         });//end of client.query
   });//end of pg.connect
 });//end of POST
+
 
 module.exports = router;
