@@ -16,56 +16,44 @@ var pool = require('../modules/pool');
 //-*****************
 
 // POST uses email, first_name, last_name to SELECT from DB
-router.post('/', function(req, res, next) {
-  console.log("inside volunteer GET: req.body = ", req.body);
-  var newVolunteer = {};
-  newVolunteer.email = req.body.email;
-  newVolunteer.first_name = req.body.first_name;
-  newVolunteer.last_name = req.body.last_name;
-  newVolunteer.under_18 = req.body.under_18;
-  newVolunteer.birthdate = req.body.birthdate;
-console.log("x NEW VOLUNTEER :", newVolunteer.email, newVolunteer.first_name, newVolunteer.last_name);
+router.post('/initial', function(req, res, next) {
+  var volGiven = req.body;
+
   pool.connect(function(err, client, done) {
-    if(err) {
+    if ( err ) {
       console.log("Error connecting: ", err);
       next(err);
     }
-    console.log("No err in connecting");
-    client.query("SELECT * FROM volunteer WHERE email = '$1' AND " +
-      "first_name = '$2' AND last_name = '$3';",
-      [newVolunteer.email, newVolunteer.first_name, newVolunteer.last_name],
+    client.query("SELECT * FROM volunteer WHERE email = $1 AND " +
+      "first_name = $2 AND last_name = $3;",
+      [volGiven.email, volGiven.first_name, volGiven.last_name],
         function (err, result) {
-          // done();
-          // console.log("success in GET from volunteer table", result);
-          console.log(err);
-          if(err) {
-            console.log("1 Error getting data from volunteer table: ", err);
+          done();
+          if ( err ) {
+            // error handling
+            console.log("the error: ", err);
+          } else if (result.rows.length === 0) {
             client.query("INSERT INTO volunteer (email, first_name, last_name, " +
               "under_18, birthdate) VALUES ($1, $2, $3, $4, $5) RETURNING *;",
-              [newVolunteer.email, newVolunteer.first_name, newVolunteer.last_name,
-                newVolunteer.under_18, newVolunteer.birthdate],
+              [volGiven.email, volGiven.first_name, volGiven.last_name,
+                volGiven.under_18, volGiven.birthdate],
                 function (err, result) {
-                  console.log("success in INSERT to volunteer table", result);
-                  if(err) {
-                    console.log("2 Error inserting data on volunteer table: ", err);
+                  done();
+                  if ( err ) {
+                    console.log("Error adding volunteer: ", err);
                     next(err);
                   } else {
-                    console.log("Result here: ", result.rows);
                     res.send(result.rows);
-                    done();
                   }
                 });
           } else {
-            console.log("here is the result: ", result);
-            console.log("no err in second post");
             res.send(result.rows);
-            done();
           }
         });//end of client.query
   });//end of pg.connect
 });//end of GET
 
-router.post('/', function(req, res, next) {
+router.post('/complete', function(req, res, next) {
   console.log("inside waiver POST: req.body = ", req.body);
   let signedAdult,
       signedYouth,
@@ -123,11 +111,10 @@ router.post('/', function(req, res, next) {
         saveWaiver.has_signed_waiver, saveWaiver.has_allowed_photos,
         saveWaiver.parent_email, saveWaiver.volunteer_id],
         function (err, result) {
+          done();
 
           //PUT
 
-          done();
-          console.log("successful INSERT to 'waiver' and UPDATE to 'volunteer': ", result);
           if(err) {
             console.log("Error inserting data on waiver table: ", err);
             next(err);
@@ -140,7 +127,7 @@ router.post('/', function(req, res, next) {
 
 
 // POST volunteer_id, event_id, date, time_in
-router.post('/', function(req, res, next) {
+router.post('/thiswillbechanged', function(req, res, next) {
   console.log("inside volunteer_hours POST: req.body = ", req.body);
   var saveHours = {
     volunteer_id: req.body.id,
