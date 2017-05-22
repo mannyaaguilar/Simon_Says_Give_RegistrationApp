@@ -1,0 +1,46 @@
+<!-- HEADER INCLUDED -->
+<div ng-include="'views/partials/header.html'"></div>
+
+<!-- REGISTER ADMIN USER VIEW -->
+<div layout="row">
+  <div layout-md="column" flex="5"></div>
+  <div layout="column" flex="90">
+    <div class="addAdminContainer">
+      <h1>ADD A NEW ADMIN USER</h1>
+      <div layout="row">
+        <form name="registerView" ng-submit="registerAdminUser()">
+          <md-input-container layout="column">
+            <div>
+              <label for="username">Username:</label>
+              <input type="text" ng-model="adminUser.username" required/>
+              <div ng-messages="registerView.adminUser.username.$error">
+                <div ng-message="required">A username is required!</div>
+              </div>
+            </div>
+          </md-input-container>
+          <md-input-container layout="column">
+            <div>
+              <label for="password">Password:</label>
+              <input type="password" ng-model="adminUser.password" required/>
+              <div ng-messages="registerView.adminUser.password.$error">
+                <div ng-message="required">A password is required!</div>
+              </div>
+            </div>
+          </md-input-container>
+          <!-- BUTTONS -->
+          <md-input-container layout="row">
+            <div>
+              <md-button ng-if="message === ''" class="themed-Btn" aria-label="Cancel" value="Cancel" ng-click="redirect('/admin')">Back to Admin Home</md-button>
+              <md-button ng-if="message === ''" class="themed-Btn" type="submit" name="submit" aria-label="Register" value="Register">Register</md-button>
+            </div>
+          </md-input-container>
+          <p ng-if="message != ''">{{message}}</p>
+          <md-button ng-if="message != ''" class="themed-Btn" aria-label="Back to Admin" value="Back to Admin" ng-click="redirect('/admin')">Back to Admin Home</md-button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER INCLUDED -->
+<div ng-include="'views/partials/footer.html'"></div>

@@ -36,7 +36,14 @@
 
       <p>{{errorMessage}}</p>
 
-      <md-button class="themed-Btn" ng-click="exportInformation(exportOption)">Export</md-button><br>
+      <!-- BUTTONS -->
+      <md-input-container layout="row">
+        <div>
+          <md-button class="themed-Btn" aria-label="Cancel" value="Cancel" ng-click="redirect('/admin')">Back to Admin Home</md-button>
+          <md-button class="themed-Btn" ng-click="exportInformation(exportOption)">Export</md-button><br>
+        </div>
+      </md-input-container>
+
 
     </div>
   </div>
