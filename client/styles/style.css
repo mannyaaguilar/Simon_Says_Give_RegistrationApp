@@ -130,14 +130,38 @@ user-select: none;
 background-clip: padding-box;
 -webkit-font-smoothing: antialiased;*/
 
+/* Login Page Styles */
 .mainImageDiv {
-  margin-top: 150px;
+  margin-top: 200px;
   margin-bottom: 50px;
   height: 220px;
   display:flex;
   justify-content:center;
   align-items:flex-end;
 }
+
+.mainLoginDiv {
+  margin-top: 100px;
+}
+
+.loginLine {
+  flex-shrink: 1;
+  background-color: black;
+  height: 1px;
+  position: relative;
+  top: .45em;
+}
+
+.mainLogo {
+  padding-top: 30px;
+  max-height: 100%;
+  max-width: 100%;
+  display:flex;
+  justify-content:center;
+  align-items:flex-end;
+}
+/* Login Page Styles */
+
 
 /*styling for big logo on checkInOut and confirmation views
 not sure we need anymore*/
@@ -210,6 +234,26 @@ footer {
    padding-left: 30px;
    padding-bottom: 30px;
  }
+
+.addAdminContainer {
+  padding-top: 30px;
+}
+
+.eventInputs {
+  width: 100%;
+}
+
+.eventLocationInput {
+  padding-bottom: 19px;
+}
+
+.eventDescriptionInput {
+  padding-bottom: 19px;
+}
+
+.eventCodeInfo {
+  font-size: 14px;
+}
  /*Import/Export .CSV file styles*/
 
 /*center buttons in checkInOut View*/

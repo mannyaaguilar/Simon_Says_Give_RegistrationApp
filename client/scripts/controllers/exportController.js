@@ -58,6 +58,6 @@ myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserServi
     } else {
       $scope.datesEnabledValue = true;
     }
-  }
+  };
 
 }]);

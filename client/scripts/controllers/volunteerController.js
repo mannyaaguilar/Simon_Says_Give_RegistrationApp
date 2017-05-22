@@ -2,10 +2,9 @@ myApp.controller('VolunteerController', ['$scope', '$http', '$location', 'UserSe
 console.log("VolunteerController Loaded");
 
 $scope.redirect = UserService.redirect;
-$scope.volunteerCheckIn = VolunteerService.volunteerCheckIn;
+// $scope.volunteerCheckIn = VolunteerService.volunteerCheckIn;
 $scope.volunteer = VolunteerService.volunteer;
-
-
+$scope.preregisteredVolunteer = VolunteerService.preregisteredVolunteer;
 
 var birtdateToDB;
 
@@ -85,4 +84,5 @@ VolunteerService.volunteerToDB.birtdateToDB = angular.copy($scope.volunteer.birt
 
 $scope.minmaxDate();
 $scope.volunteerData();
+// VolunteerService.postNewVolunteer();
 }]);//end VolunteerController
