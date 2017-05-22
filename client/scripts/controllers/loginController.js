@@ -4,6 +4,10 @@ myApp.controller('LoginController', ['$scope', '$http', '$location', 'UserServic
       password: ''
     };
     $scope.message = '';
+    $scope.event = {
+      eventCode: ''
+    };
+
 
     $scope.login = function() {
       if($scope.user.username == '' || $scope.user.password == '') {
@@ -26,6 +30,36 @@ myApp.controller('LoginController', ['$scope', '$http', '$location', 'UserServic
           }
         });
       }
+    };
+
+    $scope.startEvent = function() {
+      console.log('startEvent clicked:', $scope.event.eventCode);
+      if($scope.event.eventCode == '') {
+        $scope.message = "Enter an event code!";
+      } else {
+        console.log('sending to server...', $scope.event);
+        $http.get('/newEvent/start/' + $scope.event.eventCode).then(function(response) {
+          console.log(response);
+          if(response.data.event_code) {
+            console.log('success: ', response.data);
+            UserService.eventObject.eventCode = response.data.event_code;
+            UserService.eventObject.eventName = response.data.event_name;
+            console.log('EVENT CODE', UserService.eventObject.eventCode);
+            console.log('EVENT NAME', UserService.eventObject.eventName);
+            // console.log('EVENT CODE', response.data.event_code);
+            // console.log('EVENT NAME', response.data.event_name);
+            $location.path('/checkInOut');
+          } else {
+            console.log('failure: ', response);
+            $scope.message = "Invalid event code.";
+          }
+        });
+      }
+
+
+
+
+
     }
 
     $scope.registerUser = function() {

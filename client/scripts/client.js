@@ -86,8 +86,8 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/volunteer.html',
       controller: 'VolunteerController',
       resolve: {
-        getuser : ['UserService', function(UserService){
-          return UserService.getuser();
+        checkevent : ['UserService', function(UserService){
+          return UserService.checkEvent();
         }]
       }
     })
@@ -104,8 +104,8 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/checkInOut.html',
       controller: 'checkInOutController',
       resolve: {
-        getuser : ['UserService', function(UserService){
-          return UserService.getuser();
+        checkevent : ['UserService', function(UserService){
+          return UserService.checkEvent();
         }]
       }
     })
@@ -114,8 +114,8 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/adultWaiver.html',
       controller: 'WaiverController',
       resolve: {
-        getuser : ['UserService', function(UserService){
-          return UserService.getuser();
+        checkevent : ['UserService', function(UserService){
+          return UserService.checkEvent();
         }]
       }
     })
@@ -124,8 +124,8 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/youthWaiver.html',
       controller: 'WaiverController',
       resolve: {
-        getuser : ['UserService', function(UserService){
-          return UserService.getuser();
+        checkevent : ['UserService', function(UserService){
+          return UserService.checkEvent();
         }]
       }
     })
@@ -134,8 +134,8 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/photoWaiver.html',
       controller: 'WaiverController',
       resolve: {
-        getuser : ['UserService', function(UserService){
-          return UserService.getuser();
+        checkevent : ['UserService', function(UserService){
+          return UserService.checkEvent();
         }]
       }
     })
@@ -144,8 +144,8 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/confirmation.html',
       controller: 'ConfirmationController',
       resolve: {
-        getuser : ['UserService', function(UserService){
-          return UserService.getuser();
+        checkevent : ['UserService', function(UserService){
+          return UserService.checkEvent();
         }]
       }
     })
@@ -154,8 +154,8 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/override.html',
       controller: 'OverrideController',
       resolve: {
-        getuser : ['UserService', function(UserService){
-          return UserService.getuser();
+        checkevent : ['UserService', function(UserService){
+          return UserService.checkEvent();
         }]
       }
     })
@@ -164,8 +164,8 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/checkout.html',
       controller: 'CheckoutController',
       resolve: {
-        getuser : ['UserService', function(UserService){
-          return UserService.getuser();
+        checkevent : ['UserService', function(UserService){
+          return UserService.checkEvent();
         }]
       }
     })

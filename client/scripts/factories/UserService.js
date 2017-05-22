@@ -2,6 +2,7 @@ myApp.factory('UserService', ['$http', '$location', function($http, $location){
   console.log('User Service Loaded');
 
   var userObject = {};
+  var eventObject = {};
 
   function redirect(page){
     console.log('in page navigation', page);
@@ -10,6 +11,7 @@ myApp.factory('UserService', ['$http', '$location', function($http, $location){
 
   return {
     userObject : userObject,
+    eventObject : eventObject,
     redirect : redirect,
 
     getuser : function(adminRequired){
@@ -39,6 +41,12 @@ myApp.factory('UserService', ['$http', '$location', function($http, $location){
             }
           }
       });
+    },
+
+    checkEvent : function(){
+      if(!eventObject.eventCode) {
+        $location.path('/login');
+      }
     },
 
     logout : function() {

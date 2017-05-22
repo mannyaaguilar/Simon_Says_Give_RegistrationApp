@@ -38,5 +38,29 @@
           </div>
         </md-input-container> -->
       </form>
+
+      <!-- START EVENT SECTION -->
+      <form name="eventForm" ng-submit="startEvent()">
+        <md-input-container layout="column">
+          <div>
+            <label for="event.eventCode">Event Code:</label>
+            <input type="text" ng-model="event.eventCode" required/>
+            <div ng-messages="eventForm.event.eventCode.$error">
+              <div ng-message="required">An event code is required!</div>
+            </div>
+          </div>
+        </md-input-container>
+        <md-input-container layout="column" layout-align="center center">
+          <div>
+            <md-button class=" themed-Btn" type="submit" name="submit" aria-label="Start Event" value="Start Event">Start Event</md-button>
+          </div>
+        </md-input-container>
+        <!-- <md-input-container layout="row" layout-align="center center">
+          <div>
+            <span>Don't have an account? </span><a href="#register">Register</a>
+          </div>
+        </md-input-container> -->
+      </form>
+
     </div>
 </div>

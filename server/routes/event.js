@@ -42,4 +42,28 @@ router.post('/add', function(req,res) {
   });
 });
 
+// get route for starting events
+router.get('/start/:code', function(req,res) {
+  eventCode = req.params.code;
+  console.log('IN event/start/', eventCode);
+  // SELECT * FROM event WHERE event_code = '';
+  pool.connect(function(errorConnectingToDatabase,db,done) {
+    if(errorConnectingToDatabase) {
+      console.log('Error connecting to the database');
+      res.sendStatus(500);
+    } else {
+      var eventQuery = 'SELECT * FROM event WHERE event_code = $1;';
+      db.query(eventQuery,[eventCode],function(queryError,result) {
+        done();
+        if (queryError) {
+          console.log('Error making query');
+          res.sendStatus(500);
+        } else {
+          res.send(result.rows[0]);
+        }
+      });
+    }
+  });
+});
+
 module.exports = router;
