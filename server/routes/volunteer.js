@@ -16,8 +16,8 @@ var pool = require('../modules/pool');
 //-*****************
 
 
-// GET by email, first_name, last_name
-router.get('/', function(req, res, next) {
+// POST uses email, first_name, last_name to SELECT from DB
+router.post('/', function(req, res, next) {
   console.log("inside volunteer GET: req.body = ", req.body);
   var newVolunteer = {
     email: req.body.email,
@@ -102,21 +102,21 @@ router.post('/', function(req, res, next) {
 
   saveWaiver = {
     //Adult waiver
-    adult_lw_signature: req.body.nameBottomAdult || "null",
-    adult_lw_date: req.body.dateBottomAdult || "3000-12-01",
+    adult_lw_signature: req.body.nameBottomAdult || null,
+    adult_lw_date: req.body.dateBottomAdult || null,
     //Youth waiver
-    minor_lw_guardian_name: req.body.guardianTopYouth || "null",
-    minor_lw_signature: req.body.nameBottomYouth || "null",
-    minor_lw_date: req.body.dateBottomYouth || "3000-12-01",
-    minor_lw_guardian_signature: req.body.guardianBottomYouth || "null",
+    minor_lw_guardian_name: req.body.guardianTopYouth || null,
+    minor_lw_signature: req.body.nameBottomYouth || null,
+    minor_lw_date: req.body.dateBottomYouth || null,
+    minor_lw_guardian_signature: req.body.guardianBottomYouth || null,
     //Photo waiver
-    pw_signature: req.body.nameBottomPhoto || "null",
-    pw_date: req.body.dateBottomPhoto || "3000-12-01",
-    pw_guardian_signature: req.body.guardianBottomPhoto || "null",
+    pw_signature: req.body.nameBottomPhoto || null,
+    pw_date: req.body.dateBottomPhoto || null,
+    pw_guardian_signature: req.body.guardianBottomPhoto || null,
     //For the PUT
     has_signed_waiver: liabilitySigned,
     has_allowed_photos: req.body.agreedPhoto,
-    parent_email: req.body.guardianEmailYouth || "null",
+    parent_email: req.body.guardianEmailYouth || null,
     volunteer_id: req.body.volunteerID
   };
 
@@ -137,7 +137,7 @@ router.post('/', function(req, res, next) {
         saveWaiver.minor_lw_signature, saveWaiver.minor_lw_date,
         saveWaiver.minor_lw_guardian_signature, saveWaiver.pw_signature,
         saveWaiver.pw_date, saveWaiver.pw_guardian_signature,
-        saveWaiver.has_signed_waiver, saveWaiver.has_allowed_photos, 
+        saveWaiver.has_signed_waiver, saveWaiver.has_allowed_photos,
         saveWaiver.parent_email, saveWaiver.volunteer_id],
         function (err, result) {
 
