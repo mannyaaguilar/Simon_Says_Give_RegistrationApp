@@ -33,7 +33,6 @@ $scope.getVolunteers = function(volunteer) {
 };
 
 $scope.checkout = function() {
-  //NEED TO ADD: PUT ROUTE to add checkout time to chosen volunteer hours record
   // checkoutTime = new Date();
   console.log('Logging checkout time on click: ', new Date());
   console.log('logging checkoutList: ', $scope.checkoutList);
