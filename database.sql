@@ -2,10 +2,15 @@
 
 --create user table
 CREATE TABLE "users" (
-  "id" serial primary key,
-  "username" varchar(80) not null,
-  "password" varchar(120) not null
+  "id" serial,
+  "username" varchar(80) primary key not null,
+  "password" varchar(120) not null,
+  "role" varchar(20) not null
 );
+
+--INSERTS username: ADMIN password: SSG
+INSERT INTO users (username, password, role) VALUES
+('ADMIN','$2a$10$gh.g4NFfLSVFFUxsLolS3OxJi0GgBTd2a86L/LKL.bp0WNH/5KEYS','ADMIN');
 
 CREATE TABLE "json_volunteer" (
  ID serial NOT NULL PRIMARY KEY,
@@ -55,3 +60,19 @@ CREATE TABLE "waiver" (
 "pw_date" date,
 "pw_guardian_signature" varchar(80)
 );
+
+CREATE TABLE "event" (
+  "id" serial not null,
+  "event_code" varchar(15) primary key,
+  "event_name" varchar(80) not null,
+  "event_team" varchar(2) not null,
+  "event_description" varchar(120),
+  "event_location" varchar(80),
+  "event_date" date not null,
+  "event_from_time" time not null,
+  "event_until_time" time not null
+);
+
+INSERT INTO event (event_code, event_name, event_team, event_description, event_location, event_date, event_from_time, event_until_time) VALUES
+('MOA2017','Birthday Celebration', 'MN', 'Biggest B-Day Celb', 'MOA', '2017-8-1','13:0','12:30'),
+('HFS2017','High Five for supplies','MN','Packing Backpacks for Kids','St. Thomas Academy','2017-08-16','11:00','19:00');

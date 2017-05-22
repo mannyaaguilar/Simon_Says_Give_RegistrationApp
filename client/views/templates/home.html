@@ -1,42 +1,70 @@
 <!-- LOGIN VIEW -->
 <div layout="row">
-  <div layout-md="column" flex="33"></div>
-    <div layout="column" flex="33">
-
+  <div layout-md="column" flex="15"></div>
+    <div layout="column" flex="30">
       <div class="mainImageDiv">
-        <img class="mainLogo" src="views/assets/SSG_Logo_Drawn_Primary.png" alt="Simon Says Give">
+        <img class="mainLogo" src="views/assets/SSG_Logo_Drawn_Primary_tagline.png" alt="Simon Says Give">
       </div>
-      <!-- <h2>Simon Says Give</h> -->
-      <h3 ng-if="message != ''">{{message}}</h3>
-      <form name="loginView" ng-submit="login()">
-        <md-input-container layout="column">
-          <div>
-            <label for="username">Username:</label>
-            <input type="text" ng-model="user.username" required/>
-            <div ng-messages="loginView.user.username.$error">
-              <div ng-message="required">A username is required!</div>
+    </div>
+    <div layout-md="column" flex="10"></div>
+    <div layout="column" flex="30" class="mainLoginDiv">
+      <div>
+        <!-- START EVENT SECTION -->
+        <p>Start Event Registration:</p>
+        <h3 ng-if="message != ''">{{eventMessage}}</h3>
+        <form name="eventForm" ng-submit="startEvent()">
+          <md-input-container layout="column">
+            <div>
+              <label for="event.eventCode">Event Code:</label>
+              <input type="text" ng-model="event.eventCode" required/>
+              <div ng-messages="eventForm.event.eventCode.$error">
+                <div ng-message="required">An event code is required!</div>
+              </div>
             </div>
-          </div>
-        </md-input-container>
-        <md-input-container layout="column">
-          <div>
-            <label for="password">Password:</label>
-            <input type="password" ng-model="user.password" required/>
-            <div ng-messages="loginView.user.password.$error">
-              <div ng-message="required">A password is required!</div>
+          </md-input-container>
+          <md-input-container layout="column" layout-align="center center">
+            <div>
+              <md-button class=" themed-Btn" type="submit" name="submit" aria-label="Start Event" value="Start Event">Start Event</md-button>
             </div>
-          </div>
-        </md-input-container>
-        <md-input-container layout="column" layout-align="center center">
-          <div>
-            <md-button class=" themed-Btn" type="submit" name="submit" aria-label="Log In" value="Log In">Log In</md-button>
-          </div>
-        </md-input-container>
-        <md-input-container layout="row" layout-align="center center">
-          <div>
-            <span>Don't have an account? </span><a href="#register">Register</a>
-          </div>
-        </md-input-container>
-      </form>
+          </md-input-container>
+        </form>
+      </div>
+
+      <div layout="row" layout-align="center center">
+        <div flex="40" class="loginLine"></div>
+        <div>&nbsp&nbsp OR &nbsp&nbsp</div>
+        <div flex="40" class="loginLine"></div>
+      </div>
+      <div>
+        <!-- ADMIN LOGIN SECTION -->
+        <br>
+        <p>Login to Admin Site:</p>
+        <h3 ng-if="message != ''">{{adminMessage}}</h3>
+        <form name="loginView" ng-submit="login()">
+          <md-input-container layout="column">
+            <div>
+              <label for="username">Username:</label>
+              <input type="text" ng-model="user.username" required/>
+              <div ng-messages="loginView.user.username.$error">
+                <div ng-message="required">A username is required!</div>
+              </div>
+            </div>
+          </md-input-container>
+          <md-input-container layout="column">
+            <div>
+              <label for="password">Password:</label>
+              <input type="password" ng-model="user.password" required/>
+              <div ng-messages="loginView.user.password.$error">
+                <div ng-message="required">A password is required!</div>
+              </div>
+            </div>
+          </md-input-container>
+          <md-input-container layout="column" layout-align="center center">
+            <div>
+              <md-button class=" themed-Btn" type="submit" name="submit" aria-label="Log In" value="Log In">Log In</md-button>
+            </div>
+          </md-input-container>
+        </form>
+      </div>
     </div>
 </div>
