@@ -3,7 +3,7 @@ myApp.controller('checkInOutController', ['$scope', '$location', '$http', 'Volun
   // when check in btn clicked, get for preregistered volunteers triggered and routes to volunteer view
   $scope.checkIn = function(){
     console.log('inside checkIn function');
-    VolunteerService.preregisteredVolunteer();
+    // VolunteerService.preregisteredVolunteer();
     $location.path('/volunteer');
   };
   // when check out btn clicked, route to confirmation view

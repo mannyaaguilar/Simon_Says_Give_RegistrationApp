@@ -5,7 +5,7 @@
   <div layout-md="column" flex="20"></div>
   <div layout="column" flex="60">
     <h1>You are just a few steps away from being checked in!</h1>
-    <form form name="volunteerView" ng-submit=" formatdob(); volunteerCheckIn(volunteer)">
+    <form form name="volunteerView" ng-submit=" formatdob(); preregisteredVolunteer(volunteer)">
       <md-input-container layout="column">
         <div>
           <label for="email">Email:</label>
@@ -31,7 +31,7 @@
         </div>
       </md-input-container>
       <md-input-container layout="column">
-        <div ng-show="volunteer.under_18">  
+        <div ng-show="volunteer.under_18">
           <label for="birthdate">Date of Birth:</label>
            <!-- md-min-date="minDate" md-max-date="maxDate" -->
           <md-datepicker ng-model="volunteer.birthdate" md-current-view="year" md-placeholder="Enter date" md-max-date="maxDate"></md-datepicker>
