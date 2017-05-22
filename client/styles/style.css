@@ -254,6 +254,10 @@ footer {
 .eventCodeInfo {
   font-size: 14px;
 }
+
+.eventBox {
+  width: 100%;
+}
  /*Import/Export .CSV file styles*/
 
 /*center buttons in checkInOut View*/

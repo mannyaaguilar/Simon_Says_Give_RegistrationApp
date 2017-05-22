@@ -21,7 +21,7 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/register.html',
       controller: 'LoginController'
     })
-    // admin landing View
+    // Admin landing View
     .when('/admin', {
       templateUrl: '/views/templates/admin.html',
       controller: 'AdminController',
@@ -41,7 +41,7 @@ myApp.config(['$routeProvider', '$locationProvider',
         }]
       }
     })
-    // admin landing View
+    // Create Event View
     .when('/createEvent', {
       templateUrl: '/views/templates/createEvent.html',
       controller: 'CreateEventController',
@@ -51,7 +51,17 @@ myApp.config(['$routeProvider', '$locationProvider',
         }]
       }
     })
-    // export to .csv view
+    // Event View
+    .when('/displayEvents', {
+      templateUrl: '/views/templates/events.html',
+      controller: 'EventController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser('ADMIN');
+        }]
+      }
+    })
+    // Export to .csv view
     .when('/export', {
       templateUrl: '/views/templates/export.html',
       controller: 'ExportController',
