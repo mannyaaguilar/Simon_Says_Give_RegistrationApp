@@ -2,7 +2,6 @@ myApp.controller('VolunteerController', ['$scope', '$http', '$location', 'UserSe
 console.log("VolunteerController Loaded");
 
 $scope.redirect = UserService.redirect;
-// $scope.volunteerCheckIn = VolunteerService.volunteerCheckIn;
 $scope.volunteer = VolunteerService.volunteer;
 $scope.preregisteredVolunteer = VolunteerService.preregisteredVolunteer;
 
@@ -27,7 +26,7 @@ $scope.volunteer = {
   };
 
 $scope.formatdob = function() {
-  console.log("1 formatdob", $scope.volunteer.birthdate);
+  console.log("formatdob", $scope.volunteer.birthdate);
   if ( $scope.volunteer.birthdate) {
     birtdateToDB = UtilitesService.formatDate(angular.copy($scope.volunteer.birthdate));
     console.log('birthdate', birtdateToDB);
@@ -37,7 +36,6 @@ $scope.formatdob = function() {
     console.log("default birthdate", birtdateToDB);
   }
 };
-
 
 $scope.cancel = function(){
   $location.path('/checkInOut');
@@ -53,15 +51,12 @@ $scope.minmaxDate = function() {
   );
 };
 
-$scope.volunteerData = function(){
-VolunteerService.volunteerToDB.email = angular.copy($scope.volunteer.email);
-VolunteerService.volunteerToDB.first_name = angular.copy($scope.volunteer.first_name);
-VolunteerService.volunteerToDB.last_name = angular.copy($scope.volunteer.last_name);
-VolunteerService.volunteerToDB.under_18 = angular.copy($scope.volunteer.under_18);
-VolunteerService.volunteerToDB.birtdateToDB = angular.copy($scope.volunteer.birthdate);
-};
+// $scope.volunteerData = function(){
+// VolunteerService.volunteerToDB = angular.copy($scope.volunteer);
+// console.log("INSIDE COPY volunteerToDB", VolunteerService.volunteerToDB );
+// };
 
 $scope.minmaxDate();
-$scope.volunteerData();
+// $scope.volunteerData();
 // VolunteerService.postNewVolunteer();
 }]);//end VolunteerController
