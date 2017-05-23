@@ -171,8 +171,6 @@ var volunteerToDB = {
 
  return {
    volunteerToDB: volunteerToDB,
-  //  volunteerCheckIn: volunteerCheckIn,
-
    clearVolunteerObject: clearVolunteerObject,
    preregisteredVolunteer: preregisteredVolunteer,
    preregisteredVolunteerObj: preregisteredVolunteerObj,

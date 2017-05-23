@@ -43,35 +43,14 @@ $scope.cancel = function(){
   $location.path('/checkInOut');
 };
 
-//***
-
-// $scope.initial = {
-//   dob: new Date()
-// };
-// var stringDate = toString()
-// $scope.formatdob = function(initial){
-// console.log(typeof(inital));
-// console.log("Initial DOB: ", initial);
-// var formattedDOB = $scope.initial.slice(0, 10);
-// console.log(formattedDOB);
-// };
-$scope.volunteer = {
-  email: '',
-  first_name: '',
-  last_name: '',
-  under_18: true,
-  birthdate: '3000-12-01'
-};
+//sets date on datepicker to 8 years back for the convenience of user
 $scope.minmaxDate = function() {
-  this.myDate = new Date();
-  // console.log(this.myDate);
-
-  this.maxDate = new Date(
+    this.myDate = new Date();
+    this.maxDate = new Date(
     this.myDate.getFullYear() - 8,
     this.myDate.getMonth(),
     this.myDate.getDate()
   );
-  // console.log(this.maxDate);
 };
 
 $scope.volunteerData = function(){

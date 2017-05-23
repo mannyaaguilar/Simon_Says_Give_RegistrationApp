@@ -17,7 +17,7 @@ var pool = require('../modules/pool');
 
 // GET by email, first_name, last_name
 router.post('/', function(req, res, next) {
-  console.log("inside volunteer GET: req.body = ", req.body);
+  // console.log("inside volunteer GET: req.body = ", req.body);
   var newVolunteer = {};
   newVolunteer.email = req.body.email;
   newVolunteer.first_name = req.body.first_name;
@@ -37,7 +37,7 @@ console.log("x NEW VOLUNTEER :", newVolunteer.email, newVolunteer.first_name, ne
         function (err, result) {
           // done();
           // console.log("success in GET from volunteer table", result);
-          console.log(err);
+          // console.log(err);
           if(err) {
             console.log("1 Error getting data from volunteer table: ", err);
             client.query("INSERT INTO volunteer (email, first_name, last_name, " +
@@ -67,7 +67,7 @@ console.log("x NEW VOLUNTEER :", newVolunteer.email, newVolunteer.first_name, ne
 
 router.post('/', function(req, res, next) {
   console.log("inside waiver POST: req.body = ", req.body);
-  let signedAdult,
+  var signedAdult,
       signedYouth,
       liabilitySigned,
       saveWaiver;
