@@ -46,8 +46,9 @@ console.log("before", preregisteredVolunteerObj);
   var newVolunteer = [];
 
   preregisteredVolunteer = function(volunteer){
-      // console.log("inside preregisteredVolunteer function", volunteer );
-      $http.post('/volunteer', volunteer)
+      console.log("inside preregisteredVolunteer function", volunteer );
+      $http.post('/volunteer/initial', volunteer)
+      // $http.post('/volunteer')
       .then(function(response){
         // console.log('RESPONSE: ', response.data[0]);
         // volunteerToDB = angular.copy(response.data)
