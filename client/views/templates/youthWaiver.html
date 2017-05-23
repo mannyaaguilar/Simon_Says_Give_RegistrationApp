@@ -11,9 +11,9 @@
         <br>
         <div layout="row">
           <button type="button" name="button" class="themed-Btn badButton"
-            ng-click="youthWaiver.noParent = true; hideQuestion = true">No</button>
+            ng-click="waiverObj.noParentYouth = true; hideQuestion = true">No</button>
           <button type="button" name="button" class="themed-Btn goodButton"
-            ng-click="youthWaiver.noParent = false; hideQuestion = true">Yes</button>
+            ng-click="waiverObj.noParentYouth = false; hideQuestion = true">Yes</button>
         </div>
       </div>
       <div layout="row" class="bufferDiv">
@@ -147,13 +147,13 @@
       <div layout="row" class="bufferDiv">
       </div>
       <div layout="row" flex="33"
-        ng-hide="youthWaiver.noParentYouth || youthWaiver.agreedYouth">
+        ng-hide="waiverObj.noParentYouth || waiverObj.agreedYouth">
         <button type="button" name="button" class="themed-Btn badButton"
           ng-click="declineWaiver()">Decline</button>
         <div class="bufferDiv">
         </div>
         <button type="button" name="button" class="themed-Btn goodButton"
-          ng-click="youthWaiver.agreed = true">Accept</button>
+          ng-click="waiverObj.agreedYouth = true">Accept</button>
       </div>
 
       <div ng-show="waiverObj.agreedYouth || waiverObj.noParentYouth">
