@@ -23,4 +23,11 @@ myApp.controller('EventController', ['$scope','$mdDialog','UserService','Utilite
     });
   };
 
+  // Redirects to Event View
+  $scope.viewEvent = function(ssgEvent) {
+    console.log('view event clicked',ssgEvent);
+    EventService.serverResponseObject.currentEvent = ssgEvent;
+    UserService.redirect('/viewEvent');
+  };
+
 }]);

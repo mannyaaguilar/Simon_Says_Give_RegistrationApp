@@ -101,6 +101,45 @@ router.delete('/delete/:eventCode', function(req,res) {
   }
 });
 
+// updates an existing event
+router.put('/update', function(req,res) {
+  if(req.isAuthenticated()) {
+    console.log("object received is: ", req.body);
+    var eventCode = req.body.eventCode;
+    var eventName = req.body.eventName;
+    var eventTeam = req.body.eventTeam;
+    var eventDescription = req.body.eventDescription;
+    var eventLocation = req.body.eventLocation;
+    var eventDate = req.body.eventDate;
+    var eventFromTime = req.body.eventFromTime;
+    var eventUntilTime = req.body.eventUntilTime;
+    // UPDATE event SET ... WHERE event_code = $2;
+    pool.connect(function(errorConnectingToDatabase,db,done) {
+      if(errorConnectingToDatabase) {
+        console.log('Error connecting to the database');
+        res.send(500);
+      } else {
+        db.query('UPDATE event SET event_name = $1, event_team = $2, event_description = $3, ' +
+        'event_location = $4, event_date = $5, event_from_time = $6, event_until_time = $7 ' +
+        ' WHERE event_code = $8;',
+        [eventName,eventTeam,eventDescription,eventLocation,eventDate,eventFromTime,eventUntilTime,eventCode],
+        function(queryError,result) {
+          done();
+          if (queryError) {
+            console.log('Error making query',queryError);
+            res.sendStatus(500);
+          } else {
+            res.sendStatus(201);
+          }
+        });
+      }
+    });
+  } else {
+    res.sendStatus(401);
+  }
+});
+
+
 // get route for starting events
 router.get('/start/:code', function(req,res) {
   eventCode = req.params.code;

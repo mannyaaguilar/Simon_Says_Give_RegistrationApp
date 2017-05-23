@@ -51,10 +51,20 @@ myApp.config(['$routeProvider', '$locationProvider',
         }]
       }
     })
-    // Event View
+    // All Events View
     .when('/displayEvents', {
       templateUrl: '/views/templates/events.html',
       controller: 'EventController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser('ADMIN');
+        }]
+      }
+    })
+    // All Events View
+    .when('/viewEvent', {
+      templateUrl: '/views/templates/viewEvent.html',
+      controller: 'ViewEventController',
       resolve: {
         getuser : ['UserService', function(UserService){
           return UserService.getuser('ADMIN');

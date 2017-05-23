@@ -350,6 +350,15 @@ footer {
   margin-left: 25px;
 }
 
+.orangeButton {
+  background-color: #f57f20;
+  background-image: none;
+  padding-right: 25px;
+  padding-left: 25px;
+  margin-right: 25px;
+  margin-left: 25px;
+}
+
 /*yellow background highlighting fields*/
 .yellowBack {
   background-color: #ffff80;

@@ -13,7 +13,6 @@ myApp.factory('EventService', ['$http', function($http){
     });
   };
 
-
   // Sends event information to server
   postEvent = function(eventToPost) {
     console.log('Posting event ', eventToPost);
@@ -31,10 +30,19 @@ myApp.factory('EventService', ['$http', function($http){
     });
   };
 
+  // Updates a specific event
+  updateEvent = function(eventToUpdate) {
+    console.log('Updating event: ', eventToUpdate);
+    $http.put('/ssgEvent/update', eventToUpdate).then(function(response) {
+      getEvents();
+    });
+  };
+
   return {
     serverResponseObject : serverResponseObject,
     getEvents : getEvents,
     postEvent : postEvent,
-    deleteEvent : deleteEvent
+    deleteEvent : deleteEvent,
+    updateEvent : updateEvent
   };
 }]);

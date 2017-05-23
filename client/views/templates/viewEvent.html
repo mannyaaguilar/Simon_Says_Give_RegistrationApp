@@ -6,26 +6,10 @@
   <div layout-md="column" flex="5"></div>
   <div layout="column" flex="90">
     <div class="addAdminContainer">
-      <h1>CREATE EVENT</h1>
-      <div layout="column">
-        <form name="createEventForm" ng-submit="createEvent(event)">
-          <!-- EVENT CODE -->
-          <div layout="row">
-            <md-input-container layout="column" flex="45" class="eventInputs">
-              <div>
-                <label for="event.eventCode">Event Code:</label>
-                <input type="text" ng-model="event.eventCode" required/>
-                <div ng-messages="createEventForm.event.eventCode.$error" ng-if='submitted'>
-                  <div ng-message="required">An event code is required!</div>
-                </div>
-              </div>
-            </md-input-container>
-            <div layout="column" flex="10"></div>
-            <div layout="column" flex="45">
-              <p class="eventCodeInfo">Please enter a unique, one word code to identify the event. This will be the code that will be used to start the volunteer check in/check out application for the event. Example: MOA072017</p>
-            </div>
-          </div>
+      <h1>{{serverResponseObject.currentEvent.event_code}} {{serverResponseObject.currentEvent.event_name}}</h1>
 
+      <div layout="column">
+        <form name="updateEventForm" ng-submit="editEvent(event)">
           <div layout="row">
             <!-- EVENT NAME -->
             <md-input-container layout="column" flex="45" class="eventInputs">
@@ -108,8 +92,9 @@
           <!-- BUTTONS -->
           <md-input-container layout="row" layout-align="start center">
             <div>
-              <md-button class="themed-Btn" aria-label="Cancel" value="Cancel" ng-click="redirect('/admin')">Back to Admin Home</md-button>
-              <md-button class="themed-Btn" type="submit" name="submit" aria-label="Create Event" value="Create Event">Create Event</md-button>
+              <md-button class="themed-Btn orangeButton" aria-label="Logout Volunteers" ng-click="">Logout Volunteers</md-button>
+              <md-button class="themed-Btn" aria-label="Cancel" value="Cancel" ng-click="redirect('/displayEvents')">Back to Events</md-button>
+              <md-button class="themed-Btn" type="submit" name="submit" aria-label="Update Event" value="Update Event">Make Changes to Event</md-button>
             </div>
           </md-input-container>
           <p>{{serverResponseObject.response.data}}</p>
