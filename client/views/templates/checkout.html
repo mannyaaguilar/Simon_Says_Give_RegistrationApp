@@ -51,34 +51,10 @@
       </md-checkbox>
     </div>
     <div class="demo-select-all-checkboxes" flex="100" ng-repeat="volunteer in volunteerList">
-      <md-checkbox ng-checked="exists(volunteer.id, selected)" ng-click="toggle(volunteer.id, selected)">
+      <md-checkbox ng-checked="exists(volunteer.id, checkoutList)" ng-click="toggle(volunteer.id, checkoutList)">
         {{volunteer.first_name}} {{volunteer.last_name}}   ({{volunteer.email}})
       </md-checkbox>
     </div>
-
-      <!-- <md-checkbox ng-model="checkoutList.volunteer" aria-label="{{volunteer}}">
-            {{volunteer.first_name}} {{volunteer.last_name}}   ({{volunteer.email}})
-      </md-checkbox> -->
-
-      <!-- <md-checkbox ng-model="checkoutList.volunteer" aria-label="{{volunteer}}"
-        ng-checked="" ng-click="">
-      </md-checkbox>
-      <p> {{volunteer.first_name}} {{volunteer.last_name}}   ({{volunteer.email}}) <p>
-    </div> -->
-
-    <!-- <div ng-repeat="volunteer in volunteerList">
-      <div ng-options="volunteer for volunteer in volunteerList track by volunteer.id">
-
-      <md-checkbox ng-model="checkoutList.volunteer" aria-label="{{volunteer}}">
-            {{volunteer.first_name}} {{volunteer.last_name}}   ({{volunteer.email}})
-      </md-checkbox>
-
-      <md-checkbox ng-model="checkoutList.volunteer" aria-label="{{volunteer}}">
-      </md-checkbox>
-      <p> {{volunteer.first_name}} {{volunteer.last_name}}   ({{volunteer.email}}) <p>
-    </div> -->
-
-
 </div>
 <div layout="row" ng-show="success">
   <div layout-md="column" flex="10" ></div>

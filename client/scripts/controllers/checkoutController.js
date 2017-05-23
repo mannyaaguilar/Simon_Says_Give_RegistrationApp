@@ -12,15 +12,12 @@ $scope.success = false;
 //Array to store search results. Array of objects
 $scope.volunteerList = [];
 
-//Array to store selected volunteers (by ID) to checkout.
-//CURRENTLY HARDCODED - NEED TO CHANGE TO EMPTY ARRAY
-// $scope.checkoutList = [1, 2, 3, 4];
+//Array to store checkoutList volunteers by ID to checkout.
 $scope.checkoutList = [];
 
-// //CODE TO UPDATE - SKELETON FROM ANGULAR DOCUMENTATION
-// $scope.items = [1,2,3,4,5];
+
 $scope.items = [];
-$scope.selected = [];
+
 $scope.toggle = function (item, list) {
   var idx = list.indexOf(item);
   if (idx > -1) {
@@ -30,7 +27,7 @@ $scope.toggle = function (item, list) {
     list.push(item);
   }
   console.log('here is items: ', $scope.items);
-  console.log('here is selected: ', $scope.selected);
+  console.log('here is checkoutList: ', $scope.checkoutList);
 };
 
 $scope.exists = function (item, list) {
@@ -38,27 +35,21 @@ $scope.exists = function (item, list) {
 };
 
 $scope.isIndeterminate = function() {
-  return ($scope.selected.length !== 0 &&
-      $scope.selected.length !== $scope.items.length);
+  return ($scope.checkoutList.length !== 0 &&
+      $scope.checkoutList.length !== $scope.items.length);
 };
 
 $scope.isChecked = function() {
-  return $scope.selected.length === $scope.items.length;
+  return $scope.checkoutList.length === $scope.items.length;
 };
 
 $scope.toggleAll = function() {
-  if ($scope.selected.length === $scope.items.length) {
-    $scope.selected = [];
-  } else if ($scope.selected.length === 0 || $scope.selected.length > 0) {
-    $scope.selected = $scope.items.slice(0);
+  if ($scope.checkoutList.length === $scope.items.length) {
+    $scope.checkoutList = [];
+  } else if ($scope.checkoutList.length === 0 || $scope.checkoutList.length > 0) {
+    $scope.checkoutList = $scope.items.slice(0);
   }
 };
-//DOCUMENTATION CODE END
-
-
-
-
-
 
 //Connected to Search button - take inputs and check for records in database,
 //appends results to DOM
