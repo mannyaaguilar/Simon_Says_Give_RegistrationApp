@@ -2,22 +2,56 @@ myApp.controller('CheckoutController', ['$scope', '$location', '$http', 'Utilite
 
 $scope.formatTime = UtilitesService.formatTime;
 
-//object for input items to bind to
+//object for input volunteers to bind to
 //NEED TO UPDATE, BRING IN VOLUNTEER OBJECT FROM FACTORY
 $scope.volunteerObject = {};
 
 //variable to inform the ng-show on the search results div
 $scope.success = false;
 
-//Array to store search results
+//Array to store search results. Array of objects
 $scope.volunteerList = [];
 
-//Array to store selected volunteers (by ID) to checkout
+//Array to store selected volunteers (by ID) to checkout.
 //CURRENTLY HARDCODED - NEED TO CHANGE TO EMPTY ARRAY
-$scope.checkoutList = [1, 2, 3, 4];
-// $scope.checkoutList = {
-//   volunteer:''
-// };
+// $scope.checkoutList = [1, 2, 3, 4];
+$scope.checkoutList = [];
+
+//CODE TO UPDATE - SKELETON FROM ANGULAR DOCUMENTATION
+// $scope.list = [1,2,3,4,5];
+  $scope.toggle = function (volunteer, volunteerList) {
+    var idx = volunteerList.indexOf(volunteer);
+    if (idx > -1) {
+      volunteerList.splice(idx, 1);
+    }
+    else {
+      volunteerList.push(volunteer);
+    }
+  };
+
+  $scope.exists = function (volunteer, volunteerList) {
+    return volunteerList.indexOf(volunteer) > -1;
+  };
+
+  $scope.isIndeterminate = function() {
+    return ($scope.checkoutList.length !== 0 &&
+        $scope.checkoutList.length !== $scope.volunteer.length);
+  };
+
+  $scope.isChecked = function() {
+    return $scope.checkoutList.length === $scope.volunteerList.length;
+  };
+
+  $scope.toggleAll = function() {
+    if ($scope.checkoutList.length === $scope.volunteerList.length) {
+      $scope.checkoutList = [];
+    } else if ($scope.checkoutList.length === 0 || $scope.checkoutList.length > 0) {
+      $scope.checkoutList = $scope.volunteerList.slice(0);
+    }
+  };
+//DOCUMENTATION CODE END
+
+
 
 //Connected to Search button - take inputs and check for records in database,
 //appends results to DOM

@@ -45,17 +45,26 @@
   <div layout-md="column" flex="10" ></div>
   <div layout-md="column" flex="80">
     <h3>Select Who You Want to Check Out!</h3>
-    <div ng-repeat="volunteer in volunteerList">
+    <div flex-xs="" flex="50">
+      <md-checkbox aria-label="Select All" ng-checked="isChecked()" md-indeterminate="isIndeterminate()" ng-click="toggleAll()">
+        <span ng-if="isChecked()">Un-</span>Select All
+      </md-checkbox>
+    </div>
+    <div class="demo-select-all-checkboxes" flex="100" ng-repeat="volunteer in volunteerList">
+      <md-checkbox ng-checked="exists(volunteer.id, selected)" ng-click="toggle(volunteer.id, selected)">
+        {{volunteer.first_name}} {{volunteer.last_name}}   ({{volunteer.email}}
+      </md-checkbox>
+    </div>
 
       <!-- <md-checkbox ng-model="checkoutList.volunteer" aria-label="{{volunteer}}">
             {{volunteer.first_name}} {{volunteer.last_name}}   ({{volunteer.email}})
       </md-checkbox> -->
 
-      <md-checkbox ng-model="checkoutList.volunteer" aria-label="{{volunteer}}"
+      <!-- <md-checkbox ng-model="checkoutList.volunteer" aria-label="{{volunteer}}"
         ng-checked="" ng-click="">
       </md-checkbox>
       <p> {{volunteer.first_name}} {{volunteer.last_name}}   ({{volunteer.email}}) <p>
-    </div>
+    </div> -->
 
     <!-- <div ng-repeat="volunteer in volunteerList">
       <div ng-options="volunteer for volunteer in volunteerList track by volunteer.id">
@@ -69,7 +78,7 @@
       <p> {{volunteer.first_name}} {{volunteer.last_name}}   ({{volunteer.email}}) <p>
     </div> -->
 
-  </div>
+
 </div>
 <div layout="row" ng-show="success">
   <div layout-md="column" flex="10" ></div>
