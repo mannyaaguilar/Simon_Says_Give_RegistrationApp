@@ -1,4 +1,6 @@
-myApp.controller('CheckoutController', ['$scope', '$location', '$http', function($scope, $location, $http) {
+myApp.controller('CheckoutController', ['$scope', '$location', '$http', 'UtilitesService', function($scope, $location, $http, UtilitesService) {
+
+$scope.formatTime = UtilitesService.formatTime;
 
 //object for input items to bind to
 //NEED TO UPDATE, BRING IN VOLUNTEER OBJECT FROM FACTORY
@@ -10,13 +12,15 @@ $scope.success = false;
 //Array to store search results
 $scope.volunteerList = [];
 
-//Array to store selected volunteers to checkout
-$scope.checkoutList = {
-  volunteer:''
-};
+//Array to store selected volunteers (by ID) to checkout
+//CURRENTLY HARDCODED - NEED TO CHANGE TO EMPTY ARRAY
+$scope.checkoutList = [1, 2, 3, 4];
+// $scope.checkoutList = {
+//   volunteer:''
+// };
 
 //Connected to Search button - take inputs and check for records in database,
-// append results to DOM
+//appends results to DOM
 $scope.search = function(volunteer) {
   $scope.getVolunteers(volunteer);
   $scope.success = true;
@@ -32,20 +36,19 @@ $scope.getVolunteers = function(volunteer) {
     });
 };
 
-$scope.checkout = function() {
-  //NEED TO ADD: PUT ROUTE to add checkout time to chosen volunteer hours record
-  // checkoutTime = new Date();
-  console.log('Logging checkout time on click: ', new Date());
+$scope.checkout = function(checkoutList) {
   console.log('logging checkoutList: ', $scope.checkoutList);
-  $scope.checkoutVolunteers();
-
-  //changes view to confirmation page:
+  $scope.checkoutVolunteers(checkoutList);
   $scope.changeView();
 };
 
 //PUT Route that updates the checkout time of chosen volunteer record(s)
-$scope.checkoutVolunteers = function() {
-  $http.put('/checkout').then(function(response){
+$scope.checkoutVolunteers = function(volunteers) {
+  console.log('logging volunteers in checkoutVolunteers: ', volunteers);
+  var timeToFormat = new Date();
+  var checkoutTime = $scope.formatTime(timeToFormat);
+
+  $http.put('/checkout/' + volunteers + '/' + checkoutTime).then(function(response){
     console.log(response);
     });
 };

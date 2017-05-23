@@ -46,10 +46,29 @@
   <div layout-md="column" flex="80">
     <h3>Select Who You Want to Check Out!</h3>
     <div ng-repeat="volunteer in volunteerList">
+
+      <!-- <md-checkbox ng-model="checkoutList.volunteer" aria-label="{{volunteer}}">
+            {{volunteer.first_name}} {{volunteer.last_name}}   ({{volunteer.email}})
+      </md-checkbox> -->
+
+      <md-checkbox ng-model="checkoutList.volunteer" aria-label="{{volunteer}}"
+        ng-checked="" ng-click="">
+      </md-checkbox>
+      <p> {{volunteer.first_name}} {{volunteer.last_name}}   ({{volunteer.email}}) <p>
+    </div>
+
+    <!-- <div ng-repeat="volunteer in volunteerList">
+      <div ng-options="volunteer for volunteer in volunteerList track by volunteer.id">
+
       <md-checkbox ng-model="checkoutList.volunteer" aria-label="{{volunteer}}">
             {{volunteer.first_name}} {{volunteer.last_name}}   ({{volunteer.email}})
       </md-checkbox>
-    </div>
+
+      <md-checkbox ng-model="checkoutList.volunteer" aria-label="{{volunteer}}">
+      </md-checkbox>
+      <p> {{volunteer.first_name}} {{volunteer.last_name}}   ({{volunteer.email}}) <p>
+    </div> -->
+
   </div>
 </div>
 <div layout="row" ng-show="success">
@@ -57,10 +76,9 @@
   <md-input-container layout="column" layout-align="center center" flex="80">
     <div>
       <md-button class="biggerButton themed-Btn blueButton" type="submit" name="submit" aria-label="Checkout"
-      value="Checkout" ng-click="checkout(volunteerList)">Checkout</md-button>
+      value="Checkout" ng-click="checkout(checkoutList)">Checkout</md-button>
     </div>
   </md-input-container>
 </div>
-
 
 <div ng-include="'views/partials/footer.html'"></div>
