@@ -1,100 +1,48 @@
 myApp.controller('WaiverController', ['$scope', '$http', '$location', 'VolunteerService', function($scope, $http, $location, VolunteerService) {
 
-$scope.preregisteredVolunteerObj = VolunteerService.preregisteredVolunteerObj;
-
   //ALL OF THESE WILL NEED TO BE IN A FACTORY
 
-  var todaysDate = new Date();
-
-  $scope.waiverObj = {
-    //Adult waiver
-    volunteerIndex: "",
-    dateTopAdult: todaysDate,
-    nameTopAdult: "",
-    agreedAdult: false,
-    nameBottomAdult: "",
-    dateBottomAdult: todaysDate,
-    //Youth waiver
-    dateTopYouth: todaysDate,
-    nameTopYouth: "",
-    agreedYouth: false,
-    nameBottomYouth: "",
-    dateBottomYouth: todaysDate,
-    noParentYouth: "",
-    dateBottomVolYouth: todaysDate,
-    guardianEmailYouth: "",
-    guardianTopYouth: "",
-    guardianBottomYouth: "",
-    dateBottomGuardYouth: todaysDate,
-    //Photo waiver
-    agreedPhoto: false,
-    nameBottomPhoto: "",
-    dateBottomPhoto: todaysDate,
-    dateBottomVolPhoto: todaysDate,
-    guardianBottomPhoto: "",
-    dateBottomGuardPhoto: todaysDate
-  };
-
-  //BEGIN TIMER STUFF
-  var inDate;
-
-  const NUM_MILIS_IN_HOUR = 3600000;
-  $scope.setCheckIn = function() {
-    inDate = new Date();
-  };
-  $scope.captureTime = function() {
-    var newDate,
-        inMonth,
-        inDay,
-        inYear,
-        inHour,
-        inMinute,
-        prettyInDate,
-        newMonth,
-        newDay,
-        newYear,
-        newHour,
-        newMinute,
-        prettyNewDate,
-        millisJustVolunteered,
-        hoursJustVolunteered;
-
-    console.log("inDate: ", inDate);
-    inMonth = inDate.getMonth();
-    inDay = inDate.getDate();
-    inYear = inDate.getFullYear();
-    inHour = inDate.getHours();
-    inMinute = inDate.getMinutes();
-    prettyInDate = inMonth + "/" + inDay + "/" + inYear +
-      ", at " + inHour + ":" + inMinute;
-    console.log("prettyInDate: ", prettyInDate);
-
-    newDate = new Date();
-    console.log("newDate: ", newDate);
-    newMonth = newDate.getMonth();
-    newDay = newDate.getDate();
-    newYear = newDate.getFullYear();
-    newHour = newDate.getHours();
-    newMinute = newDate.getMinutes();
-    prettyNewDate = newMonth + "/" + newDay + "/" + newYear +
-      ", at " + newHour + ":" + newMinute;
-    console.log("prettyNewDate: ", prettyNewDate);
-
-    millisJustVolunteered = newDate - inDate;
-    hoursJustVolunteered = millisJustVolunteered / NUM_MILIS_IN_HOUR;
-    console.log("hoursJustVolunteered: ", hoursJustVolunteered);
-  };
-  //END TIMER STUFF
+  // var todaysDate = new Date();
+  //
+  // VolunteerService.waiverObj = {
+  //   //Adult waiver
+  //   volunteerIndex: "",
+  //   dateTopAdult: todaysDate,
+  //   nameTopAdult: "",
+  //   agreedAdult: false,
+  //   nameBottomAdult: "",
+  //   dateBottomAdult: todaysDate,
+  //   //Youth waiver
+  //   dateTopYouth: todaysDate,
+  //   nameTopYouth: "",
+  //   agreedYouth: false,
+  //   nameBottomYouth: "",
+  //   dateBottomYouth: todaysDate,
+  //   noParentYouth: "",
+  //   dateBottomVolYouth: todaysDate,
+  //   guardianEmailYouth: "",
+  //   guardianTopYouth: "",
+  //   guardianBottomYouth: "",
+  //   dateBottomGuardYouth: todaysDate,
+  //   //Photo waiver
+  //   agreedPhoto: false,
+  //   nameBottomPhoto: "",
+  //   dateBottomPhoto: todaysDate,
+  //   dateBottomVolPhoto: todaysDate,
+  //   guardianBottomPhoto: "",
+  //   dateBottomGuardPhoto: todaysDate
+  // };
 
   $scope.submitAdultWaiver = function() {
-    console.log("XXcurrent waiverObj: ", $scope.waiverObj);
+    console.log("XXcurrent waiverObj: ", VolunteerService.waiverObj);
     var filledOut;
-    $scope.waiverObj.volunteerIndex = VolunteerService.preregisteredVolunteerObj[0].id;
-    filledOut = $scope.waiverObj.dateTopAdult &&
-                $scope.waiverObj.nameTopAdult &&
-                $scope.waiverObj.agreedAdult &&
-                $scope.waiverObj.nameBottomAdult &&
-                $scope.waiverObj.dateBottomAdult;
+
+    filledOut = VolunteerService.waiverObj.dateTopAdult &&
+                VolunteerService.waiverObj.nameTopAdult &&
+                VolunteerService.waiverObj.agreedAdult &&
+                VolunteerService.waiverObj.nameBottomAdult &&
+                VolunteerService.waiverObj.dateBottomAdult;
+
 
     if ( filledOut ) {
       $location.path("/waiver-photo");
@@ -105,24 +53,24 @@ $scope.preregisteredVolunteerObj = VolunteerService.preregisteredVolunteerObj;
   };
 
   $scope.submitYouthWaiver = function() {
-    console.log("current waiverObj: ", $scope.waiverObj);
+    console.log("current waiverObj: ", VolunteerService.waiverObj);
     var noParentAll,
         parentAll,
         filledOut;
 
-    noParentAll = $scope.waiverObj.noParentYouth &&
-                  $scope.waiverObj.nameBottomYouth &&
-                  $scope.waiverObj.dateBottomVolYouth &&
-                  $scope.waiverObj.guardianEmailYouth;
+    noParentAll = VolunteerService.waiverObj.noParentYouth &&
+                  VolunteerService.waiverObj.nameBottomYouth &&
+                  VolunteerService.waiverObj.dateBottomVolYouth &&
+                  VolunteerService.waiverObj.guardianEmailYouth;
 
-    parentAll = $scope.waiverObj.dateTopYouth &&
-                $scope.waiverObj.nameTopYouth &&
-                $scope.waiverObj.guardianTopYouth &&
-                $scope.waiverObj.agreedYouth &&
-                $scope.waiverObj.nameBottomYouth &&
-                $scope.waiverObj.dateBottomVolYouth &&
-                $scope.waiverObj.guardianBottomYouth &&
-                $scope.waiverObj.dateBottomGuardYouth;
+    parentAll = VolunteerService.waiverObj.dateTopYouth &&
+                VolunteerService.waiverObj.nameTopYouth &&
+                VolunteerService.waiverObj.guardianTopYouth &&
+                VolunteerService.waiverObj.agreedYouth &&
+                VolunteerService.waiverObj.nameBottomYouth &&
+                VolunteerService.waiverObj.dateBottomVolYouth &&
+                VolunteerService.waiverObj.guardianBottomYouth &&
+                VolunteerService.waiverObj.dateBottomGuardYouth;
 
     filledOut = noParentAll || parentAll;
 
@@ -143,9 +91,9 @@ $scope.preregisteredVolunteerObj = VolunteerService.preregisteredVolunteerObj;
   };
 
   $scope.submitPhotoWaiver = function() {
-    console.log("current waiverObj: ", $scope.waiverObj);
+    console.log("current waiverObj: ", VolunteerService.waiverObj);
 
-    if ( $scope.waiverObj.agreedPhoto ) {
+    if ( VolunteerService.waiverObj.agreedPhoto ) {
       $location.path("/confirmation");
     }
     else {

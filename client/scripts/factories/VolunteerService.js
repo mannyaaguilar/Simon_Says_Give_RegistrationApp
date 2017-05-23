@@ -1,26 +1,5 @@
-myApp.factory('VolunteerService', ['$http', '$location', function($http, $location){
+myApp.factory('VolunteerService', ['$http', '$location', 'UserService', 'UtilitesService', function($http, $location, UserService, UtilitesService){
 console.log("Volunteer Service loaded");
-
-// var volunteerToDB = {
-//     email: '',
-//     first_name: '',
-//     last_name: '',
-//     // address1: '',
-//     // address2: '',
-//     // city: '',
-//     // state: '',
-//     // zip: '',
-//     under_18: true,
-//     birthdate: '',
-//     // birthdate: '3000-12-01',
-//     has_signed_waiver: false,
-//     has_allowed_photos: false,
-//     parent_email: '',
-//     // validation_required: false,
-//     // school: '',
-//     // employer: '',
-//     // employer_match: false
-//   };
 
   var preregisteredVolunteerObj = {
     email: '',
@@ -42,7 +21,38 @@ console.log("Volunteer Service loaded");
     // employer: '',
     // employer_match: false
   };
-  var newVolunteer = [];
+
+  var todaysDate = new Date();
+
+  var waiverObj = {
+    //Adult waiver
+    volunteerIndex: "",
+    dateTopAdult: todaysDate,
+    nameTopAdult: "",
+    agreedAdult: false,
+    nameBottomAdult: "",
+    dateBottomAdult: todaysDate,
+    //Youth waiver
+    dateTopYouth: todaysDate,
+    nameTopYouth: "",
+    agreedYouth: false,
+    nameBottomYouth: "",
+    dateBottomYouth: todaysDate,
+    noParentYouth: "",
+    dateBottomVolYouth: todaysDate,
+    guardianEmailYouth: "",
+    guardianTopYouth: "",
+    guardianBottomYouth: "",
+    dateBottomGuardYouth: todaysDate,
+    //Photo waiver
+    agreedPhoto: false,
+    nameBottomPhoto: "",
+    dateBottomPhoto: todaysDate,
+    dateBottomVolPhoto: todaysDate,
+    guardianBottomPhoto: "",
+    dateBottomGuardPhoto: todaysDate
+  };
+
 
   preregisteredVolunteer = function(volunteer){
       console.log("inside preregisteredVolunteer function", volunteer );
@@ -85,9 +95,25 @@ console.log("Volunteer Service loaded");
       // return preregisteredVolunteerObj;
     };
 
-  postNewVolunteer = function(newVolunteer){
 
-  };
+    setEventTime = function(){
+      var checkInTime = new Date();
+      updateWaiver(checkInTime);
+    };
+
+
+
+    updateWaiver = function(checkInTime){
+        waiverObj.event_id = UserService.eventObject.eventCode;
+        waiverObj.time_in = UtilitesService.formatTime(checkInTime);
+        waiverObj.date = UtilitesService.formatDate(checkInTime);
+        $http.post('/volunteer/complete', waiverObj)
+        .then(function(response){
+          if(response){
+            $location.path('/confirmation');
+          }
+        });
+      };
 
   clearVolunteerObject = function(){
     volunteer = {};
@@ -97,7 +123,7 @@ console.log("Volunteer Service loaded");
    clearVolunteerObject: clearVolunteerObject,
    preregisteredVolunteer: preregisteredVolunteer,
    preregisteredVolunteerObj: preregisteredVolunteerObj,
-   postNewVolunteer: postNewVolunteer
+   waiverObj: waiverObj
  };
 
 }]); //end of VolunteerService

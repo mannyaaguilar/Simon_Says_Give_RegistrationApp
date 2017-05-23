@@ -144,6 +144,9 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/confirmation.html',
       controller: 'ConfirmationController',
       resolve: {
+        setEventTime: ['VolunteerService', function(){
+          return VolunteerService.setEventTime();
+        }],
         checkevent : ['UserService', function(UserService){
           return UserService.checkEvent();
         }]

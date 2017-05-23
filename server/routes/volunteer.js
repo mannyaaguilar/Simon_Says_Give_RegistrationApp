@@ -142,7 +142,7 @@ router.post('/complete', function(req, res, next) {
                     next(err);
                   }
                   else {
-                    res.redirect('/');
+                    res.send(result.rows);
                   }
                 });//end of client.query
           }
