@@ -17,39 +17,46 @@ $scope.volunteerList = [];
 // $scope.checkoutList = [1, 2, 3, 4];
 $scope.checkoutList = [];
 
-//CODE TO UPDATE - SKELETON FROM ANGULAR DOCUMENTATION
-// $scope.list = [1,2,3,4,5];
-  $scope.toggle = function (volunteer, volunteerList) {
-    var idx = volunteerList.indexOf(volunteer);
-    if (idx > -1) {
-      volunteerList.splice(idx, 1);
-    }
-    else {
-      volunteerList.push(volunteer);
-    }
-  };
+// //CODE TO UPDATE - SKELETON FROM ANGULAR DOCUMENTATION
+// $scope.items = [1,2,3,4,5];
+$scope.items = [];
+$scope.selected = [];
+$scope.toggle = function (item, list) {
+  var idx = list.indexOf(item);
+  if (idx > -1) {
+    list.splice(idx, 1);
+  }
+  else {
+    list.push(item);
+  }
+  console.log('here is items: ', $scope.items);
+  console.log('here is selected: ', $scope.selected);
+};
 
-  $scope.exists = function (volunteer, volunteerList) {
-    return volunteerList.indexOf(volunteer) > -1;
-  };
+$scope.exists = function (item, list) {
+  return list.indexOf(item) > -1;
+};
 
-  $scope.isIndeterminate = function() {
-    return ($scope.checkoutList.length !== 0 &&
-        $scope.checkoutList.length !== $scope.volunteer.length);
-  };
+$scope.isIndeterminate = function() {
+  return ($scope.selected.length !== 0 &&
+      $scope.selected.length !== $scope.items.length);
+};
 
-  $scope.isChecked = function() {
-    return $scope.checkoutList.length === $scope.volunteerList.length;
-  };
+$scope.isChecked = function() {
+  return $scope.selected.length === $scope.items.length;
+};
 
-  $scope.toggleAll = function() {
-    if ($scope.checkoutList.length === $scope.volunteerList.length) {
-      $scope.checkoutList = [];
-    } else if ($scope.checkoutList.length === 0 || $scope.checkoutList.length > 0) {
-      $scope.checkoutList = $scope.volunteerList.slice(0);
-    }
-  };
+$scope.toggleAll = function() {
+  if ($scope.selected.length === $scope.items.length) {
+    $scope.selected = [];
+  } else if ($scope.selected.length === 0 || $scope.selected.length > 0) {
+    $scope.selected = $scope.items.slice(0);
+  }
+};
 //DOCUMENTATION CODE END
+
+
+
 
 
 
