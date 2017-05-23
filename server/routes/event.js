@@ -3,7 +3,7 @@ var router = express.Router();
 var pool = require('../modules/pool');
 
 
-// get route for all events
+// Get route for all events
 router.get('/', function(req,res) {
   console.log('ssgEvent/ Route Hit');
   if(req.isAuthenticated()) {
@@ -30,7 +30,7 @@ router.get('/', function(req,res) {
   }
 });
 
-// posts new events
+// Posts new events
 router.post('/add', function(req,res) {
   console.log("inside /event/add route");
   if(req.isAuthenticated()) {
@@ -65,6 +65,33 @@ router.post('/add', function(req,res) {
           } else {
             res.send("Event created successfully")
             // res.sendStatus(201); // succesful insert status
+          }
+        });
+      }
+    });
+  } else {
+    res.sendStatus(401);
+  }
+});
+
+// Deletes an event from the database
+router.delete('/delete/:eventCode', function(req,res) {
+  console.log("/delete route hit");
+  if(req.isAuthenticated()) {
+    var eventCode = req.params.eventCode;
+    // DELETE FROM event WHERE "event_code" = 2;
+    pool.connect(function(errorConnectingToDatabase,db,done) {
+      if(errorConnectingToDatabase) {
+        console.log('Error connecting to the database');
+        res.sendStatus(500);
+      } else {
+        db.query('DELETE FROM event WHERE event_code = $1;',[eventCode], function(queryError,result) {
+          done();
+          if (queryError) {
+            console.log('Error making query');
+            res.sendStatus(500);
+          } else {
+            res.sendStatus(200);
           }
         });
       }

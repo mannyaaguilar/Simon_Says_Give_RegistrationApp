@@ -22,6 +22,7 @@ html {
 body {
   margin: 0;
   padding: 0;
+  height: 120%;
   font-family: 'Open Sans';
   /*background-color: #f3eab2;*/
 }
@@ -255,8 +256,11 @@ footer {
   font-size: 14px;
 }
 
-.eventBox {
+.eventListDiv {
   width: 100%;
+  background-color: whitesmoke;
+  padding: 10px;
+  border-radius: 8px;
 }
  /*Import/Export .CSV file styles*/
 

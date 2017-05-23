@@ -11,15 +11,15 @@
 
        <md-list layout="column">
          <md-list-item class="md-3-line" ng-repeat="ssgEvent in serverResponseObject.allEvents">
-             <div class="md-list-item-text" layout="row">
+             <div class="md-list-item-text eventListDiv" layout="row">
                <div layout="column" flex="60">
+                 <h3><b>{{ssgEvent.event_code}}</b></h3>
                  <h3>{{ssgEvent.event_name}}</h3>
-                 <h4>{{ssgEvent.event_code}}</h4>
-                 <p>{{ssgEvent.event_date}}</p>
+                 <p>{{ ssgEvent.event_date.substr(0,10) }}</p>
                </div>
 
-               <md-button class="themed-Btn blueButton" aria-label="Delete" ng-click="showConfirm($event,recipe)">Delete</md-button>
-               <md-button class="themed-Btn blueButton" aria-label="View" ng-click="viewRecipe(recipe)">View</md-button>
+               <md-button class="themed-Btn blueButton" aria-label="Delete" ng-click="showConfirm($event,ssgEvent)">Delete</md-button>
+               <md-button class="themed-Btn blueButton" aria-label="View" ng-click="">View</md-button>
              </div>
          </md-list-item>
        </md-list>

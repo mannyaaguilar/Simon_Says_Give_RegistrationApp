@@ -23,10 +23,18 @@ myApp.factory('EventService', ['$http', function($http){
     });
   };
 
+  // Deletes a specific event
+  deleteEvent = function(ssgEvent) {
+    console.log('Deleting event: ', ssgEvent);
+    $http.delete('/ssgEvent/delete/' + ssgEvent.event_code).then(function(response) {
+      getEvents();
+    });
+  };
+
   return {
     serverResponseObject : serverResponseObject,
     getEvents : getEvents,
-    postEvent : postEvent
-
+    postEvent : postEvent,
+    deleteEvent : deleteEvent
   };
 }]);
