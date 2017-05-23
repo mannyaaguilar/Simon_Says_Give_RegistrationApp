@@ -1,4 +1,6 @@
-myApp.controller('CheckoutController', ['$scope', '$location', '$http', function($scope, $location, $http) {
+myApp.controller('CheckoutController', ['$scope', '$location', '$http', 'UtilitesService', function($scope, $location, $http, UtilitesService) {
+
+$scope.formatTime = UtilitesService.formatTime;
 
 //object for input items to bind to
 //NEED TO UPDATE, BRING IN VOLUNTEER OBJECT FROM FACTORY
@@ -34,8 +36,6 @@ $scope.getVolunteers = function(volunteer) {
 };
 
 $scope.checkout = function(checkoutList) {
-  // checkoutTime = new Date();
-  console.log('Logging checkout time on click: ', new Date());
   console.log('logging checkoutList: ', $scope.checkoutList);
   $scope.checkoutVolunteers(checkoutList);
   $scope.changeView();
@@ -44,7 +44,10 @@ $scope.checkout = function(checkoutList) {
 //PUT Route that updates the checkout time of chosen volunteer record(s)
 $scope.checkoutVolunteers = function(volunteers) {
   console.log('logging volunteers in checkoutVolunteers: ', volunteers);
-  $http.put('/checkout/' + volunteers).then(function(response){
+  var timeToFormat = new Date();
+  var checkoutTime = $scope.formatTime(timeToFormat);
+
+  $http.put('/checkout/' + volunteers + '/' + checkoutTime).then(function(response){
     console.log(response);
     });
 };

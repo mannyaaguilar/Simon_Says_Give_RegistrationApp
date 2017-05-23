@@ -31,19 +31,16 @@ router.post('/', function(req, res) {
 }); //ends router.post
 
 //PUT Route that updates the checkout time of chosen volunteer record(s)
-router.put('/:ids', function(req, res){
-  var ids = req.params.ids;
-  console.log('logging ids: ', ids);
+router.put('/:ids/:timeout', function(req, res){
 
   pool.connect(function(errorConnectingToDatabase, db, done){
     if(errorConnectingToDatabase) {
       console.log('Error connecting to the database.');
       res.send(500);
     } else {
-      // BELOW IS HARDCODED - NEED TO BRING IN ID AND TIMEOUT FROM CLIENT.
-      // to update multiple rows by id: UPDATE volunteer_hours SET time_out = '12:30:00' WHERE id IN (1, 2, 3, 4);
-      db.query("UPDATE volunteer_hours SET time_out = '12:30:00' WHERE id IN $1;",
-       [req.params.ids], function(queryError, result){
+      // TIMEOUT BELOW IS HARDCODED
+      db.query("UPDATE volunteer_hours SET time_out = '" + req.params.timeout +
+              "' WHERE id IN (" + req.params.ids + ");", function(queryError, result){
         done();
         if(queryError) {
           console.log('Error making query.');
