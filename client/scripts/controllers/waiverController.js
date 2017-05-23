@@ -4,7 +4,7 @@ $scope.preregisteredVolunteerObj = VolunteerService.preregisteredVolunteerObj;
   //ALL OF THESE WILL NEED TO BE IN A FACTORY
 
   var todaysDate = new Date();
-
+console.log("waiverController", VolunteerService.preregisteredVolunteerObj);
   $scope.waiverObj = {
     //Adult waiver
     dateTopAdult: todaysDate,
