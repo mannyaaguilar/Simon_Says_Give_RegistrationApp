@@ -12,14 +12,15 @@ $scope.success = false;
 //Array to store search results
 $scope.volunteerList = [];
 
-//Array to store selected volunteers to checkout
+//Array to store selected volunteers (by ID) to checkout
+//CURRENTLY HARDCODED - NEED TO CHANGE TO EMPTY ARRAY
 $scope.checkoutList = [1, 2, 3, 4];
 // $scope.checkoutList = {
 //   volunteer:''
 // };
 
 //Connected to Search button - take inputs and check for records in database,
-// append results to DOM
+//appends results to DOM
 $scope.search = function(volunteer) {
   $scope.getVolunteers(volunteer);
   $scope.success = true;
