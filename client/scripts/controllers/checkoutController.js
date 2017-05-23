@@ -11,9 +11,10 @@ $scope.success = false;
 $scope.volunteerList = [];
 
 //Array to store selected volunteers to checkout
-$scope.checkoutList = {
-  volunteer:''
-};
+$scope.checkoutList = [1, 2, 3, 4];
+// $scope.checkoutList = {
+//   volunteer:''
+// };
 
 //Connected to Search button - take inputs and check for records in database,
 // append results to DOM
@@ -32,19 +33,18 @@ $scope.getVolunteers = function(volunteer) {
     });
 };
 
-$scope.checkout = function() {
+$scope.checkout = function(checkoutList) {
   // checkoutTime = new Date();
   console.log('Logging checkout time on click: ', new Date());
   console.log('logging checkoutList: ', $scope.checkoutList);
-  $scope.checkoutVolunteers();
-
-  //changes view to confirmation page:
+  $scope.checkoutVolunteers(checkoutList);
   $scope.changeView();
 };
 
 //PUT Route that updates the checkout time of chosen volunteer record(s)
-$scope.checkoutVolunteers = function() {
-  $http.put('/checkout').then(function(response){
+$scope.checkoutVolunteers = function(volunteers) {
+  console.log('logging volunteers in checkoutVolunteers: ', volunteers);
+  $http.put('/checkout/' + volunteers).then(function(response){
     console.log(response);
     });
 };
