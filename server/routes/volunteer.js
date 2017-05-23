@@ -8,86 +8,65 @@ var pool = require('../modules/pool');
 //-*** STRUCTURE ***
 //-*****************
 //-CHECK-IN
-//X1. GET by email, first_name, last_name
+//X1. POST with email, first_name, last_name to SELECT from DB
 //X2. POST email, first_name, last_name, under_18, birthdate (if not in "volunteer")
 //X3. POST waiver object info to "waiver" with appropriate fields
 //X4. \--> PUT to "volunteer" with has_signed_waiver, has_allowed_photos, parent_email
 //X5. POST "volunteer_hours" with volunteer_id, event_id, date, time_in
 //-*****************
 
-
-// GET by email, first_name, last_name
-router.get('/', function(req, res, next) {
-  console.log("inside volunteer GET: req.body = ", req.body);
-  var newVolunteer = {
-    email: req.body.email,
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-  };
+// POST with email, first_name, last_name to SELECT from DB ("volunteer")
+// Then POST email, first_name, last_name, under_18, birthdate (if not in DB)
+router.post('/initial', function(req, res, next) {
+  var volGiven = req.body;
 
   pool.connect(function(err, client, done) {
-    if(err) {
+    if ( err ) {
       console.log("Error connecting: ", err);
       next(err);
     }
-    client.query("SELECT * FROM volunteer WHERE (email = $1 AND " +
-      "first_name = $2 AND last_name = $3);",
-      [newVolunteer.email, newVolunteer.first_name, newVolunteer.last_name],
+    client.query("SELECT * FROM volunteer WHERE email = $1 AND " +
+      "first_name = $2 AND last_name = $3;",
+      [volGiven.email, volGiven.first_name, volGiven.last_name],
         function (err, result) {
           done();
-          console.log("success in GET from volunteer table", result);
-          if(err) {
-            console.log("Error getting data from volunteer table: ", err);
+
+          if ( err ) {
+            console.log("Error with volunteer query: ", err);
             next(err);
-          } else {
-            res.redirect('/');
           }
-        });//end of client.query
-  });//end of pg.connect
-});//end of GET
+          else if ( result.rows.length === 0 ) {
+            client.query("INSERT INTO volunteer (email, first_name, last_name, " +
+              "under_18, birthdate) VALUES ($1, $2, $3, $4, $5) RETURNING *;",
+              [volGiven.email, volGiven.first_name, volGiven.last_name,
+                volGiven.under_18, volGiven.birthdate],
+                function (err, result) {
+                  done();
 
-
-// POST email, first_name, last_name, under_18, birthdate
-router.post('/', function(req, res, next) {
-  console.log("inside volunteer POST: req.body = ", req.body);
-  var saveVolunteer = {
-    email: req.body.email,
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-    under_18: req.body.under_18,
-    birthdate: req.body.birthdate
-  };
-
-  pool.connect(function(err, client, done) {
-    if(err) {
-      console.log("Error connecting: ", err);
-      next(err);
-    }
-    client.query("INSERT INTO volunteer (email, first_name, last_name, " +
-      "under_18, birthdate) VALUES ($1, $2, $3, $4, $5) RETURNING id",
-      [saveVolunteer.email, saveVolunteer.first_name, saveVolunteer.last_name,
-        saveVolunteer.under_18, saveVolunteer.birthdate],
-        function (err, result) {
-          done();
-          console.log("success in INSERT to volunteer table", result);
-          if(err) {
-            console.log("Error inserting data on volunteer table: ", err);
-            next(err);
-          } else {
-            res.redirect('/');
+                  if ( err ) {
+                    console.log("Error adding volunteer: ", err);
+                    next(err);
+                  }
+                  else {
+                    res.send(result.rows);
+                  }
+                });//end of client.query
+          }
+          else {
+            res.send(result.rows);
           }
         });//end of client.query
   });//end of pg.connect
 });//end of POST
 
-
-// POST to "waiver" table
-router.post('/', function(req, res, next) {
-  console.log("inside waiver POST: req.body = ", req.body);
-  let signedAdult,
+// POST waiver object info to "waiver" with appropriate fields
+// PUT to "volunteer" with has_signed_waiver, has_allowed_photos, parent_email
+// POST "volunteer_hours" with volunteer_id, event_id, date, time_in
+router.post('/complete', function(req, res, next) {
+  var signedAdult,
       signedYouth,
       liabilitySigned,
-      saveWaiver;
+      waiverInfo;
 
   signedAdult = req.body.dateTopAdult && req.body.nameTopAdult &&
                 req.body.agreedAdult && req.body.nameBottomAdult &&
@@ -100,28 +79,32 @@ router.post('/', function(req, res, next) {
 
   liabilitySigned = signedAdult || signedYouth;
 
-  saveWaiver = {
+  waiverInfo = {
     //Adult waiver
-    adult_lw_signature: req.body.nameBottomAdult || "null",
-    adult_lw_date: req.body.dateBottomAdult || "3000-12-01",
+    adult_lw_signature: req.body.nameBottomAdult || null,
+    adult_lw_date: req.body.dateBottomAdult || null,
     //Youth waiver
-    minor_lw_guardian_name: req.body.guardianTopYouth || "null",
-    minor_lw_signature: req.body.nameBottomYouth || "null",
-    minor_lw_date: req.body.dateBottomYouth || "3000-12-01",
-    minor_lw_guardian_signature: req.body.guardianBottomYouth || "null",
+    minor_lw_guardian_name: req.body.guardianTopYouth || null,
+    minor_lw_signature: req.body.nameBottomYouth || null,
+    minor_lw_date: req.body.dateBottomYouth || null,
+    minor_lw_guardian_signature: req.body.guardianBottomYouth || null,
     //Photo waiver
-    pw_signature: req.body.nameBottomPhoto || "null",
-    pw_date: req.body.dateBottomPhoto || "3000-12-01",
-    pw_guardian_signature: req.body.guardianBottomPhoto || "null",
+    pw_signature: req.body.nameBottomPhoto || null,
+    pw_date: req.body.dateBottomPhoto || null,
+    pw_guardian_signature: req.body.guardianBottomPhoto || null,
     //For the PUT
     has_signed_waiver: liabilitySigned,
-    has_allowed_photos: req.body.agreedPhoto,
-    parent_email: req.body.guardianEmailYouth || "null",
-    volunteer_id: req.body.volunteerID
+    has_allowed_photos: req.body.agreedPhoto, //required
+    parent_email: req.body.guardianEmailYouth || null,
+    volunteer_id: req.body.volunteerID, //required
+    //For the volunteer_hours POST
+    event_id: req.body.event_id, //required
+    date: req.body.date, //required
+    time_in: req.body.time //required
   };
 
   pool.connect(function(err, client, done) {
-    if(err) {
+    if ( err ) {
       console.log("Error connecting: ", err);
       next(err);
     }
@@ -132,57 +115,36 @@ router.post('/', function(req, res, next) {
       "$6, $7, $8, $9, $10) RETURNING id) UPDATE volunteer SET " +
       "has_signed_waiver = $11, has_allowed_photos = $12, parent_email = $13 " +
       "WHERE id = $14;",
-      [saveWaiver.volunteer_id, saveWaiver.adult_lw_signature,
-        saveWaiver.adult_lw_date, saveWaiver.minor_lw_guardian_name,
-        saveWaiver.minor_lw_signature, saveWaiver.minor_lw_date,
-        saveWaiver.minor_lw_guardian_signature, saveWaiver.pw_signature,
-        saveWaiver.pw_date, saveWaiver.pw_guardian_signature,
-        saveWaiver.has_signed_waiver, saveWaiver.has_allowed_photos, 
-        saveWaiver.parent_email, saveWaiver.volunteer_id],
+      [waiverInfo.volunteer_id, waiverInfo.adult_lw_signature,
+        waiverInfo.adult_lw_date, waiverInfo.minor_lw_guardian_name,
+        waiverInfo.minor_lw_signature, waiverInfo.minor_lw_date,
+        waiverInfo.minor_lw_guardian_signature, waiverInfo.pw_signature,
+        waiverInfo.pw_date, waiverInfo.pw_guardian_signature,
+        waiverInfo.has_signed_waiver, waiverInfo.has_allowed_photos,
+        waiverInfo.parent_email, waiverInfo.volunteer_id],
         function (err, result) {
-
-          //PUT
-
           done();
-          console.log("successful INSERT to 'waiver' and UPDATE to 'volunteer': ", result);
-          if(err) {
+
+          if ( err ) {
             console.log("Error inserting data on waiver table: ", err);
             next(err);
-          } else {
-            res.redirect('/');
           }
-        });//end of client.query
-  });//end of pg.connect
-});//end of POST
+          else {
+            client.query("INSERT INTO volunteer_hours (volunteer_id, event_id," +
+              " date, time_in) VALUES ($1, $2, $3, $4)",
+              [waiverInfo.volunteer_id, waiverInfo.event_id, waiverInfo.date,
+                waiverInfo.time_in],
+                function (err, result) {
+                  done();
 
-
-// POST volunteer_id, event_id, date, time_in
-router.post('/', function(req, res, next) {
-  console.log("inside volunteer_hours POST: req.body = ", req.body);
-  var saveHours = {
-    volunteer_id: req.body.id,
-    event_id: req.body.event_id,
-    date: req.body.date,
-    time_in: req.body.time
-  };
-
-  pool.connect(function(err, client, done) {
-    if(err) {
-      console.log("Error connecting: ", err);
-      next(err);
-    }
-    client.query("INSERT INTO volunteer_hours (volunteer_id, event_id, date, " +
-      "time_in) VALUES ($1, $2, $3, $4)",
-      [saveHours.volunteer_id, saveHours.event_id, saveHours.date,
-        saveHours.time_in],
-        function (err, result) {
-          done();
-          console.log("success in INSERT to volunteer_hours table", result);
-          if(err) {
-            console.log("Error inserting data on volunteer_hours table: ", err);
-            next(err);
-          } else {
-            res.redirect('/');
+                  if ( err ) {
+                    console.log("Error inserting to volunteer_hours: ", err);
+                    next(err);
+                  }
+                  else {
+                    res.redirect('/');
+                  }
+                });//end of client.query
           }
         });//end of client.query
   });//end of pg.connect
