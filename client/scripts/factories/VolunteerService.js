@@ -97,20 +97,27 @@ console.log("Volunteer Service loaded");
 
 
     setEventTime = function(){
-      var checkInTime = new Date();
-      updateWaiver(checkInTime);
+          console.log("in setEventTime!");
+          updateWaiver();
     };
 
 
 
-    updateWaiver = function(checkInTime){
+    updateWaiver = function(){
+      console.log("in updateWaiver!");
+        var checkInTime = new Date();
         waiverObj.event_id = UserService.eventObject.eventCode;
         waiverObj.time_in = UtilitesService.formatTime(checkInTime);
         waiverObj.date = UtilitesService.formatDate(checkInTime);
         $http.post('/volunteer/complete', waiverObj)
-        .then(function(response){
-          if(response){
-            $location.path('/confirmation');
+        .then(function(err, response){
+          console.log("in .then from updateWaiver!");
+          if( err ){
+            console.log("updateWaiver error: ", err);
+            return false;
+          }
+          else {
+            return response;
           }
         });
       };
@@ -123,7 +130,8 @@ console.log("Volunteer Service loaded");
    clearVolunteerObject: clearVolunteerObject,
    preregisteredVolunteer: preregisteredVolunteer,
    preregisteredVolunteerObj: preregisteredVolunteerObj,
-   waiverObj: waiverObj
+   waiverObj: waiverObj,
+   setEventTime: setEventTime
  };
 
 }]); //end of VolunteerService

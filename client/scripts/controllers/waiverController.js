@@ -4,7 +4,7 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location', 'Volunteer
 
   // var todaysDate = new Date();
   //
-  // VolunteerService.waiverObj = {
+  // $scope.waiverObj = {
   //   //Adult waiver
   //   volunteerIndex: "",
   //   dateTopAdult: todaysDate,
@@ -33,15 +33,17 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location', 'Volunteer
   //   dateBottomGuardPhoto: todaysDate
   // };
 
+  $scope.waiverObj = VolunteerService.waiverObj;
+
   $scope.submitAdultWaiver = function() {
-    console.log("XXcurrent waiverObj: ", VolunteerService.waiverObj);
+    console.log("XXcurrent waiverObj: ", $scope.waiverObj);
     var filledOut;
 
-    filledOut = VolunteerService.waiverObj.dateTopAdult &&
-                VolunteerService.waiverObj.nameTopAdult &&
-                VolunteerService.waiverObj.agreedAdult &&
-                VolunteerService.waiverObj.nameBottomAdult &&
-                VolunteerService.waiverObj.dateBottomAdult;
+    filledOut = $scope.waiverObj.dateTopAdult &&
+                $scope.waiverObj.nameTopAdult &&
+                $scope.waiverObj.agreedAdult &&
+                $scope.waiverObj.nameBottomAdult &&
+                $scope.waiverObj.dateBottomAdult;
 
 
     if ( filledOut ) {
@@ -53,24 +55,24 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location', 'Volunteer
   };
 
   $scope.submitYouthWaiver = function() {
-    console.log("current waiverObj: ", VolunteerService.waiverObj);
+    console.log("current waiverObj: ", $scope.waiverObj);
     var noParentAll,
         parentAll,
         filledOut;
 
-    noParentAll = VolunteerService.waiverObj.noParentYouth &&
-                  VolunteerService.waiverObj.nameBottomYouth &&
-                  VolunteerService.waiverObj.dateBottomVolYouth &&
-                  VolunteerService.waiverObj.guardianEmailYouth;
+    noParentAll = $scope.waiverObj.noParentYouth &&
+                  $scope.waiverObj.nameBottomYouth &&
+                  $scope.waiverObj.dateBottomVolYouth &&
+                  $scope.waiverObj.guardianEmailYouth;
 
-    parentAll = VolunteerService.waiverObj.dateTopYouth &&
-                VolunteerService.waiverObj.nameTopYouth &&
-                VolunteerService.waiverObj.guardianTopYouth &&
-                VolunteerService.waiverObj.agreedYouth &&
-                VolunteerService.waiverObj.nameBottomYouth &&
-                VolunteerService.waiverObj.dateBottomVolYouth &&
-                VolunteerService.waiverObj.guardianBottomYouth &&
-                VolunteerService.waiverObj.dateBottomGuardYouth;
+    parentAll = $scope.waiverObj.dateTopYouth &&
+                $scope.waiverObj.nameTopYouth &&
+                $scope.waiverObj.guardianTopYouth &&
+                $scope.waiverObj.agreedYouth &&
+                $scope.waiverObj.nameBottomYouth &&
+                $scope.waiverObj.dateBottomVolYouth &&
+                $scope.waiverObj.guardianBottomYouth &&
+                $scope.waiverObj.dateBottomGuardYouth;
 
     filledOut = noParentAll || parentAll;
 
@@ -91,9 +93,9 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location', 'Volunteer
   };
 
   $scope.submitPhotoWaiver = function() {
-    console.log("current waiverObj: ", VolunteerService.waiverObj);
+    console.log("current waiverObj: ", $scope.waiverObj);
 
-    if ( VolunteerService.waiverObj.agreedPhoto ) {
+    if ( $scope.waiverObj.agreedPhoto ) {
       $location.path("/confirmation");
     }
     else {

@@ -63,20 +63,46 @@ router.post('/initial', function(req, res, next) {
 // PUT to "volunteer" with has_signed_waiver, has_allowed_photos, parent_email
 // POST "volunteer_hours" with volunteer_id, event_id, date, time_in
 router.post('/complete', function(req, res, next) {
+  console.log("in server complete post!");
   var signedAdult,
       signedYouth,
       liabilitySigned,
       waiverInfo;
 
-  signedAdult = req.body.dateTopAdult && req.body.nameTopAdult &&
-                req.body.agreedAdult && req.body.nameBottomAdult &&
-                req.body.dateBottomAdult;
+signedAdult = false;
+  if ( req.body.dateTopAdult ) {
+    if ( req.body.nameTopAdult ) {
+      if ( req.body.agreedAdult ) {
+        if ( req.body.nameBottomAdult ) {
+          if ( req.body.dateBottomAdult ) {
+            signedAdult = true;
+          }
+        }
+      }
+    }
+  }
 
-  signedYouth = req.body.dateTopYouth && req.body.nameTopYouth &&
-                req.body.guardianTopYouth && req.body.agreedYouth &&
-                req.body.nameBottomYouth && req.body.dateBottomVolYouth &&
-                req.body.guardianBottomYouth && req.body.dateBottomGuardYouth;
+signedYouth = false;
+  if ( req.body.dateTopYouth ) {
+    if ( req.body.nameTopYouth ) {
+      if ( req.body.guardianTopYouth ) {
+        if ( req.body.agreedYouth ) {
+          if ( req.body.nameBottomYouth ) {
+            if ( req.body.dateBottomVolYouth ) {
+              if ( req.body.guardianBottomYouth ) {
+                if ( req.body.dateBottomGuardYouth ) {
+                  signedYouth = true;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 
+console.log("signedAdult: ", signedAdult);
+console.log("signedYouth: ", signedYouth);
   liabilitySigned = signedAdult || signedYouth;
 
   waiverInfo = {
@@ -108,6 +134,7 @@ router.post('/complete', function(req, res, next) {
       console.log("Error connecting: ", err);
       next(err);
     }
+    console.log("waiverInfo: ", waiverInfo);
     client.query("WITH volunteer_hours AS (INSERT INTO waiver " +
       "(volunteer_id, adult_lw_signature, adult_lw_date, minor_lw_guardian_name, " +
       "minor_lw_signature, minor_lw_date, minor_lw_guardian_signature, " +
@@ -130,6 +157,7 @@ router.post('/complete', function(req, res, next) {
             next(err);
           }
           else {
+            console.log("server complete post worked!");
             client.query("INSERT INTO volunteer_hours (volunteer_id, event_id," +
               " date, time_in) VALUES ($1, $2, $3, $4)",
               [waiverInfo.volunteer_id, waiverInfo.event_id, waiverInfo.date,
@@ -142,6 +170,7 @@ router.post('/complete', function(req, res, next) {
                     next(err);
                   }
                   else {
+                    console.log("server complete second post worked!");
                     res.send(result.rows);
                   }
                 });//end of client.query
