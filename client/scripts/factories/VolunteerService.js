@@ -42,7 +42,6 @@ console.log("Volunteer Service loaded");
     // employer: '',
     // employer_match: false
   };
-console.log("before", preregisteredVolunteerObj);
   var newVolunteer = [];
 
   preregisteredVolunteer = function(volunteer){
@@ -50,7 +49,9 @@ console.log("before", preregisteredVolunteerObj);
       $http.post('/volunteer/initial', volunteer)
       // $http.post('/volunteer')
       .then(function(response){
-        // console.log('RESPONSE: ', response.data[0]);
+        console.log('RESPONSE: ', response.data[0]);
+        console.log('RESPONSE: ', response.data[0].id);
+
         // volunteerToDB = angular.copy(response.data)
         // console.log('VOLUNTEERTODB', volunteerToDB);
         preregisteredVolunteerObj.email = response.data[0].email;
@@ -62,7 +63,6 @@ console.log("before", preregisteredVolunteerObj);
         preregisteredVolunteerObj.has_allowed_photos = response.data[0].has_allowed_photos;
         preregisteredVolunteerObj.parent_email = response.data[0].parent_email;
 
-        console.log("PREREGISTEREDVOLUNTEEROBJ", preregisteredVolunteerObj);
         if(response.data[0]){
           console.log("found");
           if(preregisteredVolunteerObj.under_18 === true && preregisteredVolunteerObj.has_signed_waiver === false){
@@ -84,7 +84,6 @@ console.log("before", preregisteredVolunteerObj);
       });
       // return preregisteredVolunteerObj;
     };
-console.log('after', preregisteredVolunteerObj);
 
   postNewVolunteer = function(newVolunteer){
 

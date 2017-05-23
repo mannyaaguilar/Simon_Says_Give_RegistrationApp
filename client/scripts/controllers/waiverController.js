@@ -1,12 +1,14 @@
 myApp.controller('WaiverController', ['$scope', '$http', '$location', 'VolunteerService', function($scope, $http, $location, VolunteerService) {
+
 $scope.preregisteredVolunteerObj = VolunteerService.preregisteredVolunteerObj;
-// $scope.volunteerToDB = VolunteerService.volunteerToDB;
+
   //ALL OF THESE WILL NEED TO BE IN A FACTORY
 
   var todaysDate = new Date();
-console.log("waiverController", VolunteerService.preregisteredVolunteerObj);
+
   $scope.waiverObj = {
     //Adult waiver
+    volunteerIndex: "",
     dateTopAdult: todaysDate,
     nameTopAdult: "",
     agreedAdult: false,
@@ -85,9 +87,9 @@ console.log("waiverController", VolunteerService.preregisteredVolunteerObj);
   //END TIMER STUFF
 
   $scope.submitAdultWaiver = function() {
-    console.log("current waiverObj: ", $scope.waiverObj);
+    console.log("XXcurrent waiverObj: ", $scope.waiverObj);
     var filledOut;
-
+    $scope.waiverObj.volunteerIndex = VolunteerService.preregisteredVolunteerObj[0].id;
     filledOut = $scope.waiverObj.dateTopAdult &&
                 $scope.waiverObj.nameTopAdult &&
                 $scope.waiverObj.agreedAdult &&
