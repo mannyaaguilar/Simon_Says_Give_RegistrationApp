@@ -1,4 +1,5 @@
-myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserService', 'CSVService', function($scope, $http, $location, UserService, CSVService) {
+myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserService', 'UtilitesService','CSVService',
+            function($scope, $http, $location, UserService, UtilitesService, CSVService) {
 
   $scope.userObject = UserService.userObject;
   $scope.logout = UserService.logout;
@@ -6,9 +7,10 @@ myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserServi
   $scope.serverResponseObject = CSVService.serverResponseObject;
   $scope.exportOption = '';
   $scope.datesEnabledValue = true;
-  $scope.errorMessage = "";
   $scope.fromDate;
   $scope.toDate;
+  var errorMessage = "";
+
 
   console.log('ExportController loaded');
 
@@ -38,13 +40,15 @@ myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserServi
   function validDates(fromDate, toDate) {
     if (fromDate && toDate) {
       if(toDate < fromDate) {
-        $scope.errorMessage = 'Invalid date Selection';
+        errorMessage = 'Invalid date Selection';
+        UtilitesService.showAlert(errorMessage);
         return false;
       } else {
         return true;
       }
     } else {
-      $scope.errorMessage = 'Invalid date Selection';
+      errorMessage = 'Invalid date Selection';
+      UtilitesService.showAlert(errorMessage);
       return false;
     }
   };
