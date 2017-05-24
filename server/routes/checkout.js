@@ -6,6 +6,8 @@ var pool = require('../modules/pool');
 //Gets matching volunteers from database
 router.post('/', function(req, res) {
 
+  console.log('logging req.body: ', req.body);
+
   pool.connect(function(error, db, done){
     if(error) {
       console.log('error connecting to the database.');
@@ -14,9 +16,10 @@ router.post('/', function(req, res) {
     } else {
       db.query("SELECT volunteer.first_name, volunteer.last_name, " +
       "volunteer.email, volunteer_hours.id FROM volunteer JOIN volunteer_hours " +
-      "ON volunteer.id = volunteer_hours.volunteer_id WHERE volunteer.first_name " +
-      "ILIKE $1 OR volunteer.last_name ILIKE $2 OR volunteer.email ILIKE $3;",
-      [req.body.first_name, req.body.last_name, req.body.email],
+      "ON volunteer.id = volunteer_hours.volunteer_id WHERE volunteer_hours.event_id " +
+      "= $4 AND (volunteer.first_name " + "ILIKE $1 OR volunteer.last_name ILIKE $2 " +
+      "OR volunteer.email ILIKE $3) AND volunteer_hours.time_out IS null;",
+      [req.body.first_name, req.body.last_name, req.body.email, req.body.eventID],
       function(queryError, result){
         done();
         if (queryError) {

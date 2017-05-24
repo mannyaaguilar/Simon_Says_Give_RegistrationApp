@@ -63,9 +63,10 @@ $scope.search = function(volunteer) {
 //http post to server - takes response and sets it equal to the volunteerList array
 $scope.getVolunteers = function(volunteer) {
   console.log('volunteerObject in http: ', $scope.volunteerObject);
-  console.log('logging volunteer in htpp function', volunteer);
+  volunteer.eventID = $scope.eventObject.eventCode;
+  console.log('logging volunteer in http function', volunteer);
   console.log('logging event objectL: ', $scope.eventObject);
-  $http.post('/checkout', volunteer).then(function(response){
+  $http.post('/checkout/', volunteer).then(function(response){
     $scope.volunteerList = response.data;
     console.log('logging checkout response: ', response);
     });
