@@ -1,12 +1,15 @@
 <!-- HEADER INCLUDED -->
 <div ng-include="'views/partials/header.html'"></div>
 
+<!-- MENU INCLUDED -->
+<div ng-include="'views/partials/menu.html'"></div>
+
 <!-- REGISTER ADMIN USER VIEW -->
 <div layout="row">
   <div layout-md="column" flex="5"></div>
   <div layout="column" flex="90">
     <div class="addAdminContainer">
-      <h1>ADD A NEW ADMIN USER</h1>
+      <h1>ADD ADMIN USER</h1>
         <form name="registerView" ng-submit="registerAdminUser()">
           <div layout="row">
           <md-input-container layout="column" flex="45">
@@ -32,12 +35,11 @@
         <!-- BUTTONS -->
         <md-input-container layout="row" layout-align="start center">
           <div>
-            <md-button ng-if="message === ''" class="themed-Btn" aria-label="Cancel" value="Cancel" ng-click="redirect('/admin')">Back to Admin Home</md-button>
-            <md-button ng-if="message === ''" class="themed-Btn" type="submit" name="submit" aria-label="Register" value="Register">Register</md-button>
+            <md-button class="themed-Btn" aria-label="Cancel" value="Cancel" ng-click="redirect('/displayEvents')">Back to Admin Home</md-button>
+            <md-button class="themed-Btn" type="submit" name="submit" aria-label="Register" value="Register">Register</md-button>
           </div>
         </md-input-container>
         <p ng-if="message != ''">{{message}}</p>
-        <md-button layout-align="end center" ng-if="message != ''" class="themed-Btn" aria-label="Back to Admin" value="Back to Admin" ng-click="redirect('/admin')">Back to Admin Home</md-button>
       </form>
     </div>
   </div>

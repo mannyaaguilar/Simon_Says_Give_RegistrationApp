@@ -1,12 +1,15 @@
 <!-- HEADER INCLUDED -->
 <div ng-include="'views/partials/header.html'"></div>
 
+<!-- MENU INCLUDED -->
+<div ng-include="'views/partials/menu.html'"></div>
+
 <!-- EXPORT VIEW -->
 <div layout="row">
   <div layout-md="column" flex="5"></div>
   <div layout="column" flex="90">
     <div class="importFileContainer">
-      <h1>EXPORT SSG VOLUNTEER DATABASE TO .CSV FILE </h1>
+      <h1>EXPORT VOLUNTEER INFORMATION</h1>
       <md-radio-group ng-model="exportOption" ng-change="toggleEnableDates(exportOption)">
         <br>
         <md-radio-button value="volunteer" class="md-primary">Export volunteer information (First Name, Last Name, Email)</md-radio-button>
@@ -39,7 +42,7 @@
       <!-- BUTTONS -->
       <md-input-container layout="row" layout-align="start center">
         <div>
-          <md-button class="themed-Btn" aria-label="Cancel" value="Cancel" ng-click="redirect('/admin')">Back to Admin Home</md-button>
+          <md-button class="themed-Btn" aria-label="Cancel" value="Cancel" ng-click="redirect('/displayEvents')">Back to Admin Home</md-button>
           <md-button class="themed-Btn" ng-click="exportInformation(exportOption)">Export</md-button><br>
         </div>
       </md-input-container>

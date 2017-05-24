@@ -1,6 +1,9 @@
 <!-- HEADER INCLUDED -->
 <div ng-include="'views/partials/header.html'"></div>
 
+<!-- MENU INCLUDED -->
+<div ng-include="'views/partials/menu.html'"></div>
+
 <!-- CREATE EVENT VIEW -->
 <div layout="row">
   <div layout-md="column" flex="5"></div>
@@ -108,8 +111,8 @@
           <!-- BUTTONS -->
           <md-input-container layout="row" layout-align="start center">
             <div>
-              <md-button class="themed-Btn" aria-label="Cancel" value="Cancel" ng-click="redirect('/admin')">Back to Admin Home</md-button>
-              <md-button class="themed-Btn" type="submit" name="submit" aria-label="Create Event" value="Create Event">Create Event</md-button>
+              <md-button class="themed-Btn" aria-label="Cancel" value="Cancel" ng-click="redirect('/displayEvents')">Back to Admin Home</md-button>
+              <md-button class="themed-Btn" type="submit" name="submit" aria-label="Save Event" value="Save Event">Save Event</md-button>
             </div>
           </md-input-container>
           <p>{{serverResponseObject.response.data}}</p>

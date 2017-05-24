@@ -22,7 +22,7 @@ myApp.controller('LoginController', ['$scope', '$http', '$location', 'UserServic
           // location works with SPA (ng-route)
           console.log('redirecting to admin page');
           if (response.data.role === 'ADMIN') {
-            $location.path('/admin');
+            $location.path('/displayEvents');
           } else {
             $location.path('/checkInOut');
           }

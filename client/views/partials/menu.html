@@ -1,0 +1,49 @@
+<!-- ADMIN MENU -->
+<md-menu-bar ng-controller="HeaderController">
+   <md-menu>
+     <button ng-click="$mdMenu.open()">
+       Events
+     </button>
+     <md-menu-content>
+       <md-menu-item>
+         <md-button ng-click="redirect('/createEvent')">Create Event</md-button>
+       </md-menu-item>
+       <md-menu-divider></md-menu-divider>
+       <md-menu-item>
+         <md-button ng-click="redirect('/displayEvents')">View Events</md-button>
+       </md-menu-item>
+     </md-menu-content>
+   </md-menu>
+   <md-menu>
+     <button ng-click="$mdMenu.open()">
+       Import/Export
+     </button>
+     <md-menu-content>
+       <md-menu-item>
+         <md-button ng-click="redirect('/import')">Import Volunteer Information</md-button>
+       </md-menu-item>
+       <md-menu-divider></md-menu-divider>
+       <md-menu-item>
+         <md-button ng-click="redirect('/export')">Export Volunteer Information</md-button>
+       </md-menu-item>
+     </md-menu-content>
+   </md-menu>
+   <md-menu>
+     <button ng-click="$mdMenu.open()">
+       Settings
+     </button>
+     <md-menu-content>
+       <md-menu-item>
+         <md-button ng-click="redirect('/addAdminUser')">Add Admin User</md-button>
+       </md-menu-item>
+       <md-menu-divider></md-menu-divider>
+       <md-menu-item>
+         <md-button>Change Password</md-button>
+       </md-menu-item>
+       <md-menu-divider></md-menu-divider>
+       <md-menu-item>
+         <md-button ng-click="logout()">Logout</md-button>
+       </md-menu-item>
+     </md-menu-content>
+   </md-menu>
+ </md-menu-bar>
