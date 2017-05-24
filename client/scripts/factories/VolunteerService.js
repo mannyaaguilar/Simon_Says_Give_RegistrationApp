@@ -119,7 +119,58 @@ console.log("Volunteer Service loaded");
       };
 
   clearVolunteerObject = function(){
-    volunteer = {};
+    preregisteredVolunteerObj = {
+      email: '',
+      first_name: '',
+      last_name: '',
+      // address1: '',
+      // address2: '',
+      // city: '',
+      // state: '',
+      // zip: '',
+      under_18: '',
+      birthdate: '',
+      // birthdate: '3000-12-01',
+      has_signed_waiver: '',
+      has_allowed_photos: '',
+      parent_email: '',
+      // validation_required: false,
+      // school: '',
+      // employer: '',
+      // employer_match: false
+    };
+    waiverObj = {
+      //Adult waiver
+      volunteerID: "",
+      dateTopAdult: todaysDate,
+      nameTopAdult: "",
+      agreedAdult: false,
+      nameBottomAdult: "",
+      dateBottomAdult: todaysDate,
+      //Youth waiver
+      dateTopYouth: todaysDate,
+      nameTopYouth: "",
+      agreedYouth: false,
+      nameBottomYouth: "",
+      dateBottomYouth: todaysDate,
+      noParentYouth: "",
+      dateBottomVolYouth: todaysDate,
+      guardianEmailYouth: "",
+      guardianTopYouth: "",
+      guardianBottomYouth: "",
+      dateBottomGuardYouth: todaysDate,
+      //Photo waiver
+      agreedPhoto: false,
+      nameBottomPhoto: "",
+      dateBottomPhoto: todaysDate,
+      dateBottomVolPhoto: todaysDate,
+      guardianBottomPhoto: "",
+      dateBottomGuardPhoto: todaysDate
+    };
+    UserService.userObject = {
+      id: "",
+      userName: ""
+    };
   };
 
  return {

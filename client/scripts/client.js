@@ -86,6 +86,9 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/volunteer.html',
       controller: 'VolunteerController',
       resolve: {
+        clearVolunteerObject: ['VolunteerService', function(VolunteerService) {
+          return VolunteerService.clearVolunteerObject();
+        }],
         checkevent : ['UserService', function(UserService){
           return UserService.checkEvent();
         }]
