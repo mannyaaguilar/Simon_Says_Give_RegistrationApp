@@ -166,6 +166,9 @@ myApp.config(['$routeProvider', '$locationProvider',
       resolve: {
         checkevent : ['UserService', function(UserService){
           return UserService.checkEvent();
+        }],
+        setEventTime: ['VolunteerService', function(VolunteerService){
+          return VolunteerService.setEventTime();
         }]
       }
     })

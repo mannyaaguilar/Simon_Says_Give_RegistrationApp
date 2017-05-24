@@ -324,6 +324,7 @@ footer {
 
 .errorContainer {
   height: 30px;
+  padding-bottom: 15px;
 }
 
 /*input font size in startEvent view*/
@@ -331,8 +332,9 @@ footer {
   font-size: 70px;
 }
 
-.eventCodeError {
+.inputError {
   color: rgb(237,39,44);
+  font-size: 30px;
 }
 
 .badButton {

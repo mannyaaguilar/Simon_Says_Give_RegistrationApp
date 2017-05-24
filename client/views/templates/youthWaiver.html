@@ -7,13 +7,13 @@
       <div layout="row" class="bufferDiv">
       </div>
       <div layout="column" ng-hide="hideQuestion">
-        <span><b>Is your parent or guardian here?</b></span>
+        <span class="yellowBack"><b>Is your parent or guardian here?</b></span>
         <br>
         <div layout="row">
-          <button type="button" name="button" class="themed-Btn badButton"
-            ng-click="youthWaiver.noParent = true; hideQuestion = true">No</button>
-          <button type="button" name="button" class="themed-Btn goodButton"
-            ng-click="youthWaiver.noParent = false; hideQuestion = true">Yes</button>
+          <button type="button" name="button" class="biggerButton themed-Btn badButton"
+            ng-click="waiverObj.noParentYouth = true; hideQuestion = true">No</button>
+          <button type="button" name="button" class="biggerButton themed-Btn goodButton"
+            ng-click="waiverObj.noParentYouth = false; hideQuestion = true">Yes</button>
         </div>
       </div>
       <div layout="row" class="bufferDiv">
@@ -147,13 +147,14 @@
       <div layout="row" class="bufferDiv">
       </div>
       <div layout="row" flex="33"
-        ng-hide="youthWaiver.noParentYouth || youthWaiver.agreedYouth">
-        <button type="button" name="button" class="themed-Btn badButton"
+        ng-hide="waiverObj.noParentYouth || waiverObj.agreedYouth">
+
+        <button type="button" name="button" class="biggerButton themed-Btn badButton"
           ng-click="declineWaiver()">Decline</button>
         <div class="bufferDiv">
         </div>
-        <button type="button" name="button" class="themed-Btn goodButton"
-          ng-click="youthWaiver.agreed = true">Accept</button>
+        <button type="button" name="button" class="biggerButton themed-Btn goodButton"
+          ng-click="waiverObj.agreedYouth = true">Accept</button>
       </div>
 
       <div ng-show="waiverObj.agreedYouth || waiverObj.noParentYouth">
@@ -223,14 +224,16 @@
               ng-model="waiverObj.guardianEmailYouth">
           </md-input-container>
         </div>
-
+        <div class="errorContainer">
+          <h3 class="inputError">{{message}}</h3>
+        </div>
         <div layout="row" class="bufferDiv">
         </div>
         <div layout="row" flex="33">
-          <button type="button" name="button" class="themed-Btn badButton"
+          <button type="button" name="button" class="biggerButton themed-Btn badButton"
             ng-click="declineWaiver()">Decline</button>
           <div class="bufferDiv">
-          <button type="button" name="button" class="themed-Btn goodButton"
+          <button type="button" name="button" class="biggerButton themed-Btn goodButton"
             ng-click="submitYouthWaiver(waiverObj)">Accept</button>
         </div>
 

@@ -11,7 +11,7 @@
   <div layout="row">
     <div flex="15"></div>
 
-    <div layout="column" flex="70" ng-show="waiverObj">
+    <div layout="column" flex="70" ng-show="waiverObj.agreedYouth">
       <br>
       <p>
         <strong>Publicity Release:</strong> Volunteer and Guardian grant and
@@ -51,7 +51,7 @@
       </div>
     </div>
 
-    <div layout="column" flex="70" ng-hide="waiverObj">
+    <div layout="column" flex="70" ng-show="waiverObj.agreedAdult">
       <br>
       <p>
         <strong>Publicity Release:</strong> Volunteer grants and conveys to
@@ -99,12 +99,12 @@
   <div flex="15" class="bufferDiv">
   </div>
   <div layout="row" flex="33">
-    <button type="button" name="button" class="themed-Btn goodButton"
-      ng-click="waiverObj.agreedPhoto = true">Accept</button>
+    <button type="button" name="button" class="biggerButton themed-Btn badButton"
+      ng-click="declineWaiver()">Decline</button>
     <div class="bufferDiv">
     </div>
-    <button type="button" name="button" class="themed-Btn badButton"
-      ng-click="declineWaiver()">Decline</button>
+    <button type="button" name="button" class="biggerButton themed-Btn goodButton"
+      ng-click="waiverObj.agreedPhoto = true">Accept</button>
   </div>
   <div flex="15" class="bufferDiv">
   </div>
@@ -115,7 +115,7 @@
   <div layout="row">
     <div flex="15"></div>
 
-    <div layout="column" flex="70" ng-hide="waiverObj && waiverObj.agreedPhoto">
+    <div layout="column" flex="70" ng-show="waiverObj.agreedAdult && waiverObj.agreedPhoto">
       <div layout="row" class="bufferDiv">
       </div>
       <div layout="row">
@@ -144,17 +144,17 @@
       </div>
 
       <div flex="66" layout="row">
-        <button type="button" name="button" class="themed-Btn goodButton"
-          ng-click="submitPhotoWaiver(waiverObj)">Submit</button>
+        <button type="button" name="button" class="biggerButton themed-Btn badButton"
+          ng-click="submitPhotoWaiver(photoWaiver)">Decline</button>
         <div class="bufferDiv">
         </div>
-        <button type="button" name="button" class="themed-Btn badButton"
-          ng-click="submitPhotoWaiver(photoWaiver)">Decline</button>
+        <button type="button" name="button" class="biggerButton themed-Btn goodButton"
+          ng-click="submitPhotoWaiver(waiverObj)">Submit</button>
       </div>
 
     </div>
 
-    <div layout="column" flex="70" ng-show="waiverObj && waiverObj.agreedPhoto">
+    <div layout="column" flex="70" ng-show="waiverObj.agreedYouth && waiverObj.agreedPhoto">
       <div layout="row" class="bufferDiv">
       </div>
       <div layout="row">

@@ -10,10 +10,10 @@
       <div layout-md="column" flex="35" ></div>
       <md-input-container layout="column" flex="30">
         <div>
-          <div class="errorContainer">
-          <h3 class="eventCodeError">{{message}}</h3>
-          </div>
           <label for="code">Administrator Code:</label>
+            <div class="errorContainer">
+              <h3 class="inputError">{{message}}</h3>
+            </div>
           <input class="eventCode" ng-model="adminCode.thisCode" type="password" required/>
         </div>
       </md-input-container>

@@ -1,7 +1,7 @@
-myApp.factory('VolunteerService', ['$http', '$location', function($http, $location){
+myApp.factory('VolunteerService', ['$http', '$location', 'UserService', 'UtilitesService', function($http, $location, UserService, UtilitesService){
 console.log("Volunteer Service loaded");
 
-var volunteerToDB = {
+  var preregisteredVolunteerObj = {
     email: '',
     first_name: '',
     last_name: '',
@@ -10,47 +10,124 @@ var volunteerToDB = {
     // city: '',
     // state: '',
     // zip: '',
-    under_18: true,
+    under_18: '',
     birthdate: '',
     // birthdate: '3000-12-01',
-    has_signed_waiver: false,
-    has_allowed_photos: false,
+    has_signed_waiver: '',
+    has_allowed_photos: '',
     parent_email: '',
     // validation_required: false,
     // school: '',
     // employer: '',
     // employer_match: false
   };
-    
-  volunteerCheckIn = function(volunteer){
-  console.log("volunteerCheckIn function accessed", volunteer);
-  $http.post('/volunteer', volunteer).then(function(){
-    if(volunteer.under_18 === true){
-      console.log("General Waiver Needed- youth", volunteer.birthdate);
-      $location.path('/waiver-youth');
-    } else if (volunteer.has_signed_waiver === true && volunteer.has_allowed_photos === true) {
-      console.log("Adult General Waiver & Photo Waiver on record");
-      $location.path('/confirmation');
-    } else if (volunteer.has_signed_waiver === true && volunteer.has_allowed_photos === false) {
-      console.log("General Waiver on record, just need Photo Waiver");
-      $location.path('/waiver-photo');
-    } else if (volunteer.has_signed_waiver === false && volunteer.has_allowed_photos === true) {
-      console.log("Photo Waiver on record, just need General Waiver");
-      $location.path('/waiver-adult');
-    } else {
-      $location.path('/waiver-adult');
-    }
-  });
-};//end volunteerCheckIn
 
-clearVolunteerObject = function(){
-  volunteer = {};
-};
+  var todaysDate = new Date();
+
+  var waiverObj = {
+    //Adult waiver
+    volunteerID: "",
+    dateTopAdult: todaysDate,
+    nameTopAdult: "",
+    agreedAdult: false,
+    nameBottomAdult: "",
+    dateBottomAdult: todaysDate,
+    //Youth waiver
+    dateTopYouth: todaysDate,
+    nameTopYouth: "",
+    agreedYouth: false,
+    nameBottomYouth: "",
+    dateBottomYouth: todaysDate,
+    noParentYouth: "",
+    dateBottomVolYouth: todaysDate,
+    guardianEmailYouth: "",
+    guardianTopYouth: "",
+    guardianBottomYouth: "",
+    dateBottomGuardYouth: todaysDate,
+    //Photo waiver
+    agreedPhoto: false,
+    nameBottomPhoto: "",
+    dateBottomPhoto: todaysDate,
+    dateBottomVolPhoto: todaysDate,
+    guardianBottomPhoto: "",
+    dateBottomGuardPhoto: todaysDate
+  };
+
+
+  preregisteredVolunteer = function(volunteer){
+      console.log("inside preregisteredVolunteer function", volunteer );
+      $http.post('/volunteer/initial', volunteer)
+      // $http.post('/volunteer')
+      .then(function(response){
+        console.log('RESPONSE: ', response.data[0]);
+        console.log('RESPONSE: ', response.data[0].id);
+
+        // volunteerToDB = angular.copy(response.data)
+        // console.log('VOLUNTEERTODB', volunteerToDB);
+        preregisteredVolunteerObj.email = response.data[0].email;
+        preregisteredVolunteerObj.first_name = response.data[0].first_name;
+        preregisteredVolunteerObj.last_name = response.data[0].last_name;
+        preregisteredVolunteerObj.under_18 = response.data[0].under_18;
+        preregisteredVolunteerObj.birthdate = response.data[0].birthdate;
+        preregisteredVolunteerObj.has_signed_waiver = response.data[0].has_signed_waiver;
+        preregisteredVolunteerObj.has_allowed_photos = response.data[0].has_allowed_photos;
+        preregisteredVolunteerObj.parent_email = response.data[0].parent_email;
+        preregisteredVolunteerObj.id = response.data[0].id;
+
+        if(response.data[0]){
+          console.log("found");
+          if(preregisteredVolunteerObj.under_18 === true && preregisteredVolunteerObj.has_signed_waiver === false){
+            $location.path('/waiver-youth');
+          } else if
+            (preregisteredVolunteerObj.under_18 === false && preregisteredVolunteerObj.has_signed_waiver === false){
+            $location.path('/waiver-adult');
+          } else if
+            (preregisteredVolunteerObj.under_18 === true && preregisteredVolunteerObj.has_allowed_photos === false){
+            $location.path('/waiver-photo');
+          } else if
+            (preregisteredVolunteerObj.under_18 === false && preregisteredVolunteerObj.has_allowed_photos === false){
+            $location.path('/waiver-photo');
+          } else {
+            $location.path('/confirmation');
+          }
+        }
+        console.log('PREREGISTERED VOLUNTEER: ', preregisteredVolunteerObj);
+      });
+      // return preregisteredVolunteerObj;
+    };
+
+
+    setEventTime = function(){
+          console.log("in setEventTime!");
+          updateWaiver();
+    };
+
+
+
+    updateWaiver = function(){
+      console.log("in updateWaiver!");
+        var checkInTime = new Date();
+        waiverObj.event_id = UserService.eventObject.eventCode;
+        waiverObj.time_in = UtilitesService.formatTime(checkInTime);
+        waiverObj.date = UtilitesService.formatDate(checkInTime);
+        waiverObj.volunteerID = preregisteredVolunteerObj.id;
+        $http.post('/volunteer/complete', waiverObj)
+        .then(function(response){
+          console.log("in .then from updateWaiver! ", response);
+          return response;
+        });
+      };
+
+  clearVolunteerObject = function(){
+    volunteer = {};
+  };
 
  return {
-   volunteerToDB: volunteerToDB,
-   volunteerCheckIn: volunteerCheckIn,
-   clearVolunteerObject: clearVolunteerObject
+   clearVolunteerObject: clearVolunteerObject,
+   preregisteredVolunteer: preregisteredVolunteer,
+   preregisteredVolunteerObj: preregisteredVolunteerObj,
+   waiverObj: waiverObj,
+   setEventTime: setEventTime
  };
 
 }]); //end of VolunteerService

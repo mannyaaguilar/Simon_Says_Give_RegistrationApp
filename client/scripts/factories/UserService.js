@@ -46,6 +46,7 @@ myApp.factory('UserService', ['$http', '$location', function($http, $location){
 
     // Checks that event code has been entered otherwise goes back to login view
     checkEvent : function(){
+      console.log("inside checkEvent");
       if(!eventObject.eventCode) {
         redirect('/login');
       }
