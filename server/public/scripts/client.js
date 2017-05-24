@@ -16,18 +16,60 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/home.html',
       controller: 'LoginController',
     })
-    .when('/admin', {
-      templateUrl: '/views/templates/admin.html',
-      controller: 'AdminController',
-    })
-    .when('/export', {
-      templateUrl: '/views/templates/export.html',
-      controller: 'ExportController',
-    })
     // Register new user View
     .when('/register', {
       templateUrl: '/views/templates/register.html',
       controller: 'LoginController'
+    })
+    // admin landing View
+    .when('/admin', {
+      templateUrl: '/views/templates/admin.html',
+      controller: 'AdminController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser('ADMIN');
+        }]
+      }
+    })
+    // Register new user View
+    .when('/addAdminUser', {
+      templateUrl: '/views/templates/addAdminUser.html',
+      controller: 'AddAdminController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser('ADMIN');
+        }]
+      }
+    })
+    // admin landing View
+    .when('/createEvent', {
+      templateUrl: '/views/templates/createEvent.html',
+      controller: 'CreateEventController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser('ADMIN');
+        }]
+      }
+    })
+    // export to .csv view
+    .when('/export', {
+      templateUrl: '/views/templates/export.html',
+      controller: 'ExportController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser('ADMIN');
+        }]
+      }
+    })
+    // Import .csv file View
+    .when('/import', {
+      templateUrl: '/views/templates/import.html',
+      controller: 'ImportController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser('ADMIN');
+        }]
+      }
     })
     // Main View of the app
     .when('/user', {
@@ -43,54 +85,125 @@ myApp.config(['$routeProvider', '$locationProvider',
     .when('/volunteer', {
       templateUrl: '/views/templates/volunteer.html',
       controller: 'VolunteerController',
+      resolve: {
+        checkevent : ['UserService', function(UserService){
+          return UserService.checkEvent();
+        }]
+      }
     })
     .when('/startEvent', {
       templateUrl: '/views/templates/startEvent.html',
       controller: 'startEventController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser();
+        }]
+      }
     })
     .when('/checkInOut', {
       templateUrl: '/views/templates/checkInOut.html',
       controller: 'checkInOutController',
+      resolve: {
+        checkevent : ['UserService', function(UserService){
+          return UserService.checkEvent();
+        }]
+      }
     })
     // Waiver View for adult primary
     .when('/waiver-adult', {
       templateUrl: '/views/templates/adultWaiver.html',
-      controller: 'WaiverController' //RESOLVE
+      controller: 'WaiverController',
+      resolve: {
+        checkevent : ['UserService', function(UserService){
+          return UserService.checkEvent();
+        }]
+      }
     })
     // Waiver View for adult primary
     .when('/waiver-youth', {
       templateUrl: '/views/templates/youthWaiver.html',
-      controller: 'WaiverController' //RESOLVE
+      controller: 'WaiverController',
+      resolve: {
+        checkevent : ['UserService', function(UserService){
+          return UserService.checkEvent();
+        }]
+      }
     })
     // Waiver View for adult primary
     .when('/waiver-photo', {
       templateUrl: '/views/templates/photoWaiver.html',
-      controller: 'WaiverController' //RESOLVE
+      controller: 'WaiverController',
+      resolve: {
+        checkevent : ['UserService', function(UserService){
+          return UserService.checkEvent();
+        }]
+      }
     })
     // Confirmation View
     .when('/confirmation', {
       templateUrl: '/views/templates/confirmation.html',
       controller: 'ConfirmationController',
+      resolve: {
+        checkevent : ['UserService', function(UserService){
+          return UserService.checkEvent();
+        }],
+        setEventTime: ['VolunteerService', function(VolunteerService){
+          return VolunteerService.setEventTime();
+        }]
+      }
     })
     // Override View
     .when('/override', {
       templateUrl: '/views/templates/override.html',
       controller: 'OverrideController',
+      resolve: {
+        checkevent : ['UserService', function(UserService){
+          return UserService.checkEvent();
+        }]
+      }
     })
     // Checkout View
     .when('/checkout', {
       templateUrl: '/views/templates/checkout.html',
       controller: 'CheckoutController',
-    })
-    // Import View of the app
-    .when('/import', {
-      templateUrl: '/views/templates/import.html',
-      controller: 'ImportController'
+      resolve: {
+        checkevent : ['UserService', function(UserService){
+          return UserService.checkEvent();
+        }]
+      }
     })
     //
     .otherwise({
       redirectTo: 'home'
     });
+}]);
+
+myApp.controller('AddAdminController', ['$scope', '$http', '$location', 'UserService', function($scope, $http, $location, UserService) {
+
+  $scope.redirect = UserService.redirect;
+  $scope.message = '';
+  $scope.adminUser = {
+    username: '',
+    password: '',
+    role: 'ADMIN'
+  };
+
+  // Registers a new ADMIN user
+  $scope.registerAdminUser = function() {
+    if($scope.adminUser.username == '' || $scope.adminUser.password == '') {
+      $scope.message = "Choose a username and password.";
+    } else {
+      console.log('sending to server...', $scope.adminUser);
+      $http.post('/register', $scope.adminUser).then(function(response) {
+        console.log('success');
+        $scope.message = 'User ' + $scope.adminUser.username + ' has been added as an Admin User.'
+      },
+      function(response) {
+        console.log('error');
+        $scope.message = "Please try again."
+      });
+    }
+  }
 }]);
 
 myApp.controller('AdminController', ['$scope', '$http', '$location', 'UserService', function($scope, $http, $location, UserService) {
@@ -99,9 +212,12 @@ console.log("adminController Loaded");
 $scope.redirect = UserService.redirect;
 }]);
 
-myApp.controller('checkInOutController', ['$scope', '$location', function($scope, $location) {
-  // when check in btn clicked, route to volunteer view
+myApp.controller('checkInOutController', ['$scope', '$location', '$http', 'VolunteerService', function($scope, $location, $http, VolunteerService) {
+
+  // when check in btn clicked, get for preregistered volunteers triggered and routes to volunteer view
   $scope.checkIn = function(){
+    console.log('inside checkIn function');
+    // VolunteerService.preregisteredVolunteer();
     $location.path('/volunteer');
   };
   // when check out btn clicked, route to confirmation view
@@ -110,7 +226,9 @@ myApp.controller('checkInOutController', ['$scope', '$location', function($scope
   };
 }]);
 
-myApp.controller('CheckoutController', ['$scope', '$location', '$http', function($scope, $location, $http) {
+myApp.controller('CheckoutController', ['$scope', '$location', '$http', 'UtilitesService', function($scope, $location, $http, UtilitesService) {
+
+$scope.formatTime = UtilitesService.formatTime;
 
 //object for input items to bind to
 //NEED TO UPDATE, BRING IN VOLUNTEER OBJECT FROM FACTORY
@@ -122,13 +240,15 @@ $scope.success = false;
 //Array to store search results
 $scope.volunteerList = [];
 
-//Array to store selected volunteers to checkout
-$scope.checkoutList = {
-  volunteer:''
-};
+//Array to store selected volunteers (by ID) to checkout
+//CURRENTLY HARDCODED - NEED TO CHANGE TO EMPTY ARRAY
+$scope.checkoutList = [1, 2, 3, 4];
+// $scope.checkoutList = {
+//   volunteer:''
+// };
 
 //Connected to Search button - take inputs and check for records in database,
-// append results to DOM
+//appends results to DOM
 $scope.search = function(volunteer) {
   $scope.getVolunteers(volunteer);
   $scope.success = true;
@@ -144,20 +264,19 @@ $scope.getVolunteers = function(volunteer) {
     });
 };
 
-$scope.checkout = function() {
-  //NEED TO ADD: PUT ROUTE to add checkout time to chosen volunteer hours record
-  // checkoutTime = new Date();
-  console.log('Logging checkout time on click: ', new Date());
+$scope.checkout = function(checkoutList) {
   console.log('logging checkoutList: ', $scope.checkoutList);
-  $scope.checkoutVolunteers();
-
-  //changes view to confirmation page:
+  $scope.checkoutVolunteers(checkoutList);
   $scope.changeView();
 };
 
 //PUT Route that updates the checkout time of chosen volunteer record(s)
-$scope.checkoutVolunteers = function() {
-  $http.put('/checkout').then(function(response){
+$scope.checkoutVolunteers = function(volunteers) {
+  console.log('logging volunteers in checkoutVolunteers: ', volunteers);
+  var timeToFormat = new Date();
+  var checkoutTime = $scope.formatTime(timeToFormat);
+
+  $http.put('/checkout/' + volunteers + '/' + checkoutTime).then(function(response){
     console.log(response);
     });
 };
@@ -200,6 +319,57 @@ myApp.controller('ConfirmationController', ['$scope', '$http', '$location', '$in
 
   // timeOut function runs when confirmation view is loaded
   $scope.timeOut();
+
+}]);
+
+myApp.controller('CreateEventController', ['$scope', '$location','UserService', 'UtilitesService','EventService',
+                function($scope, $location, UserService, UtilitesService, EventService) {
+
+  $scope.redirect = UserService.redirect;
+  $scope.serverResponseObject = EventService.serverResponseObject;
+  $scope.event = {
+    eventCode: '',
+    eventName: '',
+    eventTeam: '',
+    eventDescription: '',
+    eventLocation: '',
+    eventFromTime: '',
+    eventUntilTime: '',
+  };
+  $scope.event.eventDate;
+  var eventToSend = {};
+
+  // calls function from factory that saves event into the database
+  $scope.createEvent = function(eventEntered) {
+    console.log('EVENT ENTERED', eventEntered);
+    console.log('event.eventCode is',$scope.event.eventCode);
+    console.log('event.eventName is',$scope.event.eventName);
+    console.log('event.eventTeam is',$scope.event.eventTeam);
+    console.log('event.eventDate is',$scope.event.eventDate);
+    // validates and copies data to an object to send to the factory
+    if ($scope.event.eventCode != '' && $scope.event.eventName != '' && $scope.event.eventTeam != '' && $scope.event.eventDate) {
+      console.log('inside if');
+      eventToSend.eventCode = angular.copy($scope.event.eventCode);
+      eventToSend.eventName = angular.copy($scope.event.eventName);
+      eventToSend.eventTeam = angular.copy($scope.event.eventTeam);
+      eventToSend.eventDate = UtilitesService.formatDate(angular.copy($scope.event.eventDate));
+      eventToSend.eventDescription = angular.copy($scope.event.eventDescription);
+      eventToSend.eventLocation = angular.copy($scope.event.eventLocation);
+
+      console.log($scope.event.eventFromTime);
+      if ($scope.event.eventFromTime) {
+        eventToSend.eventFromTime = UtilitesService.formatTime(angular.copy($scope.event.eventFromTime));
+      }
+      if ($scope.event.eventUntilTime) {
+        eventToSend.eventUntilTime = UtilitesService.formatTime(angular.copy($scope.event.eventUntilTime));
+      }
+      // send information to factory
+      console.log('EVENT TO SEND: ', eventToSend);
+      EventService.postEvent(eventToSend);
+      
+    }
+  } // function createEvent()
+
 
 }]);
 
@@ -263,7 +433,14 @@ myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserServi
     } else {
       $scope.datesEnabledValue = true;
     }
-  }
+  };
+
+}]);
+
+myApp.controller('HeaderController', ['$scope', 'UserService', function($scope, UserService) {
+
+  $scope.redirect = UserService.redirect;
+  $scope.logout = UserService.logout;
 
 }]);
 
@@ -342,47 +519,68 @@ myApp.controller('ImportController', ['$scope', '$http', '$location', 'UserServi
 
 }]);
 
-myApp.controller('LoginController', ['$scope', '$http', '$location', function($scope, $http, $location) {
-    $scope.user = {
-      username: '',
-      password: ''
-    };
-    $scope.message = '';
+myApp.controller('LoginController', ['$scope', '$http', '$location', 'UserService', function($scope, $http, $location, UserService) {
 
-    $scope.login = function() {
-      if($scope.user.username == '' || $scope.user.password == '') {
-        $scope.message = "Enter your username and password!";
-      } else {
-        console.log('sending to server...', $scope.user);
-        $http.post('/', $scope.user).then(function(response) {
-          if(response.data.username) {
-            console.log('success: ', response.data);
-            // location works with SPA (ng-route)
-            console.log('redirecting to admin page');
+  $scope.user = {
+    username: '',
+    password: ''
+  };
+  $scope.event = {
+    eventCode: ''
+  };
+  $scope.adminMessage = '';
+  $scope.eventMessage = '';
+
+  // Logins Admin user
+  $scope.login = function() {
+    if($scope.user.username == '' || $scope.user.password == '') {
+      $scope.adminMessage = "Enter your username and password!";
+    } else {
+      console.log('sending to server...', $scope.user);
+      $http.post('/', $scope.user).then(function(response) {
+        if(response.data.username) {
+          console.log('success: ', response.data);
+          // location works with SPA (ng-route)
+          console.log('redirecting to admin page');
+          if (response.data.role === 'ADMIN') {
             $location.path('/admin');
           } else {
-            console.log('failure: ', response);
-            $scope.message = "Wrong!!";
+            $location.path('/checkInOut');
           }
-        });
-      }
+        } else {
+          console.log('failure: ', response);
+          $scope.adminMessage = "Invalid username and password combination.";
+        }
+      });
     }
+  };
 
-    $scope.registerUser = function() {
-      if($scope.user.username == '' || $scope.user.password == '') {
-        $scope.message = "Choose a username and password!";
-      } else {
-        console.log('sending to server...', $scope.user);
-        $http.post('/register', $scope.user).then(function(response) {
-          console.log('success');
-          $location.path('/home');
-        },
-        function(response) {
-          console.log('error');
-          $scope.message = "Please try again."
-        });
-      }
+  // Starts event based on event code
+  $scope.startEvent = function() {
+    console.log('startEvent clicked:', $scope.event.eventCode);
+    if($scope.event.eventCode == '') {
+      $scope.eventMessage = "Enter an event code!";
+    } else {
+      console.log('sending to server...', $scope.event);
+      $http.get('/newEvent/start/' + $scope.event.eventCode).then(function(response) {
+        console.log(response);
+        if(response.data.event_code) {
+          console.log('success: ', response.data);
+          UserService.eventObject.eventCode = response.data.event_code;
+          UserService.eventObject.eventName = response.data.event_name;
+          console.log('EVENT CODE', UserService.eventObject.eventCode);
+          console.log('EVENT NAME', UserService.eventObject.eventName);
+          // console.log('EVENT CODE', response.data.event_code);
+          // console.log('EVENT NAME', response.data.event_name);
+          $location.path('/checkInOut');
+        } else {
+          console.log('failure: ', response);
+          $scope.eventMessage = "Invalid event code.";
+        }
+      });
     }
+  }
+
 }]);
 
 myApp.controller('OverrideController', ['$window','$scope', '$http', '$location', 'UserService', function($window, $scope, $http, $location, UserService) {
@@ -451,10 +649,8 @@ myApp.controller('VolunteerController', ['$scope', '$http', '$location', 'UserSe
 console.log("VolunteerController Loaded");
 
 $scope.redirect = UserService.redirect;
-$scope.volunteerCheckIn = VolunteerService.volunteerCheckIn;
 $scope.volunteer = VolunteerService.volunteer;
-
-
+$scope.preregisteredVolunteer = VolunteerService.preregisteredVolunteer;
 
 var birtdateToDB;
 
@@ -477,7 +673,7 @@ $scope.volunteer = {
   };
 
 $scope.formatdob = function() {
-  console.log("1 formatdob", $scope.volunteer.birthdate);
+  console.log("formatdob", $scope.volunteer.birthdate);
   if ( $scope.volunteer.birthdate) {
     birtdateToDB = UtilitesService.formatDate(angular.copy($scope.volunteer.birthdate));
     console.log('birthdate', birtdateToDB);
@@ -488,145 +684,72 @@ $scope.formatdob = function() {
   }
 };
 
-
 $scope.cancel = function(){
   $location.path('/checkInOut');
 };
 
-//***
-
-// $scope.initial = {
-//   dob: new Date()
-// };
-// var stringDate = toString()
-// $scope.formatdob = function(initial){
-// console.log(typeof(inital));
-// console.log("Initial DOB: ", initial);
-// var formattedDOB = $scope.initial.slice(0, 10);
-// console.log(formattedDOB);
-// };
-$scope.volunteer = {
-  email: '',
-  first_name: '',
-  last_name: '',
-  under_18: true,
-  birthdate: '3000-12-01'
-};
+//sets date on datepicker to 8 years back for the convenience of user
 $scope.minmaxDate = function() {
-  this.myDate = new Date();
-  // console.log(this.myDate);
-
-  this.maxDate = new Date(
+    this.myDate = new Date();
+    this.maxDate = new Date(
     this.myDate.getFullYear() - 8,
     this.myDate.getMonth(),
     this.myDate.getDate()
   );
-  // console.log(this.maxDate);
 };
 
-$scope.volunteerData = function(){
-VolunteerService.volunteerToDB.email = angular.copy($scope.volunteer.email);
-VolunteerService.volunteerToDB.first_name = angular.copy($scope.volunteer.first_name);
-VolunteerService.volunteerToDB.last_name = angular.copy($scope.volunteer.last_name);
-VolunteerService.volunteerToDB.under_18 = angular.copy($scope.volunteer.under_18);
-VolunteerService.volunteerToDB.birtdateToDB = angular.copy($scope.volunteer.birthdate);
-};
+// $scope.volunteerData = function(){
+// VolunteerService.volunteerToDB = angular.copy($scope.volunteer);
+// console.log("INSIDE COPY volunteerToDB", VolunteerService.volunteerToDB );
+// };
 
 $scope.minmaxDate();
-$scope.volunteerData();
+// $scope.volunteerData();
+// VolunteerService.postNewVolunteer();
 }]);//end VolunteerController
 
-myApp.controller('WaiverController', ['$scope', '$http', '$location',
-  function($scope, $http, $location) {
+myApp.controller('WaiverController', ['$scope', '$http', '$location', 'VolunteerService', function($scope, $http, $location, VolunteerService) {
 
     $scope.message = '';
 
   //ALL OF THESE WILL NEED TO BE IN A FACTORY
 
-  let todaysDate = new Date();
+  // var todaysDate = new Date();
+  //
+  // $scope.waiverObj = {
+  //   //Adult waiver
+  //   volunteerIndex: "",
+  //   dateTopAdult: todaysDate,
+  //   nameTopAdult: "",
+  //   agreedAdult: false,
+  //   nameBottomAdult: "",
+  //   dateBottomAdult: todaysDate,
+  //   //Youth waiver
+  //   dateTopYouth: todaysDate,
+  //   nameTopYouth: "",
+  //   agreedYouth: false,
+  //   nameBottomYouth: "",
+  //   dateBottomYouth: todaysDate,
+  //   noParentYouth: "",
+  //   dateBottomVolYouth: todaysDate,
+  //   guardianEmailYouth: "",
+  //   guardianTopYouth: "",
+  //   guardianBottomYouth: "",
+  //   dateBottomGuardYouth: todaysDate,
+  //   //Photo waiver
+  //   agreedPhoto: false,
+  //   nameBottomPhoto: "",
+  //   dateBottomPhoto: todaysDate,
+  //   dateBottomVolPhoto: todaysDate,
+  //   guardianBottomPhoto: "",
+  //   dateBottomGuardPhoto: todaysDate
+  // };
 
-  $scope.waiverObj = {
-    //Adult waiver
-    dateTopAdult: todaysDate,
-    nameTopAdult: "",
-    agreedAdult: false,
-    nameBottomAdult: "",
-    dateBottomAdult: todaysDate,
-    //Youth waiver
-    dateTopYouth: todaysDate,
-    nameTopYouth: "",
-    agreedYouth: false,
-    nameBottomYouth: "",
-    dateBottomYouth: todaysDate,
-    noParentYouth: "",
-    dateBottomVolYouth: todaysDate,
-    guardianEmailYouth: "",
-    guardianTopYouth: "",
-    guardianBottomYouth: "",
-    dateBottomGuardYouth: todaysDate,
-    //Photo waiver
-    agreedPhoto: false,
-    nameBottomPhoto: "",
-    dateBottomPhoto: todaysDate,
-    dateBottomVolPhoto: todaysDate,
-    guardianBottomPhoto: "",
-    dateBottomGuardPhoto: todaysDate
-  };
-
-  //BEGIN TIMER STUFF
-  let inDate;
-
-  const NUM_MILIS_IN_HOUR = 3600000;
-  $scope.setCheckIn = function() {
-    inDate = new Date();
-  };
-  $scope.captureTime = function() {
-    let newDate,
-        inMonth,
-        inDay,
-        inYear,
-        inHour,
-        inMinute,
-        prettyInDate,
-        newMonth,
-        newDay,
-        newYear,
-        newHour,
-        newMinute,
-        prettyNewDate,
-        millisJustVolunteered,
-        hoursJustVolunteered;
-
-    console.log("inDate: ", inDate);
-    inMonth = inDate.getMonth();
-    inDay = inDate.getDate();
-    inYear = inDate.getFullYear();
-    inHour = inDate.getHours();
-    inMinute = inDate.getMinutes();
-    prettyInDate = inMonth + "/" + inDay + "/" + inYear +
-      ", at " + inHour + ":" + inMinute;
-    console.log("prettyInDate: ", prettyInDate);
-
-    newDate = new Date();
-    console.log("newDate: ", newDate);
-    newMonth = newDate.getMonth();
-    newDay = newDate.getDate();
-    newYear = newDate.getFullYear();
-    newHour = newDate.getHours();
-    newMinute = newDate.getMinutes();
-    prettyNewDate = newMonth + "/" + newDay + "/" + newYear +
-      ", at " + newHour + ":" + newMinute;
-    console.log("prettyNewDate: ", prettyNewDate);
-
-    millisJustVolunteered = newDate - inDate;
-    hoursJustVolunteered = millisJustVolunteered / NUM_MILIS_IN_HOUR;
-    console.log("hoursJustVolunteered: ", hoursJustVolunteered);
-  };
-  //END TIMER STUFF
+  $scope.waiverObj = VolunteerService.waiverObj;
 
   $scope.submitAdultWaiver = function() {
-    console.log("current waiverObj: ", $scope.waiverObj);
-    let filledOut;
+    console.log("XXcurrent waiverObj: ", $scope.waiverObj);
+    var filledOut;
 
     filledOut = $scope.waiverObj.dateTopAdult &&
                 $scope.waiverObj.nameTopAdult &&
@@ -655,7 +778,7 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location',
 
   $scope.submitYouthWaiver = function() {
     console.log("current waiverObj: ", $scope.waiverObj);
-    let noParentAll,
+    var noParentAll,
         parentAll,
         filledOut;
 
@@ -786,41 +909,87 @@ myApp.factory('CSVService', ['$http', function($http){
   };
 }]);
 
+myApp.factory('EventService', ['$http', function($http){
+  console.log('CSVService Loaded');
+
+  serverResponseObject = {};
+
+  // Sends event information to server
+  postEvent = function(eventToPost) {
+    console.log('Posting event ', eventToPost);
+    $http.post('/newEvent/add', eventToPost).then(function(response) {
+      console.log('Back from server after posting event', response);
+      serverResponseObject.response = response;
+    });
+  };
+
+  return {
+    serverResponseObject : serverResponseObject,
+    postEvent : postEvent
+
+  };
+}]);
+
+
 myApp.factory('UserService', ['$http', '$location', function($http, $location){
   console.log('User Service Loaded');
 
   var userObject = {};
+  var eventObject = {};
 
+  // Redirects to the view received as a parameter
   function redirect(page){
     console.log('in page navigation', page);
     $location.url(page);
   }
 
-
-
   return {
     userObject : userObject,
+    eventObject : eventObject,
     redirect : redirect,
 
-    getuser : function(){
+    getuser : function(adminRequired){
       $http.get('/user').then(function(response) {
-        // console.log('logging response.data in get user: ', response.data);
-          if(response.data.username) {
-              // user has a curret session on the server
-              userObject.id = response.data.id;
-              userObject.userName = response.data.username;
-              console.log('User userName, id: ', userObject.userName, userObject.id);
+        console.log('logging response.data in get user: ', response.data);
+          // validates that the user has a current session and is allowed to see
+          // current view
+          if (adminRequired) {
+            if(response.data.username && (response.data.role === adminRequired)) {
+                // user has a curret session on the server
+                userObject.id = response.data.id;
+                userObject.userName = response.data.username;
+                console.log('User userName, id: ', userObject.userName, userObject.id);
+            } else {
+                // user has no session or current view access is not permitted, bounce them back to the login page
+                $location.path('/login');
+            }
           } else {
-              // user has no session, bounce them back to the login page
-              $location.path('/login');
+            if(response.data.username) {
+                // user has a curret session on the server
+                userObject.id = response.data.id;
+                userObject.userName = response.data.username;
+                console.log('User userName, id: ', userObject.userName, userObject.id);
+            } else {
+                // user has no session, bounce them back to the login page
+                $location.path('/login');
+            }
           }
       });
     },
 
+    // Checks that event code has been entered otherwise goes back to login view
+    checkEvent : function(){
+      console.log("inside checkEvent");
+      if(!eventObject.eventCode) {
+        redirect('/login');
+      }
+    },
+
+    // Logs out user
     logout : function() {
         $http.get('/user/logout').then(function(response) {
           console.log('logged out');
-          $location.path('/login');
+          redirect('/login');
         });
     }
   };
@@ -831,7 +1000,7 @@ console.log('UtilitesService loaded');
 
 let todaysDate = new Date();
 
-formatDate = function(date) {
+  formatDate = function(date) {
     var curr_date = date.getDate();
     var curr_month = date.getMonth() + 1; //Months are zero based
     var curr_year = date.getFullYear();
@@ -839,17 +1008,25 @@ formatDate = function(date) {
     return formattedDate;
   };
 
+  formatTime = function(time) {
+      var curr_hour = time.getHours();
+      var curr_minutes = time.getMinutes();
+      var formattedTime = curr_hour + ":" + curr_minutes;
+      return formattedTime;
+    };
+
 return {
-    formatDate: formatDate
+    formatDate: formatDate,
+    formatTime: formatTime
   };
 
 
 }]);//end of UtilitesService
 
-myApp.factory('VolunteerService', ['$http', '$location', function($http, $location){
+myApp.factory('VolunteerService', ['$http', '$location', 'UserService', 'UtilitesService', function($http, $location, UserService, UtilitesService){
 console.log("Volunteer Service loaded");
 
-var volunteerToDB = {
+  var preregisteredVolunteerObj = {
     email: '',
     first_name: '',
     last_name: '',
@@ -858,47 +1035,124 @@ var volunteerToDB = {
     // city: '',
     // state: '',
     // zip: '',
-    under_18: true,
+    under_18: '',
     birthdate: '',
     // birthdate: '3000-12-01',
-    has_signed_waiver: false,
-    has_allowed_photos: false,
+    has_signed_waiver: '',
+    has_allowed_photos: '',
     parent_email: '',
     // validation_required: false,
     // school: '',
     // employer: '',
     // employer_match: false
   };
-    
-  volunteerCheckIn = function(volunteer){
-  console.log("volunteerCheckIn function accessed", volunteer);
-  $http.post('/volunteer', volunteer).then(function(){
-    if(volunteer.under_18 === true){
-      console.log("General Waiver Needed- youth", volunteer.birthdate);
-      $location.path('/waiver-youth');
-    } else if (volunteer.has_signed_waiver === true && volunteer.has_allowed_photos === true) {
-      console.log("Adult General Waiver & Photo Waiver on record");
-      $location.path('/confirmation');
-    } else if (volunteer.has_signed_waiver === true && volunteer.has_allowed_photos === false) {
-      console.log("General Waiver on record, just need Photo Waiver");
-      $location.path('/waiver-photo');
-    } else if (volunteer.has_signed_waiver === false && volunteer.has_allowed_photos === true) {
-      console.log("Photo Waiver on record, just need General Waiver");
-      $location.path('/waiver-adult');
-    } else {
-      $location.path('/waiver-adult');
-    }
-  });
-};//end volunteerCheckIn
 
-clearVolunteerObject = function(){
-  volunteer = {};
-};
+  var todaysDate = new Date();
+
+  var waiverObj = {
+    //Adult waiver
+    volunteerID: "",
+    dateTopAdult: todaysDate,
+    nameTopAdult: "",
+    agreedAdult: false,
+    nameBottomAdult: "",
+    dateBottomAdult: todaysDate,
+    //Youth waiver
+    dateTopYouth: todaysDate,
+    nameTopYouth: "",
+    agreedYouth: false,
+    nameBottomYouth: "",
+    dateBottomYouth: todaysDate,
+    noParentYouth: "",
+    dateBottomVolYouth: todaysDate,
+    guardianEmailYouth: "",
+    guardianTopYouth: "",
+    guardianBottomYouth: "",
+    dateBottomGuardYouth: todaysDate,
+    //Photo waiver
+    agreedPhoto: false,
+    nameBottomPhoto: "",
+    dateBottomPhoto: todaysDate,
+    dateBottomVolPhoto: todaysDate,
+    guardianBottomPhoto: "",
+    dateBottomGuardPhoto: todaysDate
+  };
+
+
+  preregisteredVolunteer = function(volunteer){
+      console.log("inside preregisteredVolunteer function", volunteer );
+      $http.post('/volunteer/initial', volunteer)
+      // $http.post('/volunteer')
+      .then(function(response){
+        console.log('RESPONSE: ', response.data[0]);
+        console.log('RESPONSE: ', response.data[0].id);
+
+        // volunteerToDB = angular.copy(response.data)
+        // console.log('VOLUNTEERTODB', volunteerToDB);
+        preregisteredVolunteerObj.email = response.data[0].email;
+        preregisteredVolunteerObj.first_name = response.data[0].first_name;
+        preregisteredVolunteerObj.last_name = response.data[0].last_name;
+        preregisteredVolunteerObj.under_18 = response.data[0].under_18;
+        preregisteredVolunteerObj.birthdate = response.data[0].birthdate;
+        preregisteredVolunteerObj.has_signed_waiver = response.data[0].has_signed_waiver;
+        preregisteredVolunteerObj.has_allowed_photos = response.data[0].has_allowed_photos;
+        preregisteredVolunteerObj.parent_email = response.data[0].parent_email;
+        preregisteredVolunteerObj.id = response.data[0].id;
+
+        if(response.data[0]){
+          console.log("found");
+          if(preregisteredVolunteerObj.under_18 === true && preregisteredVolunteerObj.has_signed_waiver === false){
+            $location.path('/waiver-youth');
+          } else if
+            (preregisteredVolunteerObj.under_18 === false && preregisteredVolunteerObj.has_signed_waiver === false){
+            $location.path('/waiver-adult');
+          } else if
+            (preregisteredVolunteerObj.under_18 === true && preregisteredVolunteerObj.has_allowed_photos === false){
+            $location.path('/waiver-photo');
+          } else if
+            (preregisteredVolunteerObj.under_18 === false && preregisteredVolunteerObj.has_allowed_photos === false){
+            $location.path('/waiver-photo');
+          } else {
+            $location.path('/confirmation');
+          }
+        }
+        console.log('PREREGISTERED VOLUNTEER: ', preregisteredVolunteerObj);
+      });
+      // return preregisteredVolunteerObj;
+    };
+
+
+    setEventTime = function(){
+          console.log("in setEventTime!");
+          updateWaiver();
+    };
+
+
+
+    updateWaiver = function(){
+      console.log("in updateWaiver!");
+        var checkInTime = new Date();
+        waiverObj.event_id = UserService.eventObject.eventCode;
+        waiverObj.time_in = UtilitesService.formatTime(checkInTime);
+        waiverObj.date = UtilitesService.formatDate(checkInTime);
+        waiverObj.volunteerID = preregisteredVolunteerObj.id;
+        $http.post('/volunteer/complete', waiverObj)
+        .then(function(response){
+          console.log("in .then from updateWaiver! ", response);
+          return response;
+        });
+      };
+
+  clearVolunteerObject = function(){
+    volunteer = {};
+  };
 
  return {
-   volunteerToDB: volunteerToDB,
-   volunteerCheckIn: volunteerCheckIn,
-   clearVolunteerObject: clearVolunteerObject
+   clearVolunteerObject: clearVolunteerObject,
+   preregisteredVolunteer: preregisteredVolunteer,
+   preregisteredVolunteerObj: preregisteredVolunteerObj,
+   waiverObj: waiverObj,
+   setEventTime: setEventTime
  };
 
 }]); //end of VolunteerService

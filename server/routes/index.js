@@ -7,8 +7,9 @@ var pool = require('../modules/pool');
 // Handles login form POST from index.html
 router.post('/',
     passport.authenticate('local', {
-        successRedirect: '/user',
-        failureRedirect: '/'
+        // request stays within node/express and is routed as a new request
+        successRedirect: '/user',   // goes to routes/user.js
+        failureRedirect: '/'        // goes to get '/' route below
     })
 );
 

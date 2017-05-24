@@ -1,94 +1,45 @@
-myApp.controller('WaiverController', ['$scope', '$http', '$location',
-  function($scope, $http, $location) {
+myApp.controller('WaiverController', ['$scope', '$http', '$location', 'VolunteerService', function($scope, $http, $location, VolunteerService) {
 
     $scope.message = '';
 
   //ALL OF THESE WILL NEED TO BE IN A FACTORY
 
-  let todaysDate = new Date();
+  // var todaysDate = new Date();
+  //
+  // $scope.waiverObj = {
+  //   //Adult waiver
+  //   volunteerIndex: "",
+  //   dateTopAdult: todaysDate,
+  //   nameTopAdult: "",
+  //   agreedAdult: false,
+  //   nameBottomAdult: "",
+  //   dateBottomAdult: todaysDate,
+  //   //Youth waiver
+  //   dateTopYouth: todaysDate,
+  //   nameTopYouth: "",
+  //   agreedYouth: false,
+  //   nameBottomYouth: "",
+  //   dateBottomYouth: todaysDate,
+  //   noParentYouth: "",
+  //   dateBottomVolYouth: todaysDate,
+  //   guardianEmailYouth: "",
+  //   guardianTopYouth: "",
+  //   guardianBottomYouth: "",
+  //   dateBottomGuardYouth: todaysDate,
+  //   //Photo waiver
+  //   agreedPhoto: false,
+  //   nameBottomPhoto: "",
+  //   dateBottomPhoto: todaysDate,
+  //   dateBottomVolPhoto: todaysDate,
+  //   guardianBottomPhoto: "",
+  //   dateBottomGuardPhoto: todaysDate
+  // };
 
-  $scope.waiverObj = {
-    //Adult waiver
-    dateTopAdult: todaysDate,
-    nameTopAdult: "",
-    agreedAdult: false,
-    nameBottomAdult: "",
-    dateBottomAdult: todaysDate,
-    //Youth waiver
-    dateTopYouth: todaysDate,
-    nameTopYouth: "",
-    agreedYouth: false,
-    nameBottomYouth: "",
-    dateBottomYouth: todaysDate,
-    noParentYouth: "",
-    dateBottomVolYouth: todaysDate,
-    guardianEmailYouth: "",
-    guardianTopYouth: "",
-    guardianBottomYouth: "",
-    dateBottomGuardYouth: todaysDate,
-    //Photo waiver
-    agreedPhoto: false,
-    nameBottomPhoto: "",
-    dateBottomPhoto: todaysDate,
-    dateBottomVolPhoto: todaysDate,
-    guardianBottomPhoto: "",
-    dateBottomGuardPhoto: todaysDate
-  };
-
-  //BEGIN TIMER STUFF
-  let inDate;
-
-  const NUM_MILIS_IN_HOUR = 3600000;
-  $scope.setCheckIn = function() {
-    inDate = new Date();
-  };
-  $scope.captureTime = function() {
-    let newDate,
-        inMonth,
-        inDay,
-        inYear,
-        inHour,
-        inMinute,
-        prettyInDate,
-        newMonth,
-        newDay,
-        newYear,
-        newHour,
-        newMinute,
-        prettyNewDate,
-        millisJustVolunteered,
-        hoursJustVolunteered;
-
-    console.log("inDate: ", inDate);
-    inMonth = inDate.getMonth();
-    inDay = inDate.getDate();
-    inYear = inDate.getFullYear();
-    inHour = inDate.getHours();
-    inMinute = inDate.getMinutes();
-    prettyInDate = inMonth + "/" + inDay + "/" + inYear +
-      ", at " + inHour + ":" + inMinute;
-    console.log("prettyInDate: ", prettyInDate);
-
-    newDate = new Date();
-    console.log("newDate: ", newDate);
-    newMonth = newDate.getMonth();
-    newDay = newDate.getDate();
-    newYear = newDate.getFullYear();
-    newHour = newDate.getHours();
-    newMinute = newDate.getMinutes();
-    prettyNewDate = newMonth + "/" + newDay + "/" + newYear +
-      ", at " + newHour + ":" + newMinute;
-    console.log("prettyNewDate: ", prettyNewDate);
-
-    millisJustVolunteered = newDate - inDate;
-    hoursJustVolunteered = millisJustVolunteered / NUM_MILIS_IN_HOUR;
-    console.log("hoursJustVolunteered: ", hoursJustVolunteered);
-  };
-  //END TIMER STUFF
+  $scope.waiverObj = VolunteerService.waiverObj;
 
   $scope.submitAdultWaiver = function() {
-    console.log("current waiverObj: ", $scope.waiverObj);
-    let filledOut;
+    console.log("XXcurrent waiverObj: ", $scope.waiverObj);
+    var filledOut;
 
     filledOut = $scope.waiverObj.dateTopAdult &&
                 $scope.waiverObj.nameTopAdult &&
@@ -117,7 +68,7 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location',
 
   $scope.submitYouthWaiver = function() {
     console.log("current waiverObj: ", $scope.waiverObj);
-    let noParentAll,
+    var noParentAll,
         parentAll,
         filledOut;
 

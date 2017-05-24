@@ -16,18 +16,60 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/home.html',
       controller: 'LoginController',
     })
-    .when('/admin', {
-      templateUrl: '/views/templates/admin.html',
-      controller: 'AdminController',
-    })
-    .when('/export', {
-      templateUrl: '/views/templates/export.html',
-      controller: 'ExportController',
-    })
     // Register new user View
     .when('/register', {
       templateUrl: '/views/templates/register.html',
       controller: 'LoginController'
+    })
+    // admin landing View
+    .when('/admin', {
+      templateUrl: '/views/templates/admin.html',
+      controller: 'AdminController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser('ADMIN');
+        }]
+      }
+    })
+    // Register new user View
+    .when('/addAdminUser', {
+      templateUrl: '/views/templates/addAdminUser.html',
+      controller: 'AddAdminController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser('ADMIN');
+        }]
+      }
+    })
+    // admin landing View
+    .when('/createEvent', {
+      templateUrl: '/views/templates/createEvent.html',
+      controller: 'CreateEventController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser('ADMIN');
+        }]
+      }
+    })
+    // export to .csv view
+    .when('/export', {
+      templateUrl: '/views/templates/export.html',
+      controller: 'ExportController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser('ADMIN');
+        }]
+      }
+    })
+    // Import .csv file View
+    .when('/import', {
+      templateUrl: '/views/templates/import.html',
+      controller: 'ImportController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser('ADMIN');
+        }]
+      }
     })
     // Main View of the app
     .when('/user', {
@@ -43,49 +85,92 @@ myApp.config(['$routeProvider', '$locationProvider',
     .when('/volunteer', {
       templateUrl: '/views/templates/volunteer.html',
       controller: 'VolunteerController',
+      resolve: {
+        checkevent : ['UserService', function(UserService){
+          return UserService.checkEvent();
+        }]
+      }
     })
     .when('/startEvent', {
       templateUrl: '/views/templates/startEvent.html',
       controller: 'startEventController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser();
+        }]
+      }
     })
     .when('/checkInOut', {
       templateUrl: '/views/templates/checkInOut.html',
       controller: 'checkInOutController',
+      resolve: {
+        checkevent : ['UserService', function(UserService){
+          return UserService.checkEvent();
+        }]
+      }
     })
     // Waiver View for adult primary
     .when('/waiver-adult', {
       templateUrl: '/views/templates/adultWaiver.html',
-      controller: 'WaiverController' //RESOLVE
+      controller: 'WaiverController',
+      resolve: {
+        checkevent : ['UserService', function(UserService){
+          return UserService.checkEvent();
+        }]
+      }
     })
     // Waiver View for adult primary
     .when('/waiver-youth', {
       templateUrl: '/views/templates/youthWaiver.html',
-      controller: 'WaiverController' //RESOLVE
+      controller: 'WaiverController',
+      resolve: {
+        checkevent : ['UserService', function(UserService){
+          return UserService.checkEvent();
+        }]
+      }
     })
     // Waiver View for adult primary
     .when('/waiver-photo', {
       templateUrl: '/views/templates/photoWaiver.html',
-      controller: 'WaiverController' //RESOLVE
+      controller: 'WaiverController',
+      resolve: {
+        checkevent : ['UserService', function(UserService){
+          return UserService.checkEvent();
+        }]
+      }
     })
     // Confirmation View
     .when('/confirmation', {
       templateUrl: '/views/templates/confirmation.html',
       controller: 'ConfirmationController',
+      resolve: {
+        checkevent : ['UserService', function(UserService){
+          return UserService.checkEvent();
+        }],
+        setEventTime: ['VolunteerService', function(VolunteerService){
+          return VolunteerService.setEventTime();
+        }]
+      }
     })
     // Override View
     .when('/override', {
       templateUrl: '/views/templates/override.html',
       controller: 'OverrideController',
+      resolve: {
+        checkevent : ['UserService', function(UserService){
+          return UserService.checkEvent();
+        }]
+      }
     })
     // Checkout View
     .when('/checkout', {
       templateUrl: '/views/templates/checkout.html',
       controller: 'CheckoutController',
-    })
-    // Import View of the app
-    .when('/import', {
-      templateUrl: '/views/templates/import.html',
-      controller: 'ImportController'
+      resolve: {
+        checkevent : ['UserService', function(UserService){
+          return UserService.checkEvent();
+        }]
+      }
     })
     //
     .otherwise({
