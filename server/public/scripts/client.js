@@ -252,26 +252,60 @@ myApp.controller('checkInOutController', ['$scope', '$location', '$http', 'Volun
   };
 }]);
 
-myApp.controller('CheckoutController', ['$scope', '$location', '$http', 'UtilitesService', function($scope, $location, $http, UtilitesService) {
+myApp.controller('CheckoutController', ['$scope', '$location', '$http',
+                'UtilitesService', 'UserService',
+                function($scope, $location, $http, UtilitesService, UserService) {
 
 $scope.formatTime = UtilitesService.formatTime;
-
-//object for input items to bind to
+$scope.eventObject = UserService.eventObject;
+//object for input volunteers to bind to
 //NEED TO UPDATE, BRING IN VOLUNTEER OBJECT FROM FACTORY
 $scope.volunteerObject = {};
 
 //variable to inform the ng-show on the search results div
 $scope.success = false;
 
-//Array to store search results
+//Array to store search results. Array of objects
 $scope.volunteerList = [];
 
-//Array to store selected volunteers (by ID) to checkout
-//CURRENTLY HARDCODED - NEED TO CHANGE TO EMPTY ARRAY
-$scope.checkoutList = [1, 2, 3, 4];
-// $scope.checkoutList = {
-//   volunteer:''
-// };
+//Array to store checkoutList volunteers by ID to checkout.
+$scope.checkoutList = [];
+
+
+$scope.items = [];
+
+$scope.toggle = function (item, list) {
+  var idx = list.indexOf(item);
+  if (idx > -1) {
+    list.splice(idx, 1);
+  }
+  else {
+    list.push(item);
+  }
+  console.log('here is items: ', $scope.items);
+  console.log('here is checkoutList: ', $scope.checkoutList);
+};
+
+$scope.exists = function (item, list) {
+  return list.indexOf(item) > -1;
+};
+
+$scope.isIndeterminate = function() {
+  return ($scope.checkoutList.length !== 0 &&
+      $scope.checkoutList.length !== $scope.items.length);
+};
+
+$scope.isChecked = function() {
+  return $scope.checkoutList.length === $scope.items.length;
+};
+
+$scope.toggleAll = function() {
+  if ($scope.checkoutList.length === $scope.items.length) {
+    $scope.checkoutList = [];
+  } else if ($scope.checkoutList.length === 0 || $scope.checkoutList.length > 0) {
+    $scope.checkoutList = $scope.items.slice(0);
+  }
+};
 
 //Connected to Search button - take inputs and check for records in database,
 //appends results to DOM
@@ -283,8 +317,10 @@ $scope.search = function(volunteer) {
 //http post to server - takes response and sets it equal to the volunteerList array
 $scope.getVolunteers = function(volunteer) {
   console.log('volunteerObject in http: ', $scope.volunteerObject);
-  console.log('logging volunteer in htpp function', volunteer);
-  $http.post('/checkout', volunteer).then(function(response){
+  volunteer.eventID = $scope.eventObject.eventCode;
+  console.log('logging volunteer in http function', volunteer);
+  console.log('logging event objectL: ', $scope.eventObject);
+  $http.post('/checkout/', volunteer).then(function(response){
     $scope.volunteerList = response.data;
     console.log('logging checkout response: ', response);
     });
