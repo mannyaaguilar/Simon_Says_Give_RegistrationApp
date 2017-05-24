@@ -22,7 +22,7 @@ html {
 body {
   margin: 0;
   padding: 0;
-  height: 200%;
+  height: 100%;
   font-family: 'Open Sans';
   /*background-color: #f3eab2;*/
 }
@@ -36,6 +36,12 @@ h1 {
   position: fixed;
   background-color: #f8d208;
   color: whitesmoke;
+}
+
+.ssg_menu {
+  position: fixed;
+  width: 100%;
+  background-color: white;
 }
 
 .btnPadding {
@@ -227,12 +233,13 @@ footer {
  }
 
 .eventViewContainer {
-  padding-top: 30px;
-
+  padding-top: 50px;
+  padding-bottom: 80px;
+  width:100%;
 }
 
  .importFileContainer {
-   padding-top: 30px;
+   padding-top: 50px;
  }
 
  .exportDatesContainer {
@@ -242,7 +249,7 @@ footer {
  }
 
 .addAdminContainer {
-  padding-top: 30px;
+  padding-top: 50px;
 }
 
 .eventInputs {

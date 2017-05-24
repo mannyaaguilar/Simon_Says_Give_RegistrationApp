@@ -30,4 +30,13 @@ myApp.controller('EventController', ['$scope','$mdDialog','UserService','Utilite
     UserService.redirect('/viewEvent');
   };
 
+  $scope.logoutVolunteers = function(eventObject) {
+    console.log("Event object ISSSS", eventObject);
+    var eventParams = {};
+    eventParams.eventCode = eventObject.event_code;
+    eventParams.time = eventObject.event_until_time;
+    console.log('Logging out volunteers for event:', eventParams);
+    EventService.logoutVolunteersByEvent(eventParams);
+  }
+
 }]);

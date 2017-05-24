@@ -38,11 +38,20 @@ myApp.factory('EventService', ['$http', function($http){
     });
   };
 
+  // Logs out all volunteers for a specific event
+  logoutVolunteersByEvent = function(eventParams) {
+    console.log('Logging out volunteers - event: ', eventParams);
+    $http.put('/ssgEvent/logoutAll', eventParams).then(function(response) {
+      console.log('Back from server after logging out volunteers', response);
+    });
+  };
+
   return {
     serverResponseObject : serverResponseObject,
     getEvents : getEvents,
     postEvent : postEvent,
     deleteEvent : deleteEvent,
-    updateEvent : updateEvent
+    updateEvent : updateEvent,
+    logoutVolunteersByEvent : logoutVolunteersByEvent
   };
 }]);

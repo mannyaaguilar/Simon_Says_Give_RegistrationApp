@@ -71,22 +71,12 @@ myApp.controller('ViewEventController', ['$scope','$mdDialog','UserService','Uti
     }
   } // function updateEvent()
 
-
-  // Modal window that confirms volunteer logout process
-  $scope.showConfirm = function(ev,ssgEvent) {
-    var confirm = $mdDialog.confirm()
-          .title('Are you sure that you want to delete this event?')
-          .textContent('')
-          .ariaLabel('Delete event')
-          .targetEvent(ev)
-          .ok('Delete')
-          .cancel('Cancel');
-    $mdDialog.show(confirm).then(function() {
-      console.log('DELETING: ',ssgEvent);
-      EventService.deleteEvent(ssgEvent);
-      }, function() {
-      console.log('Deletion cancelled');
-    });
-  };
+  $scope.logoutVolunteers = function(eventObject) {
+    var eventParams = {};
+    eventParams.eventCode = eventObject.eventCode;
+    eventParams.time = UtilitesService.formatTime(eventObject.eventUntilTime);
+    console.log('Logging out volunteers for event:', eventParams);
+    EventService.logoutVolunteersByEvent(eventParams);
+  }
 
 }]);

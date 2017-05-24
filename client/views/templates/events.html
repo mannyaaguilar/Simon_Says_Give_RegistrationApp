@@ -10,8 +10,6 @@
   <div layout="column" flex="90">
     <div class="eventViewContainer">
       <h1>SIMON SAYS GIVE EVENTS:</h1>
-
-
        <md-list layout="column">
          <md-list-item class="md-3-line" ng-repeat="ssgEvent in serverResponseObject.allEvents">
              <div class="md-list-item-text eventListDiv" layout="row">
@@ -21,15 +19,13 @@
                  <p>{{ ssgEvent.event_date.substr(0,10) }}</p>
                </div>
                <div layout="row" flex="60" layout-align="end center">
-                 <md-button class="themed-Btn orangeButton" aria-label="Logout Volunteers" ng-click="">Logout Volunteers</md-button>
+                 <md-button class="themed-Btn orangeButton" aria-label="Logout Volunteers" ng-click="logoutVolunteers(ssgEvent)">Logout Volunteers</md-button>
                  <md-button class="themed-Btn blueButton" aria-label="Delete" ng-click="showConfirm($event,ssgEvent)">Delete</md-button>
                  <md-button class="themed-Btn blueButton" aria-label="View" ng-click="viewEvent(ssgEvent)">View</md-button>
                </div>
              </div>
          </md-list-item>
        </md-list>
-
-
     </div>
   </div>
 </div>

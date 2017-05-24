@@ -129,7 +129,7 @@ router.put('/update', function(req,res) {
             console.log('Error making query',queryError);
             res.sendStatus(500);
           } else {
-            res.sendStatus(201);
+            res.send(result);
           }
         });
       }
@@ -139,6 +139,36 @@ router.put('/update', function(req,res) {
   }
 });
 
+// logs out all volunteers with time_out = NULL for a specific event
+router.put('/logoutAll', function(req,res) {
+  if(req.isAuthenticated()) {
+    console.log("object received is: ", req.body);
+    var eventCode = req.body.eventCode;
+    var time = req.body.time;
+    // UPDATE volunteer_hours SET time_out = '12:00' WHERE time_out is NULL AND event_id = 'MOA2017';
+    pool.connect(function(errorConnectingToDatabase,db,done) {
+      if(errorConnectingToDatabase) {
+        console.log('Error connecting to the database');
+        res.send(500);
+      } else {
+        db.query('UPDATE volunteer_hours SET time_out = $1 WHERE time_out is NULL AND event_id = $2;',
+        [time,eventCode],
+        function(queryError,result) {
+          done();
+          if (queryError) {
+            console.log('Error making query',queryError);
+            res.sendStatus(500);
+          } else {
+            // res.sendStatus(201);
+            res.send(result);
+          }
+        });
+      }
+    });
+  } else {
+    res.sendStatus(401);
+  }
+});
 
 // get route for starting events
 router.get('/start/:code', function(req,res) {
