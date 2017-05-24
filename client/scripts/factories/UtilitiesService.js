@@ -1,4 +1,4 @@
-myApp.factory('UtilitesService', ['$http', function($http){
+myApp.factory('UtilitesService', ['$http','$mdDialog', function($http,$mdDialog){
 console.log('UtilitesService loaded');
 
 let todaysDate = new Date();
@@ -18,9 +18,20 @@ let todaysDate = new Date();
       return formattedTime;
     };
 
+  showAlert = function(message) {
+      $mdDialog.show(
+        $mdDialog.alert()
+          .clickOutsideToClose(true)
+          .title(message)
+          .ariaLabel(message)
+          .ok('Ok')
+      );
+    };
+
 return {
     formatDate: formatDate,
-    formatTime: formatTime
+    formatTime: formatTime,
+    showAlert: showAlert
   };
 
 

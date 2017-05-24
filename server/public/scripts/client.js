@@ -21,7 +21,7 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/register.html',
       controller: 'LoginController'
     })
-    // admin landing View
+    // Admin landing View
     .when('/admin', {
       templateUrl: '/views/templates/admin.html',
       controller: 'AdminController',
@@ -41,7 +41,7 @@ myApp.config(['$routeProvider', '$locationProvider',
         }]
       }
     })
-    // admin landing View
+    // Create Event View
     .when('/createEvent', {
       templateUrl: '/views/templates/createEvent.html',
       controller: 'CreateEventController',
@@ -51,7 +51,27 @@ myApp.config(['$routeProvider', '$locationProvider',
         }]
       }
     })
-    // export to .csv view
+    // All Events View
+    .when('/displayEvents', {
+      templateUrl: '/views/templates/events.html',
+      controller: 'EventController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser('ADMIN');
+        }]
+      }
+    })
+    // All Events View
+    .when('/viewEvent', {
+      templateUrl: '/views/templates/viewEvent.html',
+      controller: 'ViewEventController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser('ADMIN');
+        }]
+      }
+    })
+    // Export to .csv view
     .when('/export', {
       templateUrl: '/views/templates/export.html',
       controller: 'ExportController',
@@ -178,10 +198,11 @@ myApp.config(['$routeProvider', '$locationProvider',
     });
 }]);
 
-myApp.controller('AddAdminController', ['$scope', '$http', '$location', 'UserService', function($scope, $http, $location, UserService) {
+myApp.controller('AddAdminController', ['$scope', '$http', '$location', 'UserService', 'UtilitesService',
+                function($scope, $http, $location, UserService, UtilitesService) {
 
   $scope.redirect = UserService.redirect;
-  $scope.message = '';
+  var message = '';
   $scope.adminUser = {
     username: '',
     password: '',
@@ -196,11 +217,13 @@ myApp.controller('AddAdminController', ['$scope', '$http', '$location', 'UserSer
       console.log('sending to server...', $scope.adminUser);
       $http.post('/register', $scope.adminUser).then(function(response) {
         console.log('success');
-        $scope.message = 'User ' + $scope.adminUser.username + ' has been added as an Admin User.'
+        message = $scope.adminUser.username + ' has been added as an Admin User.';
+        showAlert(message);
       },
       function(response) {
         console.log('error');
-        $scope.message = "Please try again."
+        message = "Error adding admin. Please make sure admin doesn’t already exist."
+        showAlert(message);
       });
     }
   }
@@ -338,42 +361,93 @@ myApp.controller('CreateEventController', ['$scope', '$location','UserService', 
   };
   $scope.event.eventDate;
   var eventToSend = {};
+  var message;
 
   // calls function from factory that saves event into the database
   $scope.createEvent = function(eventEntered) {
     console.log('EVENT ENTERED', eventEntered);
-    console.log('event.eventCode is',$scope.event.eventCode);
-    console.log('event.eventName is',$scope.event.eventName);
-    console.log('event.eventTeam is',$scope.event.eventTeam);
-    console.log('event.eventDate is',$scope.event.eventDate);
     // validates and copies data to an object to send to the factory
-    if ($scope.event.eventCode != '' && $scope.event.eventName != '' && $scope.event.eventTeam != '' && $scope.event.eventDate) {
-      console.log('inside if');
-      eventToSend.eventCode = angular.copy($scope.event.eventCode);
-      eventToSend.eventName = angular.copy($scope.event.eventName);
-      eventToSend.eventTeam = angular.copy($scope.event.eventTeam);
-      eventToSend.eventDate = UtilitesService.formatDate(angular.copy($scope.event.eventDate));
-      eventToSend.eventDescription = angular.copy($scope.event.eventDescription);
-      eventToSend.eventLocation = angular.copy($scope.event.eventLocation);
+    if (alphanumeric($scope.event.eventCode)) {
+      if ($scope.event.eventCode != '' && $scope.event.eventName != '' && $scope.event.eventTeam != '' && $scope.event.eventDate) {
+        eventToSend = angular.copy($scope.event);
+        eventToSend.eventDate = UtilitesService.formatDate(eventToSend.eventDate);
 
-      console.log($scope.event.eventFromTime);
-      if ($scope.event.eventFromTime) {
-        eventToSend.eventFromTime = UtilitesService.formatTime(angular.copy($scope.event.eventFromTime));
+        if (eventToSend.eventFromTime) {
+          eventToSend.eventFromTime = UtilitesService.formatTime(eventToSend.eventFromTime);
+        }
+        if (eventToSend.eventUntilTime) {
+          eventToSend.eventUntilTime = UtilitesService.formatTime(eventToSend.eventUntilTime);
+        }
+        // send information to factory
+        console.log('EVENT TO SEND: ', eventToSend);
+        EventService.postEvent(eventToSend);
       }
-      if ($scope.event.eventUntilTime) {
-        eventToSend.eventUntilTime = UtilitesService.formatTime(angular.copy($scope.event.eventUntilTime));
-      }
-      // send information to factory
-      console.log('EVENT TO SEND: ', eventToSend);
-      EventService.postEvent(eventToSend);
-      
+    } else {
+      UtilitesService.showAlert('Please enter an alphanumeric code');
     }
   } // function createEvent()
 
+  // Validates that the code entered is valid
+  function alphanumeric(code) {
+    if (code != '') {
+      var letters = /^[0-9a-zA-Z]+$/;
+      if(code.match(letters)) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+  }
 
 }]);
 
-myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserService', 'CSVService', function($scope, $http, $location, UserService, CSVService) {
+myApp.controller('EventController', ['$scope','$mdDialog','UserService','UtilitesService','EventService',
+                function($scope,$mdDialog,UserService,UtilitesService,EventService) {
+
+  $scope.redirect = UserService.redirect;
+  $scope.serverResponseObject = EventService.serverResponseObject;
+
+  EventService.getEvents();
+
+  // Modal window that confirms event deletion
+  $scope.showConfirm = function(ev,ssgEvent) {
+    var confirm = $mdDialog.confirm()
+          .title('Are you sure that you want to delete this event?')
+          .textContent('')
+          .ariaLabel('Delete event')
+          .targetEvent(ev)
+          .ok('Delete')
+          .cancel('Cancel');
+    $mdDialog.show(confirm).then(function() {
+      console.log('DELETING: ',ssgEvent);
+      EventService.deleteEvent(ssgEvent);
+      }, function() {
+      console.log('Deletion cancelled');
+    });
+  };
+
+  // Redirects to Event View
+  $scope.viewEvent = function(ssgEvent) {
+    console.log('view event clicked',ssgEvent);
+    EventService.serverResponseObject.currentEvent = ssgEvent;
+    UserService.redirect('/viewEvent');
+  };
+
+  // calls factory function to check out all active volunteers for the event
+  $scope.logoutVolunteers = function(eventObject) {
+    console.log("Event object ISSSS", eventObject);
+    var eventParams = {};
+    eventParams.eventCode = eventObject.event_code;
+    eventParams.time = eventObject.event_until_time;
+    console.log('Logging out volunteers for event:', eventParams);
+    EventService.logoutVolunteersByEvent(eventParams);
+  }
+
+}]);
+
+myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserService', 'UtilitesService','CSVService',
+            function($scope, $http, $location, UserService, UtilitesService, CSVService) {
 
   $scope.userObject = UserService.userObject;
   $scope.logout = UserService.logout;
@@ -381,9 +455,10 @@ myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserServi
   $scope.serverResponseObject = CSVService.serverResponseObject;
   $scope.exportOption = '';
   $scope.datesEnabledValue = true;
-  $scope.errorMessage = "";
   $scope.fromDate;
   $scope.toDate;
+  var errorMessage = "";
+
 
   console.log('ExportController loaded');
 
@@ -413,13 +488,15 @@ myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserServi
   function validDates(fromDate, toDate) {
     if (fromDate && toDate) {
       if(toDate < fromDate) {
-        $scope.errorMessage = 'Invalid date Selection';
+        errorMessage = 'Invalid date Selection';
+        UtilitesService.showAlert(errorMessage);
         return false;
       } else {
         return true;
       }
     } else {
-      $scope.errorMessage = 'Invalid date Selection';
+      errorMessage = 'Invalid date Selection';
+      UtilitesService.showAlert(errorMessage);
       return false;
     }
   };
@@ -543,7 +620,7 @@ myApp.controller('LoginController', ['$scope', '$http', '$location', 'UserServic
           // location works with SPA (ng-route)
           console.log('redirecting to admin page');
           if (response.data.role === 'ADMIN') {
-            $location.path('/admin');
+            $location.path('/displayEvents');
           } else {
             $location.path('/checkInOut');
           }
@@ -562,7 +639,7 @@ myApp.controller('LoginController', ['$scope', '$http', '$location', 'UserServic
       $scope.eventMessage = "Enter an event code!";
     } else {
       console.log('sending to server...', $scope.event);
-      $http.get('/newEvent/start/' + $scope.event.eventCode).then(function(response) {
+      $http.get('/ssgEvent/start/' + $scope.event.eventCode).then(function(response) {
         console.log(response);
         if(response.data.event_code) {
           console.log('success: ', response.data);
@@ -642,6 +719,90 @@ myApp.controller('UserController', ['$scope', '$http', '$location', 'UserService
   $scope.userObject = UserService.userObject;
   $scope.logout = UserService.logout;
   $scope.redirect = UserService.redirect;
+
+}]);
+
+myApp.controller('ViewEventController', ['$scope','$mdDialog','UserService','UtilitesService','EventService',
+                function($scope,$mdDialog,UserService,UtilitesService,EventService) {
+
+  $scope.redirect = UserService.redirect;
+  $scope.serverResponseObject = {};
+  $scope.serverResponseObject.currentEvent = EventService.serverResponseObject.currentEvent;
+  $scope.event = {
+    eventCode: '',
+    eventName: '',
+    eventTeam: '',
+    eventDescription: '',
+    eventLocation: '',
+    eventFromTime: '',
+    eventUntilTime: '',
+  };
+  $scope.event.eventDate;
+  var eventToSend = {};
+
+  // fills out input fields with current event information
+  $scope.populate = function() {
+    console.log('Current Event is:', EventService.serverResponseObject.currentEvent);
+    if (EventService.serverResponseObject.currentEvent != undefined) {
+      $scope.event.eventCode = EventService.serverResponseObject.currentEvent.event_code;
+      $scope.event.eventName = EventService.serverResponseObject.currentEvent.event_name;
+      $scope.event.eventDescription = EventService.serverResponseObject.currentEvent.event_description;
+      $scope.event.eventLocation = EventService.serverResponseObject.currentEvent.event_location;
+      $scope.event.eventFromTime = getTime(EventService.serverResponseObject.currentEvent.event_from_time);
+      $scope.event.eventUntilTime = getTime(EventService.serverResponseObject.currentEvent.event_until_time);
+      $scope.event.eventDate = getDate(EventService.serverResponseObject.currentEvent.event_date);
+      $scope.event.eventTeam = EventService.serverResponseObject.currentEvent.event_team;
+    }
+  }
+
+  // calling the function that fills out the edit form
+  $scope.populate();
+
+  // formats time to be displayed in input type="time"
+  function getTime(timeString) {
+    var hours = timeString.substr(0,2);
+    var minutes = timeString.substr(3,2);
+    var formattedTime = new Date(1900, 0, 1, hours, minutes, 0);
+    return formattedTime
+  }
+
+  // formats date to be displayed in date picker
+  function getDate(dateString) {
+    var year = dateString.substr(0,4);
+    var month = dateString.substr(5,2) - 1; // months are 0 based
+    var day = dateString.substr(8,2);
+    var formattedTime = new Date(year, month, day, 0, 0, 0);
+    return formattedTime
+  }
+
+  // calls function from factory that saves changes to event into the database
+  $scope.editEvent = function(eventEntered) {
+    console.log('EDITING EVENT', eventEntered);
+    // validates and copies data to an object to send to the factory
+    if ($scope.event.eventCode != '' && $scope.event.eventName != '' && $scope.event.eventTeam != '' && $scope.event.eventDate) {
+      eventToSend = angular.copy($scope.event);
+      eventToSend.eventDate = UtilitesService.formatDate(eventToSend.eventDate);
+
+      if (eventToSend.eventFromTime) {
+        eventToSend.eventFromTime = UtilitesService.formatTime(eventToSend.eventFromTime);
+      }
+      if (eventToSend.eventUntilTime) {
+        eventToSend.eventUntilTime = UtilitesService.formatTime(eventToSend.eventUntilTime);
+      }
+      // send information to factory
+      console.log('EVENT TO SEND: ', eventToSend);
+      EventService.updateEvent(eventToSend);
+    }
+  } // function updateEvent()
+
+  // Checks out all remaining active volunteers
+  $scope.logoutVolunteers = function(eventObject) {
+    var eventParams = {};
+    eventParams.eventCode = eventObject.eventCode;
+    eventParams.time = UtilitesService.formatTime(eventObject.eventUntilTime);
+    console.log('Logging out volunteers for event:', eventParams);
+    EventService.logoutVolunteersByEvent(eventParams);
+  }
 
 }]);
 
@@ -852,7 +1013,7 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location', 'Volunteer
 
 }]);
 
-myApp.factory('CSVService', ['$http', function($http){
+myApp.factory('CSVService', ['$http','$mdDialog', function($http,$mdDialog){
   console.log('CSVService Loaded');
 
   serverResponseObject = {};
@@ -861,10 +1022,9 @@ myApp.factory('CSVService', ['$http', function($http){
   sendCSV = function(csv) {
     var csvToPost = {};
     csvToPost.fileContent = csv;
-    // console.log('Posting csv ', csvToPost);
     $http.post('/csv/upload', csvToPost).then(function(response) {
       console.log('Back from server after posting csv content', response);
-      serverResponseObject.response = response;
+      showAlert(response.data);
     });
   };
 
@@ -899,7 +1059,18 @@ myApp.factory('CSVService', ['$http', function($http){
     var curr_year = date.getFullYear();
     var formattedDate = curr_year + "-" + curr_month + "-" + curr_date;
     return formattedDate;
-  }
+  };
+
+  // Alert dialog to inform response to the user
+  showAlert = function(message) {
+      $mdDialog.show(
+        $mdDialog.alert()
+          .clickOutsideToClose(true)
+          .title(message)
+          .ariaLabel(message)
+          .ok('Ok')
+      );
+    };
 
   return {
     sendCSV : sendCSV,
@@ -909,24 +1080,72 @@ myApp.factory('CSVService', ['$http', function($http){
   };
 }]);
 
-myApp.factory('EventService', ['$http', function($http){
+myApp.factory('EventService', ['$http','$mdDialog', function($http,$mdDialog){
   console.log('CSVService Loaded');
 
   serverResponseObject = {};
 
-  // Sends event information to server
-  postEvent = function(eventToPost) {
-    console.log('Posting event ', eventToPost);
-    $http.post('/newEvent/add', eventToPost).then(function(response) {
-      console.log('Back from server after posting event', response);
-      serverResponseObject.response = response;
+  // Gets all events in the database
+  getEvents = function(){
+    console.log('in getEvents');
+    $http.get('/ssgEvent/').then(function(response) {
+      console.log('Back from the server with:', response);
+      serverResponseObject.allEvents = response.data;
     });
   };
 
+  // Sends event information to server
+  postEvent = function(eventToPost) {
+    console.log('Posting event ', eventToPost);
+    $http.post('/ssgEvent/add', eventToPost).then(function(response) {
+      console.log('Back from server after posting event', response);
+      showAlert(response.data);
+    });
+  };
+
+  // Deletes a specific event
+  deleteEvent = function(ssgEvent) {
+    console.log('Deleting event: ', ssgEvent);
+    $http.delete('/ssgEvent/delete/' + ssgEvent.event_code).then(function(response) {
+      getEvents();
+    });
+  };
+
+  // Updates a specific event
+  updateEvent = function(eventToUpdate) {
+    console.log('Updating event: ', eventToUpdate);
+    $http.put('/ssgEvent/update', eventToUpdate).then(function(response) {
+      showAlert(response.data);
+      getEvents();
+    });
+  };
+
+  // Logs out all volunteers for a specific event
+  logoutVolunteersByEvent = function(eventParams) {
+    console.log('Logging out volunteers - event: ', eventParams);
+    $http.put('/ssgEvent/logoutAll', eventParams).then(function(response) {
+      showAlert('All active volunteers have been checked out.');
+    });
+  };
+
+  // Alert dialog to inform response to the user
+  showAlert = function(message) {
+      $mdDialog.show(
+        $mdDialog.alert()
+          .clickOutsideToClose(true)
+          .title(message)
+          .ariaLabel(message)
+          .ok('Ok')
+      );
+    };
+
   return {
     serverResponseObject : serverResponseObject,
-    postEvent : postEvent
-
+    getEvents : getEvents,
+    postEvent : postEvent,
+    deleteEvent : deleteEvent,
+    updateEvent : updateEvent,
+    logoutVolunteersByEvent : logoutVolunteersByEvent
   };
 }]);
 
@@ -995,7 +1214,7 @@ myApp.factory('UserService', ['$http', '$location', function($http, $location){
   };
 }]);
 
-myApp.factory('UtilitesService', ['$http', function($http){
+myApp.factory('UtilitesService', ['$http','$mdDialog', function($http,$mdDialog){
 console.log('UtilitesService loaded');
 
 let todaysDate = new Date();
@@ -1015,9 +1234,20 @@ let todaysDate = new Date();
       return formattedTime;
     };
 
+  showAlert = function(message) {
+      $mdDialog.show(
+        $mdDialog.alert()
+          .clickOutsideToClose(true)
+          .title(message)
+          .ariaLabel(message)
+          .ok('Ok')
+      );
+    };
+
 return {
     formatDate: formatDate,
-    formatTime: formatTime
+    formatTime: formatTime,
+    showAlert: showAlert
   };
 
 

@@ -1,7 +1,8 @@
-myApp.controller('AddAdminController', ['$scope', '$http', '$location', 'UserService', function($scope, $http, $location, UserService) {
+myApp.controller('AddAdminController', ['$scope', '$http', '$location', 'UserService', 'UtilitesService',
+                function($scope, $http, $location, UserService, UtilitesService) {
 
   $scope.redirect = UserService.redirect;
-  $scope.message = '';
+  var message = '';
   $scope.adminUser = {
     username: '',
     password: '',
@@ -16,11 +17,13 @@ myApp.controller('AddAdminController', ['$scope', '$http', '$location', 'UserSer
       console.log('sending to server...', $scope.adminUser);
       $http.post('/register', $scope.adminUser).then(function(response) {
         console.log('success');
-        $scope.message = 'User ' + $scope.adminUser.username + ' has been added as an Admin User.'
+        message = $scope.adminUser.username + ' has been added as an Admin User.';
+        showAlert(message);
       },
       function(response) {
         console.log('error');
-        $scope.message = "Please try again."
+        message = "Error adding admin. Please make sure admin doesn’t already exist."
+        showAlert(message);
       });
     }
   }
