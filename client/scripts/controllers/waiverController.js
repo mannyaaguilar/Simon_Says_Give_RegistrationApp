@@ -1,91 +1,44 @@
 myApp.controller('WaiverController', ['$scope', '$http', '$location', 'VolunteerService', function($scope, $http, $location, VolunteerService) {
-$scope.preregisteredVolunteerObj = VolunteerService.preregisteredVolunteerObj;
-// $scope.volunteerToDB = VolunteerService.volunteerToDB;
+
+    $scope.message = '';
+
   //ALL OF THESE WILL NEED TO BE IN A FACTORY
 
-  var todaysDate = new Date();
-console.log("waiverController", VolunteerService.preregisteredVolunteerObj);
-  $scope.waiverObj = {
-    //Adult waiver
-    dateTopAdult: todaysDate,
-    nameTopAdult: "",
-    agreedAdult: false,
-    nameBottomAdult: "",
-    dateBottomAdult: todaysDate,
-    //Youth waiver
-    dateTopYouth: todaysDate,
-    nameTopYouth: "",
-    agreedYouth: false,
-    nameBottomYouth: "",
-    dateBottomYouth: todaysDate,
-    noParentYouth: "",
-    dateBottomVolYouth: todaysDate,
-    guardianEmailYouth: "",
-    guardianTopYouth: "",
-    guardianBottomYouth: "",
-    dateBottomGuardYouth: todaysDate,
-    //Photo waiver
-    agreedPhoto: false,
-    nameBottomPhoto: "",
-    dateBottomPhoto: todaysDate,
-    dateBottomVolPhoto: todaysDate,
-    guardianBottomPhoto: "",
-    dateBottomGuardPhoto: todaysDate
-  };
+  // var todaysDate = new Date();
+  //
+  // $scope.waiverObj = {
+  //   //Adult waiver
+  //   volunteerIndex: "",
+  //   dateTopAdult: todaysDate,
+  //   nameTopAdult: "",
+  //   agreedAdult: false,
+  //   nameBottomAdult: "",
+  //   dateBottomAdult: todaysDate,
+  //   //Youth waiver
+  //   dateTopYouth: todaysDate,
+  //   nameTopYouth: "",
+  //   agreedYouth: false,
+  //   nameBottomYouth: "",
+  //   dateBottomYouth: todaysDate,
+  //   noParentYouth: "",
+  //   dateBottomVolYouth: todaysDate,
+  //   guardianEmailYouth: "",
+  //   guardianTopYouth: "",
+  //   guardianBottomYouth: "",
+  //   dateBottomGuardYouth: todaysDate,
+  //   //Photo waiver
+  //   agreedPhoto: false,
+  //   nameBottomPhoto: "",
+  //   dateBottomPhoto: todaysDate,
+  //   dateBottomVolPhoto: todaysDate,
+  //   guardianBottomPhoto: "",
+  //   dateBottomGuardPhoto: todaysDate
+  // };
 
-  //BEGIN TIMER STUFF
-  var inDate;
-
-  const NUM_MILIS_IN_HOUR = 3600000;
-  $scope.setCheckIn = function() {
-    inDate = new Date();
-  };
-  $scope.captureTime = function() {
-    var newDate,
-        inMonth,
-        inDay,
-        inYear,
-        inHour,
-        inMinute,
-        prettyInDate,
-        newMonth,
-        newDay,
-        newYear,
-        newHour,
-        newMinute,
-        prettyNewDate,
-        millisJustVolunteered,
-        hoursJustVolunteered;
-
-    console.log("inDate: ", inDate);
-    inMonth = inDate.getMonth();
-    inDay = inDate.getDate();
-    inYear = inDate.getFullYear();
-    inHour = inDate.getHours();
-    inMinute = inDate.getMinutes();
-    prettyInDate = inMonth + "/" + inDay + "/" + inYear +
-      ", at " + inHour + ":" + inMinute;
-    console.log("prettyInDate: ", prettyInDate);
-
-    newDate = new Date();
-    console.log("newDate: ", newDate);
-    newMonth = newDate.getMonth();
-    newDay = newDate.getDate();
-    newYear = newDate.getFullYear();
-    newHour = newDate.getHours();
-    newMinute = newDate.getMinutes();
-    prettyNewDate = newMonth + "/" + newDay + "/" + newYear +
-      ", at " + newHour + ":" + newMinute;
-    console.log("prettyNewDate: ", prettyNewDate);
-
-    millisJustVolunteered = newDate - inDate;
-    hoursJustVolunteered = millisJustVolunteered / NUM_MILIS_IN_HOUR;
-    console.log("hoursJustVolunteered: ", hoursJustVolunteered);
-  };
-  //END TIMER STUFF
+  $scope.waiverObj = VolunteerService.waiverObj;
 
   $scope.submitAdultWaiver = function() {
-    console.log("current waiverObj: ", $scope.waiverObj);
+    console.log("XXcurrent waiverObj: ", $scope.waiverObj);
     var filledOut;
 
     filledOut = $scope.waiverObj.dateTopAdult &&
@@ -94,13 +47,24 @@ console.log("waiverController", VolunteerService.preregisteredVolunteerObj);
                 $scope.waiverObj.nameBottomAdult &&
                 $scope.waiverObj.dateBottomAdult;
 
-    if ( filledOut ) {
-      $location.path("/waiver-photo");
-    }
-    else {
-      alert("Please complete all fields");
-    }
-  };
+    var signature = $scope.waiverObj.nameBottomAdult;
+    checkAdultSignFormat(signature);
+
+    function checkAdultSignFormat(signature) {
+      if (filledOut &&
+          signature.charAt(0) === '/' &&
+          signature.charAt(signature.length -1) === '/') {
+            $location.path("/waiver-photo");
+      }
+      else if (filledOut &&
+        (signature.charAt(0) !== '/' || signature.charAt(signature.length -1) !== '/' )) {
+          $scope.message = 'Please put name between slashes';
+        }
+      else {
+        $scope.message = 'Please fill out all highlighted fields';
+      }
+    } // end checkSignatureFormat
+  }; // end submitAdultWaiver
 
   $scope.submitYouthWaiver = function() {
     console.log("current waiverObj: ", $scope.waiverObj);
@@ -124,6 +88,30 @@ console.log("waiverController", VolunteerService.preregisteredVolunteerObj);
 
     filledOut = noParentAll || parentAll;
 
+    var youthSignature = $scope.waiverObj.nameBottomYouth;
+    var guardianSignature = $scope.waiverObj.guardianBottomYouth;
+
+
+
+    // NEEDS TO BE FINISHED
+    // function checkYouthSignFormat(youthSignature, guardianSignature) {
+    //   if (filledOut &&
+    //       youthSignature.charAt(0) === '/' &&
+    //       youthSignature.charAt(youthSignature.length -1) === '/') {
+    //         $location.path("/override");
+    //   }
+    //   else if (filledOut &&
+    //     (signature.charAt(0) !== '/' || signature.charAt(signature.length -1) !== '/' )) {
+    //       $scope.message = 'Please put name between slashes';
+    //     }
+    //   else {
+    //     $scope.message = 'Please fill out all highlighted fields';
+    //   }
+    // } // end checkSignatureFormat
+
+
+
+
     if ( filledOut ) {
       if ( noParentAll ) {
         $location.path("/override");
@@ -131,14 +119,11 @@ console.log("waiverController", VolunteerService.preregisteredVolunteerObj);
       else if ( parentAll ) {
         $location.path("/waiver-photo");
       }
-      else {
-        alert("Weird error!");
-      }
     }
     else {
-      alert("Please complete all fields");
+      $scope.message = 'Please complete all highlighted fields';
     }
-  };
+  }; // end submitYouthWaiver
 
   $scope.submitPhotoWaiver = function() {
     console.log("current waiverObj: ", $scope.waiverObj);

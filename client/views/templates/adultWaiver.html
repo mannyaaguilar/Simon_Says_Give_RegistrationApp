@@ -139,14 +139,17 @@
             md-max-date="ctrl.maxDate"></md-datepicker>
         </md-input-container>
       </div>
+      <div class="errorContainer">
+        <h3 class="inputError">{{message}}</h3>
+      </div>
       <div layout="row" class="bufferDiv">
       </div>
       <div layout="row" flex="33">
-        <button type="button" name="button" class="themed-Btn badButton"
+        <button type="button" name="button" class="biggerButton themed-Btn badButton"
           ng-click="declineWaiver(); captureTime()">Decline</button>
           <div class="bufferDiv">
           </div>
-        <button type="button" name="button" class="themed-Btn goodButton"
+        <button type="button" name="button" class="biggerButton themed-Btn goodButton"
           ng-click="submitAdultWaiver(waiverObj); captureTime()">Submit</button>
       </div>
     </div>
