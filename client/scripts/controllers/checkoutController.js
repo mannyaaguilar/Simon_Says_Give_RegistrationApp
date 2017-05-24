@@ -1,7 +1,9 @@
-myApp.controller('CheckoutController', ['$scope', '$location', '$http', 'UtilitesService', function($scope, $location, $http, UtilitesService) {
+myApp.controller('CheckoutController', ['$scope', '$location', '$http',
+                'UtilitesService', 'UserService',
+                function($scope, $location, $http, UtilitesService, UserService) {
 
 $scope.formatTime = UtilitesService.formatTime;
-
+$scope.eventObject = UserService.eventObject;
 //object for input volunteers to bind to
 //NEED TO UPDATE, BRING IN VOLUNTEER OBJECT FROM FACTORY
 $scope.volunteerObject = {};
@@ -62,6 +64,7 @@ $scope.search = function(volunteer) {
 $scope.getVolunteers = function(volunteer) {
   console.log('volunteerObject in http: ', $scope.volunteerObject);
   console.log('logging volunteer in htpp function', volunteer);
+  console.log('logging event objectL: ', $scope.eventObject);
   $http.post('/checkout', volunteer).then(function(response){
     $scope.volunteerList = response.data;
     console.log('logging checkout response: ', response);
