@@ -70,35 +70,17 @@ router.post('/complete', function(req, res, next) {
       waiverInfo;
 
 signedAdult = false;
-  if ( req.body.dateTopAdult ) {
-    if ( req.body.nameTopAdult ) {
-      if ( req.body.agreedAdult ) {
-        if ( req.body.nameBottomAdult ) {
-          if ( req.body.dateBottomAdult ) {
-            signedAdult = true;
-          }
-        }
-      }
-    }
+  if ( req.body.dateTopAdult && req.body.nameTopAdult && req.body.agreedAdult &&
+    req.body.nameBottomAdult && req.body.dateBottomAdult) {
+    signedAdult = true;
   }
 
 signedYouth = false;
-  if ( req.body.dateTopYouth ) {
-    if ( req.body.nameTopYouth ) {
-      if ( req.body.guardianTopYouth ) {
-        if ( req.body.agreedYouth ) {
-          if ( req.body.nameBottomYouth ) {
-            if ( req.body.dateBottomVolYouth ) {
-              if ( req.body.guardianBottomYouth ) {
-                if ( req.body.dateBottomGuardYouth ) {
-                  signedYouth = true;
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+  if ( req.body.dateTopYouth && req.body.nameTopYouth &&
+    req.body.guardianTopYouth && req.body.agreedYouth &&
+    req.body.nameBottomYouth && req.body.dateBottomVolYouth &&
+    req.body.guardianBottomYouth && req.body.dateBottomGuardYouth ) {
+    signedYouth = true;
   }
 
 console.log("signedAdult: ", signedAdult);
@@ -126,7 +108,7 @@ console.log("signedYouth: ", signedYouth);
     //For the volunteer_hours POST
     event_id: req.body.event_id, //required
     date: req.body.date, //required
-    time_in: req.body.time //required
+    time_in: req.body.time_in //required
   };
 
   pool.connect(function(err, client, done) {

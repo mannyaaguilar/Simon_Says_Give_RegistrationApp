@@ -26,7 +26,7 @@ console.log("Volunteer Service loaded");
 
   var waiverObj = {
     //Adult waiver
-    volunteerIndex: "",
+    volunteerID: "",
     dateTopAdult: todaysDate,
     nameTopAdult: "",
     agreedAdult: false,
@@ -72,6 +72,7 @@ console.log("Volunteer Service loaded");
         preregisteredVolunteerObj.has_signed_waiver = response.data[0].has_signed_waiver;
         preregisteredVolunteerObj.has_allowed_photos = response.data[0].has_allowed_photos;
         preregisteredVolunteerObj.parent_email = response.data[0].parent_email;
+        preregisteredVolunteerObj.id = response.data[0].id;
 
         if(response.data[0]){
           console.log("found");
@@ -109,16 +110,11 @@ console.log("Volunteer Service loaded");
         waiverObj.event_id = UserService.eventObject.eventCode;
         waiverObj.time_in = UtilitesService.formatTime(checkInTime);
         waiverObj.date = UtilitesService.formatDate(checkInTime);
+        waiverObj.volunteerID = preregisteredVolunteerObj.id;
         $http.post('/volunteer/complete', waiverObj)
-        .then(function(err, response){
-          console.log("in .then from updateWaiver!");
-          if( err ){
-            console.log("updateWaiver error: ", err);
-            return false;
-          }
-          else {
-            return response;
-          }
+        .then(function(response){
+          console.log("in .then from updateWaiver! ", response);
+          return response;
         });
       };
 
