@@ -22,7 +22,7 @@ $scope.finish = function(adminCode) {
     $location.path('/confirmation');
   }
   else {
-    $scope.message = 'Please try again.';
+    $scope.message = 'Please try again';
   }
 };
 }]);
