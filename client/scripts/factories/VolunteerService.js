@@ -119,58 +119,49 @@ console.log("Volunteer Service loaded");
       };
 
   clearVolunteerObject = function(){
-    preregisteredVolunteerObj = {
-      email: '',
-      first_name: '',
-      last_name: '',
-      // address1: '',
-      // address2: '',
-      // city: '',
-      // state: '',
-      // zip: '',
-      under_18: '',
-      birthdate: '',
-      // birthdate: '3000-12-01',
-      has_signed_waiver: '',
-      has_allowed_photos: '',
-      parent_email: '',
-      // validation_required: false,
-      // school: '',
-      // employer: '',
-      // employer_match: false
-    };
-    waiverObj = {
-      //Adult waiver
-      volunteerID: "",
-      dateTopAdult: todaysDate,
-      nameTopAdult: "",
-      agreedAdult: false,
-      nameBottomAdult: "",
-      dateBottomAdult: todaysDate,
-      //Youth waiver
-      dateTopYouth: todaysDate,
-      nameTopYouth: "",
-      agreedYouth: false,
-      nameBottomYouth: "",
-      dateBottomYouth: todaysDate,
-      noParentYouth: "",
-      dateBottomVolYouth: todaysDate,
-      guardianEmailYouth: "",
-      guardianTopYouth: "",
-      guardianBottomYouth: "",
-      dateBottomGuardYouth: todaysDate,
-      //Photo waiver
-      agreedPhoto: false,
-      nameBottomPhoto: "",
-      dateBottomPhoto: todaysDate,
-      dateBottomVolPhoto: todaysDate,
-      guardianBottomPhoto: "",
-      dateBottomGuardPhoto: todaysDate
-    };
-    UserService.userObject = {
-      id: "",
-      userName: ""
-    };
+    preregisteredVolunteerObj.email = '';
+    preregisteredVolunteerObj.first_name = '';
+    preregisteredVolunteerObj.last_name = '';
+    preregisteredVolunteerObj.under_18 = '';
+    preregisteredVolunteerObj.birthdate = '';
+    preregisteredVolunteerObj.has_signed_waiver = '';
+    preregisteredVolunteerObj.has_allowed_photos = '';
+    preregisteredVolunteerObj.parent_email = '';
+    // preregisteredVolunteerObj.address1 = '';
+    // preregisteredVolunteerObj.address2 = '';
+    // preregisteredVolunteerObj.city = '';
+    // preregisteredVolunteerObj.state = '';
+    // preregisteredVolunteerObj.zip = '';
+    // preregisteredVolunteerObj.birthdate = '3000-12-01';
+    // preregisteredVolunteerObj.validation_required = false;
+    // preregisteredVolunteerObj.school = '';
+    // preregisteredVolunteerObj.employer = '';
+    // preregisteredVolunteerObj.employer_match = false;
+    waiverObj.volunteerID = "";
+    waiverObj.dateTopAdult = todaysDate;
+    waiverObj.nameTopAdult = "";
+    waiverObj.agreedAdult = false;
+    waiverObj.nameBottomAdult = "";
+    waiverObj.dateBottomAdult = todaysDate;
+    waiverObj.dateTopYouth = todaysDate;
+    waiverObj.nameTopYouth = "";
+    waiverObj.agreedYouth = false;
+    waiverObj.nameBottomYouth = "";
+    waiverObj.dateBottomYouth = todaysDate;
+    waiverObj.noParentYouth = "";
+    waiverObj.dateBottomVolYouth = todaysDate;
+    waiverObj.guardianEmailYouth = "";
+    waiverObj.guardianTopYouth = "";
+    waiverObj.guardianBottomYouth = "";
+    waiverObj.dateBottomGuardYouth = todaysDate;
+    waiverObj.agreedPhoto = false;
+    waiverObj.nameBottomPhoto = "";
+    waiverObj.dateBottomPhoto = todaysDate;
+    waiverObj.dateBottomVolPhoto = todaysDate;
+    waiverObj.guardianBottomPhoto = "";
+    waiverObj.dateBottomGuardPhoto = todaysDate;
+    UserService.userObject.id = "";
+    UserService.userObject.userName = "";
   };
 
  return {

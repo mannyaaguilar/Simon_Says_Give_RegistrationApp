@@ -4,11 +4,6 @@
 }
 
 @font-face {
-    font-family: 'BluBerry Grunge'; /*a name to be used later*/
-    src: url('../views/assets/fonts/Bluberry Grunge.ttf'); /*URL to font*/
-}
-
-@font-face {
   font-family: 'League Gothic Regular';
   src: url('../views/assets/fonts/leaguegothic-regular-webfont.ttf') format('truetype'),
        url('../views/assets/fonts/leaguegothic-regular-webfont.woff') format('woff');
@@ -27,7 +22,7 @@ body {
 }
 
 h1 {
-  font-family: 'BluBerry Grunge';
+  font-family: 'League Gothic Regular';
   text-transform: uppercase;
 }
 
