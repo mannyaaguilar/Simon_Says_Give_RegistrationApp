@@ -66,6 +66,7 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location', 'Volunteer
     } // end checkSignatureFormat
   }; // end submitAdultWaiver
 
+
   $scope.submitYouthWaiver = function() {
     console.log("current waiverObj: ", $scope.waiverObj);
     var noParentAll,
@@ -90,40 +91,24 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location', 'Volunteer
 
     var youthSignature = $scope.waiverObj.nameBottomYouth;
     var guardianSignature = $scope.waiverObj.guardianBottomYouth;
+    var guardianEmail = $scope.waiverObj.guardianEmailYouth;
 
-
-
-    // NEEDS TO BE FINISHED
-    // function checkYouthSignFormat(youthSignature, guardianSignature) {
-    //   if (filledOut &&
-    //       youthSignature.charAt(0) === '/' &&
-    //       youthSignature.charAt(youthSignature.length -1) === '/') {
-    //         $location.path("/override");
-    //   }
-    //   else if (filledOut &&
-    //     (signature.charAt(0) !== '/' || signature.charAt(signature.length -1) !== '/' )) {
-    //       $scope.message = 'Please put name between slashes';
-    //     }
-    //   else {
-    //     $scope.message = 'Please fill out all highlighted fields';
-    //   }
-    // } // end checkSignatureFormat
-
-
-
-
-    if ( filledOut ) {
-      if ( noParentAll ) {
-        $location.path("/override");
+      if (filledOut &&
+          youthSignature.charAt(0) === '/' &&
+          youthSignature.charAt(youthSignature.length -1) === '/') {
+            $location.path("/override");
       }
-      else if ( parentAll ) {
-        $location.path("/waiver-photo");
+      else if (filledOut &&
+              (youthSignature.charAt(0) !== '/' || youthSignature.charAt(youthSignature.length -1) !== '/')) {
+                $scope.message = 'Please put name between slashes';
+               }
+      else {
+        $scope.message = 'Please fill out all highlighted fields';
       }
-    }
-    else {
-      $scope.message = 'Please complete all highlighted fields';
-    }
+
   }; // end submitYouthWaiver
+
+
 
   $scope.submitPhotoWaiver = function() {
     console.log("current waiverObj: ", $scope.waiverObj);
