@@ -6,14 +6,15 @@
       <h2>Guardian and Minor Volunteer Release and Waiver of Liability</h2>
       <div layout="row" class="bufferDiv">
       </div>
-      <div layout="column" ng-hide="hideQuestion">
+      <div layout="column">
         <span class="yellowBack"><b>Is your parent or guardian here?</b></span>
         <br>
         <div layout="row">
+          <p>Change answer to:</p>
           <button type="button" name="button" class="biggerButton themed-Btn badButton"
-            ng-click="waiverObj.noParentYouth = true; hideQuestion = true">No</button>
+            ng-click="waiverObj.noParentYouth = true; nobodyHome = true; somebodyHome = false" ng-hide="nobodyHome">No</button>
           <button type="button" name="button" class="biggerButton themed-Btn goodButton"
-            ng-click="waiverObj.noParentYouth = false; hideQuestion = true">Yes</button>
+            ng-click="waiverObj.noParentYouth = false; somebodyHome = true; nobodyHome = false" ng-hide="somebodyHome">Yes</button>
         </div>
       </div>
       <div layout="row" class="bufferDiv">
