@@ -1,4 +1,4 @@
-myApp.factory('CSVService', ['$http', function($http){
+myApp.factory('CSVService', ['$http','$mdDialog', function($http,$mdDialog){
   console.log('CSVService Loaded');
 
   serverResponseObject = {};
@@ -7,10 +7,9 @@ myApp.factory('CSVService', ['$http', function($http){
   sendCSV = function(csv) {
     var csvToPost = {};
     csvToPost.fileContent = csv;
-    // console.log('Posting csv ', csvToPost);
     $http.post('/csv/upload', csvToPost).then(function(response) {
       console.log('Back from server after posting csv content', response);
-      serverResponseObject.response = response;
+      showAlert(response.data);
     });
   };
 
@@ -45,7 +44,18 @@ myApp.factory('CSVService', ['$http', function($http){
     var curr_year = date.getFullYear();
     var formattedDate = curr_year + "-" + curr_month + "-" + curr_date;
     return formattedDate;
-  }
+  };
+
+  // Alert dialog to inform response to the user
+  showAlert = function(message) {
+      $mdDialog.show(
+        $mdDialog.alert()
+          .clickOutsideToClose(true)
+          .title(message)
+          .ariaLabel(message)
+          .ok('Ok')
+      );
+    };
 
   return {
     sendCSV : sendCSV,

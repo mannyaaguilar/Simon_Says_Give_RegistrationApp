@@ -95,12 +95,12 @@
           <!-- BUTTONS -->
           <md-input-container layout="row" layout-align="start center">
             <div>
-              <md-button class="themed-Btn orangeButton" aria-label="Logout Volunteers" ng-click="logoutVolunteers(event)">Logout Volunteers</md-button>
+              <br>
+              <md-button class="themed-Btn orangeButton" aria-label="Check out volunteers" ng-click="logoutVolunteers(event)">Logout Volunteers</md-button>
               <md-button class="themed-Btn" aria-label="Cancel" value="Cancel" ng-click="redirect('/displayEvents')">Back to Admin Home</md-button>
               <md-button class="themed-Btn" type="submit" name="submit" aria-label="Update Event" value="Update Event">Save Event</md-button>
             </div>
           </md-input-container>
-          <p>{{serverResponseObject.response.data}}</p>
         </form>
       </div>
     </div>

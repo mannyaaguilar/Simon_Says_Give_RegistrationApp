@@ -34,7 +34,6 @@ router.get('/', function(req,res) {
 router.post('/add', function(req,res) {
   console.log("inside /event/add route");
   if(req.isAuthenticated()) {
-    console.log("object received is: ", req.body);
     var eventCode = req.body.eventCode;
     var eventName = req.body.eventName;
     var eventTeam = req.body.eventTeam;
@@ -61,9 +60,9 @@ router.post('/add', function(req,res) {
           if (queryError) {
             console.log('Error making query',queryError);
             // res.sendStatus(500);
-            res.send("Error inserting information, make sure Event Code doesn't exist");
+            res.send("There was an error saving the event. Please make sure that event code doesn't exist in the database.");
           } else {
-            res.send("Event created successfully")
+            res.send("Event created successfully.")
             // res.sendStatus(201); // succesful insert status
           }
         });
@@ -104,7 +103,6 @@ router.delete('/delete/:eventCode', function(req,res) {
 // updates an existing event
 router.put('/update', function(req,res) {
   if(req.isAuthenticated()) {
-    console.log("object received is: ", req.body);
     var eventCode = req.body.eventCode;
     var eventName = req.body.eventName;
     var eventTeam = req.body.eventTeam;
@@ -127,9 +125,9 @@ router.put('/update', function(req,res) {
           done();
           if (queryError) {
             console.log('Error making query',queryError);
-            res.sendStatus(500);
+            res.send("There was a problem updating the event information.");
           } else {
-            res.send(result);
+            res.send("Event updated successfully.");
           }
         });
       }
@@ -159,7 +157,6 @@ router.put('/logoutAll', function(req,res) {
             console.log('Error making query',queryError);
             res.sendStatus(500);
           } else {
-            // res.sendStatus(201);
             res.send(result);
           }
         });

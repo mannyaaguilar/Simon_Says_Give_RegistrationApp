@@ -34,10 +34,6 @@ myApp.controller('CreateEventController', ['$scope', '$location','UserService', 
         // send information to factory
         console.log('EVENT TO SEND: ', eventToSend);
         EventService.postEvent(eventToSend);
-        // $scope.serverResponseObject.data = EventService.serverResponseObject.data;
-        // console.log("response",$scope.serverResponseObject.response);
-        message = angular.copy(EventService.serverResponseObject);
-        // UtilitesService.showAlert(message.response);
       }
     } else {
       UtilitesService.showAlert('Please enter an alphanumeric code');

@@ -10,8 +10,6 @@ router.get('/export/hours/:fromDate/:toDate', function(req, res, next) {
   if(req.isAuthenticated()) {
     var fromDate = req.params.fromDate;
     var toDate = req.params.toDate;
-    console.log('FROM DATE', fromDate);
-    console.log('TO DATE', toDate);
     // connects to the pool
     pool.connect(function(errorConnectingToDatabase,db,done) {
       if(errorConnectingToDatabase) {
@@ -130,12 +128,10 @@ router.post('/upload', function(req, res, next) {
            function(queryError,result) {
             done();
             if (queryError) {
-              console.log('Error inserting into volunteer table');
-              message = 'Error inserting into volunteer table';
+              message = 'Error importing volunteers.';
               res.send(message);
             } else {
-              console.log(result);
-              message = 'Import finished Successfully. Number of volunteers inserted: ' + result.rowCount;
+              message = 'Import successful. ' + result.rowCount + ' volunteers added to the database.';
               res.send(message);
             }
           });

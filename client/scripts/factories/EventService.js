@@ -1,15 +1,14 @@
-myApp.factory('EventService', ['$http', function($http){
+myApp.factory('EventService', ['$http','$mdDialog', function($http,$mdDialog){
   console.log('CSVService Loaded');
 
   serverResponseObject = {};
 
-  // Gets all recipes in the database for a specific uset
+  // Gets all events in the database
   getEvents = function(){
     console.log('in getEvents');
     $http.get('/ssgEvent/').then(function(response) {
       console.log('Back from the server with:', response);
       serverResponseObject.allEvents = response.data;
-      console.log('Updated serverResponseObject:', serverResponseObject.allEvents);
     });
   };
 
@@ -18,7 +17,7 @@ myApp.factory('EventService', ['$http', function($http){
     console.log('Posting event ', eventToPost);
     $http.post('/ssgEvent/add', eventToPost).then(function(response) {
       console.log('Back from server after posting event', response);
-      serverResponseObject.response = response;
+      showAlert(response.data);
     });
   };
 
@@ -34,6 +33,7 @@ myApp.factory('EventService', ['$http', function($http){
   updateEvent = function(eventToUpdate) {
     console.log('Updating event: ', eventToUpdate);
     $http.put('/ssgEvent/update', eventToUpdate).then(function(response) {
+      showAlert(response.data);
       getEvents();
     });
   };
@@ -42,9 +42,20 @@ myApp.factory('EventService', ['$http', function($http){
   logoutVolunteersByEvent = function(eventParams) {
     console.log('Logging out volunteers - event: ', eventParams);
     $http.put('/ssgEvent/logoutAll', eventParams).then(function(response) {
-      console.log('Back from server after logging out volunteers', response);
+      showAlert('All active volunteers have been checked out.');
     });
   };
+
+  // Alert dialog to inform response to the user
+  showAlert = function(message) {
+      $mdDialog.show(
+        $mdDialog.alert()
+          .clickOutsideToClose(true)
+          .title(message)
+          .ariaLabel(message)
+          .ok('Ok')
+      );
+    };
 
   return {
     serverResponseObject : serverResponseObject,

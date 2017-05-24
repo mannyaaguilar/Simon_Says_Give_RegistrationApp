@@ -30,6 +30,7 @@ myApp.controller('EventController', ['$scope','$mdDialog','UserService','Utilite
     UserService.redirect('/viewEvent');
   };
 
+  // calls factory function to check out all active volunteers for the event
   $scope.logoutVolunteers = function(eventObject) {
     console.log("Event object ISSSS", eventObject);
     var eventParams = {};

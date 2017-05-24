@@ -71,6 +71,7 @@ myApp.controller('ViewEventController', ['$scope','$mdDialog','UserService','Uti
     }
   } // function updateEvent()
 
+  // Checks out all remaining active volunteers
   $scope.logoutVolunteers = function(eventObject) {
     var eventParams = {};
     eventParams.eventCode = eventObject.eventCode;
