@@ -4,11 +4,6 @@
 }
 
 @font-face {
-    font-family: 'BluBerry Grunge'; /*a name to be used later*/
-    src: url('../views/assets/fonts/Bluberry Grunge.ttf'); /*URL to font*/
-}
-
-@font-face {
   font-family: 'League Gothic Regular';
   src: url('../views/assets/fonts/leaguegothic-regular-webfont.ttf') format('truetype'),
        url('../views/assets/fonts/leaguegothic-regular-webfont.woff') format('woff');
@@ -22,12 +17,13 @@ html {
 body {
   margin: 0;
   padding: 0;
+  height: 100%;
   font-family: 'Open Sans';
   /*background-color: #f3eab2;*/
 }
 
 h1 {
-  font-family: 'BluBerry Grunge';
+  font-family: 'League Gothic Regular';
   text-transform: uppercase;
 }
 
@@ -35,6 +31,12 @@ h1 {
   position: fixed;
   background-color: #f8d208;
   color: whitesmoke;
+}
+
+.ssg_menu {
+  position: fixed;
+  width: 100%;
+  background-color: white;
 }
 
 .btnPadding {
@@ -225,8 +227,14 @@ footer {
    width: 0;
  }
 
+.eventViewContainer {
+  padding-top: 50px;
+  padding-bottom: 80px;
+  width:100%;
+}
+
  .importFileContainer {
-   padding-top: 30px;
+   padding-top: 50px;
  }
 
  .exportDatesContainer {
@@ -236,7 +244,7 @@ footer {
  }
 
 .addAdminContainer {
-  padding-top: 30px;
+  padding-top: 50px;
 }
 
 .eventInputs {
@@ -253,6 +261,13 @@ footer {
 
 .eventCodeInfo {
   font-size: 14px;
+}
+
+.eventListDiv {
+  width: 100%;
+  background-color: whitesmoke;
+  padding: 10px;
+  border-radius: 8px;
 }
  /*Import/Export .CSV file styles*/
 
@@ -337,6 +352,15 @@ footer {
 
 .blueButton {
   background-color: #3691df;
+  background-image: none;
+  padding-right: 25px;
+  padding-left: 25px;
+  margin-right: 25px;
+  margin-left: 25px;
+}
+
+.orangeButton {
+  background-color: #f57f20;
   background-image: none;
   padding-right: 25px;
   padding-left: 25px;

@@ -1,5 +1,6 @@
 myApp.controller('WaiverController', ['$scope', '$http', '$location', 'VolunteerService', function($scope, $http, $location, VolunteerService) {
 
+console.log("WaiverController loaded!");
     $scope.message = '';
 
   //ALL OF THESE WILL NEED TO BE IN A FACTORY
