@@ -96,7 +96,7 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location', 'Volunteer
       if (filledOut &&
           youthSignature.charAt(0) === '/' &&
           youthSignature.charAt(youthSignature.length -1) === '/') {
-            $location.path("/override");
+            $location.path("/waiver-photo");
       }
       else if (filledOut &&
               (youthSignature.charAt(0) !== '/' || youthSignature.charAt(youthSignature.length -1) !== '/')) {
@@ -113,7 +113,13 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location', 'Volunteer
   $scope.submitPhotoWaiver = function() {
     console.log("current waiverObj: ", $scope.waiverObj);
 
-    if ( $scope.waiverObj.agreedPhoto ) {
+
+
+
+
+
+    if ( $scope.waiverObj.agreedPhoto )
+    {
       $location.path("/confirmation");
     }
     else {
@@ -125,4 +131,4 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location', 'Volunteer
     $location.path("/override");
   };
 
-}]);
+}]); // end submitPhotoWaiver
