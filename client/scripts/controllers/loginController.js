@@ -41,7 +41,7 @@ myApp.controller('LoginController', ['$scope', '$http', '$location', 'UserServic
       $scope.eventMessage = "Enter an event code!";
     } else {
       console.log('sending to server...', $scope.event);
-      $http.get('/newEvent/start/' + $scope.event.eventCode).then(function(response) {
+      $http.get('/ssgEvent/start/' + $scope.event.eventCode).then(function(response) {
         console.log(response);
         if(response.data.event_code) {
           console.log('success: ', response.data);
