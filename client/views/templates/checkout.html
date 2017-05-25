@@ -45,37 +45,23 @@
 <!-- div with ng-show for list of search results: -->
 <div layout="row" ng-show="success">
   <div layout-md="column" flex="10" ></div>
-  <div layout-md="column" flex="80">
-    <h3>Select Who You Want to Check Out!</h3>
-    <div ng-repeat="volunteer in volunteerList">
-
-      <!-- <md-checkbox ng-model="checkoutList.volunteer" aria-label="{{volunteer}}">
-            {{volunteer.first_name}} {{volunteer.last_name}}   ({{volunteer.email}})
-      </md-checkbox> -->
-
-      <md-checkbox ng-model="checkoutList.volunteer" aria-label="{{volunteer}}"
-        ng-checked="" ng-click="">
-      </md-checkbox>
-      <p> {{volunteer.first_name}} {{volunteer.last_name}}   ({{volunteer.email}}) <p>
-    </div>
-
-    <!-- <div ng-repeat="volunteer in volunteerList">
-      <div ng-options="volunteer for volunteer in volunteerList track by volunteer.id">
-
-      <md-checkbox ng-model="checkoutList.volunteer" aria-label="{{volunteer}}">
-            {{volunteer.first_name}} {{volunteer.last_name}}   ({{volunteer.email}})
-      </md-checkbox>
-
-      <md-checkbox ng-model="checkoutList.volunteer" aria-label="{{volunteer}}">
-      </md-checkbox>
-      <p> {{volunteer.first_name}} {{volunteer.last_name}}   ({{volunteer.email}}) <p>
-    </div> -->
-
+  <div layout-md="column" flex="80" layout-align="center center">
+    <h2>Select Who You Want to Check Out!</h2>
+    <!-- <div flex-xs="" flex="50">
+      <md-checkbox aria-label="Select All" ng-checked="isChecked()" md-indeterminate="isIndeterminate()" ng-click="toggleAll()">
+      <span ng-if="isChecked()">Un-</span>Select All
+    </md-checkbox>
+  </div> -->
+  <div class="demo-select-all-checkboxes" flex="100" ng-repeat="volunteer in volunteerList">
+    <md-checkbox ng-checked="exists(volunteer.id, checkoutList)" ng-click="toggle(volunteer.id, checkoutList)">
+      {{volunteer.first_name}} {{volunteer.last_name}}   ({{volunteer.email}})
+    </md-checkbox>
   </div>
 </div>
+</div>
 <div layout="row" ng-show="success">
-  <div layout-md="column" flex="10" ></div>
-  <md-input-container layout="column" layout-align="center center" flex="80">
+  <div layout-md="column" flex="10"  ></div>
+  <md-input-container layout="column" flex="80" layout-align="center center">
     <div>
       <md-button class="biggerButton themed-Btn blueButton" type="submit" name="submit" aria-label="Checkout"
       value="Checkout" ng-click="checkout(checkoutList)">Checkout</md-button>
