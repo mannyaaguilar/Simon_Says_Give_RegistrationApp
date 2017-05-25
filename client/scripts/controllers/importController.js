@@ -61,7 +61,7 @@ myApp.controller('ImportController', ['$scope', '$http', '$location', 'UserServi
       progress.textContent = 'Importing data 100%';
       setTimeout("document.getElementById('progress_bar').className='';", 2000);
 
-      console.log(e.target.result);
+      // sends read file to factory function
       CSVService.sendCSV(e.target.result);
     }
 

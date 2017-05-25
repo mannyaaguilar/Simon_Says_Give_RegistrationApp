@@ -9,6 +9,8 @@ myApp.controller('LoginController', ['$scope', '$http', '$location', 'UserServic
   };
   $scope.adminMessage = '';
   $scope.eventMessage = '';
+  $scope.message = '';
+
 
   // Logins Admin user
   $scope.login = function() {
@@ -49,8 +51,6 @@ myApp.controller('LoginController', ['$scope', '$http', '$location', 'UserServic
           UserService.eventObject.eventName = response.data.event_name;
           console.log('EVENT CODE', UserService.eventObject.eventCode);
           console.log('EVENT NAME', UserService.eventObject.eventName);
-          // console.log('EVENT CODE', response.data.event_code);
-          // console.log('EVENT NAME', response.data.event_name);
           $location.path('/checkInOut');
         } else {
           console.log('failure: ', response);
@@ -58,6 +58,25 @@ myApp.controller('LoginController', ['$scope', '$http', '$location', 'UserServic
         }
       });
     }
+  };
+
+  // sends request to get a link to reset the password
+  $scope.sendResetPassword = function() {
+  if($scope.user.username === '') {
+    $scope.message = "Enter your username!";
+  } else {
+    console.log('sending to server...', $scope.user);
+    $http.post('/user/forgotpassword', $scope.user).then(function(response) {
+      if(response.data.username) {
+        console.log('success: ', response.data);
+        // location works with SPA (ng-route)
+        $scope.message = "Password link sent.";
+      } else {
+        console.log('failure: ', response);
+        $scope.message = "Failure.";
+      }
+    });
   }
+};
 
 }]);

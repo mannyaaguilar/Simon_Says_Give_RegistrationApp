@@ -32,6 +32,10 @@ h1 {
   text-transform: uppercase;
 }
 
+a {
+  color: gray;
+}
+
 .ssg_header {
   position: fixed;
   background-color: #f8d208;
