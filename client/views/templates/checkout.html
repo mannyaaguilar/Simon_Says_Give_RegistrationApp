@@ -1,72 +1,69 @@
-<!-- finish button - needs validation that a volunteer has been selected -->
-<div ng-include="'views/partials/header.html'"></div>
+<!-- INCLUDE HEADER -->
+<div ng-include="'views/partials/headerCheckIn.html'"></div>
 
 <div layout="row">
-  <div layout-md="column" flex="5"></div>
-  <div layout="column" flex="90">
-    <h1>CHECKOUT</h1>
-    <h3>Enter email to search all party members</h3>
-    <h3>or search for yourself by name</h3>
+  <div layout-md="column" flex="20"></div>
+  <div layout="column" flex="60">
+    <div class="volunteerPage">
+      <p>Please search for you or your group by email or by name:</p>
+      <!-- SEARCH SECTION -->
+      <div layout="row">
+        <div layout-md="column" flex="70">
+          <!-- EMAIL -->
+          <md-input-container layout="column">
+              <label for="email">Email:</label>
+              <input type="text" ng-model="volunteerObject.email"/>
+          </md-input-container>
+
+          <!-- FIRST AND LAST NAME -->
+          <div layout="row">
+            <md-input-container layout="column" flex="45" >
+                <label for="first_name" >First Name:</label>
+                <input type="text" ng-model="volunteerObject.first_name"/>
+            </md-input-container>
+            <div flex="10"></div>
+            <md-input-container layout="column" flex="45" >
+                <label for="last_name">Last Name:</label>
+                <input type="text" ng-model="volunteerObject.last_name"/>
+            </md-input-container>
+          </div>
+        </div>
+        <div layout-md="column" flex="30" layout-align="center end">
+          <md-input-container layout="column">
+              <md-button class="biggerButton themed-Btn blueButton" type="submit" name="submit" aria-label="Checkout"
+              value="Search" ng-click="search(volunteerObject)">Search</md-button>
+          </md-input-container>
+        </div>
+      </div>
+      <!-- RESULTS SECTION -->
+
+      <div layout="column" ng-show="success">
+        <br>
+        <p>Select who you want to check out!</p>
+          <!-- <div flex-xs="" flex="50">
+            <md-checkbox aria-label="Select All" ng-checked="isChecked()" md-indeterminate="isIndeterminate()" ng-click="toggleAll()">
+            <span ng-if="isChecked()">Un-</span>Select All
+          </md-checkbox>
+        </div> -->
+        <div layout="row">
+          <div class="demo-select-all-checkboxes" ng-repeat="volunteer in volunteerList">
+            <md-checkbox ng-checked="exists(volunteer.id, checkoutList)" ng-click="toggle(volunteer.id, checkoutList)">
+              {{volunteer.first_name}} {{volunteer.last_name}}   ({{volunteer.email}})
+            </md-checkbox>
+          </div>
+        </div>
+        <div layout="row" ng-show="success" layout-align="center center" class="chechOutContainer">
+          <md-input-container class="chechOutContainer">
+              <md-button class="biggerButton themed-Btn blueButton" type="submit" name="submit" aria-label="Checkout"
+              value="Checkout" ng-click="checkout(checkoutList)">Checkout</md-button>
+          </md-input-container>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
-<div layout="row">
-  <div layout-md="column" flex="35" ></div>
-  <md-input-container layout="column" flex="30" >
-    <div>
-      <label for="email">Email:</label>
-      <input type="text" ng-model="volunteerObject.email"/>
-    </div>
-  </md-input-container>
-</div>
-<div layout="row">
-  <div layout-md="column" flex="25" ></div>
-  <md-input-container layout="column" flex="25" >
-    <div>
-      <label for="first_name" >First Name:</label>
-      <input type="text" ng-model="volunteerObject.first_name"/>
-    </div>
-  </md-input-container>
-  <md-input-container layout="column" flex="25" >
-    <div>
-      <label for="last_name">Last Name:</label>
-      <input type="text" ng-model="volunteerObject.last_name"/>
-    </div>
-  </md-input-container>
-</div>
-<div layout="row">
-  <div layout-md="column" flex="10" ></div>
-  <md-input-container layout="column" layout-align="center center" flex="80">
-    <div>
-      <md-button class="biggerButton themed-Btn blueButton" type="submit" name="submit" aria-label="Checkout"
-      value="Search" ng-click="search(volunteerObject)">Search</md-button>
-    </div>
-  </md-input-container>
-</div>
+
 <!-- div with ng-show for list of search results: -->
-<div layout="row" ng-show="success">
-  <div layout-md="column" flex="10" ></div>
-  <div layout-md="column" flex="80" layout-align="center center">
-    <h2>Select Who You Want to Check Out!</h2>
-    <!-- <div flex-xs="" flex="50">
-      <md-checkbox aria-label="Select All" ng-checked="isChecked()" md-indeterminate="isIndeterminate()" ng-click="toggleAll()">
-      <span ng-if="isChecked()">Un-</span>Select All
-    </md-checkbox>
-  </div> -->
-  <div class="demo-select-all-checkboxes" flex="100" ng-repeat="volunteer in volunteerList">
-    <md-checkbox ng-checked="exists(volunteer.id, checkoutList)" ng-click="toggle(volunteer.id, checkoutList)">
-      {{volunteer.first_name}} {{volunteer.last_name}}   ({{volunteer.email}})
-    </md-checkbox>
-  </div>
-</div>
-</div>
-<div layout="row" ng-show="success">
-  <div layout-md="column" flex="10"  ></div>
-  <md-input-container layout="column" flex="80" layout-align="center center">
-    <div>
-      <md-button class="biggerButton themed-Btn blueButton" type="submit" name="submit" aria-label="Checkout"
-      value="Checkout" ng-click="checkout(checkoutList)">Checkout</md-button>
-    </div>
-  </md-input-container>
-</div>
 
 <div ng-include="'views/partials/footer.html'"></div>
