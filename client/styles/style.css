@@ -238,8 +238,16 @@ footer {
   display: flex;
 }
 
-.volunteerPage {
+.checkInOutPage {
   padding-top: 220px;
+}
+
+.volunteerPage {
+  padding-top: 160px;
+}
+
+.adminCode {
+  width: 100%;
 }
 
 .mainCheckInOutLogo {
@@ -252,7 +260,7 @@ footer {
 .checkInBtn {
   height: 250px;
   width: 400px;
-  font-family: 'BluBerry Grunge';
+  font-family: 'League Gothic Regular';
   font-size: 50px;
   color: white;
   border-radius: 20px 20px 20px 20px;
@@ -263,7 +271,7 @@ footer {
 .checkOutBtn {
   height: 250px;
   width: 400px;
-  font-family: 'BluBerry Grunge';
+  font-family: 'League Gothic Regular';
   font-size: 50px;
   color: white;
   border-radius: 20px 20px 20px 20px;
@@ -289,9 +297,8 @@ footer {
     display: none;
 }
 
-.errorContainer {
-  height: 30px;
-  padding-bottom: 15px;
+.overrideContainer {
+  width: 100%
 }
 
 /*input font size in startEvent view*/
