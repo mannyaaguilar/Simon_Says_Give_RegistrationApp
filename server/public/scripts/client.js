@@ -1019,24 +1019,39 @@ console.log("WaiverController loaded!");
 
   }; // end submitYouthWaiver
 
-
+  var agreedPhoto = $scope.waiverObj.agreedPhoto;
+  var volunteerPhotoSign = $scope.waiverObj.nameBottomPhoto;
+  var guardianPhotoSign = $scope.waiverObj.guardianBottomPhoto;
 
   $scope.submitPhotoWaiver = function() {
     console.log("current waiverObj: ", $scope.waiverObj);
-
-
-
-
-
-
-    if ( $scope.waiverObj.agreedPhoto )
-    {
-      $location.path("/confirmation");
-    }
+    if (agreedPhoto === true &&
+       (volunteerPhotoSign.charAt(0) === '/' && volunteerPhotoSign.charAt(volunteerPhotoSign.length -1) === '/') &&
+       (guardianPhotoSign.charAt(0) === '/' && guardianPhotoSign.charAt(guardianPhotoSign.length -1) === '/')) {
+          $location.path('/confirmation');
+        }
+    else if (agreedPhoto === true &&
+            (volunteerPhotoSign.charAt(0) !== '/' || volunteerPhotoSign.charAt(volunteerPhotoSign.length -1) !== '/') ||
+            (guardianPhotoSign.charAt(0) !== '/' || guardianPhotoSign.charAt(volunteerPhotoSign.length -1) !== '/')) {
+              $scope.message = 'Please put name between slashes';
+            }
     else {
-      $location.path("/override");
+      $scope.message = 'Please fill out all highlighted fields';
     }
-  };
+
+
+// // old code
+//     if ( $scope.waiverObj.agreedPhoto )
+//     {
+//       $location.path("/confirmation");
+//     }
+//     else {
+//       $location.path("/override");
+//     }
+
+
+  }; // end submitPhotoWaiver
+
 
   $scope.declineWaiver = function() {
     $location.path("/override");
