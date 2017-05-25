@@ -1,4 +1,8 @@
-myApp.controller('checkInOutController', ['$scope', '$location', '$http', 'VolunteerService', function($scope, $location, $http, VolunteerService) {
+myApp.controller('checkInOutController', ['$scope', '$location', '$http', 'VolunteerService', 'UserService',
+                  function($scope, $location, $http, VolunteerService, UserService) {
+
+  $scope.eventObject = UserService.eventObject;
+  console.log('In checkInOutController eventobject is', UserService.eventObject);
 
   // when check in btn clicked, get for preregistered volunteers triggered and routes to volunteer view
   $scope.checkIn = function(){
