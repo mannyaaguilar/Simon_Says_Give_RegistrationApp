@@ -45,9 +45,9 @@
             <span ng-if="isChecked()">Un-</span>Select All
           </md-checkbox>
         </div> -->
-        <div layout="row">
-          <div class="demo-select-all-checkboxes" ng-repeat="volunteer in volunteerList">
-            <md-checkbox ng-checked="exists(volunteer.id, checkoutList)" ng-click="toggle(volunteer.id, checkoutList)">
+        <div layout="column">
+          <div class="demo-select-all-checkboxes" layout="column" ng-repeat="volunteer in volunteerList">
+            <md-checkbox ng-checked="exists(volunteer.id, checkoutList)" layout="column" ng-click="toggle(volunteer.id, checkoutList)">
               {{volunteer.first_name}} {{volunteer.last_name}}   ({{volunteer.email}})
             </md-checkbox>
           </div>
