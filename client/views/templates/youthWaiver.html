@@ -10,11 +10,10 @@
         <span class="yellowBack"><b>Is your parent or guardian here?</b></span>
         <br>
         <div layout="row">
-          <p>Change answer to:</p>
-          <button type="button" name="button" class="biggerButton themed-Btn badButton"
-            ng-click="waiverObj.noParentYouth = true; nobodyHome = true; somebodyHome = false" ng-hide="nobodyHome">No</button>
-          <button type="button" name="button" class="biggerButton themed-Btn goodButton"
-            ng-click="waiverObj.noParentYouth = false; somebodyHome = true; nobodyHome = false" ng-hide="somebodyHome">Yes</button>
+          <button type="button" name="button" style="background-color: {{ noBtn || rgb(65,182,73) }}" class="biggerButton themed-Btn badButton noParentBtn"
+            ng-click="waiverObj.noParentYouth = true; yesBtn = '#A0B0C0'; noBtn = 'rgb(237,39,44)'">No</button>
+          <button type="button" name="button" style="background-color: {{ yesBtn || rgb(237,39,44) }}" class="biggerButton themed-Btn goodButton yesParentBtn"
+            ng-click="waiverObj.noParentYouth = false; noBtn = '#A0B0C0'; yesBtn = 'rgb(65,182,73)'">Yes</button>
         </div>
       </div>
       <div layout="row" class="bufferDiv">
