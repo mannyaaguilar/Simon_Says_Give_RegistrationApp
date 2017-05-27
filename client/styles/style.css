@@ -1,4 +1,359 @@
+@font-face {
+    font-family: 'Open Sans'; /*a name to be used later*/
+    src: url('../views/assets/fonts/OpenSans-Regular.ttf'); /*URL to font*/
+}
+
+@font-face {
+  font-family: 'League Gothic Regular';
+  src: url('../views/assets/fonts/leaguegothic-regular-webfont.ttf') format('truetype'),
+       url('../views/assets/fonts/leaguegothic-regular-webfont.woff') format('woff');
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Open Sans';
+  /*background-color: #f3eab2;*/
+}
+
+h1 {
+  font-family: 'League Gothic Regular';
+  text-transform: uppercase;
+}
+
 .ssg_header {
-  background-color: #3573b9;
+  position: fixed;
+  background-color: #f8d208;
   color: whitesmoke;
+}
+
+.ssg_menu {
+  position: fixed;
+  width: 100%;
+  background-color: white;
+}
+
+.btnPadding {
+  padding: 15px;
+}
+
+.themed-Btn {
+  padding-top: 0;
+  padding-right: 50px;
+  padding-bottom: 0;
+  padding-left: 25px;
+  display: inline-block;
+	margin: 0;
+	height: 58px;
+	overflow: visible;
+	position: relative;
+	font-size: 24px;
+  line-height: 50px;
+  font-family: "League Gothic Regular", "Arial Narrow", Arial, sans-serif;
+	letter-spacing: 0.015em;
+	color: #FFF;
+	background-color: #3691df;
+  background-image: url("http://www.simonsaysgive.org/wp-content/themes/simonsaysgive.theme/images/button-sprite.png");
+  background-position-x: 100%;
+  background-position-y: 0;
+  background-repeat: repeat-x;
+	text-align: center;
+	text-transform: uppercase;
+	white-space: nowrap;
+	border: #fcfdfd 3px solid;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	outline: none;
+	cursor: pointer;
+	max-width: 100%;
+	-webkit-background-clip: padding-box;
+	-moz-background-clip: padding-box;
+	background-clip: padding-box;
+	-webkit-font-smoothing: antialiased;
+}
+
+.themed-Btn:hover,
+.themed-Btn:focus,
+.themed-Btn:active {
+  background-color: #2f7dc0;
+  background-position-x: 100%;
+  background-position-y: -64px;
+}
+
+/* Login Page Styles */
+.mainImageDiv {
+  margin-top: 200px;
+  margin-bottom: 50px;
+  height: 220px;
+  display:flex;
+  justify-content:center;
+  align-items:flex-end;
+}
+
+.mainLoginDiv {
+  margin-top: 100px;
+}
+
+.loginLine {
+  flex-shrink: 1;
+  background-color: black;
+  height: 1px;
+  position: relative;
+  top: .45em;
+}
+
+.mainLogo {
+  padding-top: 30px;
+  max-height: 100%;
+  max-width: 100%;
+  display:flex;
+  justify-content:center;
+  align-items:flex-end;
+}
+/* Login Page Styles */
+
+
+/*styling for big logo on checkInOut and confirmation views
+not sure we need anymore*/
+/*.mainLogo {
+  padding-top: 30px;
+  max-height: 60%;
+  max-width: 60%;
+  display:flex;
+  justify-content:center;
+  align-items:flex-end;
+}*/
+
+/* Header / Footer styles */
+.navbarLogo {
+  max-height: 18%;
+  max-width: 18%;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 55px;
+  overflow:hidden;
+  display:flex;
+  align-items:flex-end;
+  background-color: #3573b9;
+}
+
+.kidsInFooter {
+  display:flex;
+  align-items:flex-end;
+  background-color: #3573b9;
+}
+
+.kidsImg {
+  max-width: 100%;
+  height: auto;
+}
+/* Header / Footer styles */
+
+/* Admin pages styles*/
+#progress_bar {
+   margin: 10px 0;
+   padding: 3px;
+   border: 1px solid #000;
+   font-size: 14px;
+   clear: both;
+   opacity: 0;
+   -moz-transition: opacity 1s linear;
+   -o-transition: opacity 1s linear;
+   -webkit-transition: opacity 1s linear;
+ }
+
+ #progress_bar.loading {
+   opacity: 1.0;
+ }
+
+ #progress_bar .percent {
+   background-color: #99ccff;
+   height: auto;
+   width: 0;
+ }
+
+.eventViewContainer {
+  padding-top: 50px;
+  padding-bottom: 80px;
+  width:100%;
+}
+
+ .importFileContainer {
+   padding-top: 50px;
+ }
+
+ .exportDatesContainer {
+   padding-top: 10px;
+   padding-left: 30px;
+   padding-bottom: 30px;
+ }
+
+.addAdminContainer {
+  padding-top: 50px;
+}
+
+.eventInputs {
+  width: 100%;
+}
+
+.eventLocationInput {
+  padding-bottom: 19px;
+}
+
+.eventDescriptionInput {
+  padding-bottom: 19px;
+}
+
+.eventCodeInfo {
+  font-size: 14px;
+}
+
+.eventListDiv {
+  width: 100%;
+  background-color: whitesmoke;
+  padding: 10px;
+  border-radius: 8px;
+}
+/* Admin Pages styles*/
+
+/*Check In/Check Out Styles*/
+.checkInOutHeader {
+  position: fixed;
+  width: 100%;
+  background-color: #f8d208;
+  color: whitesmoke;
+  height: 200px;
+  display: flex;
+}
+
+.checkInOutPage {
+  padding-top: 220px;
+}
+
+.volunteerPage {
+  padding-top: 160px;
+}
+
+.adminCode {
+  width: 100%;
+}
+
+.mainCheckInOutLogo {
+  padding: 30px;
+  max-height: 100%;
+  max-width: 100%;
+}
+
+/*check in button styling*/
+.checkInBtn {
+  height: 250px;
+  width: 400px;
+  font-family: 'League Gothic Regular';
+  font-size: 50px;
+  color: white;
+  border-radius: 20px 20px 20px 20px;
+  background-color: rgb(65,182,73);
+}
+
+/*check out button styling*/
+.checkOutBtn {
+  height: 250px;
+  width: 400px;
+  font-family: 'League Gothic Regular';
+  font-size: 50px;
+  color: white;
+  border-radius: 20px 20px 20px 20px;
+  background-color: rgb(237,39,44);
+}
+/*Check In/Check Out Styles*/
+
+#confirmation {
+  padding-top: 220px;
+  text-align: center;
+}
+
+.noMargins {
+  margin: 0;
+}
+
+.bufferDiv {
+  min-height: 40px;
+  min-width: 40px;
+}
+
+.md-errors-spacer:empty {
+    display: none;
+}
+
+.overrideContainer .chechOutContainer {
+  width: 100%
+}
+
+/*input font size in startEvent view*/
+.eventCode {
+  font-size: 70px;
+}
+
+.inputError {
+  color: rgb(237,39,44);
+  font-size: 30px;
+}
+
+.badButton {
+  background-color: rgb(237,39,44);
+  background-image: none;
+  padding-right: 25px;
+  padding-left: 25px;
+  margin-right: 25px;
+  margin-left: 25px;
+}
+
+.goodButton {
+  background-color: rgb(65,182,73);
+  background-image: none;
+  padding-right: 25px;
+  padding-left: 25px;
+  margin-right: 25px;
+  margin-left: 25px;
+}
+
+.blueButton {
+  background-color: #3691df;
+  background-image: none;
+  padding-right: 25px;
+  padding-left: 25px;
+  margin-right: 25px;
+  margin-left: 25px;
+}
+
+.orangeButton {
+  background-color: #f57f20;
+  background-image: none;
+  padding-right: 25px;
+  padding-left: 25px;
+  margin-right: 25px;
+  margin-left: 25px;
+}
+
+/*yellow background highlighting fields*/
+.yellowBack {
+  background-color: #ffff80;
+}
+
+.biggerButton {
+  height: 75px;
+  width: auto;
+  font-size: 30px;
 }

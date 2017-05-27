@@ -1,0 +1,18 @@
+<div ng-include="'views/partials/header.html'"></div>
+
+<div class="btnPadding" layout-md="column" flex="33">
+
+    <section  flex=33 layout="row" layout-md="column" layout-align="center center" layout-wrap>
+      <md-button class="themed-Btn blueButton" ng-click="redirect('/import')">Import Data</md-button><br>
+      <md-button class="themed-Btn blueButton" ng-click="redirect('/export')">Export Data</md-button><br>
+      <md-button class="themed-Btn blueButton" ng-click="redirect('/addAdminUser')">Add Admin User</md-button><br>
+      <md-button class="themed-Btn blueButton" ng-click="redirect('/createEvent')">Create Event</md-button><br>
+      <md-button class="themed-Btn blueButton" ng-click="redirect('/displayEvents')">View Events</md-button><br>
+
+      <!-- <md-button class="themed-Btn" ng-click="redirect('/startEvent')">Start Event</md-button> -->
+      <!-- <md-button ng-click="redirect('/test')">Log Out All Volunteers</md-button> -->
+    </section>
+
+<div layout-md="column" flex="33">
+
+<div ng-include="'views/partials/footer.html'"></div>

@@ -1,0 +1,222 @@
+<div layout="column" flex="100">
+  <div layout="row">
+    <div flex="15"></div>
+    <div flex="70">
+      <h1>Simon Says Give</h1>
+      <h2>Publicity Release Form</h2>
+    </div>
+    <div flex="15"></div>
+  </div>
+
+  <div layout="row">
+    <div flex="15"></div>
+
+    <div layout="column" flex="70" ng-show="waiverObj.agreedYouth">
+      <br>
+      <p>
+        <strong>Publicity Release:</strong> Volunteer and Guardian grant and
+        convey to Nonprofit all right, title, and interests in any and all
+        photographs, images, video, or audio recordings of Volunteer or
+        Volunteer’s likeness or voice made by Nonprofit (the “Media”) in
+        connection with Volunteer’s provision of volunteer services to
+        Nonprofit, including but not limited to any royalties, proceeds, or
+        other benefits derived from the Media. Volunteer and Guardian further
+        grant to Nonprofit and its subsidiaries, affiliates, agents,
+        successors, and assigns the absolute and irrevocable right,
+        permission, and license to use, publish, and broadcast Volunteer’s
+        image and likeness as part of the Media in its current form or as
+        retouched, digitized, or modified in any way in in any all
+        advertising, promotional, or other materials based upon or derived
+        from the volunteer activities without any further compensation to
+        Volunteer or Guardian in any form.
+      </p>
+      <br>
+      <p>
+        By checking this box I hereby acknowledge that:
+      </p>
+      <div layout="row">
+        <div flex="5"></div>
+        <div flex="90">
+          <div layout="column">
+            <span>(a) It is my understanding and intent to enter into this
+              Release and Waiver of Liability willingly and voluntarily;</span>
+            <span>(b) I have read this form and understand that by signing
+              this form, I am giving up legal rights and remedies; and</span>
+            <span>(c) For Guardian, I acknowledge that I am of legal age and
+              am the parent or legal guardian of the Volunteer.</span>
+            <br>
+          </div>
+        </div>
+        <div flex="5"></div>
+      </div>
+    </div>
+
+    <div layout="column" flex="70" ng-show="waiverObj.agreedAdult">
+      <br>
+      <p>
+        <strong>Publicity Release:</strong> Volunteer grants and conveys to
+        Nonprofit all right, title, and interests in any and all
+        photographs, images, video, or audio recordings of Volunteer or
+        Volunteer’s likeness or voice made by Nonprofit (the “Media”) in
+        connection with Volunteer’s provision of volunteer services to
+        Nonprofit, including but not limited to any royalties, proceeds, or
+        other benefits derived from the Media. Volunteer further grants to
+        Nonprofit and its subsidiaries, affiliates, agents, successors,
+        and assigns the absolute, irrevocable, royalty-free right,
+        permission, and license to use, publish, and broadcast Volunteer’s
+        image and likeness as part of the Media in its current form or as
+        retouched, digitized, or modified in any way in in any all
+        advertising, promotional, or other materials based upon or derived
+        from the volunteer activities without any further compensation to
+        Volunteer in any form.
+      </p>
+      <br>
+      <p>
+        By checking this box I hereby acknowledge that:
+      </p>
+      <div layout="row">
+        <div flex="5"></div>
+        <div flex="90">
+          <div layout="column">
+            <span>(a) I am of legal age;</span>
+            <span>(b) It is my understanding and intent to enter into this
+              Release and Waiver of Liability willingly and voluntarily; and</span>
+            <span>(c) I have read this form and understand that by signing
+              this form, I am giving up legal rights and remedies.</span>
+            <br>
+          </div>
+        </div>
+        <div flex="5"></div>
+      </div>
+    </div>
+
+    <div flex="15"></div>
+  </div>
+
+<div layout="row" class="bufferDiv">
+</div>
+<div layout="row">
+  <div flex="15" class="bufferDiv">
+  </div>
+  <div layout="row" flex="33" ng-hide="onPageVar">
+    <button type="button" name="button" class="biggerButton themed-Btn badButton"
+      ng-click="onPageVar = true; declineWaiver()">Decline</button>
+    <div class="bufferDiv">
+    </div>
+    <button type="button" name="button" class="biggerButton themed-Btn goodButton"
+      ng-click="onPageVar = true; waiverObj.agreedPhoto = true">Accept</button>
+  </div>
+  <div flex="15" class="bufferDiv">
+  </div>
+</div>
+<div layout="row" class="bufferDiv">
+</div>
+
+  <div layout="row">
+    <div flex="15"></div>
+
+    <div layout="column" flex="70" ng-show="waiverObj.agreedAdult && waiverObj.agreedPhoto">
+      <div layout="row" class="bufferDiv">
+      </div>
+      <div layout="row">
+        <div flex="15">
+          <span>Signature:</span>
+        </div>
+        <md-input-container class="noMargins yellowBack" flex="85">
+          <!-- <label>Please enter your name between slash marks: /John Doe/</label> -->
+          <input type="text" name="photoWaiverNameBottom" value=""
+            ng-model="waiverObj.nameBottomPhoto">
+        </md-input-container>
+      </div>
+      <div layout="row" class="bufferDiv">
+      </div>
+      <div layout="row">
+        <div flex="15">
+          <span>Today's Date:</span>
+        </div>
+        <md-input-container class="noMargins" flex="85">
+          <md-datepicker ng-model="waiverObj.dateBottomPhoto"
+            name="photoWaiverDateBottom" md-min-date="ctrl.minDate"
+            md-max-date="ctrl.maxDate"></md-datepicker>
+        </md-input-container>
+      </div>
+      <div layout="row" class="bufferDiv">
+      </div>
+
+      <div flex="66" layout="row">
+        <button type="button" name="button" class="biggerButton themed-Btn badButton"
+          ng-click="submitPhotoWaiver(photoWaiver)">Decline</button>
+        <div class="bufferDiv">
+        </div>
+        <button type="button" name="button" class="biggerButton themed-Btn goodButton"
+          ng-click="submitPhotoWaiver(waiverObj)">Submit</button>
+      </div>
+
+    </div>
+
+    <div layout="column" flex="70" ng-show="waiverObj.agreedYouth && waiverObj.agreedPhoto">
+      <div layout="row" class="bufferDiv">
+      </div>
+      <div layout="row">
+        <div flex="15">
+          <span>Signature of Volunteer:</span>
+        </div>
+        <md-input-container class="noMargins yellowBack" flex="85">
+          <!-- <label>Please enter your name between slash marks: /John Doe/</label> -->
+          <input type="text" name="photoWaiverNameBottom" value=""
+            ng-model="waiverObj.nameBottomPhoto">
+        </md-input-container>
+      </div>
+      <div layout="row" class="bufferDiv">
+      </div>
+      <div layout="row">
+        <div flex="15">
+          <span>Today's Date:</span>
+        </div>
+        <md-input-container class="noMargins" flex="85">
+          <md-datepicker ng-model="waiverObj.dateBottomVolPhoto"
+            name="photoWaiverDateBottomVol" md-min-date="ctrl.minDate"
+            md-max-date="ctrl.maxDate"></md-datepicker>
+        </md-input-container>
+      </div>
+      <div layout="row" class="bufferDiv">
+      </div>
+      <div layout="row">
+        <div flex="15">
+          <span>Signature of Guardian:</span>
+        </div>
+        <md-input-container class="noMargins yellowBack" flex="85">
+          <!-- <label>Please enter your name between slash marks: /John Doe/</label> -->
+          <input type="text" name="photoWaiverGuardianBottom" value=""
+            ng-model="waiverObj.guardianBottomPhoto">
+        </md-input-container>
+      </div>
+      <div layout="row" class="bufferDiv">
+      </div>
+      <div layout="row">
+        <div flex="15">
+          <span>Today's Date:</span>
+        </div>
+        <md-input-container class="noMargins" flex="85">
+          <md-datepicker ng-model="waiverObj.dateBottomGuardPhoto"
+            name="photoWaiverDateBottomGuard" md-min-date="ctrl.minDate"
+            md-max-date="ctrl.maxDate"></md-datepicker>
+        </md-input-container>
+      </div>
+      <div layout="row" class="bufferDiv">
+      </div>
+
+      <div flex="66" layout="row">
+        <button type="button" name="button" class="themed-Btn badButton"
+          ng-click="declineWaiver()">Decline</button>
+        <div class="bufferDiv">
+        </div>
+        <button type="button" name="button" class="themed-Btn goodButton"
+          ng-click="submitPhotoWaiver(waiverObj)">Submit</button>
+      </div>
+
+    </div>
+
+    <div flex="15"></div>
+  </div>
+</div>

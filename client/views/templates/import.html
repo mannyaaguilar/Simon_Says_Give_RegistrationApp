@@ -1,0 +1,29 @@
+<!-- HEADER INCLUDED -->
+<div ng-include="'views/partials/header.html'"></div>
+
+<!-- MENU INCLUDED -->
+<div ng-include="'views/partials/menu.html'"></div>
+
+<!-- IMPORT VIEW -->
+<div layout="row">
+  <div layout-md="column" flex="5"></div>
+  <div layout="column" flex="90">
+    <div class="importFileContainer">
+      <h1>IMPORT VOLUNTEER INFORMATION</h1>
+      <br>
+      <p>Please select the .csv file that you want to import:</p>
+      <input type="file" id="files" name="file" accept=".csv"/>
+      <div id="progress_bar"><div class="percent">0%</div></div>
+    </div>
+
+    <!-- BUTTONS -->
+    <md-input-container layout="row" layout-align="start center">
+      <div>
+        <md-button class="themed-Btn" aria-label="Cancel" value="Cancel" ng-click="redirect('/displayEvents')">Back to Admin Home</md-button>
+      </div>
+    </md-input-container>
+  </div>
+</div>
+
+<!-- FOOTER INCLUDED -->
+<div ng-include="'views/partials/footer.html'"></div>

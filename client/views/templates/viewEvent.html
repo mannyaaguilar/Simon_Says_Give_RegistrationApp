@@ -1,0 +1,111 @@
+<!-- HEADER INCLUDED -->
+<div ng-include="'views/partials/header.html'"></div>
+
+<!-- MENU INCLUDED -->
+<div ng-include="'views/partials/menu.html'"></div>
+
+<!-- CREATE EVENT VIEW -->
+<div layout="row">
+  <div layout-md="column" flex="5"></div>
+  <div layout="column" flex="90">
+    <div class="addAdminContainer">
+      <h1>{{serverResponseObject.currentEvent.event_code}} {{serverResponseObject.currentEvent.event_name}}</h1>
+
+      <div layout="column">
+        <form name="updateEventForm" ng-submit="editEvent(event)">
+          <div layout="row">
+            <!-- EVENT NAME -->
+            <md-input-container layout="column" flex="45" class="eventInputs">
+              <div>
+                <label for="event.eventName">Event Name:</label>
+                <input type="text" ng-model="event.eventName" required/>
+                <div ng-messages="createEventForm.event.eventName.$error" ng-if='submitted'>
+                  <div ng-message="required">An event name is required!</div>
+                </div>
+              </div>
+            </md-input-container>
+            <div layout="column" flex="10"></div>
+            <!-- EVENT DATE -->
+            <md-input-container layout="column" flex="45" class="eventInputs">
+              <div>
+                <label for="event.eventDate">Date:</label>
+                <md-datepicker ng-model="event.eventDate" md-current-view="year" md-placeholder="Enter date" required></md-datepicker>
+                <div ng-messages="event.eventDate.$error" ng-if='submitted'>
+                  <div ng-message="required">A date is required!</div>
+                </div>
+              </div>
+            </md-input-container>
+          </div>
+
+          <div layout="row">
+            <!-- EVENT STARTING TIME -->
+            <md-input-container layout="column" flex="45" class="eventInputs">
+              <div>
+                <label for="event.eventFromTime">From:</label>
+                <input type="time" ng-model="event.eventFromTime" required/>
+                <div ng-messages="event.eventFromTime.$error" ng-if='submitted'>
+                  <div ng-message="required">A time is required!</div>
+                </div>
+              </div>
+            </md-input-container>
+            <div layout="column" flex="10"></div>
+            <!-- EVENT ENDING TIME -->
+            <md-input-container layout="column" flex="45" class="eventInputs">
+              <div>
+                <label for="event.eventUntilTime">To:</label>
+                <input type="time" ng-model="event.eventUntilTime" required/>
+                <div ng-messages="event.eventUntilTime.$error" ng-if='submitted'>
+                  <div ng-message="required">A time is required!</div>
+                </div>
+              </div>
+            </md-input-container>
+          </div>
+
+          <div layout="row">
+            <!-- SSG TEAM SELECT -->
+            <md-input-container flex="45" class="eventInputs">
+              <label for="team">Simon Says Give Team:</label>
+              <md-select ng-model="event.eventTeam" placeholder="Team" required>
+                <md-option value="MN">Minnesota</md-option>
+                <md-option value="MA">Massachusetts</md-option>
+                <md-option value="SD">South Dakota</md-option>
+              </md-select>
+              <div class="errors" ng-messages="createEventForm.event.eventTeam.$error" ng-if='submitted'>
+                <div ng-message="required">Required</div>
+              </div>
+            </md-input-container>
+            <div layout="column" flex="10"></div>
+            <!-- EVENT LOCATION -->
+            <md-input-container layout="column" flex="45" class="eventInputs">
+              <div>
+                <label for="event.eventLocation">Event Location:</label>
+                <input type="text" ng-model="event.eventLocation" />
+              </div>
+            </md-input-container>
+          </div>
+
+          <!-- EVENT DESCRIPTION -->
+          <md-input-container layout="column" class="eventInputs">
+            <div>
+              <label for="event.eventDescription">Event Description:</label>
+              <input type="text" ng-model="event.eventDescription" />
+            </div>
+          </md-input-container>
+
+          <!-- BUTTONS -->
+          <md-input-container layout="row" layout-align="start center">
+            <div>
+              <br>
+              <md-button class="themed-Btn orangeButton" aria-label="Check out volunteers" ng-click="logoutVolunteers(event)">Check out Volunteers</md-button>
+              <md-button class="themed-Btn" aria-label="Cancel" value="Cancel" ng-click="redirect('/displayEvents')">Back to Admin Home</md-button>
+              <md-button class="themed-Btn" type="submit" name="submit" aria-label="Update Event" value="Update Event">Save Event</md-button>
+            </div>
+          </md-input-container>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER INCLUDED -->
+<div ng-include="'views/partials/footer.html'"></div>

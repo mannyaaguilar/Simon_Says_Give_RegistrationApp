@@ -1,0 +1,53 @@
+<!-- HEADER INCLUDED -->
+<div ng-include="'views/partials/header.html'"></div>
+
+<!-- MENU INCLUDED -->
+<div ng-include="'views/partials/menu.html'"></div>
+
+<!-- EXPORT VIEW -->
+<div layout="row">
+  <div layout-md="column" flex="5"></div>
+  <div layout="column" flex="90">
+    <div class="importFileContainer">
+      <h1>EXPORT VOLUNTEER INFORMATION</h1>
+      <md-radio-group ng-model="exportOption" ng-change="toggleEnableDates(exportOption)">
+        <br>
+        <md-radio-button value="volunteer" class="md-primary">Export volunteer information (First Name, Last Name, Email)</md-radio-button>
+        <br>
+        <md-radio-button value="hours">Export volunteer hours information (First Name, Last Name, Email, Date, Time in, Time out)</md-radio-button>
+        <md-container layout="row" class="exportDatesContainer">
+          <md-input-container layout="column">
+            <div>
+              <label for="fromDate">From:</label>
+              <md-datepicker ng-model="fromDate" ng-disabled="datesEnabledValue" md-current-view="year" md-placeholder="Enter date" required></md-datepicker>
+              <div ng-messages="fromDate.$error">
+                <div ng-message="required">A date is required!</div>
+              </div>
+            </div>
+          </md-input-container>
+          <md-input-container layout="column">
+            <div>
+              <label for="toDate">To:</label>
+              <md-datepicker ng-model="toDate" ng-disabled="datesEnabledValue" md-current-view="year" md-placeholder="Enter date" required></md-datepicker>
+              <div ng-messages="toDate.$error">
+                <div ng-message="required">A date is required!</div>
+              </div>
+            </div>
+          </md-input-container>
+        </md-container>
+      </md-radio-group>
+
+      <!-- BUTTONS -->
+      <md-input-container layout="row" layout-align="start center">
+        <div>
+          <md-button class="themed-Btn" aria-label="Cancel" value="Cancel" ng-click="redirect('/displayEvents')">Back to Admin Home</md-button>
+          <md-button class="themed-Btn" ng-click="exportInformation(exportOption)">Export</md-button><br>
+        </div>
+      </md-input-container>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER INCLUDED -->
+<div ng-include="'views/partials/footer.html'"></div>

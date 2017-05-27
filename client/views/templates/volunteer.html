@@ -1,0 +1,56 @@
+<!-- INCLUDE HEADER -->
+<div ng-include="'views/partials/headerCheckIn.html'"></div>
+
+<div layout="row">
+  <div layout-md="column" flex="20"></div>
+  <div layout="column" flex="60">
+    <div class="volunteerPage">
+      <h1>You are just a few steps away from being checked in!</h1>
+      <form form name="volunteerView" ng-submit=" formatdob(); preregisteredVolunteer(volunteer)">
+        <md-input-container layout="column">
+          <div>
+            <label for="email">Email:</label>
+            <input type="email" ng-model="volunteer.email" required/>
+          </div>
+        </md-input-container>
+        <md-input-container layout="column">
+          <div>
+            <label for="first_name">First Name:</label>
+            <input type="text" ng-model="volunteer.first_name" required/>
+          </div>
+        </md-input-container>
+        <md-input-container layout="column">
+          <div>
+            <label for="last_name">Last Name:</label>
+            <input type="text" ng-model="volunteer.last_name" required/>
+          </div>
+        </md-input-container>
+        <md-input-container layout="column">
+          <div>
+            <!-- <label for="under_18">Are you under the age of 18?:</label>
+            <input type="checkbox" ng-model="volunteer.under_18"/> -->
+            <md-checkbox ng-model="volunteer.under_18">Are you under the age of 18? </md-checkbox>
+          </div>
+        </md-input-container>
+        <md-input-container layout="column">
+          <div ng-show="volunteer.under_18">
+            <label for="birthdate">Date of Birth:</label>
+             <!-- md-min-date="minDate" md-max-date="maxDate" -->
+            <md-datepicker ng-model="volunteer.birthdate" md-current-view="year" md-placeholder="Enter date" md-max-date="maxDate"></md-datepicker>
+          </div>
+        </md-input-container>
+        <md-input-container layout="row" layout-align="center center">
+          <div>
+            <md-button ng-click="cancel()" class="biggerButton themed-Btn badButton" name="cancel" aria-label="Cancel" value="Cancel">Cancel</md-button>
+          </div>
+          <div>
+            <md-button class="biggerButton themed-Btn goodButton" type="submit" name="submit" aria-label="Register" value="Register">Next</md-button>
+          </div>
+        </md-input-container>
+      </form>
+      <div layout-md="column" flex="20"></div>
+  </div>
+</div>
+</div>
+<!-- FOOTER INCLUDED -->
+<div ng-include="'views/partials/footer.html'"></div>

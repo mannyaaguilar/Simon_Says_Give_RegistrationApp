@@ -2,7 +2,9 @@
 <div layout="row">
   <div layout-md="column" flex="33"></div>
   <div layout="column" flex="33">
-    <h2>Register</h>
+    <div class="mainImageDiv">
+      <img class="mainLogo" src="views/assets/SSG_Logo_Drawn_Primary.png" alt="Simon Says Give">
+    </div>
     <h3 ng-if="message != ''">{{message}}</h3>
     <form form name="registerView" ng-submit="registerUser()">
       <md-input-container layout="column">
@@ -25,7 +27,7 @@
       </md-input-container>
       <md-input-container layout="row" layout-align="center center">
         <div>
-          <md-button class="md-raised" type="submit" name="submit" aria-label="Register" value="Register">Register</md-button>
+          <md-button class="themed-Btn" type="submit" name="submit" aria-label="Register" value="Register">Register</md-button>
           <a href="#home">Cancel</a>
         </div>
       </md-input-container>

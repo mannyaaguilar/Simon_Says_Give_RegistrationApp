@@ -1,7 +1,10 @@
 <!-- HEADER -->
-<md-toolbar md-scroll-shrink >
-    <div class="md-toolbar-tools ssg_header">
-      <h2 flex md-truncate class="md-truncate flex navTitle">Simon Says Give</h2>
-      <md-button ng-click="logout()">Log Out</button>
+<md-toolbar class="md-scroll-shrink" ng-controller="HeaderController">
+  <div class="md-toolbar-tools ssg_header">
+    <div>
+      <img class="navbarLogo" src="views/assets/SSG_Logo_Drawn_Primary.png" alt="Simon Says Give">
     </div>
+    <h2 flex md-truncate class="md-truncate flex navTitle"></h2>
+    <!-- <md-button ng-click="logout()">Log Out</md-button> -->
+  </div>
 </md-toolbar>
