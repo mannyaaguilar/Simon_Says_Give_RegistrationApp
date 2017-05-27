@@ -98,13 +98,13 @@
 <div layout="row">
   <div flex="15" class="bufferDiv">
   </div>
-  <div layout="row" flex="33">
+  <div layout="row" flex="33" ng-hide="onPageVar">
     <button type="button" name="button" class="biggerButton themed-Btn badButton"
-      ng-click="declineWaiver()">Decline</button>
+      ng-click="onPageVar = true; declineWaiver()">Decline</button>
     <div class="bufferDiv">
     </div>
     <button type="button" name="button" class="biggerButton themed-Btn goodButton"
-      ng-click="waiverObj.agreedPhoto = true">Accept</button>
+      ng-click="onPageVar = true; waiverObj.agreedPhoto = true">Accept</button>
   </div>
   <div flex="15" class="bufferDiv">
   </div>
@@ -123,7 +123,7 @@
           <span>Signature:</span>
         </div>
         <md-input-container class="noMargins yellowBack" flex="85">
-          <label>Please enter your name between slash marks: /John Doe/</label>
+          <!-- <label>Please enter your name between slash marks: /John Doe/</label> -->
           <input type="text" name="photoWaiverNameBottom" value=""
             ng-model="waiverObj.nameBottomPhoto">
         </md-input-container>
@@ -162,7 +162,7 @@
           <span>Signature of Volunteer:</span>
         </div>
         <md-input-container class="noMargins yellowBack" flex="85">
-          <label>Please enter your name between slash marks: /John Doe/</label>
+          <!-- <label>Please enter your name between slash marks: /John Doe/</label> -->
           <input type="text" name="photoWaiverNameBottom" value=""
             ng-model="waiverObj.nameBottomPhoto">
         </md-input-container>
@@ -186,7 +186,7 @@
           <span>Signature of Guardian:</span>
         </div>
         <md-input-container class="noMargins yellowBack" flex="85">
-          <label>Please enter your name between slash marks: /John Doe/</label>
+          <!-- <label>Please enter your name between slash marks: /John Doe/</label> -->
           <input type="text" name="photoWaiverGuardianBottom" value=""
             ng-model="waiverObj.guardianBottomPhoto">
         </md-input-container>
@@ -207,12 +207,12 @@
       </div>
 
       <div flex="66" layout="row">
-        <button type="button" name="button" class="themed-Btn goodButton"
-          ng-click="submitPhotoWaiver(waiverObj)">Submit</button>
-        <div class="bufferDiv">
-        </div>
         <button type="button" name="button" class="themed-Btn badButton"
           ng-click="declineWaiver()">Decline</button>
+        <div class="bufferDiv">
+        </div>
+        <button type="button" name="button" class="themed-Btn goodButton"
+          ng-click="submitPhotoWaiver(waiverObj)">Submit</button>
       </div>
 
     </div>

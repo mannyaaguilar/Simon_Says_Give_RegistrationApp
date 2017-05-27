@@ -6,14 +6,14 @@
       <h2>Guardian and Minor Volunteer Release and Waiver of Liability</h2>
       <div layout="row" class="bufferDiv">
       </div>
-      <div layout="column" ng-hide="hideQuestion">
+      <div layout="column">
         <span class="yellowBack"><b>Is your parent or guardian here?</b></span>
         <br>
         <div layout="row">
-          <button type="button" name="button" class="biggerButton themed-Btn badButton"
-            ng-click="waiverObj.noParentYouth = true; hideQuestion = true">No</button>
-          <button type="button" name="button" class="biggerButton themed-Btn goodButton"
-            ng-click="waiverObj.noParentYouth = false; hideQuestion = true">Yes</button>
+          <button type="button" name="button" style="background-color: {{ noBtn || rgb(65,182,73) }}" class="biggerButton themed-Btn badButton noParentBtn"
+            ng-click="waiverObj.noParentYouth = true; yesBtn = '#A0B0C0'; noBtn = 'rgb(237,39,44)'">No</button>
+          <button type="button" name="button" style="background-color: {{ yesBtn || rgb(237,39,44) }}" class="biggerButton themed-Btn goodButton yesParentBtn"
+            ng-click="waiverObj.noParentYouth = false; noBtn = '#A0B0C0'; yesBtn = 'rgb(65,182,73)'">Yes</button>
         </div>
       </div>
       <div layout="row" class="bufferDiv">
@@ -166,7 +166,7 @@
             <span>Signature of Volunteer:</span>
           </div>
           <md-input-container class="noMargins yellowBack" flex="85">
-            <label>Please enter your name between slash marks: /John Doe/</label>
+            <!-- <label>Please enter your name between slash marks: /John Doe/</label> -->
             <input required type="text" name="youthWaiverNameBottom" value=""
               ng-model="waiverObj.nameBottomYouth">
           </md-input-container>
@@ -192,7 +192,7 @@
             <span>Signature of Guardian:</span>
           </div>
           <md-input-container class="noMargins yellowBack" flex="85">
-            <label>Please enter your name between slash marks: /John Doe/</label>
+            <!-- <label>Please enter your name between slash marks: /John Doe/</label> -->
             <input ng-required="!waiverObj.noParentYouth"
               type="text" name="youthWaiverGuardianBottom" value=""
               ng-model="waiverObj.guardianBottomYouth">

@@ -4,11 +4,6 @@
 }
 
 @font-face {
-    font-family: 'BluBerry Grunge'; /*a name to be used later*/
-    src: url('../views/assets/fonts/Bluberry Grunge.ttf'); /*URL to font*/
-}
-
-@font-face {
   font-family: 'League Gothic Regular';
   src: url('../views/assets/fonts/leaguegothic-regular-webfont.ttf') format('truetype'),
        url('../views/assets/fonts/leaguegothic-regular-webfont.woff') format('woff');
@@ -28,7 +23,7 @@ body {
 }
 
 h1 {
-  font-family: 'BluBerry Grunge';
+  font-family: 'League Gothic Regular';
   text-transform: uppercase;
 }
 
@@ -96,51 +91,6 @@ a {
   background-position-y: -64px;
 }
 
-/*.standardBtn {
-  display: inline-block;
-    margin: 8px;
-    padding: 0 45px 0 20px;
-    height: 40px;
-    overflow: visible;
-    position: relative;
-    font: 22px/34px 'League Gothic Regular', 'Arial Narrow', Arial, sans-serif;
-    letter-spacing: 0.015em;
-    color: #FFF;
-    background: rgb(53,115,185);
-    text-align: center;
-    text-decoration: none;
-    text-transform: uppercase;
-    white-space: nowrap;
-    border: #fcfdfd 3px solid;
-
-    border-radius: 8px;
-    outline: none;
-    cursor: pointer;
-    max-width: 100%;
-
-    position: fixed;
-    background-color: #f8d208;
-    color: whitesmoke;
-}*/
-
-
-
-/*
--webkit-border-radius: 8px;
--moz-border-radius: 8px;
-background: rgb(53,115,185) url(../images/button-sprite.png) 100% -10px repeat-x;
--webkit-touch-callout: none;
--webkit-user-select: none;
--khtml-user-select: none;
--moz-user-select: none;
--ms-user-select: none;
-user-select: none;
--webkit-appearance: none;
--webkit-background-clip: padding-box;
--moz-background-clip: padding-box;
-background-clip: padding-box;
--webkit-font-smoothing: antialiased;*/
-
 /* Login Page Styles */
 .mainImageDiv {
   margin-top: 200px;
@@ -185,6 +135,7 @@ not sure we need anymore*/
   align-items:flex-end;
 }*/
 
+/* Header / Footer styles */
 .navbarLogo {
   max-height: 18%;
   max-width: 18%;
@@ -212,8 +163,9 @@ footer {
   max-width: 100%;
   height: auto;
 }
+/* Header / Footer styles */
 
-/*Import/Export .CSV file styles*/
+/* Admin pages styles*/
 #progress_bar {
    margin: 10px 0;
    padding: 3px;
@@ -278,23 +230,44 @@ footer {
   padding: 10px;
   border-radius: 8px;
 }
- /*Import/Export .CSV file styles*/
+/* Admin Pages styles*/
 
-/*center buttons in checkInOut View*/
-.checkInOutContainer {
+/*Check In/Check Out Styles*/
+.checkInOutHeader {
+  position: fixed;
+  width: 100%;
+  background-color: #f8d208;
+  color: whitesmoke;
+  height: 200px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+}
+
+.checkInOutPage {
+  padding-top: 220px;
+}
+
+.volunteerPage {
+  padding-top: 160px;
+}
+
+.adminCode {
+  width: 100%;
+}
+
+.mainCheckInOutLogo {
+  padding: 30px;
+  max-height: 100%;
+  max-width: 100%;
 }
 
 /*check in button styling*/
 .checkInBtn {
   height: 250px;
   width: 400px;
+  font-family: 'League Gothic Regular';
   font-size: 50px;
   color: white;
   border-radius: 20px 20px 20px 20px;
-  margin-bottom: 30px;
   background-color: rgb(65,182,73);
 }
 
@@ -302,14 +275,16 @@ footer {
 .checkOutBtn {
   height: 250px;
   width: 400px;
+  font-family: 'League Gothic Regular';
   font-size: 50px;
   color: white;
   border-radius: 20px 20px 20px 20px;
-  margin-bottom: 30px;
   background-color: rgb(237,39,44);
 }
+/*Check In/Check Out Styles*/
+
 #confirmation {
-  padding-top: 20px;
+  padding-top: 220px;
   text-align: center;
 }
 
@@ -326,9 +301,8 @@ footer {
     display: none;
 }
 
-.errorContainer {
-  height: 30px;
-  padding-bottom: 15px;
+.overrideContainer .chechOutContainer {
+  width: 100%
 }
 
 /*input font size in startEvent view*/
