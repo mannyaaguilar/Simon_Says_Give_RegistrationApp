@@ -27,6 +27,11 @@ h1 {
   text-transform: uppercase;
 }
 
+a {
+  color: white;
+  text-decoration: none; /* no underline */
+}
+
 .ssg_header {
   position: fixed;
   background-color: #f8d208;
