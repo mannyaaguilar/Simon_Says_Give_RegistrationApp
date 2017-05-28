@@ -9,4 +9,9 @@ myApp.controller('ConfirmationController', ['$scope', '$http', '$location', '$in
     $location.path('/checkInOut');
   }, 7000 );
 
+  //changes view to checkInOut page
+  $scope.changeView = function() {
+    $location.path('/checkInOut');
+  };
+
 }]);
