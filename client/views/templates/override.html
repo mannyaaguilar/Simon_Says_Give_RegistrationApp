@@ -1,38 +1,33 @@
-<!-- HEADER INCLUDED -->
-<div ng-include="'views/partials/header.html'"></div>
+<!-- INCLUDE HEADER -->
+<div ng-include="'views/partials/headerCheckIn.html'"></div>
 
 <div layout="row">
   <div layout-md="column" flex="10" ></div>
   <div layout="column" flex="80" id="confirmation">
     <h1>PLEASE SPEAK TO A STAFF MEMBER</h1>
-
     <div layout="row">
-      <div layout-md="column" flex="35" ></div>
-      <md-input-container layout="column" flex="30">
-        <div>
-          <label for="code">Administrator Code:</label>
-            <div class="errorContainer">
-              <h3 class="inputError">{{message}}</h3>
-            </div>
-          <input class="eventCode" ng-model="adminCode.thisCode" type="password" required/>
+      <md-input-container layout="column" layout-align="center center" class="overrideContainer">
+        <div layout="row">
+          <div flex="20"></div>
+          <div flex="60" class="adminCode">
+            <label for="code" layout-align="center center" >Administrator Code:</label>
+              <div layout-align="center center" class="errorContainer">
+                <h3 class="inputError">{{message}}</h3>
+              </div>
+            <input class="eventCode" ng-model="adminCode.thisCode" type="password" required/>
+            <div layout-md="column" flex="10"></div>
+          </div>
+          <div flex="20"></div>
         </div>
       </md-input-container>
     </div>
-    <div layout="row">
-      <div layout-md="column" flex="10" ></div>
-      <md-input-container layout="column" layout-align="center center" flex="40">
-        <div>
+    <div layout="row" layout-align="center center">
+      <md-input-container layout="row" layout-align="center center" >
           <md-button class="biggerButton themed-Btn badButton" type="submit" name="submit" aria-label="Done"
                      value="Back To Waiver" ng-click="waiverView()">Back To Waiver</md-button>
-        </div>
-      </md-input-container>
-      <md-input-container layout="column" layout-align="center center" flex="40">
-        <div>
           <md-button class="biggerButton themed-Btn goodButton" type="submit" name="submit" aria-label="Finish"
                      value="Finish" ng-click="finish(adminCode)">Finish</md-button>
-        </div>
       </md-input-container>
-    </div>
   </div>
   <div layout-md="column" flex="10"></div>
 </div>

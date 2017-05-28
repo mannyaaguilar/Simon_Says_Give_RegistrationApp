@@ -238,7 +238,11 @@ console.log("adminController Loaded");
 $scope.redirect = UserService.redirect;
 }]);
 
-myApp.controller('checkInOutController', ['$scope', '$location', '$http', 'VolunteerService', function($scope, $location, $http, VolunteerService) {
+myApp.controller('checkInOutController', ['$scope', '$location', '$http', 'VolunteerService', 'UserService',
+                  function($scope, $location, $http, VolunteerService, UserService) {
+
+  $scope.eventObject = UserService.eventObject;
+  console.log('In checkInOutController eventobject is', UserService.eventObject);
 
   // when check in btn clicked, get for preregistered volunteers triggered and routes to volunteer view
   $scope.checkIn = function(){
@@ -557,6 +561,7 @@ myApp.controller('HeaderController', ['$scope', 'UserService', function($scope, 
 
   $scope.redirect = UserService.redirect;
   $scope.logout = UserService.logout;
+  $scope.eventObject = UserService.eventObject;
 
 }]);
 
@@ -892,7 +897,7 @@ $scope.cancel = function(){
 $scope.minmaxDate = function() {
     this.myDate = new Date();
     this.maxDate = new Date(
-    this.myDate.getFullYear() - 8,
+    this.myDate.getFullYear(),
     this.myDate.getMonth(),
     this.myDate.getDate()
   );
@@ -1229,7 +1234,6 @@ myApp.factory('EventService', ['$http','$mdDialog', function($http,$mdDialog){
     logoutVolunteersByEvent : logoutVolunteersByEvent
   };
 }]);
-
 
 myApp.factory('UserService', ['$http', '$location', function($http, $location){
   console.log('User Service Loaded');
