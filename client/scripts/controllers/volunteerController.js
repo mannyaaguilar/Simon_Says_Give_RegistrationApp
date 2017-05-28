@@ -45,7 +45,7 @@ $scope.cancel = function(){
 $scope.minmaxDate = function() {
     this.myDate = new Date();
     this.maxDate = new Date(
-    this.myDate.getFullYear() - 8,
+    this.myDate.getFullYear(),
     this.myDate.getMonth(),
     this.myDate.getDate()
   );
