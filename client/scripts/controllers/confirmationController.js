@@ -1,9 +1,11 @@
-myApp.controller('ConfirmationController', ['$scope', '$http', '$location', '$interval', 'UserService', '$timeout', function($scope, $http, $location, $interval, UserService, $timeout) {
+myApp.controller('ConfirmationController', ['$scope', '$http', '$location', 'UserService', '$timeout',
+                function($scope, $http, $location, UserService, $timeout) {
 
   $scope.userObject = UserService.userObject;
   $scope.logout = UserService.logout;
   $scope.redirect = UserService.redirect;
 
+  //timer variable for page timeout
   var timer;
 
   //On page timeout, view changes to /checkInOut. Timeout measured in milliseconds
@@ -16,7 +18,7 @@ myApp.controller('ConfirmationController', ['$scope', '$http', '$location', '$in
   //timeOut function call on page load
   $scope.timeOut();
 
-  //changes view to checkInOut page, cancels timout
+  //changes view to checkInOut page, cancels timeout
   $scope.changeView = function() {
     $location.path('/checkInOut');
     $timeout.cancel(timer);
