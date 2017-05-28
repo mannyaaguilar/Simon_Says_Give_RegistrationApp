@@ -354,37 +354,31 @@ $scope.changeView = function() {
 
 }]);
 
-myApp.controller('ConfirmationController', ['$scope', '$http', '$location', '$interval', 'UserService', function($scope, $http, $location, $interval, UserService) {
+myApp.controller('ConfirmationController', ['$scope', '$http', '$location', 'UserService', '$timeout',
+                function($scope, $http, $location, UserService, $timeout) {
 
   $scope.userObject = UserService.userObject;
   $scope.logout = UserService.logout;
   $scope.redirect = UserService.redirect;
 
-  $scope.timer = 0; // timer starts at 0 seconds
-  var timeOutLength = 5; //page will change view after x seconds
+  //timer variable for page timeout
+  var timer;
 
-  // function that changes view to check-in/check-out view after x seconds
-  $scope.timeOut = function() {
-    var interval = $interval(function(){
-      if ($scope.timer < timeOutLength){
-        $scope.timer += 1;
-        }
-      else {
-        $scope.changeView();
-        $interval.cancel(interval);
-      }
-    }, 1000);
-  }; //end timeout
-
-  //changes view to checkInOut page
-  $scope.changeView = function() {
-    $location.path('/checkInOut');
-    //user path for testing:
-    // $location.path('/user');
+  //On page timeout, view changes to /checkInOut. Timeout measured in milliseconds
+  $scope.timeOut = function(){
+    timer = $timeout(function () {
+      $scope.changeView();
+    }, 7000);
   };
 
-  // timeOut function runs when confirmation view is loaded
+  //timeOut function call on page load
   $scope.timeOut();
+
+  //changes view to checkInOut page, cancels timeout
+  $scope.changeView = function() {
+    $location.path('/checkInOut');
+    $timeout.cancel(timer);
+  };
 
 }]);
 
