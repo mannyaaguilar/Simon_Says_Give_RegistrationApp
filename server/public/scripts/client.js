@@ -921,7 +921,7 @@ $scope.cancel = function(){
 $scope.minmaxDate = function() {
     this.myDate = new Date();
     this.maxDate = new Date(
-    this.myDate.getFullYear() - 8,
+    this.myDate.getFullYear(),
     this.myDate.getMonth(),
     this.myDate.getDate()
   );
@@ -1217,7 +1217,6 @@ myApp.factory('EventService', ['$http','$mdDialog', function($http,$mdDialog){
     logoutVolunteersByEvent : logoutVolunteersByEvent
   };
 }]);
-
 
 myApp.factory('UserService', ['$http', '$location', function($http, $location){
   console.log('User Service Loaded');
