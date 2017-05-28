@@ -948,6 +948,9 @@ console.log("WaiverController loaded!");
 
   $scope.waiverObj = VolunteerService.waiverObj;
 
+
+
+
   $scope.submitAdultWaiver = function() {
     console.log("XXcurrent waiverObj: ", $scope.waiverObj);
     var filledOut;
@@ -958,23 +961,36 @@ console.log("WaiverController loaded!");
                 $scope.waiverObj.nameBottomAdult &&
                 $scope.waiverObj.dateBottomAdult;
 
-    var signature = $scope.waiverObj.nameBottomAdult;
-    checkAdultSignFormat(signature);
+    // var signature = $scope.waiverObj.nameBottomAdult;
 
-    function checkAdultSignFormat(signature) {
-      if (filledOut &&
-          signature.charAt(0) === '/' &&
-          signature.charAt(signature.length -1) === '/') {
-            $location.path("/waiver-photo");
-      }
-      else if (filledOut &&
-        (signature.charAt(0) !== '/' || signature.charAt(signature.length -1) !== '/' )) {
-          $scope.message = 'Please put name between slashes';
-        }
-      else {
-        $scope.message = 'Please fill out all highlighted fields';
-      }
-    } // end checkSignatureFormat
+    if (filledOut) {
+      $location.path('/waiver-photo');
+    }
+    else {
+      $scope.message = 'Please fill out all highlighted fields';
+    }
+
+
+
+    // checkAdultSignFormat(signature);
+
+    // function checkAdultSignFormat(signature) {
+    //   if (filledOut &&
+    //       signature.charAt(0) === '/' &&
+    //       signature.charAt(signature.length -1) === '/') {
+    //         $location.path('/waiver-photo');
+    //   }
+    //   else if (filledOut &&
+    //     (signature.charAt(0) !== '/' || signature.charAt(signature.length -1) !== '/' )) {
+    //       $scope.message = 'Please put name between slashes';
+    //     }
+    //   else {
+    //     $scope.message = 'Please fill out all highlighted fields';
+    //   }
+    // } // end checkSignatureFormat
+
+
+
   }; // end submitAdultWaiver
 
 
@@ -1000,22 +1016,30 @@ console.log("WaiverController loaded!");
 
     filledOut = noParentAll || parentAll;
 
-    var youthSignature = $scope.waiverObj.nameBottomYouth;
-    var guardianSignature = $scope.waiverObj.guardianBottomYouth;
-    var guardianEmail = $scope.waiverObj.guardianEmailYouth;
+    if (filledOut) {
+      $location.path('/waiver-photo');
+    }
+    else {
+      $scope.message = 'Please fill out all highlighted fields';
+    }
 
-      if (filledOut &&
-          youthSignature.charAt(0) === '/' &&
-          youthSignature.charAt(youthSignature.length -1) === '/') {
-            $location.path("/waiver-photo");
-      }
-      else if (filledOut &&
-              (youthSignature.charAt(0) !== '/' || youthSignature.charAt(youthSignature.length -1) !== '/')) {
-                $scope.message = 'Please put name between slashes';
-               }
-      else {
-        $scope.message = 'Please fill out all highlighted fields';
-      }
+
+    // var youthSignature = $scope.waiverObj.nameBottomYouth;
+    // var guardianSignature = $scope.waiverObj.guardianBottomYouth;
+    // var guardianEmail = $scope.waiverObj.guardianEmailYouth;
+    //
+    //   if (filledOut &&
+    //       youthSignature.charAt(0) === '/' &&
+    //       youthSignature.charAt(youthSignature.length -1) === '/') {
+    //         $location.path('/waiver-photo');
+    //   }
+    //   else if (filledOut &&
+    //           (youthSignature.charAt(0) !== '/' || youthSignature.charAt(youthSignature.length -1) !== '/')) {
+    //             $scope.message = 'Please put name between slashes';
+    //            }
+    //   else {
+    //     $scope.message = 'Please fill out all highlighted fields';
+    //   }
 
   }; // end submitYouthWaiver
 
@@ -1025,19 +1049,30 @@ console.log("WaiverController loaded!");
 
   $scope.submitPhotoWaiver = function() {
     console.log("current waiverObj: ", $scope.waiverObj);
+
     if (agreedPhoto === true &&
-       (volunteerPhotoSign.charAt(0) === '/' && volunteerPhotoSign.charAt(volunteerPhotoSign.length -1) === '/') &&
-       (guardianPhotoSign.charAt(0) === '/' && guardianPhotoSign.charAt(guardianPhotoSign.length -1) === '/')) {
-          $location.path('/confirmation');
-        }
-    else if (agreedPhoto === true &&
-            (volunteerPhotoSign.charAt(0) !== '/' || volunteerPhotoSign.charAt(volunteerPhotoSign.length -1) !== '/') ||
-            (guardianPhotoSign.charAt(0) !== '/' || guardianPhotoSign.charAt(volunteerPhotoSign.length -1) !== '/')) {
-              $scope.message = 'Please put name between slashes';
-            }
+        volunteerPhotoSign !== null &&
+        guardianPhotoSign !== null) {
+          $location.path('confirmation');
+    }
     else {
       $scope.message = 'Please fill out all highlighted fields';
     }
+
+
+    // if (agreedPhoto === true &&
+    //    (volunteerPhotoSign.charAt(0) === '/' && volunteerPhotoSign.charAt(volunteerPhotoSign.length -1) === '/') &&
+    //    (guardianPhotoSign.charAt(0) === '/' && guardianPhotoSign.charAt(guardianPhotoSign.length -1) === '/')) {
+    //       $location.path('/confirmation');
+    //     }
+    // else if (agreedPhoto === true &&
+    //         (volunteerPhotoSign.charAt(0) !== '/' || volunteerPhotoSign.charAt(volunteerPhotoSign.length -1) !== '/') ||
+    //         (guardianPhotoSign.charAt(0) !== '/' || guardianPhotoSign.charAt(volunteerPhotoSign.length -1) !== '/')) {
+    //           $scope.message = 'Please put name between slashes';
+    //         }
+    // else {
+    //   $scope.message = 'Please fill out all highlighted fields';
+    // }
 
 
 // // old code
