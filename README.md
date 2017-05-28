@@ -3,13 +3,13 @@
 
 ## Table of Contents
 
-    - [Description](#description)
-    - [Product Example](#product-example)
-    - [Exported CSV Format](#exported-csv-format)
-    - [Local Installation](#local-installation)
-    - [Contributors](#contributors)
-    - [Technologies](#technologies)
-    - [Acknowledgments](#acknowledgments)
+- [Description](#description)
+- [Product Example](#product-example)
+- [Exported CSV Format](#exported-csv-format)
+- [Local Installation](#local-installation)
+- [Contributors](#contributors)
+- [Technologies](#technologies)
+- [Acknowledgments](#acknowledgments)
 
 ---
 ## Description
@@ -32,14 +32,14 @@ This landing page allows for either an admin user to enter username and password
 
 The Admin Panel allows admin users to:
 
-    - Create new admin users
-    - Import CSV data
-    - Export CSV data by date range
-    - View all events
-    - Create new events
-    - Edit events
-    - Delete events
-    - Log out volunteers who have forgotten to log themselves out of an event
+- Create new admin users
+- Import CSV data
+- Export CSV data by date range
+- View all events
+- Create new events
+- Edit events
+- Delete events
+- Log out volunteers who have forgotten to log themselves out of an event
 
 ### **Check In Process**
 
@@ -47,13 +47,13 @@ The Admin Panel allows admin users to:
 
 The Check In Process walks volunteers through:
 
-    - Identification by unique combination of email address and name
-    - Confirmation of adult or minor status
-    - Waivers appropriate for status:
-        - Liability Waiver
-        - Photo Release Waiver
-    - Confirmation of successful check in
-    - Staff notification if volunteer declines waiver or if minor is unaccompanied by adult
+- Identification by unique combination of email address and name
+- Confirmation of adult or minor status
+- Waivers appropriate for status:
+    - Liability Waiver
+    - Photo Release Waiver
+- Confirmation of successful check in
+- Staff notification if volunteer declines waiver or if minor is unaccompanied by adult
 
 ### **Check Out Process**
 
@@ -61,10 +61,10 @@ The Check In Process walks volunteers through:
 
 The Check Out Process:
 
-    - Requires either email address, or first name, or last name
-    - Provides a list of matching active volunteers who can be selected
-    - Checks out the selected volunteers
-    - Confirms successful check out
+- Requires either email address, or first name, or last name
+- Provides a list of matching active volunteers who can be selected
+- Checks out the selected volunteers
+- Confirms successful check out
 
 ---
 ## Exported CSV Format
@@ -88,23 +88,23 @@ This project can also be run on a personal computer instead of online.
 There are three quick steps described individually below:
 
 - **First**, create a git repository on your computer.
-    * Create a new folder for the project.
-    * Open a terminal window on Mac by right clicking on the folder and selecting "New Terminal at Folder".
-    * In the terminal window, type `git init`, and hit enter.
-    * Next, type `git remote add origin ` and add the web address for the Github repository the code is located on, with `.git` added to the end of that web address without a space in between, and hit enter.
-    * Finally, type `git pull origin master`, and watch the as the files are brought down to the computer.
+    - Create a new folder for the project.
+    - Open a terminal window on Mac by right clicking on the folder and selecting "New Terminal at Folder".
+    - In the terminal window, type `git init`, and hit enter.
+    - Next, type `git remote add origin ` and add the web address for the Github repository the code is located on, with `.git` added to the end of that web address without a space in between, and hit enter.
+    - Finally, type `git pull origin master`, and watch the as the files are brought down to the computer.
 
 - **Second**, install the dependencies.
-    * In order for the program to run, some other programs that it needs in order to work have to be installed. This is done in one step by typing `npm install` in the same terminal window and hitting enter. Again, the terminal window will show the files being brought into the project folder.
-    * One of the dependencies is called Grunt, and it works by typing `grunt` in the same terminal window.
-    * Watch the terminal display as it makes changes, and then type `^c` to turn it off and allow the server to be started.
-    * Start the Postico application.
-    * Copy the text in the `database.sql` file into the "SQL Query" field, highlight all of it, and hit enter. Postico should indicate success for creating the database needed to run the application.
+    - In order for the program to run, some other programs that it needs in order to work have to be installed. This is done in one step by typing `npm install` in the same terminal window and hitting enter. Again, the terminal window will show the files being brought into the project folder.
+    - One of the dependencies is called Grunt, and it works by typing `grunt` in the same terminal window.
+    - Watch the terminal display as it makes changes, and then type `^c` to turn it off and allow the server to be started.
+    - Start the Postico application.
+    - Copy the text in the `database.sql` file into the "SQL Query" field, highlight all of it, and hit enter. Postico should indicate success for creating the database needed to run the application.
 
 - **Third**, start the server.
-    * In the same terminal window, type `npm start`, and the terminal will display "Listening on port 5000".
-    * Type "localhost:5000" in the address bar of your browser, and now the application is running, without a need for internet access! However, this means the application also cannot make changes to the real database, so local installation is only useful for testing.
-    * When done using the application locally, type `^c` again to turn the server off.
+    - In the same terminal window, type `npm start`, and the terminal will display "Listening on port 5000".
+    - Type "localhost:5000" in the address bar of your browser, and now the application is running, without a need for internet access! However, this means the application also cannot make changes to the real database, so local installation is only useful for testing.
+    - When done using the application locally, type `^c` again to turn the server off.
 
 ---
 ## Contributors
