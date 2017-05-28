@@ -2,22 +2,23 @@
 ## Prime Digital Academy Full Stack Engineering Program - Group Project
 
 ## Table of Contents
-    [Description](#Description)
-    [Product Example](#Example)
-    [Exported CSV Format](#CSV)
-    [Local Installation](#Installation)
-    [Contributors](#Contributors)
-    [Technologies](#Technologies)
-    [Acknowledgments](#Acknowledgments)
+
+    - [Description](#description)
+    - [Product Example](#product-example)
+    - [Exported CSV Format](#exported-csv-format)
+    - [Local Installation](#local-installation)
+    - [Contributors](#contributors)
+    - [Technologies](#technologies)
+    - [Acknowledgments](#acknowledgments)
 
 ---
-## Description <a id="Description"></a>
+## Description
 
 The product facilitates volunteer check in and check out, including signing of waivers.
 It allows admins to import existing .csv files, and export the volunteer data for reporting and analysis.
 
 ---
-## Product Example <a id="Example"></a>
+## Product Example
 
 ### **Landing Page**
 
@@ -30,6 +31,7 @@ This landing page allows for either an admin user to enter username and password
 [adminGif]()
 
 The Admin Panel allows admin users to:
+
     - Create new admin users
     - Import CSV data
     - Export CSV data by date range
@@ -44,6 +46,7 @@ The Admin Panel allows admin users to:
 [checkInGif]()
 
 The Check In Process walks volunteers through:
+
     - Identification by unique combination of email address and name
     - Confirmation of adult or minor status
     - Waivers appropriate for status:
@@ -57,20 +60,21 @@ The Check In Process walks volunteers through:
 [checkOutGif]()
 
 The Check Out Process:
+
     - Requires either email address, or first name, or last name
     - Provides a list of matching active volunteers who can be selected
     - Checks out the selected volunteers
     - Confirms successful check out
 
 ---
-## Exported CSV Format <a id="CSV"></a>
+## Exported CSV Format
 
 |Column 1|Column 2|Column 3|Column 4|Column 5|Column 6|
 |--------|--------|--------|--------|--------|--------|
 |value 1 |value 2 |value 3 |value 4 |value 5 |value 6 |
 
 ---
-## Local Installation <a id="Installation"></a>
+## Local Installation
 
 ### Requirements
 
@@ -103,7 +107,7 @@ There are three quick steps described individually below:
     * When done using the application locally, type `^c` again to turn the server off.
 
 ---
-## Contributors <a id="Contributors"></a>
+## Contributors
 
 - [Craig Baird](https://github.com/craigbaird)
 - [Claudia Calderas](https://github.com/claudiacalderas)
@@ -112,7 +116,7 @@ There are three quick steps described individually below:
 - [Lisa Schoofs](https://github.com/lisaschoofs)
 
 ---
-## Technologies <a id="Technologies"></a>
+## Technologies
 
 ### Primary
 
@@ -137,7 +141,7 @@ There are three quick steps described individually below:
 - [Heroku](https://www.heroku.com/)
 
 ---
-## Acknowledgments <a id="Acknowledgments"></a>
+## Acknowledgments
 
 - The entire [Simon Says Give](http://www.simonsaysgive.org) team
 - The instructors and staff at [Prime Digital Academy](https://primeacademy.io/)
