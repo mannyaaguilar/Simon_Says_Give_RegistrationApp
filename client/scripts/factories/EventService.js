@@ -42,7 +42,8 @@ myApp.factory('EventService', ['$http','$mdDialog', function($http,$mdDialog){
   logoutVolunteersByEvent = function(eventParams) {
     console.log('Logging out volunteers - event: ', eventParams);
     $http.put('/ssgEvent/logoutAll', eventParams).then(function(response) {
-      showAlert('All active volunteers have been checked out.');
+      console.log("response is", response.data.rowCount);
+      showAlert(response.data.rowCount + ' active volunteers have been checked out.');
     });
   };
 
