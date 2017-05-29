@@ -61,7 +61,7 @@ router.get('/export/volunteer', function(req, res, next) {
         res.sendStatus(500);
       } else {
         // query that selects all volunteers registered on the system
-        var jsonQuery = 'SELECT first_name as "First Name", last_name as "Last Name", email as "Email" FROM volunteer';
+        var jsonQuery = 'SELECT first_name as "First Name", last_name as "Last Name", email as "Email", parent_email as "Parent Email" FROM volunteer';
         db.query(jsonQuery,function(queryError,result) {
           done();
           if (queryError) {
@@ -74,7 +74,7 @@ router.get('/export/volunteer', function(req, res, next) {
             // parameters for json2csv function
             var opts = {
               data: json,
-              fields: ['First Name', 'Last Name', 'Email'],
+              fields: ['First Name', 'Last Name', 'Email', 'Parent Email'],
               quotes: ''
             };
             // converts json data to csv
