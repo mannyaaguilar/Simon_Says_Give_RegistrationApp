@@ -91,7 +91,7 @@ $scope.checkoutVolunteers = function(volunteers) {
 
 //changes view to confirmation page
 $scope.changeView = function() {
-  $location.path('/confirmation');
+  $location.path('/confirmed');
 };
 
 }]);

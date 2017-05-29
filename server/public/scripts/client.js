@@ -21,6 +21,16 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/register.html',
       controller: 'LoginController'
     })
+    // Forgot password view
+    .when('/forgotpassword', {
+      templateUrl: '/views/templates/forgot.html',
+      controller: 'LoginController'
+    })
+    // change password view (accesible through email link)
+    .when('/confirmreset/:code', {
+      templateUrl: '/views/templates/confirm.html',
+      controller: 'LoginController'
+    })
     // Admin landing View
     .when('/admin', {
       templateUrl: '/views/templates/admin.html',
@@ -162,7 +172,7 @@ myApp.config(['$routeProvider', '$locationProvider',
         }]
       }
     })
-    // Confirmation View
+    // Confirmation View From Checkin
     .when('/confirmation', {
       templateUrl: '/views/templates/confirmation.html',
       controller: 'ConfirmationController',
@@ -172,6 +182,16 @@ myApp.config(['$routeProvider', '$locationProvider',
         }],
         setEventTime: ['VolunteerService', function(VolunteerService){
           return VolunteerService.setEventTime();
+        }]
+      }
+    })
+    // Confirmation View from Checkout
+    .when('/confirmed', {
+      templateUrl: '/views/templates/confirmation.html',
+      controller: 'ConfirmationController',
+      resolve: {
+        checkevent : ['UserService', function(UserService){
+          return UserService.checkEvent();
         }]
       }
     })
@@ -209,13 +229,14 @@ myApp.controller('AddAdminController', ['$scope', '$http', '$location', 'UserSer
   $scope.adminUser = {
     username: '',
     password: '',
+    email: '',
     role: 'ADMIN'
   };
 
   // Registers a new ADMIN user
   $scope.registerAdminUser = function() {
-    if($scope.adminUser.username == '' || $scope.adminUser.password == '') {
-      $scope.message = "Choose a username and password.";
+    if($scope.adminUser.username == '' || $scope.adminUser.password == '' || $scope.adminUser.email == '') {
+      UtilitesService.showAlert('Please enter all the required information.');
     } else {
       console.log('sending to server...', $scope.adminUser);
       $http.post('/register', $scope.adminUser).then(function(response) {
@@ -349,42 +370,36 @@ $scope.checkoutVolunteers = function(volunteers) {
 
 //changes view to confirmation page
 $scope.changeView = function() {
-  $location.path('/confirmation');
+  $location.path('/confirmed');
 };
 
 }]);
 
-myApp.controller('ConfirmationController', ['$scope', '$http', '$location', '$interval', 'UserService', function($scope, $http, $location, $interval, UserService) {
+myApp.controller('ConfirmationController', ['$scope', '$http', '$location', 'UserService', '$timeout',
+                function($scope, $http, $location, UserService, $timeout) {
 
   $scope.userObject = UserService.userObject;
   $scope.logout = UserService.logout;
   $scope.redirect = UserService.redirect;
 
-  $scope.timer = 0; // timer starts at 0 seconds
-  var timeOutLength = 5; //page will change view after x seconds
+  //timer variable for page timeout
+  var timer;
 
-  // function that changes view to check-in/check-out view after x seconds
-  $scope.timeOut = function() {
-    var interval = $interval(function(){
-      if ($scope.timer < timeOutLength){
-        $scope.timer += 1;
-        }
-      else {
-        $scope.changeView();
-        $interval.cancel(interval);
-      }
-    }, 1000);
-  }; //end timeout
-
-  //changes view to checkInOut page
-  $scope.changeView = function() {
-    $location.path('/checkInOut');
-    //user path for testing:
-    // $location.path('/user');
+  //On page timeout, view changes to /checkInOut. Timeout measured in milliseconds
+  $scope.timeOut = function(){
+    timer = $timeout(function () {
+      $scope.changeView();
+    }, 7000);
   };
 
-  // timeOut function runs when confirmation view is loaded
+  //timeOut function call on page load
   $scope.timeOut();
+
+  //changes view to checkInOut page, cancels timeout
+  $scope.changeView = function() {
+    $location.path('/checkInOut');
+    $timeout.cancel(timer);
+  };
 
 }]);
 
@@ -628,7 +643,7 @@ myApp.controller('ImportController', ['$scope', '$http', '$location', 'UserServi
       progress.textContent = 'Importing data 100%';
       setTimeout("document.getElementById('progress_bar').className='';", 2000);
 
-      console.log(e.target.result);
+      // sends read file to factory function
       CSVService.sendCSV(e.target.result);
     }
 
@@ -640,7 +655,8 @@ myApp.controller('ImportController', ['$scope', '$http', '$location', 'UserServi
 
 }]);
 
-myApp.controller('LoginController', ['$scope', '$http', '$location', 'UserService', function($scope, $http, $location, UserService) {
+myApp.controller('LoginController', ['$scope', '$http', '$location', '$routeParams', 'UserService', 'UtilitesService',
+        function($scope, $http, $location, $routeParams, UserService, UtilitesService) {
 
   $scope.user = {
     username: '',
@@ -651,6 +667,8 @@ myApp.controller('LoginController', ['$scope', '$http', '$location', 'UserServic
   };
   $scope.adminMessage = '';
   $scope.eventMessage = '';
+  $scope.message = '';
+
 
   // Logins Admin user
   $scope.login = function() {
@@ -691,8 +709,6 @@ myApp.controller('LoginController', ['$scope', '$http', '$location', 'UserServic
           UserService.eventObject.eventName = response.data.event_name;
           console.log('EVENT CODE', UserService.eventObject.eventCode);
           console.log('EVENT NAME', UserService.eventObject.eventName);
-          // console.log('EVENT CODE', response.data.event_code);
-          // console.log('EVENT NAME', response.data.event_name);
           $location.path('/checkInOut');
         } else {
           console.log('failure: ', response);
@@ -700,7 +716,46 @@ myApp.controller('LoginController', ['$scope', '$http', '$location', 'UserServic
         }
       });
     }
+  };
+
+  // sends request to get a link to reset the password
+  $scope.sendResetPassword = function() {
+  if($scope.user.username === '') {
+    $scope.message = "Enter your username!";
+  } else {
+    console.log('sending to server...', $scope.user);
+    $http.post('/user/forgotpassword', $scope.user).then(function(response) {
+      if(response.data == 'Code sent successfully.') {
+        UtilitesService.showAlert('A link to change the password was sent by email.');
+      } else {
+        console.log('failure: ', response);
+        UtilitesService.showAlert('There was an error sending the link to change the password.');
+      }
+    });
   }
+};
+
+// sends request to the server with updated password
+$scope.updatePassword = function() {
+  console.log('Code: ', $routeParams.code);
+  // Send our password reset request to the server
+  // with our username, new password and code
+  if($scope.user.username === '' || $scope.user.password === '') {
+    $scope.message = "Enter your username and password!";
+  } else {
+    console.log('sending to server...', $scope.user);
+    $scope.user.code = $routeParams.code;
+    $http.put('/user/resetpassword', $scope.user).then(function(response) {
+      if(response.data == 'Password updated successfully.') {
+        UtilitesService.showAlert('Password updated successfully.');
+        $location.path('/home');
+      } else {
+        UtilitesService.showAlert('There was an error updating the password');
+      }
+    });
+  }
+}
+
 
 }]);
 
@@ -708,7 +763,8 @@ myApp.controller('OverrideController', ['$window','$scope', '$http', '$location'
 console.log('OverrideController loaded');
 $scope.redirect = UserService.redirect;
 
-var adminCodeHardCoded = 1234;
+var eventCode = UserService.eventObject.eventCode;
+
 $scope.adminCode = {
   thisCode: ''
 };
@@ -721,10 +777,11 @@ $scope.waiverView = function() {
 };
 //function to validate admin code and bring user to confirmation view
 $scope.finish = function(adminCode) {
+  console.log('eventCode is', eventCode);
   if (adminCode.thisCode == false) {
     $scope.message = 'Please enter admin code';
   }
-  else if (adminCode.thisCode == adminCodeHardCoded) {
+  else if (adminCode.thisCode == eventCode) {
     $location.path('/confirmation');
   }
   else {
@@ -1154,7 +1211,8 @@ myApp.factory('EventService', ['$http','$mdDialog', function($http,$mdDialog){
   logoutVolunteersByEvent = function(eventParams) {
     console.log('Logging out volunteers - event: ', eventParams);
     $http.put('/ssgEvent/logoutAll', eventParams).then(function(response) {
-      showAlert('All active volunteers have been checked out.');
+      console.log("response is", response.data.rowCount);
+      showAlert(response.data.rowCount + ' active volunteers have been checked out.');
     });
   };
 
