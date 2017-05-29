@@ -726,7 +726,8 @@ myApp.controller('OverrideController', ['$window','$scope', '$http', '$location'
 console.log('OverrideController loaded');
 $scope.redirect = UserService.redirect;
 
-var adminCodeHardCoded = 1234;
+var eventCode = UserService.eventObject.eventCode;
+
 $scope.adminCode = {
   thisCode: ''
 };
@@ -739,10 +740,11 @@ $scope.waiverView = function() {
 };
 //function to validate admin code and bring user to confirmation view
 $scope.finish = function(adminCode) {
+  console.log('eventCode is', eventCode);
   if (adminCode.thisCode == false) {
     $scope.message = 'Please enter admin code';
   }
-  else if (adminCode.thisCode == adminCodeHardCoded) {
+  else if (adminCode.thisCode == eventCode) {
     $location.path('/confirmation');
   }
   else {
