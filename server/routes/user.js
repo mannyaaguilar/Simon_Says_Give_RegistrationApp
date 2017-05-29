@@ -29,11 +29,10 @@ router.get('/logout', function(req, res) {
   res.sendStatus(200);
 });
 
-// clear all server session information about this user
+// creates and sends a code to reset the password
 router.post('/forgotpassword', function(req, res) {
   // Use passport's built-in method to log out the user
   console.log('forgotpassword route', req.body);
-
   pool.connect(function(errorConnectingToDatabase,db,done) {
     if(errorConnectingToDatabase) {
       console.log('Error connecting to the database');
@@ -50,14 +49,44 @@ router.post('/forgotpassword', function(req, res) {
         done();
         if (queryError) {
           console.log('Error making query',queryError);
-          res.sendStatus(500);;
+          res.sendStatus(500);
         } else {
           res.send("Code sent successfully.")
           // res.sendStatus(201); // succesful insert status
         }
       });
     }
-  });    
+  });
+});
+
+// resets password
+router.put('/resetpassword', function(req, res) {
+  // Use passport's built-in method to log out the user
+  console.log('resetpassword route', req.body);
+
+  pool.connect(function(errorConnectingToDatabase,db,done) {
+    // TODO: Should also check expiration here and
+    // throw 500 if expired.
+    var expired = false;
+    if(errorConnectingToDatabase) {
+      console.log('Error connecting to the database');
+      res.sendStatus(500);
+    } else if(expired) {
+      res.sendStatus(500);
+    } else {
+      var userQuery = 'UPDATE users SET password = $1 WHERE username = $2';
+      db.query(userQuery,[req.body.password, req.body.username], function(queryError,result) {
+        done();
+        if (queryError) {
+          console.log('Error making query',queryError);
+          res.sendStatus(500);
+        } else {
+          res.send("Password updated successfully.")
+          // res.sendStatus(201); // succesful insert status
+        }
+      });
+    }
+  });
 });
 
 
