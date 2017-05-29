@@ -172,7 +172,7 @@ myApp.config(['$routeProvider', '$locationProvider',
         }]
       }
     })
-    // Confirmation View
+    // Confirmation View From Checkin
     .when('/confirmation', {
       templateUrl: '/views/templates/confirmation.html',
       controller: 'ConfirmationController',
@@ -182,6 +182,16 @@ myApp.config(['$routeProvider', '$locationProvider',
         }],
         setEventTime: ['VolunteerService', function(VolunteerService){
           return VolunteerService.setEventTime();
+        }]
+      }
+    })
+    // Confirmation View from Checkout
+    .when('/confirmed', {
+      templateUrl: '/views/templates/confirmation.html',
+      controller: 'ConfirmationController',
+      resolve: {
+        checkevent : ['UserService', function(UserService){
+          return UserService.checkEvent();
         }]
       }
     })
