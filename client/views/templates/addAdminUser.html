@@ -6,13 +6,13 @@
 
 <!-- REGISTER ADMIN USER VIEW -->
 <div layout="row">
-  <div layout-md="column" flex="5"></div>
-  <div layout="column" flex="90">
+  <div layout-md="column" flex="20"></div>
+  <div layout="column" flex="60">
     <div class="addAdminContainer">
       <h1>ADD ADMIN USER</h1>
         <form name="registerView" ng-submit="registerAdminUser()">
-          <div layout="row">
-          <md-input-container layout="column" flex="45">
+          <div layout="column">
+          <md-input-container layout="column">
             <div>
               <label for="username">Username:</label>
               <input type="text" ng-model="adminUser.username" required/>
@@ -21,8 +21,16 @@
               </div>
             </div>
           </md-input-container>
-          <div layout="column" flex="10"></div>
-          <md-input-container layout="column" flex="45">
+          <md-input-container layout="column">
+            <div>
+              <label for="username">Email:</label>
+              <input type="text" ng-model="adminUser.email" required/>
+              <div ng-messages="registerView.adminUser.email.$error">
+                <div ng-message="required">An email is required!</div>
+              </div>
+            </div>
+          </md-input-container>
+          <md-input-container layout="column">
             <div>
               <label for="password">Password:</label>
               <input type="password" ng-model="adminUser.password" required/>
