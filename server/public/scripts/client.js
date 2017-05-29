@@ -26,6 +26,11 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/forgot.html',
       controller: 'LoginController'
     })
+    // change password view (accesible through email link)
+    .when('/confirmreset/:code', {
+      templateUrl: '/views/templates/confirm.html',
+      controller: 'LoginController'
+    })
     // Admin landing View
     .when('/admin', {
       templateUrl: '/views/templates/admin.html',
@@ -639,7 +644,8 @@ myApp.controller('ImportController', ['$scope', '$http', '$location', 'UserServi
 
 }]);
 
-myApp.controller('LoginController', ['$scope', '$http', '$location', 'UserService', function($scope, $http, $location, UserService) {
+myApp.controller('LoginController', ['$scope', '$http', '$location', '$routeParams', 'UserService',
+        function($scope, $http, $location, $routeParams, UserService) {
 
   $scope.user = {
     username: '',
@@ -719,6 +725,29 @@ myApp.controller('LoginController', ['$scope', '$http', '$location', 'UserServic
     });
   }
 };
+
+// sends request to the server with updated password
+$scope.updatePassword = function() {
+  console.log('Code: ', $routeParams.code);
+  // Send our password reset request to the server
+  // with our username, new password and code
+  if($scope.user.username === '' || $scope.user.password === '') {
+    $scope.message = "Enter your username and password!";
+  } else {
+    console.log('sending to server...', $scope.user);
+    $scope.user.code = $routeParams.code;
+    $http.put('/user/resetpassword', $scope.user).then(function(response) {
+      if(response.data.username) {
+        console.log('success: ', response.data);
+        // location works with SPA (ng-route)
+        $location.path('/home');
+      } else {
+        console.log('failure: ', response);
+        $scope.message = "Failure.";
+      }
+    });
+  }
+}
 
 
 }]);

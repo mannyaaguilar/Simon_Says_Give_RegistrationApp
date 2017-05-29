@@ -4,6 +4,7 @@ var passport = require('passport');
 var pool = require('../modules/pool');
 var Chance = require('chance');
 var chance = new Chance();
+var encryptLib = require('../modules/encryption');
 
 router.get('/', function(req, res) {
   console.log('get /user route');
@@ -74,8 +75,10 @@ router.put('/resetpassword', function(req, res) {
     } else if(expired) {
       res.sendStatus(500);
     } else {
+      var password = encryptLib.encryptPassword(req.body.password);
+
       var userQuery = 'UPDATE users SET password = $1 WHERE username = $2';
-      db.query(userQuery,[req.body.password, req.body.username], function(queryError,result) {
+      db.query(userQuery,[password, req.body.username], function(queryError,result) {
         done();
         if (queryError) {
           console.log('Error making query',queryError);
