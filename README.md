@@ -22,13 +22,13 @@ It allows admins to import existing .csv files, and export the volunteer data fo
 
 ### **Landing Page**
 
-[landingImg]()
+![landingImg](landingImg.png)
 
 This landing page allows for either an admin user to enter username and password, or for a staff member to enter the day's event code to begin the Check In Process.
 
 ### **Admin Panel**
 
-[adminGif]()
+![admin](admin.png)
 
 The Admin Panel allows admin users to:
 
@@ -43,7 +43,7 @@ The Admin Panel allows admin users to:
 
 ### **Check In Process**
 
-[checkInGif]()
+![checkIn](checkIn.png)
 
 The Check In Process walks volunteers through:
 
@@ -57,7 +57,7 @@ The Check In Process walks volunteers through:
 
 ### **Check Out Process**
 
-[checkOutGif]()
+![checkOut](checkOut.png)
 
 The Check Out Process:
 
