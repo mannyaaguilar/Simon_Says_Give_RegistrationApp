@@ -644,8 +644,8 @@ myApp.controller('ImportController', ['$scope', '$http', '$location', 'UserServi
 
 }]);
 
-myApp.controller('LoginController', ['$scope', '$http', '$location', '$routeParams', 'UserService',
-        function($scope, $http, $location, $routeParams, UserService) {
+myApp.controller('LoginController', ['$scope', '$http', '$location', '$routeParams', 'UserService', 'UtilitesService',
+        function($scope, $http, $location, $routeParams, UserService, UtilitesService) {
 
   $scope.user = {
     username: '',
@@ -714,13 +714,11 @@ myApp.controller('LoginController', ['$scope', '$http', '$location', '$routePara
   } else {
     console.log('sending to server...', $scope.user);
     $http.post('/user/forgotpassword', $scope.user).then(function(response) {
-      if(response.data.username) {
-        console.log('success: ', response.data);
-        // location works with SPA (ng-route)
-        $scope.message = "Password link sent.";
+      if(response.data == 'Code sent successfully.') {
+        UtilitesService.showAlert('A link to change the password was sent by email.');
       } else {
         console.log('failure: ', response);
-        $scope.message = "Failure.";
+        UtilitesService.showAlert('There was an error sending the link to change the password.');
       }
     });
   }
@@ -737,13 +735,11 @@ $scope.updatePassword = function() {
     console.log('sending to server...', $scope.user);
     $scope.user.code = $routeParams.code;
     $http.put('/user/resetpassword', $scope.user).then(function(response) {
-      if(response.data.username) {
-        console.log('success: ', response.data);
-        // location works with SPA (ng-route)
+      if(response.data == 'Password updated successfully.') {
+        UtilitesService.showAlert('Password updated successfully.');
         $location.path('/home');
       } else {
-        console.log('failure: ', response);
-        $scope.message = "Failure.";
+        UtilitesService.showAlert('There was an error updating the password');
       }
     });
   }

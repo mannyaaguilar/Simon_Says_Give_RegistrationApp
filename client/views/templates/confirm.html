@@ -23,7 +23,7 @@
           <md-input-container layout="column" flex="45">
             <div>
               <label for="user.password">New Password:</label>
-              <input type="text" ng-model="user.password" required/>
+              <input type="password" ng-model="user.password" required/>
               <div ng-messages="changePasswordView.user.password.$error">
                 <div ng-message="required">A password is required!</div>
               </div>

@@ -10,7 +10,6 @@
       <h1>RESET PASSWORD</h1>
         <form name="resetPasswordView" ng-submit="sendResetPassword()">
           <div layout="row">
-          <h1 class="lead alert alert-danger" role="alert" ng-if="message != ''">{{message}}</h2>
           <md-input-container layout="column" flex="45">
             <div>
               <label for="user.username">Username:</label>
@@ -26,7 +25,7 @@
         <md-input-container layout="row" layout-align="start center">
           <div>
             <br>
-            <md-button class="themed-Btn" type="submit" name="submit" aria-label="Register" value="Submit">Submit</md-button>
+            <md-button class="themed-Btn" type="submit" name="submit" aria-label="Reset Password" value="Submit">Submit</md-button>
           </div>
         </md-input-container>
       </form>
