@@ -720,6 +720,7 @@ myApp.controller('LoginController', ['$scope', '$http', '$location', 'UserServic
   }
 };
 
+
 }]);
 
 myApp.controller('OverrideController', ['$window','$scope', '$http', '$location', 'UserService', function($window, $scope, $http, $location, UserService) {
