@@ -1,0 +1,43 @@
+<!-- HEADER INCLUDED -->
+<div ng-include="'views/partials/header.html'"></div>
+
+<!-- MENU INCLUDED -->
+<div ng-include="'views/partials/menu.html'"></div>
+
+<!-- EVENTS VIEW -->
+<div layout="row">
+  <md-input-container layout="column" flex="45" class="eventInputs">
+    <label>Enter date *</label>
+    <md-datepicker ng-model="newHours.date" md-min-date="ctrl.minDate"
+      md-max-date="ctrl.maxDate"></md-datepicker>
+  </md-input-container>
+</div>
+
+<div layout="row">
+  <!-- EVENT STARTING TIME -->
+  <md-input-container layout="column" flex="45" class="eventInputs">
+    <div>
+      <label for="event.eventFromTime">From:</label>
+      <input type="time" ng-model="event.eventFromTime" required/>
+      <div ng-messages="event.eventFromTime.$error" ng-if='submitted'>
+        <div ng-message="required">A time is required!</div>
+      </div>
+    </div>
+  </md-input-container>
+  <div layout="column" flex="10"></div>
+  <!-- EVENT ENDING TIME -->
+  <md-input-container layout="column" flex="45" class="eventInputs">
+    <div>
+      <label for="event.eventUntilTime">To:</label>
+      <input type="time" ng-model="event.eventUntilTime" required/>
+      <div ng-messages="event.eventUntilTime.$error" ng-if='submitted'>
+        <div ng-message="required">A time is required!</div>
+      </div>
+    </div>
+  </md-input-container>
+</div>
+
+
+
+<!-- FOOTER INCLUDED -->
+<div ng-include="'views/partials/footer.html'"></div>
