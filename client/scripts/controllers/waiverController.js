@@ -111,15 +111,6 @@ console.log("WaiverController loaded!");
       $scope.message = 'Please fill out all highlighted fields';
     }
 
-// // old code
-//     if ( $scope.waiverObj.agreedPhoto )
-//     {
-//       $location.path("/confirmation");
-//     }
-//     else {
-//       $location.path("/override");
-//     }
-
   }; // end submitPhotoWaiver
 
   $scope.declineWaiver = function() {

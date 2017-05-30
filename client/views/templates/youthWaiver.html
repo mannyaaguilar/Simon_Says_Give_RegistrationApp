@@ -154,18 +154,10 @@
         <div class="bufferDiv">
         </div>
         <button type="button" name="button" class="biggerButton themed-Btn goodButton"
-          ng-click="waiverObj.agreedYouth = true"><a href="http://localhost:5000/#/waiver-youth#signatures">Accept</a> </button>
+          ng-click="waiverObj.agreedYouth = true"> <a href="http://localhost:5000/#/waiver-youth#signatures">Accept</a> </button>
       </div>
 
-
-      <!-- href logic -->
-
-
-      <div id="signatures"><div>
-
-      <!-- <a id="signatures"></a> -->
-
-
+      <!-- <div> <a id="signatures"></a> <div> -->
 
       <div ng-show="waiverObj.agreedYouth || waiverObj.noParentYouth">
         <div layout="row" class="bufferDiv">
@@ -229,7 +221,7 @@
           <md-input-container class="noMargins yellowBack" flex="85">
             <label>Please type the email for your parent or guardian:</label>
             <input ng-required="waiverObj.noParentYouth"
-              type="email" name="youthWaiverGuardianEmail"  value=""
+              type="email" name="youthWaiverGuardianEmail" value=""
               ng-model="waiverObj.guardianEmailYouth">
           </md-input-container>
         </div>
