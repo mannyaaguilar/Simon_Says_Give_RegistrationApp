@@ -38,7 +38,7 @@ router.post('/add', function(req, res) {
     var hoursDate = req.body.hoursDate;
     var hoursFromTime = req.body.hoursFromTime;
     var hoursUntilTime = req.body.hoursUntilTime;
-    var staff_name = req.body.name || "supername";
+    var staff_name = req.user.username;
     var eventID = 'OFFICEHOURSLOGS';
     var officeHoursVolID = 987654321;
 
