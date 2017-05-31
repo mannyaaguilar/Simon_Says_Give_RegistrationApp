@@ -1,7 +1,6 @@
 myApp.factory('UtilitesService', ['$http','$mdDialog', function($http,$mdDialog){
-console.log('UtilitesService loaded');
 
-let todaysDate = new Date();
+var todaysDate = new Date();
 
   formatDate = function(date) {
     var curr_date = date.getDate();
@@ -34,5 +33,4 @@ return {
     showAlert: showAlert
   };
 
-
-}]);//end of UtilitesService
+}]);

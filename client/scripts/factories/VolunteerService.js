@@ -1,5 +1,4 @@
 myApp.factory('VolunteerService', ['$http', '$location', 'UserService', 'UtilitesService', function($http, $location, UserService, UtilitesService){
-console.log("Volunteer Service loaded");
 
   var preregisteredVolunteerObj = {
     email: '',
@@ -53,17 +52,9 @@ console.log("Volunteer Service loaded");
     dateBottomGuardPhoto: todaysDate
   };
 
-
   preregisteredVolunteer = function(volunteer){
-      console.log("inside preregisteredVolunteer function", volunteer );
       $http.post('/volunteer/initial', volunteer)
-      // $http.post('/volunteer')
       .then(function(response){
-        console.log('RESPONSE: ', response.data[0]);
-        console.log('RESPONSE: ', response.data[0].id);
-
-        // volunteerToDB = angular.copy(response.data)
-        // console.log('VOLUNTEERTODB', volunteerToDB);
         preregisteredVolunteerObj.email = response.data[0].email;
         preregisteredVolunteerObj.first_name = response.data[0].first_name;
         preregisteredVolunteerObj.last_name = response.data[0].last_name;
@@ -75,7 +66,6 @@ console.log("Volunteer Service loaded");
         preregisteredVolunteerObj.id = response.data[0].id;
 
         if(response.data[0]){
-          console.log("found");
           if(preregisteredVolunteerObj.under_18 === true && preregisteredVolunteerObj.has_signed_waiver === false){
             $location.path('/waiver-youth');
           } else if
@@ -91,21 +81,14 @@ console.log("Volunteer Service loaded");
             $location.path('/confirmation');
           }
         }
-        console.log('PREREGISTERED VOLUNTEER: ', preregisteredVolunteerObj);
       });
-      // return preregisteredVolunteerObj;
     };
 
-
     setEventTime = function(){
-          console.log("in setEventTime!");
           updateWaiver();
     };
 
-
-
     updateWaiver = function(){
-      console.log("in updateWaiver!");
         var checkInTime = new Date();
         waiverObj.event_id = UserService.eventObject.eventCode;
         waiverObj.time_in = UtilitesService.formatTime(checkInTime);
@@ -113,7 +96,6 @@ console.log("Volunteer Service loaded");
         waiverObj.volunteerID = preregisteredVolunteerObj.id;
         $http.post('/volunteer/complete', waiverObj)
         .then(function(response){
-          console.log("in .then from updateWaiver! ", response);
           return response;
         });
       };
@@ -172,4 +154,4 @@ console.log("Volunteer Service loaded");
    setEventTime: setEventTime
  };
 
-}]); //end of VolunteerService
+}]);

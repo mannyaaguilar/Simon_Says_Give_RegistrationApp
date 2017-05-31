@@ -1,45 +1,10 @@
 myApp.controller('WaiverController', ['$scope', '$http', '$location', 'VolunteerService', function($scope, $http, $location, VolunteerService) {
 
-console.log("WaiverController loaded!");
-    $scope.message = '';
-
-  //ALL OF THESE WILL NEED TO BE IN A FACTORY
-
-  // var todaysDate = new Date();
-  //
-  // $scope.waiverObj = {
-  //   //Adult waiver
-  //   volunteerIndex: "",
-  //   dateTopAdult: todaysDate,
-  //   nameTopAdult: "",
-  //   agreedAdult: false,
-  //   nameBottomAdult: "",
-  //   dateBottomAdult: todaysDate,
-  //   //Youth waiver
-  //   dateTopYouth: todaysDate,
-  //   nameTopYouth: "",
-  //   agreedYouth: false,
-  //   nameBottomYouth: "",
-  //   dateBottomYouth: todaysDate,
-  //   noParentYouth: "",
-  //   dateBottomVolYouth: todaysDate,
-  //   guardianEmailYouth: "",
-  //   guardianTopYouth: "",
-  //   guardianBottomYouth: "",
-  //   dateBottomGuardYouth: todaysDate,
-  //   //Photo waiver
-  //   agreedPhoto: false,
-  //   nameBottomPhoto: "",
-  //   dateBottomPhoto: todaysDate,
-  //   dateBottomVolPhoto: todaysDate,
-  //   guardianBottomPhoto: "",
-  //   dateBottomGuardPhoto: todaysDate
-  // };
+  $scope.message = '';
 
   $scope.waiverObj = VolunteerService.waiverObj;
 
   $scope.submitAdultWaiver = function() {
-    console.log("XXcurrent waiverObj: ", $scope.waiverObj);
     var filledOut;
 
     filledOut = $scope.waiverObj.dateTopAdult &&
@@ -64,11 +29,10 @@ console.log("WaiverController loaded!");
       else {
         $scope.message = 'Please fill out all highlighted fields';
       }
-    } // end checkSignatureFormat
-  }; // end submitAdultWaiver
+    }
+  };
 
   $scope.submitYouthWaiver = function() {
-    console.log("current waiverObj: ", $scope.waiverObj);
     var noParentAll,
         parentAll,
         filledOut;
@@ -92,27 +56,6 @@ console.log("WaiverController loaded!");
     var youthSignature = $scope.waiverObj.nameBottomYouth;
     var guardianSignature = $scope.waiverObj.guardianBottomYouth;
 
-
-
-    // NEEDS TO BE FINISHED
-    // function checkYouthSignFormat(youthSignature, guardianSignature) {
-    //   if (filledOut &&
-    //       youthSignature.charAt(0) === '/' &&
-    //       youthSignature.charAt(youthSignature.length -1) === '/') {
-    //         $location.path("/override");
-    //   }
-    //   else if (filledOut &&
-    //     (signature.charAt(0) !== '/' || signature.charAt(signature.length -1) !== '/' )) {
-    //       $scope.message = 'Please put name between slashes';
-    //     }
-    //   else {
-    //     $scope.message = 'Please fill out all highlighted fields';
-    //   }
-    // } // end checkSignatureFormat
-
-
-
-
     if ( filledOut ) {
       if ( noParentAll ) {
         $location.path("/override");
@@ -124,11 +67,9 @@ console.log("WaiverController loaded!");
     else {
       $scope.message = 'Please complete all highlighted fields';
     }
-  }; // end submitYouthWaiver
+  };
 
   $scope.submitPhotoWaiver = function() {
-    console.log("current waiverObj: ", $scope.waiverObj);
-
     if ( $scope.waiverObj.agreedPhoto ) {
       $location.path("/confirmation");
     }
