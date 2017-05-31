@@ -1,4 +1,4 @@
-myApp.factory('VolunteerService', ['$http', '$location', 'UserService', 'UtilitesService', function($http, $location, UserService, UtilitesService){
+myApp.factory('VolunteerService', ['$http', '$location', 'UserService', 'UtilitiesService', function($http, $location, UserService, UtilitiesService){
 
   var preregisteredVolunteerObj = {
     email: '',
@@ -52,6 +52,25 @@ myApp.factory('VolunteerService', ['$http', '$location', 'UserService', 'Utilite
     dateBottomGuardPhoto: todaysDate
   };
 
+  waiverDateCheck = function(waiverDate) {
+
+    var WaiverYear = waiverDate.substr(0,4);
+    var WaiverMonth = waiverDate.substr(5,2)-1;
+    var WaiverDay = waiverDate.substr(8,2);
+    var waiverFormattedDate = new Date(WaiverYear,WaiverMonth,WaiverDay,0,0,0);
+    console.log("Formatted: ", waiverFormattedDate);
+    var today = new Date();
+    today.setFullYear(today.getFullYear() - 1);
+    console.log("TODAY", today);
+    if(waiverFormattedDate <= today){
+      console.log("false");
+      return true;
+    } else {
+      console.log("true");
+      return false;
+    }
+  };
+
   preregisteredVolunteer = function(volunteer){
       $http.post('/volunteer/initial', volunteer)
       .then(function(response){
@@ -61,21 +80,32 @@ myApp.factory('VolunteerService', ['$http', '$location', 'UserService', 'Utilite
         preregisteredVolunteerObj.under_18 = response.data[0].under_18;
         preregisteredVolunteerObj.birthdate = response.data[0].birthdate;
         preregisteredVolunteerObj.has_signed_waiver = response.data[0].has_signed_waiver;
+        preregisteredVolunteerObj.adult_lw_date = response.data[0].adult_lw_date;
+        preregisteredVolunteerObj.minor_lw_date = response.data[0].minor_lw_date;
         preregisteredVolunteerObj.has_allowed_photos = response.data[0].has_allowed_photos;
+        preregisteredVolunteerObj.pw_date = response.data[0].pw_date;
         preregisteredVolunteerObj.parent_email = response.data[0].parent_email;
         preregisteredVolunteerObj.id = response.data[0].id;
 
         if(response.data[0]){
-          if(preregisteredVolunteerObj.under_18 === true && preregisteredVolunteerObj.has_signed_waiver === false){
+          if((preregisteredVolunteerObj.under_18 === true && preregisteredVolunteerObj.has_signed_waiver === false) ||
+          (preregisteredVolunteerObj.under_18 === true && preregisteredVolunteerObj.has_signed_waiver === true && waiverDateCheck(preregisteredVolunteerObj.minor_lw_date)))
+          {
             $location.path('/waiver-youth');
           } else if
-            (preregisteredVolunteerObj.under_18 === false && preregisteredVolunteerObj.has_signed_waiver === false){
+            ((preregisteredVolunteerObj.under_18 === false && preregisteredVolunteerObj.has_signed_waiver === false) ||
+            (preregisteredVolunteerObj.under_18 === false && preregisteredVolunteerObj.has_signed_waiver === true && waiverDateCheck(preregisteredVolunteerObj.adult_lw_date)))
+            {
             $location.path('/waiver-adult');
           } else if
-            (preregisteredVolunteerObj.under_18 === true && preregisteredVolunteerObj.has_allowed_photos === false){
+            ((preregisteredVolunteerObj.under_18 === true && preregisteredVolunteerObj.has_allowed_photos === false) ||
+            (preregisteredVolunteerObj.under_18 === true && preregisteredVolunteerObj.has_allowed_photos === true && waiverDateCheck(preregisteredVolunteerObj.pw_date)))
+            {
             $location.path('/waiver-photo');
           } else if
-            (preregisteredVolunteerObj.under_18 === false && preregisteredVolunteerObj.has_allowed_photos === false){
+            ((preregisteredVolunteerObj.under_18 === false && preregisteredVolunteerObj.has_allowed_photos === false) ||
+            (preregisteredVolunteerObj.under_18 === true && preregisteredVolunteerObj.has_allowed_photos === true && waiverDateCheck(preregisteredVolunteerObj.pw_date)))
+            {
             $location.path('/waiver-photo');
           } else {
             $location.path('/confirmation');
@@ -84,6 +114,7 @@ myApp.factory('VolunteerService', ['$http', '$location', 'UserService', 'Utilite
       });
     };
 
+
     setEventTime = function(){
           updateWaiver();
     };
@@ -91,8 +122,8 @@ myApp.factory('VolunteerService', ['$http', '$location', 'UserService', 'Utilite
     updateWaiver = function(){
         var checkInTime = new Date();
         waiverObj.event_id = UserService.eventObject.eventCode;
-        waiverObj.time_in = UtilitesService.formatTime(checkInTime);
-        waiverObj.date = UtilitesService.formatDate(checkInTime);
+        waiverObj.time_in = UtilitiesService.formatTime(checkInTime);
+        waiverObj.date = UtilitiesService.formatDate(checkInTime);
         waiverObj.volunteerID = preregisteredVolunteerObj.id;
         $http.post('/volunteer/complete', waiverObj)
         .then(function(response){

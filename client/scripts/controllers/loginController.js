@@ -1,5 +1,5 @@
-myApp.controller('LoginController', ['$scope', '$http', '$location', '$routeParams', 'UserService', 'UtilitesService',
-        function($scope, $http, $location, $routeParams, UserService, UtilitesService) {
+myApp.controller('LoginController', ['$scope', '$http', '$location', '$routeParams', 'UserService', 'UtilitiesService',
+        function($scope, $http, $location, $routeParams, UserService, UtilitiesService) {
 
   $scope.user = {
     username: '',
@@ -69,10 +69,10 @@ myApp.controller('LoginController', ['$scope', '$http', '$location', '$routePara
     console.log('sending to server...', $scope.user);
     $http.post('/user/forgotpassword', $scope.user).then(function(response) {
       if(response.data == 'Code sent successfully.') {
-        UtilitesService.showAlert('A link to change the password was sent by email.');
+        UtilitiesService.showAlert('A link to change the password was sent by email.');
       } else {
         console.log('failure: ', response);
-        UtilitesService.showAlert('There was an error sending the link to change the password.');
+        UtilitiesService.showAlert('There was an error sending the link to change the password.');
       }
     });
   }
@@ -90,10 +90,10 @@ $scope.updatePassword = function() {
     $scope.user.code = $routeParams.code;
     $http.put('/user/resetpassword', $scope.user).then(function(response) {
       if(response.data == 'Password updated successfully.') {
-        UtilitesService.showAlert('Password updated successfully.');
+        UtilitiesService.showAlert('Password updated successfully.');
         $location.path('/home');
       } else {
-        UtilitesService.showAlert('There was an error updating the password');
+        UtilitiesService.showAlert('There was an error updating the password');
       }
     });
   }

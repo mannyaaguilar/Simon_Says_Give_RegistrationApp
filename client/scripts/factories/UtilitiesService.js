@@ -1,4 +1,4 @@
-myApp.factory('UtilitesService', ['$http','$mdDialog', function($http,$mdDialog){
+myApp.factory('UtilitiesService', ['$http','$mdDialog', function($http,$mdDialog){
 
 var todaysDate = new Date();
 

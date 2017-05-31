@@ -221,8 +221,8 @@ myApp.config(['$routeProvider', '$locationProvider',
     });
 }]);
 
-myApp.controller('AddAdminController', ['$scope', '$http', '$location', 'UserService', 'UtilitesService',
-                function($scope, $http, $location, UserService, UtilitesService) {
+myApp.controller('AddAdminController', ['$scope', '$http', '$location', 'UserService', 'UtilitiesService',
+                function($scope, $http, $location, UserService, UtilitiesService) {
 
   $scope.redirect = UserService.redirect;
   var message = '';
@@ -236,7 +236,7 @@ myApp.controller('AddAdminController', ['$scope', '$http', '$location', 'UserSer
   // Registers a new ADMIN user
   $scope.registerAdminUser = function() {
     if($scope.adminUser.username == '' || $scope.adminUser.password == '' || $scope.adminUser.email == '') {
-      UtilitesService.showAlert('Please enter all the required information.');
+      UtilitiesService.showAlert('Please enter all the required information.');
     } else {
       console.log('sending to server...', $scope.adminUser);
       $http.post('/register', $scope.adminUser).then(function(response) {
@@ -278,10 +278,10 @@ myApp.controller('checkInOutController', ['$scope', '$location', '$http', 'Volun
 }]);
 
 myApp.controller('CheckoutController', ['$scope', '$location', '$http',
-                'UtilitesService', 'UserService',
-                function($scope, $location, $http, UtilitesService, UserService) {
+                'UtilitiesService', 'UserService',
+                function($scope, $location, $http, UtilitiesService, UserService) {
 
-$scope.formatTime = UtilitesService.formatTime;
+$scope.formatTime = UtilitiesService.formatTime;
 $scope.eventObject = UserService.eventObject;
 //object for input volunteers to bind to
 //NEED TO UPDATE, BRING IN VOLUNTEER OBJECT FROM FACTORY
@@ -403,8 +403,8 @@ myApp.controller('ConfirmationController', ['$scope', '$http', '$location', 'Use
 
 }]);
 
-myApp.controller('CreateEventController', ['$scope', '$location','UserService', 'UtilitesService','EventService',
-                function($scope, $location, UserService, UtilitesService, EventService) {
+myApp.controller('CreateEventController', ['$scope', '$location','UserService', 'UtilitiesService','EventService',
+                function($scope, $location, UserService, UtilitiesService, EventService) {
 
   $scope.redirect = UserService.redirect;
   $scope.serverResponseObject = EventService.serverResponseObject;
@@ -428,20 +428,20 @@ myApp.controller('CreateEventController', ['$scope', '$location','UserService', 
     if (alphanumeric($scope.event.eventCode)) {
       if ($scope.event.eventCode != '' && $scope.event.eventName != '' && $scope.event.eventTeam != '' && $scope.event.eventDate) {
         eventToSend = angular.copy($scope.event);
-        eventToSend.eventDate = UtilitesService.formatDate(eventToSend.eventDate);
+        eventToSend.eventDate = UtilitiesService.formatDate(eventToSend.eventDate);
 
         if (eventToSend.eventFromTime) {
-          eventToSend.eventFromTime = UtilitesService.formatTime(eventToSend.eventFromTime);
+          eventToSend.eventFromTime = UtilitiesService.formatTime(eventToSend.eventFromTime);
         }
         if (eventToSend.eventUntilTime) {
-          eventToSend.eventUntilTime = UtilitesService.formatTime(eventToSend.eventUntilTime);
+          eventToSend.eventUntilTime = UtilitiesService.formatTime(eventToSend.eventUntilTime);
         }
         // send information to factory
         console.log('EVENT TO SEND: ', eventToSend);
         EventService.postEvent(eventToSend);
       }
     } else {
-      UtilitesService.showAlert('Please enter an alphanumeric code');
+      UtilitiesService.showAlert('Please enter an alphanumeric code');
     }
   } // function createEvent()
 
@@ -460,8 +460,8 @@ myApp.controller('CreateEventController', ['$scope', '$location','UserService', 
 
 }]);
 
-myApp.controller('EventController', ['$scope','$mdDialog','UserService','UtilitesService','EventService',
-                function($scope,$mdDialog,UserService,UtilitesService,EventService) {
+myApp.controller('EventController', ['$scope','$mdDialog','UserService','UtilitiesService','EventService',
+                function($scope,$mdDialog,UserService,UtilitiesService,EventService) {
 
   $scope.redirect = UserService.redirect;
   $scope.serverResponseObject = EventService.serverResponseObject;
@@ -504,8 +504,8 @@ myApp.controller('EventController', ['$scope','$mdDialog','UserService','Utilite
 
 }]);
 
-myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserService', 'UtilitesService','CSVService',
-            function($scope, $http, $location, UserService, UtilitesService, CSVService) {
+myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserService', 'UtilitiesService','CSVService',
+            function($scope, $http, $location, UserService, UtilitiesService, CSVService) {
 
   $scope.userObject = UserService.userObject;
   $scope.logout = UserService.logout;
@@ -547,14 +547,14 @@ myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserServi
     if (fromDate && toDate) {
       if(toDate < fromDate) {
         errorMessage = 'Invalid date Selection';
-        UtilitesService.showAlert(errorMessage);
+        UtilitiesService.showAlert(errorMessage);
         return false;
       } else {
         return true;
       }
     } else {
       errorMessage = 'Invalid date Selection';
-      UtilitesService.showAlert(errorMessage);
+      UtilitiesService.showAlert(errorMessage);
       return false;
     }
   };
@@ -655,8 +655,8 @@ myApp.controller('ImportController', ['$scope', '$http', '$location', 'UserServi
 
 }]);
 
-myApp.controller('LoginController', ['$scope', '$http', '$location', '$routeParams', 'UserService', 'UtilitesService',
-        function($scope, $http, $location, $routeParams, UserService, UtilitesService) {
+myApp.controller('LoginController', ['$scope', '$http', '$location', '$routeParams', 'UserService', 'UtilitiesService',
+        function($scope, $http, $location, $routeParams, UserService, UtilitiesService) {
 
   $scope.user = {
     username: '',
@@ -726,10 +726,10 @@ myApp.controller('LoginController', ['$scope', '$http', '$location', '$routePara
     console.log('sending to server...', $scope.user);
     $http.post('/user/forgotpassword', $scope.user).then(function(response) {
       if(response.data == 'Code sent successfully.') {
-        UtilitesService.showAlert('A link to change the password was sent by email.');
+        UtilitiesService.showAlert('A link to change the password was sent by email.');
       } else {
         console.log('failure: ', response);
-        UtilitesService.showAlert('There was an error sending the link to change the password.');
+        UtilitiesService.showAlert('There was an error sending the link to change the password.');
       }
     });
   }
@@ -747,10 +747,10 @@ $scope.updatePassword = function() {
     $scope.user.code = $routeParams.code;
     $http.put('/user/resetpassword', $scope.user).then(function(response) {
       if(response.data == 'Password updated successfully.') {
-        UtilitesService.showAlert('Password updated successfully.');
+        UtilitiesService.showAlert('Password updated successfully.');
         $location.path('/home');
       } else {
-        UtilitesService.showAlert('There was an error updating the password');
+        UtilitiesService.showAlert('There was an error updating the password');
       }
     });
   }
@@ -823,8 +823,8 @@ myApp.controller('UserController', ['$scope', '$http', '$location', 'UserService
 
 }]);
 
-myApp.controller('ViewEventController', ['$scope','$mdDialog','UserService','UtilitesService','EventService',
-                function($scope,$mdDialog,UserService,UtilitesService,EventService) {
+myApp.controller('ViewEventController', ['$scope','$mdDialog','UserService','UtilitiesService','EventService',
+                function($scope,$mdDialog,UserService,UtilitiesService,EventService) {
 
   $scope.redirect = UserService.redirect;
   $scope.serverResponseObject = {};
@@ -882,13 +882,13 @@ myApp.controller('ViewEventController', ['$scope','$mdDialog','UserService','Uti
     // validates and copies data to an object to send to the factory
     if ($scope.event.eventCode != '' && $scope.event.eventName != '' && $scope.event.eventTeam != '' && $scope.event.eventDate) {
       eventToSend = angular.copy($scope.event);
-      eventToSend.eventDate = UtilitesService.formatDate(eventToSend.eventDate);
+      eventToSend.eventDate = UtilitiesService.formatDate(eventToSend.eventDate);
 
       if (eventToSend.eventFromTime) {
-        eventToSend.eventFromTime = UtilitesService.formatTime(eventToSend.eventFromTime);
+        eventToSend.eventFromTime = UtilitiesService.formatTime(eventToSend.eventFromTime);
       }
       if (eventToSend.eventUntilTime) {
-        eventToSend.eventUntilTime = UtilitesService.formatTime(eventToSend.eventUntilTime);
+        eventToSend.eventUntilTime = UtilitiesService.formatTime(eventToSend.eventUntilTime);
       }
       // send information to factory
       console.log('EVENT TO SEND: ', eventToSend);
@@ -900,14 +900,14 @@ myApp.controller('ViewEventController', ['$scope','$mdDialog','UserService','Uti
   $scope.logoutVolunteers = function(eventObject) {
     var eventParams = {};
     eventParams.eventCode = eventObject.eventCode;
-    eventParams.time = UtilitesService.formatTime(eventObject.eventUntilTime);
+    eventParams.time = UtilitiesService.formatTime(eventObject.eventUntilTime);
     console.log('Logging out volunteers for event:', eventParams);
     EventService.logoutVolunteersByEvent(eventParams);
   }
 
 }]);
 
-myApp.controller('VolunteerController', ['$scope', '$http', '$location', 'UserService', 'VolunteerService', 'UtilitesService', function($scope, $http, $location, UserService, VolunteerService, UtilitesService){
+myApp.controller('VolunteerController', ['$scope', '$http', '$location', 'UserService', 'VolunteerService', 'UtilitiesService', function($scope, $http, $location, UserService, VolunteerService, UtilitiesService){
 
 $scope.redirect = UserService.redirect;
 $scope.volunteer = VolunteerService.volunteer;
@@ -935,7 +935,7 @@ $scope.volunteer = {
 
 $scope.formatdob = function() {
   if ( $scope.volunteer.birthdate) {
-    birtdateToDB = UtilitesService.formatDate(angular.copy($scope.volunteer.birthdate));
+    birtdateToDB = UtilitiesService.formatDate(angular.copy($scope.volunteer.birthdate));
   }
   else {
     $scope.volunteer.birthdate = '1900-01-01';
@@ -946,16 +946,6 @@ $scope.cancel = function(){
   $location.path('/checkInOut');
 };
 
-$scope.minmaxDate = function() {
-    this.myDate = new Date();
-    this.maxDate = new Date(
-    this.myDate.getFullYear(),
-    this.myDate.getMonth(),
-    this.myDate.getDate()
-  );
-};
-
-$scope.minmaxDate();
 }]);
 
 myApp.controller('WaiverController', ['$scope', '$http', '$location', 'VolunteerService', function($scope, $http, $location, VolunteerService) {
@@ -1245,7 +1235,7 @@ myApp.factory('UserService', ['$http', '$location', function($http, $location){
   };
 }]);
 
-myApp.factory('UtilitesService', ['$http','$mdDialog', function($http,$mdDialog){
+myApp.factory('UtilitiesService', ['$http','$mdDialog', function($http,$mdDialog){
 
 var todaysDate = new Date();
 
@@ -1282,7 +1272,7 @@ return {
 
 }]);
 
-myApp.factory('VolunteerService', ['$http', '$location', 'UserService', 'UtilitesService', function($http, $location, UserService, UtilitesService){
+myApp.factory('VolunteerService', ['$http', '$location', 'UserService', 'UtilitiesService', function($http, $location, UserService, UtilitiesService){
 
   var preregisteredVolunteerObj = {
     email: '',
@@ -1336,6 +1326,25 @@ myApp.factory('VolunteerService', ['$http', '$location', 'UserService', 'Utilite
     dateBottomGuardPhoto: todaysDate
   };
 
+  waiverDateCheck = function(waiverDate) {
+
+    var WaiverYear = waiverDate.substr(0,4);
+    var WaiverMonth = waiverDate.substr(5,2)-1;
+    var WaiverDay = waiverDate.substr(8,2);
+    var waiverFormattedDate = new Date(WaiverYear,WaiverMonth,WaiverDay,0,0,0);
+    console.log("Formatted: ", waiverFormattedDate);
+    var today = new Date();
+    today.setFullYear(today.getFullYear() - 1);
+    console.log("TODAY", today);
+    if(waiverFormattedDate <= today){
+      console.log("false");
+      return true;
+    } else {
+      console.log("true");
+      return false;
+    }
+  };
+
   preregisteredVolunteer = function(volunteer){
       $http.post('/volunteer/initial', volunteer)
       .then(function(response){
@@ -1345,21 +1354,32 @@ myApp.factory('VolunteerService', ['$http', '$location', 'UserService', 'Utilite
         preregisteredVolunteerObj.under_18 = response.data[0].under_18;
         preregisteredVolunteerObj.birthdate = response.data[0].birthdate;
         preregisteredVolunteerObj.has_signed_waiver = response.data[0].has_signed_waiver;
+        preregisteredVolunteerObj.adult_lw_date = response.data[0].adult_lw_date;
+        preregisteredVolunteerObj.minor_lw_date = response.data[0].minor_lw_date;
         preregisteredVolunteerObj.has_allowed_photos = response.data[0].has_allowed_photos;
+        preregisteredVolunteerObj.pw_date = response.data[0].pw_date;
         preregisteredVolunteerObj.parent_email = response.data[0].parent_email;
         preregisteredVolunteerObj.id = response.data[0].id;
 
         if(response.data[0]){
-          if(preregisteredVolunteerObj.under_18 === true && preregisteredVolunteerObj.has_signed_waiver === false){
+          if((preregisteredVolunteerObj.under_18 === true && preregisteredVolunteerObj.has_signed_waiver === false) ||
+          (preregisteredVolunteerObj.under_18 === true && preregisteredVolunteerObj.has_signed_waiver === true && waiverDateCheck(preregisteredVolunteerObj.minor_lw_date)))
+          {
             $location.path('/waiver-youth');
           } else if
-            (preregisteredVolunteerObj.under_18 === false && preregisteredVolunteerObj.has_signed_waiver === false){
+            ((preregisteredVolunteerObj.under_18 === false && preregisteredVolunteerObj.has_signed_waiver === false) ||
+            (preregisteredVolunteerObj.under_18 === false && preregisteredVolunteerObj.has_signed_waiver === true && waiverDateCheck(preregisteredVolunteerObj.adult_lw_date)))
+            {
             $location.path('/waiver-adult');
           } else if
-            (preregisteredVolunteerObj.under_18 === true && preregisteredVolunteerObj.has_allowed_photos === false){
+            ((preregisteredVolunteerObj.under_18 === true && preregisteredVolunteerObj.has_allowed_photos === false) ||
+            (preregisteredVolunteerObj.under_18 === true && preregisteredVolunteerObj.has_allowed_photos === true && waiverDateCheck(preregisteredVolunteerObj.pw_date)))
+            {
             $location.path('/waiver-photo');
           } else if
-            (preregisteredVolunteerObj.under_18 === false && preregisteredVolunteerObj.has_allowed_photos === false){
+            ((preregisteredVolunteerObj.under_18 === false && preregisteredVolunteerObj.has_allowed_photos === false) ||
+            (preregisteredVolunteerObj.under_18 === true && preregisteredVolunteerObj.has_allowed_photos === true && waiverDateCheck(preregisteredVolunteerObj.pw_date)))
+            {
             $location.path('/waiver-photo');
           } else {
             $location.path('/confirmation');
@@ -1368,6 +1388,7 @@ myApp.factory('VolunteerService', ['$http', '$location', 'UserService', 'Utilite
       });
     };
 
+
     setEventTime = function(){
           updateWaiver();
     };
@@ -1375,8 +1396,8 @@ myApp.factory('VolunteerService', ['$http', '$location', 'UserService', 'Utilite
     updateWaiver = function(){
         var checkInTime = new Date();
         waiverObj.event_id = UserService.eventObject.eventCode;
-        waiverObj.time_in = UtilitesService.formatTime(checkInTime);
-        waiverObj.date = UtilitesService.formatDate(checkInTime);
+        waiverObj.time_in = UtilitiesService.formatTime(checkInTime);
+        waiverObj.date = UtilitiesService.formatDate(checkInTime);
         waiverObj.volunteerID = preregisteredVolunteerObj.id;
         $http.post('/volunteer/complete', waiverObj)
         .then(function(response){

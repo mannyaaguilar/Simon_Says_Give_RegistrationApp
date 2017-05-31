@@ -10,6 +10,7 @@ router.post('/initial', function(req, res, next) {
     if ( err ) {
       next(err);
     }
+
     client.query("SELECT * FROM volunteer WHERE email = $1 AND " +
       "first_name = $2 AND last_name = $3;",
       [volGiven.email, volGiven.first_name, volGiven.last_name],
@@ -32,14 +33,26 @@ router.post('/initial', function(req, res, next) {
                   else {
                     res.send(result.rows);
                   }
-                });//end of client.query
+                });
           }
           else {
-            res.send(result.rows);
-          }
-        });
-  });
-});
+            var volID = result.rows[0].id;
+            client.query("SELECT * FROM waiver INNER JOIN volunteer ON waiver.volunteer_id=volunteer.id AND waiver.volunteer_id = $1;",
+              [volID],
+                function (err, result) {
+                  done();
+
+                  if ( err ) {
+                    next(err);
+                  }
+                  else {
+                    res.send(result.rows);
+                  }
+                });//end of client.query
+          }//end else
+        });//1st client.query
+  });//end pool connect
+});//end router post
 
 router.post('/complete', function(req, res, next) {
   var signedAdult,
