@@ -37,7 +37,7 @@ router.post('/add', function(req, res) {
     var hoursDate = req.body.hoursDate;
     var hoursFromTime = req.body.hoursFromTime;
     var hoursUntilTime = req.body.hoursUntilTime;
-    var staff_name = 'TestPerson'; // *** req.body.??? ***
+    var staff_name = req.body.name;
     var eventID = 'OFFICEHOURSLOGS';
     var officeHoursVolID = 987654321;
 
@@ -53,7 +53,7 @@ router.post('/add', function(req, res) {
           function(queryError, result) {
           done();
           if ( queryError ) {
-            res.send("Error");
+            res.sendStatus(500);
           }
           else {
             res.send("Record created successfully.")
