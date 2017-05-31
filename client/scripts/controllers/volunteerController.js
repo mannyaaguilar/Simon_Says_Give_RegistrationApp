@@ -1,4 +1,4 @@
-myApp.controller('VolunteerController', ['$scope', '$http', '$location', 'UserService', 'VolunteerService', 'UtilitesService', function($scope, $http, $location, UserService, VolunteerService, UtilitesService){
+myApp.controller('VolunteerController', ['$scope', '$http', '$location', 'UserService', 'VolunteerService', 'UtilitiesService', function($scope, $http, $location, UserService, VolunteerService, UtilitiesService){
 console.log("VolunteerController Loaded");
 
 $scope.redirect = UserService.redirect;
@@ -28,7 +28,7 @@ $scope.volunteer = {
 $scope.formatdob = function() {
   console.log("formatdob", $scope.volunteer.birthdate);
   if ( $scope.volunteer.birthdate) {
-    birtdateToDB = UtilitesService.formatDate(angular.copy($scope.volunteer.birthdate));
+    birtdateToDB = UtilitiesService.formatDate(angular.copy($scope.volunteer.birthdate));
     console.log('birthdate', birtdateToDB);
   }
   else {
@@ -45,7 +45,7 @@ $scope.cancel = function(){
 $scope.minmaxDate = function() {
     this.myDate = new Date();
     this.maxDate = new Date(
-    this.myDate.getFullYear() - 8,
+    this.myDate.getFullYear(),
     this.myDate.getMonth(),
     this.myDate.getDate()
   );

@@ -1,4 +1,5 @@
-myApp.controller('LoginController', ['$scope', '$http', '$location', 'UserService', function($scope, $http, $location, UserService) {
+myApp.controller('LoginController', ['$scope', '$http', '$routeParams', 'UserService', 'UtilitiesService',
+        function($scope, $http, $routeParams, UserService, UtilitiesService) {
 
   $scope.user = {
     username: '',
@@ -7,28 +8,22 @@ myApp.controller('LoginController', ['$scope', '$http', '$location', 'UserServic
   $scope.event = {
     eventCode: ''
   };
-  $scope.adminMessage = '';
-  $scope.eventMessage = '';
+
 
   // Logins Admin user
   $scope.login = function() {
     if($scope.user.username == '' || $scope.user.password == '') {
-      $scope.adminMessage = "Enter your username and password!";
+      UtilitiesService.showAlert('Enter your username and password!');
     } else {
-      console.log('sending to server...', $scope.user);
       $http.post('/', $scope.user).then(function(response) {
         if(response.data.username) {
-          console.log('success: ', response.data);
-          // location works with SPA (ng-route)
-          console.log('redirecting to admin page');
           if (response.data.role === 'ADMIN') {
-            $location.path('/displayEvents');
+            UserService.redirect('/displayEvents');
           } else {
-            $location.path('/checkInOut');
+            UserService.redirect('/checkInOut');
           }
         } else {
-          console.log('failure: ', response);
-          $scope.adminMessage = "Invalid username and password combination.";
+          UtilitiesService.showAlert('Invalid username and password combination.');
         }
       });
     }
@@ -36,28 +31,54 @@ myApp.controller('LoginController', ['$scope', '$http', '$location', 'UserServic
 
   // Starts event based on event code
   $scope.startEvent = function() {
-    console.log('startEvent clicked:', $scope.event.eventCode);
     if($scope.event.eventCode == '') {
-      $scope.eventMessage = "Enter an event code!";
+      UtilitiesService.showAlert('Please enter an event code!');
     } else {
-      console.log('sending to server...', $scope.event);
       $http.get('/ssgEvent/start/' + $scope.event.eventCode).then(function(response) {
-        console.log(response);
         if(response.data.event_code) {
-          console.log('success: ', response.data);
           UserService.eventObject.eventCode = response.data.event_code;
           UserService.eventObject.eventName = response.data.event_name;
-          console.log('EVENT CODE', UserService.eventObject.eventCode);
-          console.log('EVENT NAME', UserService.eventObject.eventName);
-          // console.log('EVENT CODE', response.data.event_code);
-          // console.log('EVENT NAME', response.data.event_name);
-          $location.path('/checkInOut');
+          UserService.redirect('/checkInOut');
         } else {
-          console.log('failure: ', response);
-          $scope.eventMessage = "Invalid event code.";
+          UtilitiesService.showAlert('Invalid event code.');
         }
       });
     }
+  };
+
+  // sends request to get a link to reset the password
+  $scope.sendResetPassword = function() {
+  if($scope.user.username === '') {
+    UtilitiesService.showAlert('Please enter your username.');
+  } else {
+    $http.post('/user/forgotpassword', $scope.user).then(function(response) {
+      if(response.data == 'Code sent successfully.') {
+        UtilitiesService.showAlert('A link to change the password was sent by email.');
+      } else {
+        UtilitiesService.showAlert('There was an error sending the link to change the password.');
+      }
+    });
   }
+};
+
+// sends request to the server with updated password
+$scope.updatePassword = function() {
+  // Send our password reset request to the server
+  // with our username, new password and code
+  if($scope.user.username === '' || $scope.user.password === '') {
+    UtilitiesService.showAlert('Please enter your username and password.');
+  } else {
+    $scope.user.code = $routeParams.code;
+    $http.put('/user/resetpassword', $scope.user).then(function(response) {
+      if(response.data == 'Password updated successfully.') {
+        UtilitiesService.showAlert('Password updated successfully.');
+        UserService.redirect('/home');
+      } else {
+        UtilitiesService.showAlert('There was an error updating the password');
+      }
+    });
+  }
+}
+
 
 }]);

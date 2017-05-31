@@ -21,6 +21,16 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/register.html',
       controller: 'LoginController'
     })
+    // Forgot password view
+    .when('/forgotpassword', {
+      templateUrl: '/views/templates/forgot.html',
+      controller: 'LoginController'
+    })
+    // change password view (accesible through email link)
+    .when('/confirmreset/:code', {
+      templateUrl: '/views/templates/confirm.html',
+      controller: 'LoginController'
+    })
     // Admin landing View
     .when('/admin', {
       templateUrl: '/views/templates/admin.html',
@@ -162,7 +172,7 @@ myApp.config(['$routeProvider', '$locationProvider',
         }]
       }
     })
-    // Confirmation View
+    // Confirmation View From Checkin
     .when('/confirmation', {
       templateUrl: '/views/templates/confirmation.html',
       controller: 'ConfirmationController',
@@ -172,6 +182,16 @@ myApp.config(['$routeProvider', '$locationProvider',
         }],
         setEventTime: ['VolunteerService', function(VolunteerService){
           return VolunteerService.setEventTime();
+        }]
+      }
+    })
+    // Confirmation View from Checkout
+    .when('/confirmed', {
+      templateUrl: '/views/templates/confirmation.html',
+      controller: 'ConfirmationController',
+      resolve: {
+        checkevent : ['UserService', function(UserService){
+          return UserService.checkEvent();
         }]
       }
     })

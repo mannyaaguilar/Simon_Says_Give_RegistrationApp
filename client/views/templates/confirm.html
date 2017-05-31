@@ -1,0 +1,47 @@
+<!-- HEADER INCLUDED -->
+<div ng-include="'views/partials/header.html'"></div>
+
+
+<!-- CHANGE PASSWORD VIEW -->
+<div layout="row">
+  <div layout-md="column" flex="5"></div>
+  <div layout="column" flex="90">
+    <div class="addAdminContainer">
+      <h1>CHANGE PASSWORD</h1>
+        <form name="changePasswordView" ng-submit="updatePassword()">
+          <div layout="row">
+          <h1 class="lead alert alert-danger" role="alert" ng-if="message != ''">{{message}}</h2>
+          <md-input-container layout="column" flex="45">
+            <div>
+              <label for="user.username">Username:</label>
+              <input type="text" ng-model="user.username" required/>
+              <div ng-messages="changePasswordView.user.username.$error">
+                <div ng-message="required">A username is required!</div>
+              </div>
+            </div>
+          </md-input-container>
+          <md-input-container layout="column" flex="45">
+            <div>
+              <label for="user.password">New Password:</label>
+              <input type="password" ng-model="user.password" required/>
+              <div ng-messages="changePasswordView.user.password.$error">
+                <div ng-message="required">A password is required!</div>
+              </div>
+            </div>
+          </md-input-container>
+          <div layout="column" flex="10"></div>
+        </div>
+        <!-- BUTTONS -->
+        <md-input-container layout="row" layout-align="start center">
+          <div>
+            <br>
+            <md-button class="themed-Btn" type="submit" name="submit" aria-label="Register" value="Submit">Change Password</md-button>
+          </div>
+        </md-input-container>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER INCLUDED -->
+<div ng-include="'views/partials/footer.html'"></div>
