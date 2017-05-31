@@ -1,5 +1,5 @@
-myApp.controller('ViewEventController', ['$scope','$mdDialog','UserService','UtilitesService','EventService',
-                function($scope,$mdDialog,UserService,UtilitesService,EventService) {
+myApp.controller('ViewEventController', ['$scope','$mdDialog','UserService','UtilitiesService','EventService',
+                function($scope,$mdDialog,UserService,UtilitiesService,EventService) {
 
   $scope.redirect = UserService.redirect;
   $scope.serverResponseObject = {};
@@ -57,13 +57,13 @@ myApp.controller('ViewEventController', ['$scope','$mdDialog','UserService','Uti
     // validates and copies data to an object to send to the factory
     if ($scope.event.eventCode != '' && $scope.event.eventName != '' && $scope.event.eventTeam != '' && $scope.event.eventDate) {
       eventToSend = angular.copy($scope.event);
-      eventToSend.eventDate = UtilitesService.formatDate(eventToSend.eventDate);
+      eventToSend.eventDate = UtilitiesService.formatDate(eventToSend.eventDate);
 
       if (eventToSend.eventFromTime) {
-        eventToSend.eventFromTime = UtilitesService.formatTime(eventToSend.eventFromTime);
+        eventToSend.eventFromTime = UtilitiesService.formatTime(eventToSend.eventFromTime);
       }
       if (eventToSend.eventUntilTime) {
-        eventToSend.eventUntilTime = UtilitesService.formatTime(eventToSend.eventUntilTime);
+        eventToSend.eventUntilTime = UtilitiesService.formatTime(eventToSend.eventUntilTime);
       }
       // send information to factory
       console.log('EVENT TO SEND: ', eventToSend);
@@ -75,7 +75,7 @@ myApp.controller('ViewEventController', ['$scope','$mdDialog','UserService','Uti
   $scope.logoutVolunteers = function(eventObject) {
     var eventParams = {};
     eventParams.eventCode = eventObject.eventCode;
-    eventParams.time = UtilitesService.formatTime(eventObject.eventUntilTime);
+    eventParams.time = UtilitiesService.formatTime(eventObject.eventUntilTime);
     console.log('Logging out volunteers for event:', eventParams);
     EventService.logoutVolunteersByEvent(eventParams);
   }

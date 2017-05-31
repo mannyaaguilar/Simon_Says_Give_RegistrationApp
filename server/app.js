@@ -43,6 +43,12 @@ app.use('/checkout', checkout);
 app.use('/register', register);
 app.use('/user', user);
 app.use('/csv', csv);
+
+// Login error response
+app.get('/error', function(req, res) {
+  res.send({message: 'Unable to log in. Please try again.'});
+});
+
 app.use('/*', index);
 
 // App Set //

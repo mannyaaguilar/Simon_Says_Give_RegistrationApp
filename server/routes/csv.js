@@ -6,14 +6,12 @@ var pool = require('../modules/pool');
 
 // GET request - volunteer hours .csv file
 router.get('/export/hours/:fromDate/:toDate', function(req, res, next) {
-  console.log('/export/hours hit');
   if(req.isAuthenticated()) {
     var fromDate = req.params.fromDate;
     var toDate = req.params.toDate;
     // connects to the pool
     pool.connect(function(errorConnectingToDatabase,db,done) {
       if(errorConnectingToDatabase) {
-        console.log('Error connecting to the database');
         res.sendStatus(500);
       } else {
         // query that selects all volunteer hours for a selected period of time
@@ -24,7 +22,6 @@ router.get('/export/hours/:fromDate/:toDate', function(req, res, next) {
         db.query(jsonQuery, [fromDate, toDate], function(queryError,result) {
           done();
           if (queryError) {
-            console.log('Error making query');
             res.sendStatus(500);
           } else {
             // converts query resutl to JSON
@@ -52,12 +49,10 @@ router.get('/export/hours/:fromDate/:toDate', function(req, res, next) {
 
 // GET request - volunteer .csv file
 router.get('/export/volunteer', function(req, res, next) {
-  console.log('/export/volunteer hit');
   if(req.isAuthenticated()) {
     // connects to the pool
     pool.connect(function(errorConnectingToDatabase,db,done) {
       if(errorConnectingToDatabase) {
-        console.log('Error connecting to the database');
         res.sendStatus(500);
       } else {
         // query that selects all volunteers registered on the system
@@ -65,7 +60,6 @@ router.get('/export/volunteer', function(req, res, next) {
         db.query(jsonQuery,function(queryError,result) {
           done();
           if (queryError) {
-            console.log('Error making query');
             res.sendStatus(500);
           } else {
             // converts query resutl to JSON
@@ -99,11 +93,9 @@ router.post('/upload', function(req, res, next) {
     // deletes temporary table
     deleteJSONTable();
     // converts fileContent to JSON
-    console.log('Converting to JSON');
     csvtojson({noheader:false})
     .fromString(fileContent)
     .on('end_parsed',function(jsonArrObj) {
-      console.log('Finished conversion', jsonArrObj);
       // Inserts into json_volunteer table
       pool.connect(function(errorConnectingToDatabase,db,done) {
         if(errorConnectingToDatabase) {
@@ -120,7 +112,6 @@ router.post('/upload', function(req, res, next) {
             });
           } // end of for loop
           // Moves information into volunteer table
-          console.log('INSERT INTO volunteer STARTED!');
           db.query("INSERT INTO volunteer (first_name, last_name, email) " +
           "SELECT INITCAP(info ->> 'First Name') AS first_name, INITCAP(info ->> 'Last Name') AS last_name, " +
           "LOWER(info ->> 'Email') AS email FROM json_volunteer " +
