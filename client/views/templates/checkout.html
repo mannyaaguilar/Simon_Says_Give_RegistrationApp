@@ -5,7 +5,7 @@
   <div layout-md="column" flex="20"></div>
   <div layout="column" flex="60">
     <div class="volunteerPage">
-      <p>Please search for you or your group by email or by name:</p>
+      <p>Please search for you or your group by <b>email</b> or by <b>name</b>:</p>
       <!-- SEARCH SECTION -->
       <div layout="row">
         <div layout-md="column" flex="70">
@@ -39,7 +39,8 @@
 
       <div layout="column" ng-show="success">
         <br>
-        <p>Select who you want to check out!</p>
+        <h3 class="inputError">Please enter email, first name, or last name to search</h3>
+
           <!-- <div flex-xs="" flex="50">
             <md-checkbox aria-label="Select All" ng-checked="isChecked()" md-indeterminate="isIndeterminate()" ng-click="toggleAll()">
             <span ng-if="isChecked()">Un-</span>Select All

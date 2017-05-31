@@ -351,10 +351,18 @@ $scope.getVolunteers = function(volunteer) {
     });
 };
 
+var filledOut;
+
+filledOut = $scope.volunteerObject.email ||
+            $scope.volunteerObject.first_name ||
+            $scope.volunteerObject.last_name;
+
 $scope.checkout = function(checkoutList) {
   console.log('logging checkoutList: ', $scope.checkoutList);
   $scope.checkoutVolunteers(checkoutList);
+  if (filledOut) {
   $scope.changeView();
+  }
 };
 
 //PUT Route that updates the checkout time of chosen volunteer record(s)
