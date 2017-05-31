@@ -15,7 +15,6 @@ var volunteer = require('./routes/volunteer');
 var checkout = require('./routes/checkout');
 var ssgEvent = require('./routes/event');
 
-
 // Limit set to 50mb to avoid error on large cvs files
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));

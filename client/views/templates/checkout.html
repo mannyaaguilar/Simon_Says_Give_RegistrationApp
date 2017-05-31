@@ -35,6 +35,11 @@
           </md-input-container>
         </div>
       </div>
+      <md-input-container ng-show="!success" layout="row" layout-align="center center">
+        <div>
+          <md-button ng-click="back()" class="biggerButton themed-Btn badButton" name="cancel" aria-label="Cancel" value="Cancel">Cancel</md-button>
+        </div>
+      </md-input-container>
       <!-- RESULTS SECTION -->
 
       <div layout="column" ng-show="success">
@@ -53,6 +58,11 @@
           </div>
         </div>
         <div layout="row" ng-show="success" layout-align="center center" class="chechOutContainer">
+          <md-input-container layout="row" layout-align="center center">
+            <div>
+              <md-button ng-click="back()" class="biggerButton themed-Btn badButton" name="cancel" aria-label="Cancel" value="Cancel">Cancel</md-button>
+            </div>
+          </md-input-container>
           <md-input-container class="chechOutContainer">
               <md-button class="biggerButton themed-Btn blueButton" type="submit" name="submit" aria-label="Checkout"
               value="Checkout" ng-click="checkout(checkoutList)">Checkout</md-button>

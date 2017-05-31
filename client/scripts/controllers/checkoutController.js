@@ -94,4 +94,8 @@ $scope.changeView = function() {
   $location.path('/confirmed');
 };
 
+$scope.back = function() {
+  $location.path('/checkInOut');
+};
+
 }]);
