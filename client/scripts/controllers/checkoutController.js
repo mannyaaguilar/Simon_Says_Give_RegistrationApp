@@ -1,8 +1,8 @@
 myApp.controller('CheckoutController', ['$scope', '$location', '$http',
-                'UtilitesService', 'UserService',
-                function($scope, $location, $http, UtilitesService, UserService) {
+                'UtilitiesService', 'UserService',
+                function($scope, $location, $http, UtilitiesService, UserService) {
 
-$scope.formatTime = UtilitesService.formatTime;
+$scope.formatTime = UtilitiesService.formatTime;
 $scope.eventObject = UserService.eventObject;
 //object for input volunteers to bind to
 //NEED TO UPDATE, BRING IN VOLUNTEER OBJECT FROM FACTORY
