@@ -4,38 +4,54 @@
 <!-- MENU INCLUDED -->
 <div ng-include="'views/partials/menu.html'"></div>
 
-<!-- DATE -->
-<div layout="row">
-  <md-input-container layout="column" flex="45" class="eventInputs">
-    <label>Enter date *</label>
-    <md-datepicker ng-model="newHours.date" md-min-date="ctrl.minDate"
-      md-max-date="ctrl.maxDate"></md-datepicker>
-  </md-input-container>
+<div class="bufferDiv">
 </div>
 
 <div layout="row">
-  <!-- STARTING TIME -->
-  <md-input-container layout="column" flex="45" class="eventInputs">
-    <div>
-      <label for="hours.hoursFromTime">From:</label>
-      <input type="time" ng-model="hours.hoursFromTime" required/>
-      <div ng-messages="hours.hoursFromTime.$error" ng-if='submitted'>
-        <div ng-message="required">A time is required!</div>
-      </div>
-    </div>
-  </md-input-container>
-  <div layout="column" flex="10"></div>
-  <!-- ENDING TIME -->
-  <md-input-container layout="column" flex="45" class="eventInputs">
-    <div>
-      <label for="hours.hoursUntilTime">To:</label>
-      <input type="time" ng-model="hours.hoursUntilTime" required/>
-      <div ng-messages="hours.hoursUntilTime.$error" ng-if='submitted'>
-        <div ng-message="required">A time is required!</div>
-      </div>
-    </div>
-  </md-input-container>
 
+  <div flex="15">
+  </div>
+
+  <div layout="column" flex="70">
+    <!-- DATE -->
+    <div layout="row">
+      <md-input-container layout="column" flex="45" class="eventInputs">
+        <label>Enter date *</label>
+        <md-datepicker ng-model="hours.hoursDate" md-min-date="ctrl.minDate"
+          md-max-date="ctrl.maxDate"></md-datepicker>
+      </md-input-container>
+    </div>
+
+    <div layout="row">
+      <!-- STARTING TIME -->
+      <md-input-container layout="column" flex="45" class="eventInputs">
+        <div>
+          <label for="hours.hoursFromTime">From:</label>
+          <input type="time" ng-model="hours.hoursFromTime" required/>
+          <div ng-messages="hours.hoursFromTime.$error" ng-if='submitted'>
+            <div ng-message="required">A time is required!</div>
+          </div>
+        </div>
+      </md-input-container>
+      <div layout="column" flex="10"></div>
+      <!-- ENDING TIME -->
+      <md-input-container layout="column" flex="45" class="eventInputs">
+        <div>
+          <label for="hours.hoursUntilTime">To:</label>
+          <input type="time" ng-model="hours.hoursUntilTime" required/>
+          <div ng-messages="hours.hoursUntilTime.$error" ng-if='submitted'>
+            <div ng-message="required">A time is required!</div>
+          </div>
+        </div>
+      </md-input-container>
+    </div>
+    <div layout="row">
+      <button class="themed-Btn" ng-click="createHours(hours)">Submit</button>
+    </div>
+
+  </div>
+  <div flex="15">
+  </div>
 </div>
 
 <!-- FOOTER INCLUDED -->

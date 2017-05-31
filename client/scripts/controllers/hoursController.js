@@ -1,12 +1,14 @@
-myApp.controller('HoursController', ['$scope', '$mdDialog', '$http',
-  function($scope, $mdDialog, $http) {
+myApp.controller('HoursController', ['$scope', '$mdDialog', '$http', 'UtilitesService',
+  function($scope, $mdDialog, $http, UtilitesService) {
 
 $scope.serverResponseObject = {};
 // Gets all records in the database
 getHours = function(){
-  console.log('in getEvents');
-  $http.get('/ssgEvent/').then(function(response) {
-    $scope.serverResponseObject.allEvents = response.data;
+  var staff_name = {
+    name: "TestPerson"
+  };
+  $http.post('/ssgHours/', staff_name).then(function(response) {
+    $scope.serverResponseObject.allHours = response.data;
   });
 };
 getHours();
@@ -52,7 +54,7 @@ $scope.createHours = function(hoursEntered) {
 postHours = function(hoursToPost) {
   $http.post('/ssgHours/add', hoursToPost)
   .then(function(response) {
-    getHours();
+    console.log("Success! ", response);
   });
 };
 

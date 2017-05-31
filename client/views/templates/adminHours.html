@@ -12,7 +12,7 @@
       <h1>Office Hours Logged:</h1>
        <md-list layout="column">
          <md-list-item class="md-3-line"
-          ng-repeat="thisHours in hoursObj.allHours">
+          ng-repeat="thisHours in serverResponseObject.allHours">
            <div class="md-list-item-text eventListDiv" layout="row">
              <div layout="row" flex="40">
                <h3><b>{{thisHours.date}}</b></h3>
