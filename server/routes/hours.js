@@ -4,8 +4,8 @@ var pool = require('../modules/pool');
 
 // Get route for all records
 router.post('/get', function(req, res) {
-  var staff_name = req.body.name;
   if ( req.isAuthenticated() ) {
+    var staff_name = req.user.username;
     pool.connect(function(errorConnectingToDatabase, db, done) {
       if ( errorConnectingToDatabase ) {
         res.sendStatus(500);
@@ -33,11 +33,12 @@ router.post('/get', function(req, res) {
 
 // Posts new records
 router.post('/add', function(req, res) {
+  console.log("ssgHours/add: ", req.body);
   if ( req.isAuthenticated() ) {
     var hoursDate = req.body.hoursDate;
     var hoursFromTime = req.body.hoursFromTime;
     var hoursUntilTime = req.body.hoursUntilTime;
-    var staff_name = req.body.name;
+    var staff_name = req.body.name || "supername";
     var eventID = 'OFFICEHOURSLOGS';
     var officeHoursVolID = 987654321;
 
@@ -46,8 +47,8 @@ router.post('/add', function(req, res) {
         res.sendStatus(500);
       }
       else {
-        var hoursQuery = 'INSERT INTO volunteer_hours (event_date, event_from_time, ' +
-          'event_until_time, event_id, volunteer_id, staff_name) VALUES ($1, $2, $3, $4, $5, $6);'
+        var hoursQuery = 'INSERT INTO volunteer_hours (date, time_in, ' +
+          'time_out, event_id, volunteer_id, staff_name) VALUES ($1, $2, $3, $4, $5, $6);';
         db.query(hoursQuery,
         [hoursDate, hoursFromTime, hoursUntilTime, eventID, officeHoursVolID, staff_name],
           function(queryError, result) {
@@ -56,7 +57,7 @@ router.post('/add', function(req, res) {
             res.sendStatus(500);
           }
           else {
-            res.send("Record created successfully.")
+            res.send("Record created successfully.");
           }
         });
       }
