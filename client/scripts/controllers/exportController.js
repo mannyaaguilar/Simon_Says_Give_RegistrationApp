@@ -1,5 +1,5 @@
-myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserService', 'UtilitesService','CSVService',
-            function($scope, $http, $location, UserService, UtilitesService, CSVService) {
+myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserService', 'UtilitiesService','CSVService',
+            function($scope, $http, $location, UserService, UtilitiesService, CSVService) {
 
   $scope.userObject = UserService.userObject;
   $scope.logout = UserService.logout;
@@ -41,14 +41,14 @@ myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserServi
     if (fromDate && toDate) {
       if(toDate < fromDate) {
         errorMessage = 'Invalid date Selection';
-        UtilitesService.showAlert(errorMessage);
+        UtilitiesService.showAlert(errorMessage);
         return false;
       } else {
         return true;
       }
     } else {
       errorMessage = 'Invalid date Selection';
-      UtilitesService.showAlert(errorMessage);
+      UtilitiesService.showAlert(errorMessage);
       return false;
     }
   };

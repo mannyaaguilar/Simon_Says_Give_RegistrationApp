@@ -1,5 +1,5 @@
-myApp.factory('UtilitesService', ['$http','$mdDialog', function($http,$mdDialog){
-console.log('UtilitesService loaded');
+myApp.factory('UtilitiesService', ['$http','$mdDialog', function($http,$mdDialog){
+console.log('UtilitiesService loaded');
 
 let todaysDate = new Date();
 
@@ -35,4 +35,4 @@ return {
   };
 
 
-}]);//end of UtilitesService
+}]);//end of UtilitiesService

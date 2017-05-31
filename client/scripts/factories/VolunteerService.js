@@ -1,4 +1,4 @@
-myApp.factory('VolunteerService', ['$http', '$location', 'UserService', 'UtilitesService', function($http, $location, UserService, UtilitesService){
+myApp.factory('VolunteerService', ['$http', '$location', 'UserService', 'UtilitiesService', function($http, $location, UserService, UtilitiesService){
 console.log("Volunteer Service loaded");
 
   var preregisteredVolunteerObj = {
@@ -108,8 +108,8 @@ console.log("Volunteer Service loaded");
       console.log("in updateWaiver!");
         var checkInTime = new Date();
         waiverObj.event_id = UserService.eventObject.eventCode;
-        waiverObj.time_in = UtilitesService.formatTime(checkInTime);
-        waiverObj.date = UtilitesService.formatDate(checkInTime);
+        waiverObj.time_in = UtilitiesService.formatTime(checkInTime);
+        waiverObj.date = UtilitiesService.formatDate(checkInTime);
         waiverObj.volunteerID = preregisteredVolunteerObj.id;
         $http.post('/volunteer/complete', waiverObj)
         .then(function(response){

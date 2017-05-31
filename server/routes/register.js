@@ -20,10 +20,8 @@ router.post('/', function(req, res, next) {
     email: req.body.email,
     role : req.body.role
   };
-  console.log('new user:', saveUser);
   pool.connect(function(err, client, done) {
     if(err) {
-      console.log("Error connecting: ", err);
       next(err);
     }
     client.query("INSERT INTO users (username, password, role, email) VALUES ($1, $2, $3, $4) RETURNING id",
@@ -31,7 +29,6 @@ router.post('/', function(req, res, next) {
         function (err, result) {
           client.end();
           if(err) {
-            console.log("Error inserting data: ", err);
             next(err);
           } else {
             res.redirect('/');
