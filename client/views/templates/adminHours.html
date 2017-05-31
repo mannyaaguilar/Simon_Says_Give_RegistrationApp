@@ -4,24 +4,26 @@
 <!-- MENU INCLUDED -->
 <div ng-include="'views/partials/menu.html'"></div>
 
-<!-- EVENTS VIEW -->
+<!-- HOURS VIEW -->
 <div layout="row">
   <div layout-md="column" flex="5"></div>
   <div layout="column" flex="90">
     <div class="eventViewContainer">
       <h1>Office Hours Logged:</h1>
        <md-list layout="column">
-         <md-list-item class="md-3-line" ng-repeat="thisHours in hoursObj.allHours">
-             <div class="md-list-item-text eventListDiv" layout="row">
-               <div layout="row" flex="40">
-                 <h3><b>{{thisHours.date}}</b></h3>
-                 <h3>{{thisHours.time_in}}</h3>
-                 <p>{{thisHours.time_out}}</p>
-               </div>
-               <div layout="row" flex="60" layout-align="end center">
-                 <md-button class="themed-Btn blueButton" aria-label="Delete" ng-click="showConfirm($event,ssgEvent)">Delete</md-button>
-               </div>
+         <md-list-item class="md-3-line"
+          ng-repeat="thisHours in hoursObj.allHours">
+           <div class="md-list-item-text eventListDiv" layout="row">
+             <div layout="row" flex="40">
+               <h3><b>{{thisHours.date}}</b></h3>
+               <h3>{{thisHours.time_in}}</h3>
+               <p>{{thisHours.time_out}}</p>
              </div>
+             <div layout="row" flex="60" layout-align="end center">
+               <md-button class="themed-Btn blueButton" aria-label="Delete"
+                ng-click="showConfirm($event,thisHours)">Delete</md-button>
+             </div>
+           </div>
          </md-list-item>
        </md-list>
     </div>

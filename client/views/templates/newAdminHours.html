@@ -4,7 +4,7 @@
 <!-- MENU INCLUDED -->
 <div ng-include="'views/partials/menu.html'"></div>
 
-<!-- EVENTS VIEW -->
+<!-- DATE -->
 <div layout="row">
   <md-input-container layout="column" flex="45" class="eventInputs">
     <label>Enter date *</label>
@@ -14,30 +14,29 @@
 </div>
 
 <div layout="row">
-  <!-- EVENT STARTING TIME -->
+  <!-- STARTING TIME -->
   <md-input-container layout="column" flex="45" class="eventInputs">
     <div>
-      <label for="event.eventFromTime">From:</label>
-      <input type="time" ng-model="event.eventFromTime" required/>
-      <div ng-messages="event.eventFromTime.$error" ng-if='submitted'>
+      <label for="hours.hoursFromTime">From:</label>
+      <input type="time" ng-model="hours.hoursFromTime" required/>
+      <div ng-messages="hours.hoursFromTime.$error" ng-if='submitted'>
         <div ng-message="required">A time is required!</div>
       </div>
     </div>
   </md-input-container>
   <div layout="column" flex="10"></div>
-  <!-- EVENT ENDING TIME -->
+  <!-- ENDING TIME -->
   <md-input-container layout="column" flex="45" class="eventInputs">
     <div>
-      <label for="event.eventUntilTime">To:</label>
-      <input type="time" ng-model="event.eventUntilTime" required/>
-      <div ng-messages="event.eventUntilTime.$error" ng-if='submitted'>
+      <label for="hours.hoursUntilTime">To:</label>
+      <input type="time" ng-model="hours.hoursUntilTime" required/>
+      <div ng-messages="hours.hoursUntilTime.$error" ng-if='submitted'>
         <div ng-message="required">A time is required!</div>
       </div>
     </div>
   </md-input-container>
+
 </div>
-
-
 
 <!-- FOOTER INCLUDED -->
 <div ng-include="'views/partials/footer.html'"></div>

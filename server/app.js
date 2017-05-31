@@ -14,6 +14,7 @@ var csv = require('./routes/csv');
 var volunteer = require('./routes/volunteer');
 var checkout = require('./routes/checkout');
 var ssgEvent = require('./routes/event');
+var ssgHours = require('./routes/hours');
 
 
 // Limit set to 50mb to avoid error on large cvs files
@@ -37,6 +38,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
+app.use('/ssgHours', ssgHours);
 app.use('/ssgEvent', ssgEvent);
 app.use('/volunteer', volunteer);
 app.use('/checkout', checkout);
