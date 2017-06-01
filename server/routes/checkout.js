@@ -3,10 +3,8 @@ var router = express.Router();
 var path = require('path');
 var pool = require('../modules/pool');
 
-//Gets matching volunteers from database
+//POST gets matching volunteers from database
 router.post('/', function(req, res) {
-
-  console.log('logging req.body: ', req.body);
 
   pool.connect(function(error, db, done){
     if(error) {
@@ -33,6 +31,7 @@ router.post('/', function(req, res) {
   }); //ends pool.connect
 }); //ends router.post
 
+
 //PUT Route that updates the checkout time of chosen volunteer record(s)
 router.put('/:ids/:timeout', function(req, res){
 
@@ -41,7 +40,6 @@ router.put('/:ids/:timeout', function(req, res){
       console.log('Error connecting to the database.');
       res.send(500);
     } else {
-      // TIMEOUT BELOW IS HARDCODED
       db.query("UPDATE volunteer_hours SET time_out = '" + req.params.timeout +
               "' WHERE id IN (" + req.params.ids + ");", function(queryError, result){
         done();
