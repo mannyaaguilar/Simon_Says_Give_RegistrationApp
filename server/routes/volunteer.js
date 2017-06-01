@@ -2,35 +2,19 @@ var express = require('express');
 var router = express.Router();
 var pool = require('../modules/pool');
 
-//-*****************
-//-*** STRUCTURE ***
-//-*****************
-//-CHECK-IN
-//X1. POST with email, first_name, last_name to SELECT from DB
-//X2. POST email, first_name, last_name, under_18, birthdate (if not in "volunteer")
-//X3. POST waiver object info to "waiver" with appropriate fields
-//X4. \--> PUT to "volunteer" with has_signed_waiver, has_allowed_photos, parent_email
-//X5. POST "volunteer_hours" with volunteer_id, event_id, date, time_in
-//-*****************
-
-// POST with email, first_name, last_name to SELECT from DB ("volunteer")
-// Then POST email, first_name, last_name, under_18, birthdate (if not in DB)
 router.post('/initial', function(req, res, next) {
   var volGiven = req.body;
-
   pool.connect(function(err, client, done) {
     if ( err ) {
-      console.log("Error connecting: ", err);
       next(err);
     }
+
     client.query("SELECT * FROM volunteer WHERE email = $1 AND " +
       "first_name = $2 AND last_name = $3;",
       [volGiven.email, volGiven.first_name, volGiven.last_name],
         function (err, result) {
           done();
-
           if ( err ) {
-            console.log("Error with volunteer query: ", err);
             next(err);
           }
           else if ( result.rows.length === 0 ) {
@@ -42,7 +26,6 @@ router.post('/initial', function(req, res, next) {
                   done();
 
                   if ( err ) {
-                    console.log("Error adding volunteer: ", err);
                     next(err);
                   }
                   else {
@@ -51,27 +34,34 @@ router.post('/initial', function(req, res, next) {
                 });
           }
           else {
-            res.send(result.rows);
-          }
-        });
-  });
-});
+            var volID = result.rows[0].id;
+            client.query("SELECT * FROM waiver INNER JOIN volunteer ON waiver.volunteer_id=volunteer.id AND waiver.volunteer_id = $1;",
+              [volID],
+                function (err, result) {
+                  done();
 
-// POST waiver object info to "waiver" with appropriate fields
-// PUT to "volunteer" with has_signed_waiver, has_allowed_photos, parent_email
-// POST "volunteer_hours" with volunteer_id, event_id, date, time_in
+                  if ( err ) {
+                    next(err);
+                  }
+                  else {
+                    res.send(result.rows);
+                  }
+                });//end of client.query
+          }//end else
+        });//1st client.query
+  });//end pool connect
+});//end router post
+
 router.post('/complete', function(req, res, next) {
   var signedAdult,
       signedYouth,
       liabilitySigned,
       waiverInfo;
-
 signedAdult = false;
   if ( req.body.dateTopAdult && req.body.nameTopAdult && req.body.agreedAdult &&
     req.body.nameBottomAdult && req.body.dateBottomAdult) {
     signedAdult = true;
   }
-
 signedYouth = false;
   if ( req.body.dateTopYouth && req.body.nameTopYouth &&
     req.body.guardianTopYouth && req.body.agreedYouth &&
@@ -108,7 +98,6 @@ signedYouth = false;
 
   pool.connect(function(err, client, done) {
     if ( err ) {
-      console.log("Error connecting: ", err);
       next(err);
     }
     client.query("WITH volunteer_hours AS (INSERT INTO waiver " +
@@ -129,7 +118,6 @@ signedYouth = false;
           done();
 
           if ( err ) {
-            console.log("Error inserting data on waiver table: ", err);
             next(err);
           }
           else {
@@ -141,7 +129,6 @@ signedYouth = false;
                   done();
 
                   if ( err ) {
-                    console.log("Error inserting to volunteer_hours: ", err);
                     next(err);
                   }
                   else {

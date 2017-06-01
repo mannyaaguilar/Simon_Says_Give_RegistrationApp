@@ -64,7 +64,6 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location', 'Volunteer
   };
 
   $scope.submitPhotoWaiver = function() {
-
     if ( $scope.waiverObj.agreedPhoto ) {
       $location.path("/confirmation");
     }
