@@ -14,7 +14,6 @@
               <label for="email">Email:</label>
               <input type="text" ng-model="volunteerObject.email"/>
           </md-input-container>
-
           <!-- FIRST AND LAST NAME -->
           <div layout="row">
             <md-input-container layout="column" flex="45" >
@@ -39,17 +38,11 @@
         <div>
           <md-button ng-click="back()" class="biggerButton themed-Btn badButton" name="cancel" aria-label="Cancel" value="Cancel">Cancel</md-button>
         </div>
-      </md-input-container>
+      </md-input-container>      
       <!-- RESULTS SECTION -->
-
       <div layout="column" ng-show="success">
         <br>
         <p>Select who you want to check out!</p>
-          <!-- <div flex-xs="" flex="50">
-            <md-checkbox aria-label="Select All" ng-checked="isChecked()" md-indeterminate="isIndeterminate()" ng-click="toggleAll()">
-            <span ng-if="isChecked()">Un-</span>Select All
-          </md-checkbox>
-        </div> -->
         <div layout="column">
           <div class="demo-select-all-checkboxes" layout="column" ng-repeat="volunteer in volunteerList">
             <md-checkbox ng-checked="exists(volunteer.id, checkoutList)" layout="column" ng-click="toggle(volunteer.id, checkoutList)">
