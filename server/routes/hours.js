@@ -3,7 +3,7 @@ var router = express.Router();
 var pool = require('../modules/pool');
 
 // Get route for all records
-router.post('/get', function(req, res) {
+router.get('/', function(req, res) {
   if ( req.isAuthenticated() ) {
     var staff_name = req.user.username;
     pool.connect(function(errorConnectingToDatabase, db, done) {
@@ -33,7 +33,6 @@ router.post('/get', function(req, res) {
 
 // Posts new records
 router.post('/add', function(req, res) {
-  console.log("ssgHours/add: ", req.body);
   if ( req.isAuthenticated() ) {
     var hoursDate = req.body.hoursDate;
     var hoursFromTime = req.body.hoursFromTime;
@@ -70,7 +69,6 @@ router.post('/add', function(req, res) {
 
 // Deletes a record from the database
 router.delete('/delete/:id', function(req, res) {
-  console.log("/delete route hit");
   if ( req.isAuthenticated() ) {
     var id = req.params.id;
     pool.connect(function(errorConnectingToDatabase, db, done) {

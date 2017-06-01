@@ -13,15 +13,24 @@
        <md-list layout="column">
          <md-list-item class="md-3-line"
           ng-repeat="thisHours in serverResponseObject.allHours">
-           <div class="md-list-item-text eventListDiv" layout="row">
-             <div layout="row" flex="40">
-               <h3><b>{{thisHours.date}}</b></h3>
-               <h3>{{thisHours.time_in}}</h3>
-               <p>{{thisHours.time_out}}</p>
-             </div>
-             <div layout="row" flex="60" layout-align="end center">
-               <md-button class="themed-Btn blueButton" aria-label="Delete"
-                ng-click="showConfirm($event,thisHours)">Delete</md-button>
+           <div class="md-list-item-text extraPadding" layout="row">
+             <div class="eventListDiv" layout="row">
+               <div layout="column" flex="20">
+                 <h3>Date: </h3>
+                 <h3><b>{{thisHours.date}}</b></h3>
+               </div>
+               <div layout="column" flex="20">
+                 <h3>From: </h3>
+                 <h3><b>{{thisHours.time_in}}</b></h3>
+               </div>
+               <div layout="column" flex="20">
+                 <h3>To: </h3>
+                 <h3><b>{{thisHours.time_out}}</b></h3>
+               </div>
+               <div layout="row" flex="40" layout-align="end center">
+                 <md-button class="themed-Btn blueButton" aria-label="Delete"
+                  ng-click="showConfirm($event,thisHours)">Delete</md-button>
+               </div>
              </div>
            </div>
          </md-list-item>

@@ -592,22 +592,24 @@ myApp.controller('HeaderController', ['$scope', 'UserService', function($scope, 
 myApp.controller('HoursController', ['$scope', '$mdDialog', '$http', 'UtilitesService', 'UserService',
   function($scope, $mdDialog, $http, UtilitesService, UserService) {
 
-var username;
-
 $scope.serverResponseObject = {};
 // Gets all records in the database
 getHours = function(){
-  var staff_name = {
-    name: username
-  };
-  $http.post('/ssgHours/', staff_name).then(function(response) {
-    $scope.serverResponseObject.allHours = response.data;
+  $http.get('/ssgHours/')
+  .then(function(response) {
+    var holderArray = angular.copy(response.data);
+    for (i = 0; i < holderArray.length; i++) {
+      holderArray[i].date = holderArray[i].date.slice(0, 10);
+      holderArray[i].time_in = holderArray[i].time_in.slice(0, 5);
+      holderArray[i].time_out = holderArray[i].time_out.slice(0, 5);
+    }
+    $scope.serverResponseObject.allHours = angular.copy(holderArray);
   });
 };
 getHours();
 
 // Modal window that confirms record deletion
-$scope.showConfirm = function(ev,ssgHours) {
+$scope.showConfirm = function(ev, ssgHours) {
   var confirm = $mdDialog.confirm()
         .title('Are you sure that you want to delete this record?')
         .textContent('')
@@ -621,6 +623,7 @@ $scope.showConfirm = function(ev,ssgHours) {
 };
 // Deletes a specific record
 deleteHours = function(ssgHours) {
+  console.log("the id: ", ssgHours);
   $http.delete('/ssgHours/delete/' + ssgHours.id)
   .then(function(response) {
     getHours();
@@ -637,42 +640,11 @@ var message;
 
 // calls function from factory that saves record into the database
 $scope.createHours = function(hoursEntered) {
-  console.log("hoursEntered: ", hoursEntered);
-  hoursToSend = angular.copy(hoursEntered);
 
-  // Format Date
+  hoursToSend = angular.copy(hoursEntered);
   hoursToSend.hoursDate = UtilitesService.formatDate(hoursToSend.hoursDate);
-  // Format month
-  if ( hoursToSend.hoursDate[6] === "-" ) {
-    hoursToSend.hoursDate = hoursToSend.hoursDate.slice(0, 5) + "0" + hoursToSend.hoursDate.slice(5);
-  }
-  // Format day
-  if ( hoursToSend.hoursDate.length !== 10 ) {
-    hoursToSend.hoursDate = hoursToSend.hoursDate.slice(0, 8) + "0" + hoursToSend.hoursDate.slice(8);
-  }
-  // Format Time
-  // From Time
   hoursToSend.hoursFromTime = UtilitesService.formatTime(hoursToSend.hoursFromTime);
-  if ( hoursToSend.hoursFromTime.length === 3 ) {
-    hoursToSend.hoursFromTime = "0" + hoursToSend.hoursFromTime + "0";
-  }
-  else if ( (hoursToSend.hoursFromTime.length === 4) && (hoursToSend.hoursFromTime.slice(2, 4) === ":0") ) {
-    hoursToSend.hoursFromTime = hoursToSend.hoursFromTime + "0";
-  }
-  else if ( (hoursToSend.hoursFromTime.length === 4) && (hoursToSend.hoursFromTime.slice(1, 2) === ":") ) {
-    hoursToSend.hoursFromTime = "0" + hoursToSend.hoursFromTime;
-  }
-  // Until Time
   hoursToSend.hoursUntilTime = UtilitesService.formatTime(hoursToSend.hoursUntilTime);
-  if ( hoursToSend.hoursUntilTime.length === 3 ) {
-    hoursToSend.hoursUntilTime = "0" + hoursToSend.hoursUntilTime + "0";
-  }
-  else if ( (hoursToSend.hoursUntilTime.length === 4) && (hoursToSend.hoursUntilTime.slice(2, 4) === ":0") ) {
-    hoursToSend.hoursUntilTime = hoursToSend.hoursUntilTime + "0";
-  }
-  else if ( (hoursToSend.hoursUntilTime.length === 4) && (hoursToSend.hoursUntilTime.slice(1, 2) === ":") ) {
-    hoursToSend.hoursUntilTime = "0" + hoursToSend.hoursUntilTime;
-  }
 
   postHours(hoursToSend);
 };

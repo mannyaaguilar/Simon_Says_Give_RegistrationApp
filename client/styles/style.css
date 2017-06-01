@@ -357,3 +357,7 @@ footer {
   width: auto;
   font-size: 30px;
 }
+
+.extraPadding {
+  padding: 10px;
+}
