@@ -30,6 +30,20 @@
    </md-menu>
    <md-menu>
      <button ng-click="$mdMenu.open()">
+       Office Hours
+     </button>
+     <md-menu-content>
+       <md-menu-item>
+         <md-button ng-click="redirect('/newHours')">Log New</md-button>
+       </md-menu-item>
+       <md-menu-divider></md-menu-divider>
+       <md-menu-item>
+         <md-button ng-click="redirect('/viewHours')">View All</md-button>
+       </md-menu-item>
+     </md-menu-content>
+   </md-menu>
+   <md-menu>
+     <button ng-click="$mdMenu.open()">
        Settings
      </button>
      <md-menu-content>
