@@ -50,13 +50,15 @@
        <md-menu-item>
          <md-button ng-click="redirect('/addAdminUser')">Add Admin User</md-button>
        </md-menu-item>
-       <md-menu-divider></md-menu-divider>
+     </md-menu-content>
+   </md-menu>
+   <md-menu>
+     <button ng-click="$mdMenu.open()">
+       Logout
+     </button>
+     <md-menu-content>
        <md-menu-item>
-         <md-button>Change Password</md-button>
-       </md-menu-item>
-       <md-menu-divider></md-menu-divider>
-       <md-menu-item>
-         <md-button ng-click="logout()">Logout</md-button>
+         <md-button ng-click="logout()">Confirm Logout</md-button>
        </md-menu-item>
      </md-menu-content>
    </md-menu>

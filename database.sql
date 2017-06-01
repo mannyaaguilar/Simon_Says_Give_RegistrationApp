@@ -5,12 +5,15 @@ CREATE TABLE "users" (
   "id" serial,
   "username" varchar(80) primary key not null,
   "password" varchar(120) not null,
-  "role" varchar(20) not null
+  "role" varchar(20) not null,
+  "email" varchar(80),
+  "code" varchar(80),
+  "expiration" date default CURRENT_DATE
 );
 
 --INSERTS username: ADMIN password: SSG
-INSERT INTO users (username, password, role) VALUES
-('ADMIN','$2a$10$gh.g4NFfLSVFFUxsLolS3OxJi0GgBTd2a86L/LKL.bp0WNH/5KEYS','ADMIN');
+INSERT INTO users (username, password, role, email) VALUES
+('ADMIN','$2a$10$gh.g4NFfLSVFFUxsLolS3OxJi0GgBTd2a86L/LKL.bp0WNH/5KEYS','ADMIN','simon.says.give.mail@gmail.com');
 
 CREATE TABLE "json_volunteer" (
  ID serial NOT NULL PRIMARY KEY,

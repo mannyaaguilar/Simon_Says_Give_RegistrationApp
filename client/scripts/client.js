@@ -21,6 +21,16 @@ myApp.config(['$routeProvider', '$locationProvider',
       templateUrl: '/views/templates/register.html',
       controller: 'LoginController'
     })
+    // Forgot password view
+    .when('/forgotpassword', {
+      templateUrl: '/views/templates/forgot.html',
+      controller: 'LoginController'
+    })
+    // change password view (accesible through email link)
+    .when('/confirmreset/:code', {
+      templateUrl: '/views/templates/confirm.html',
+      controller: 'LoginController'
+    })
     // Admin landing View
     .when('/admin', {
       templateUrl: '/views/templates/admin.html',
