@@ -48,20 +48,19 @@ router.post('/initial', function(req, res, next) {
                   else {
                     res.send(result.rows);
                   }
-                });//end of client.query
+                });
           }
           else {
             res.send(result.rows);
           }
-        });//end of client.query
-  });//end of pg.connect
-});//end of POST
+        });
+  });
+});
 
 // POST waiver object info to "waiver" with appropriate fields
 // PUT to "volunteer" with has_signed_waiver, has_allowed_photos, parent_email
 // POST "volunteer_hours" with volunteer_id, event_id, date, time_in
 router.post('/complete', function(req, res, next) {
-  console.log("in server complete post!");
   var signedAdult,
       signedYouth,
       liabilitySigned,
@@ -81,8 +80,6 @@ signedYouth = false;
     signedYouth = true;
   }
 
-console.log("signedAdult: ", signedAdult);
-console.log("signedYouth: ", signedYouth);
   liabilitySigned = signedAdult || signedYouth;
 
   waiverInfo = {
@@ -114,7 +111,6 @@ console.log("signedYouth: ", signedYouth);
       console.log("Error connecting: ", err);
       next(err);
     }
-    console.log("waiverInfo: ", waiverInfo);
     client.query("WITH volunteer_hours AS (INSERT INTO waiver " +
       "(volunteer_id, adult_lw_signature, adult_lw_date, minor_lw_guardian_name, " +
       "minor_lw_signature, minor_lw_date, minor_lw_guardian_signature, " +
@@ -137,7 +133,6 @@ console.log("signedYouth: ", signedYouth);
             next(err);
           }
           else {
-            console.log("server complete post worked!");
             client.query("INSERT INTO volunteer_hours (volunteer_id, event_id," +
               " date, time_in) VALUES ($1, $2, $3, $4)",
               [waiverInfo.volunteer_id, waiverInfo.event_id, waiverInfo.date,
@@ -150,13 +145,12 @@ console.log("signedYouth: ", signedYouth);
                     next(err);
                   }
                   else {
-                    console.log("server complete second post worked!");
                     res.send(result.rows);
                   }
-                });//end of client.query
+                });
           }
-        });//end of client.query
-  });//end of pg.connect
-});//end of POST
+        });
+  });
+});
 
 module.exports = router;
