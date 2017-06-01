@@ -78,7 +78,7 @@ $scope.updatePassword = function() {
       }
     });
   }
-}
+};
 
 
 }]);

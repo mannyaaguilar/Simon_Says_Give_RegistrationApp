@@ -1,5 +1,4 @@
 myApp.factory('UtilitiesService', ['$http','$mdDialog', function($http,$mdDialog){
-console.log('UtilitiesService loaded');
 
 var todaysDate = new Date();
 
@@ -33,6 +32,5 @@ return {
     formatTime: formatTime,
     showAlert: showAlert
   };
-
 
 }]);//end of UtilitiesService

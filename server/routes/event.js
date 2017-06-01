@@ -153,14 +153,17 @@ router.put('/logoutAll', function(req,res) {
 
 // get route for starting events
 router.get('/start/:code', function(req,res) {
+  console.log("inside start/code");
   eventCode = req.params.code;
   // SELECT * FROM event WHERE event_code = '';
   pool.connect(function(errorConnectingToDatabase,db,done) {
     if(errorConnectingToDatabase) {
+      console.log("inside pool.connect");
       res.sendStatus(500);
     } else {
       var eventQuery = 'SELECT * FROM event WHERE event_code = $1;';
       db.query(eventQuery,[eventCode],function(queryError,result) {
+        console.log("inside event query");
         done();
         if (queryError) {
           res.sendStatus(500);
