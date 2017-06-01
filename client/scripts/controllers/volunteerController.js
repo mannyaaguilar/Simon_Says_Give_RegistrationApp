@@ -1,5 +1,6 @@
 myApp.controller('VolunteerController', ['$scope', '$http', '$location', 'UserService', 'VolunteerService', 'UtilitiesService', function($scope, $http, $location, UserService, VolunteerService, UtilitiesService){
 
+
 $scope.redirect = UserService.redirect;
 $scope.volunteer = VolunteerService.volunteer;
 $scope.preregisteredVolunteer = VolunteerService.preregisteredVolunteer;

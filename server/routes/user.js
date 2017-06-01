@@ -11,13 +11,12 @@ var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'simon.says.give.mail@gmail.com', //YOUR GMAIL USER HERE -> EXAMPLE@gmail.com
-        pass: 'MOA2017HFS2017'  //YOUR GMAIL PASSWORD, DO NOT HOST THIS INFO ON GITHUB!
+        user: process.env.NODE_MAILER_USER,
+        pass: process.env.NODE_MAILER_PWD
     }
 });
 
 router.get('/', function(req, res) {
-  console.log('get /user route');
   // check if logged in
   if(req.isAuthenticated()) {
     // send back user object from database
@@ -43,16 +42,13 @@ router.get('/logout', function(req, res) {
 // creates and sends a code to reset the password
 router.post('/forgotpassword', function(req, res) {
   // Use passport's built-in method to log out the user
-  console.log('forgotpassword route', req.body);
   pool.connect(function(errorConnectingToDatabase,db,done) {
     if(errorConnectingToDatabase) {
-      console.log('Error connecting to the database');
       res.sendStatus(500);
     } else {
       var code = chance.string({pool: 'abcdefghijklmnopqrstuvwxyz1234567890', length:20});
       // You 'should' check for collision
       var baseUrl = 'http://localhost:5000/' // Or environment variable
-      console.log('Password reset link: ' + baseUrl + '#/confirmreset/' + code );
       var emailMessage = 'Password reset link: ' + baseUrl + '#/confirmreset/' + code;
       // TODO: mail out that link with node mailer NOT to client.
 
@@ -60,12 +56,9 @@ router.post('/forgotpassword', function(req, res) {
       db.query(userQuery,[req.body.username], function(queryError,result) {
         done();
         if (queryError) {
-          console.log('Error making query',queryError);
           res.sendStatus(500);
         } else {
-          console.log("email result:",result);
           var accountEmail = result.rows[0].email;
-          console.log('email should be',accountEmail);
           var mailOptions = {
               //example: from: '"Scott" scott@primeacademy.io',
               from: '"Simon Says Give" simon.says.give.mail@gmail.com', // sender address -> //YOUR GMAIL USER HERE IN STRING + email not in string! -> EXAMPLE@gmail.com
@@ -86,7 +79,6 @@ router.post('/forgotpassword', function(req, res) {
           db.query(userQuery,[code, req.body.username], function(queryError,result) {
             done();
             if (queryError) {
-              console.log('Error making query',queryError);
               res.sendStatus(500);
             } else {
               res.send("Code sent successfully.")
@@ -102,14 +94,12 @@ router.post('/forgotpassword', function(req, res) {
 // resets password
 router.put('/resetpassword', function(req, res) {
   // Use passport's built-in method to log out the user
-  console.log('resetpassword route', req.body);
 
   pool.connect(function(errorConnectingToDatabase,db,done) {
     // TODO: Should also check expiration here and
     // throw 500 if expired.
     var expired = false;
     if(errorConnectingToDatabase) {
-      console.log('Error connecting to the database');
       res.sendStatus(500);
     } else if(expired) {
       res.sendStatus(500);
@@ -120,11 +110,9 @@ router.put('/resetpassword', function(req, res) {
       db.query(userQuery,[password, req.body.username], function(queryError,result) {
         done();
         if (queryError) {
-          console.log('Error making query',queryError);
           res.sendStatus(500);
         } else {
           res.send("Password updated successfully.")
-          // res.sendStatus(201); // succesful insert status
         }
       });
     }

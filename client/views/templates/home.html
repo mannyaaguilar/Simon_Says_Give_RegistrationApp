@@ -11,7 +11,6 @@
       <div>
         <!-- START EVENT SECTION -->
         <p>Start Event Registration:</p>
-        <h3 ng-if="message != ''">{{eventMessage}}</h3>
         <form name="eventForm" ng-submit="startEvent()">
           <md-input-container layout="column">
             <div>
@@ -39,7 +38,6 @@
         <!-- ADMIN LOGIN SECTION -->
         <br>
         <p>Login to Admin Site:</p>
-        <h3 ng-if="message != ''">{{adminMessage}}</h3>
         <form name="loginView" ng-submit="login()">
           <md-input-container layout="column">
             <div>

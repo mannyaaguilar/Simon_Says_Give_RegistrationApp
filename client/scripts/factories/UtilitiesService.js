@@ -33,4 +33,4 @@ return {
     showAlert: showAlert
   };
 
-}]);
+}]);//end of UtilitiesService

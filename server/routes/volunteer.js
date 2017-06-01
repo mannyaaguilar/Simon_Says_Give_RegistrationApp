@@ -1,7 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var passport = require('passport');
-var path = require('path');
 var pool = require('../modules/pool');
 
 router.post('/initial', function(req, res, next) {

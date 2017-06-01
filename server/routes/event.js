@@ -5,19 +5,16 @@ var pool = require('../modules/pool');
 
 // Get route for all events
 router.get('/', function(req,res) {
-  console.log('ssgEvent/ Route Hit');
   if(req.isAuthenticated()) {
     // SELECT * FROM event;
     pool.connect(function(errorConnectingToDatabase,db,done) {
       if(errorConnectingToDatabase) {
-        console.log('Error connecting to the database');
         res.sendStatus(500);
       } else {
         var eventQuery = 'SELECT * FROM event;';
         db.query(eventQuery,function(queryError,result) {
           done();
           if (queryError) {
-            console.log('Error making query');
             res.sendStatus(500);
           } else {
             res.send(result.rows);
@@ -32,7 +29,6 @@ router.get('/', function(req,res) {
 
 // Posts new events
 router.post('/add', function(req,res) {
-  console.log("inside /event/add route");
   if(req.isAuthenticated()) {
     var eventCode = req.body.eventCode;
     var eventName = req.body.eventName;
@@ -48,7 +44,6 @@ router.post('/add', function(req,res) {
     //('Birthday Celebration', 'MN', 'Biggest B-Day Celb', 'MOA', '2017-8-1','13:0','12:30','MOA2017');
     pool.connect(function(errorConnectingToDatabase,db,done) {
       if(errorConnectingToDatabase) {
-        console.log('Error connecting to the database');
         res.sendStatus(500);
       } else {
         var eventQuery = 'INSERT INTO event (event_code, event_name, event_team, event_description, event_location, event_date, ' +
@@ -58,12 +53,9 @@ router.post('/add', function(req,res) {
         [eventCode, eventName,eventTeam,eventDescription,eventLocation,eventDate,eventFromTime,eventUntilTime], function(queryError,result) {
           done();
           if (queryError) {
-            console.log('Error making query',queryError);
-            // res.sendStatus(500);
             res.send("There was an error saving the event. Please make sure that event code doesn't exist in the database.");
           } else {
             res.send("Event created successfully.")
-            // res.sendStatus(201); // succesful insert status
           }
         });
       }
@@ -75,19 +67,16 @@ router.post('/add', function(req,res) {
 
 // Deletes an event from the database
 router.delete('/delete/:eventCode', function(req,res) {
-  console.log("/delete route hit");
   if(req.isAuthenticated()) {
     var eventCode = req.params.eventCode;
     // DELETE FROM event WHERE "event_code" = 2;
     pool.connect(function(errorConnectingToDatabase,db,done) {
       if(errorConnectingToDatabase) {
-        console.log('Error connecting to the database');
         res.sendStatus(500);
       } else {
         db.query('DELETE FROM event WHERE event_code = $1;',[eventCode], function(queryError,result) {
           done();
           if (queryError) {
-            console.log('Error making query');
             res.sendStatus(500);
           } else {
             res.sendStatus(200);
@@ -114,7 +103,6 @@ router.put('/update', function(req,res) {
     // UPDATE event SET ... WHERE event_code = $2;
     pool.connect(function(errorConnectingToDatabase,db,done) {
       if(errorConnectingToDatabase) {
-        console.log('Error connecting to the database');
         res.send(500);
       } else {
         db.query('UPDATE event SET event_name = $1, event_team = $2, event_description = $3, ' +
@@ -124,7 +112,6 @@ router.put('/update', function(req,res) {
         function(queryError,result) {
           done();
           if (queryError) {
-            console.log('Error making query',queryError);
             res.send("There was a problem updating the event information.");
           } else {
             res.send("Event updated successfully.");
@@ -140,13 +127,11 @@ router.put('/update', function(req,res) {
 // logs out all volunteers with time_out = NULL for a specific event
 router.put('/logoutAll', function(req,res) {
   if(req.isAuthenticated()) {
-    console.log("object received is: ", req.body);
     var eventCode = req.body.eventCode;
     var time = req.body.time;
     // UPDATE volunteer_hours SET time_out = '12:00' WHERE time_out is NULL AND event_id = 'MOA2017';
     pool.connect(function(errorConnectingToDatabase,db,done) {
       if(errorConnectingToDatabase) {
-        console.log('Error connecting to the database');
         res.send(500);
       } else {
         db.query('UPDATE volunteer_hours SET time_out = $1 WHERE time_out is NULL AND event_id = $2;',
@@ -154,7 +139,6 @@ router.put('/logoutAll', function(req,res) {
         function(queryError,result) {
           done();
           if (queryError) {
-            console.log('Error making query',queryError);
             res.sendStatus(500);
           } else {
             res.send(result);
@@ -169,19 +153,19 @@ router.put('/logoutAll', function(req,res) {
 
 // get route for starting events
 router.get('/start/:code', function(req,res) {
+  console.log("inside start/code");
   eventCode = req.params.code;
-  console.log('IN event/start/', eventCode);
   // SELECT * FROM event WHERE event_code = '';
   pool.connect(function(errorConnectingToDatabase,db,done) {
     if(errorConnectingToDatabase) {
-      console.log('Error connecting to the database');
+      console.log("inside pool.connect");
       res.sendStatus(500);
     } else {
       var eventQuery = 'SELECT * FROM event WHERE event_code = $1;';
       db.query(eventQuery,[eventCode],function(queryError,result) {
+        console.log("inside event query");
         done();
         if (queryError) {
-          console.log('Error making query');
           res.sendStatus(500);
         } else {
           res.send(result.rows[0]);
