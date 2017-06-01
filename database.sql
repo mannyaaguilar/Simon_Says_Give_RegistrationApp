@@ -47,7 +47,8 @@ CREATE TABLE "volunteer_hours" (
 "event_id" varchar(15),
 "date" date,
 "time_in" time,
-"time_out" time
+"time_out" time,
+"staff_name" varchar(35)
 );
 
 CREATE TABLE "waiver" (

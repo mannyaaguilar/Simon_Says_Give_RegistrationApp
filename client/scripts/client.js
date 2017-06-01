@@ -101,6 +101,26 @@ myApp.config(['$routeProvider', '$locationProvider',
         }]
       }
     })
+    // Add new office hours view
+    .when('/newHours', {
+      templateUrl: '/views/templates/newAdminHours.html',
+      controller: 'HoursController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser('ADMIN');
+        }]
+      }
+    })
+    // View and edit office hours view
+    .when('/viewHours', {
+      templateUrl: '/views/templates/adminHours.html',
+      controller: 'HoursController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser('ADMIN');
+        }]
+      }
+    })
     // Main View of the app
     .when('/user', {
       templateUrl: '/views/templates/user.html',
