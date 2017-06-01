@@ -69,6 +69,7 @@ signedYouth = false;
     req.body.guardianBottomYouth && req.body.dateBottomGuardYouth ) {
     signedYouth = true;
   }
+
   liabilitySigned = signedAdult || signedYouth;
 
   waiverInfo = {
@@ -133,10 +134,10 @@ signedYouth = false;
                   else {
                     res.send(result.rows);
                   }
-                });//end of client.query
+                });
           }
-        });//end of client.query
-  });//end of pg.connect
-});//end of POST
+        });
+  });
+});
 
 module.exports = router;

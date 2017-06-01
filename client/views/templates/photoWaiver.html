@@ -11,7 +11,9 @@
   <div layout="row">
     <div flex="15"></div>
 
-    <div layout="column" flex="70" ng-show="waiverObj.agreedYouth">
+    <div layout="column" flex="70" ng-show="waiverObj.agreedYouth ||
+      (preregisteredVolunteerObj.under_18 &&
+      preregisteredVolunteerObj.has_signed_waiver)">
       <br>
       <p>
         <strong>Publicity Release:</strong> Volunteer and Guardian grant and
@@ -51,7 +53,9 @@
       </div>
     </div>
 
-    <div layout="column" flex="70" ng-show="waiverObj.agreedAdult">
+    <div layout="column" flex="70" ng-show="waiverObj.agreedAdult ||
+      (preregisteredVolunteerObj.has_signed_waiver &&
+      (preregisteredVolunteerObj.under_18 == false))">
       <br>
       <p>
         <strong>Publicity Release:</strong> Volunteer grants and conveys to
@@ -115,7 +119,10 @@
   <div layout="row">
     <div flex="15"></div>
 
-    <div layout="column" flex="70" ng-show="waiverObj.agreedAdult && waiverObj.agreedPhoto">
+    <div layout="column" flex="70" ng-show="(waiverObj.agreedAdult ||
+      (preregisteredVolunteerObj.has_signed_waiver &&
+      (preregisteredVolunteerObj.under_18 == false) ) ) &&
+      waiverObj.agreedPhoto">
       <div layout="row" class="bufferDiv">
       </div>
       <div layout="row">
@@ -154,7 +161,10 @@
 
     </div>
 
-    <div layout="column" flex="70" ng-show="waiverObj.agreedYouth && waiverObj.agreedPhoto">
+    <div layout="column" flex="70" ng-show="(waiverObj.agreedYouth ||
+      (preregisteredVolunteerObj.under_18 &&
+      preregisteredVolunteerObj.has_signed_waiver) ) &&
+      waiverObj.agreedPhoto">
       <div layout="row" class="bufferDiv">
       </div>
       <div layout="row">

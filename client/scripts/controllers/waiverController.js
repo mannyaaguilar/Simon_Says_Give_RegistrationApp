@@ -3,6 +3,7 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location', 'Volunteer
   $scope.message = '';
 
   $scope.waiverObj = VolunteerService.waiverObj;
+  $scope.preregisteredVolunteerObj = VolunteerService.preregisteredVolunteerObj;
 
   $scope.submitAdultWaiver = function() {
     var filledOut;
@@ -13,22 +14,15 @@ myApp.controller('WaiverController', ['$scope', '$http', '$location', 'Volunteer
                 $scope.waiverObj.nameBottomAdult &&
                 $scope.waiverObj.dateBottomAdult;
 
-    var signature = $scope.waiverObj.nameBottomAdult;
-    checkAdultSignFormat(signature);
+    checkAdultSignFormat(filledOut);
+  };
 
-    function checkAdultSignFormat(signature) {
-      if (filledOut &&
-          signature.charAt(0) === '/' &&
-          signature.charAt(signature.length -1) === '/') {
-            $location.path("/waiver-photo");
-      }
-      else if (filledOut &&
-        (signature.charAt(0) !== '/' || signature.charAt(signature.length -1) !== '/' )) {
-          $scope.message = 'Please put name between slashes';
-        }
-      else {
-        $scope.message = 'Please fill out all highlighted fields';
-      }
+  checkAdultSignFormat = function(filledOut) {
+    if ( filledOut ) {
+      $location.path("/waiver-photo");
+    }
+    else {
+      $scope.message = 'Please fill out all highlighted fields';
     }
   };
 
