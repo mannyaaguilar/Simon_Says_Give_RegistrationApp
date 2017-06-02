@@ -14,7 +14,6 @@
               <label for="email">Email:</label>
               <input type="text" ng-model="volunteerObject.email"/>
           </md-input-container>
-
           <!-- FIRST AND LAST NAME -->
           <div layout="row">
             <md-input-container layout="column" flex="45" >
@@ -41,16 +40,17 @@
         </div>
       </md-input-container>
       <!-- RESULTS SECTION -->
-
       <div layout="column" ng-show="success">
         <br>
-        <h3 class="inputError">Please enter email, first name, or last name to search</h3>
+
+        <h3 class="inputError">{{message}}</h3>
 
           <!-- <div flex-xs="" flex="50">
             <md-checkbox aria-label="Select All" ng-checked="isChecked()" md-indeterminate="isIndeterminate()" ng-click="toggleAll()">
             <span ng-if="isChecked()">Un-</span>Select All
           </md-checkbox>
         </div> -->
+
         <div layout="column">
           <div class="demo-select-all-checkboxes" layout="column" ng-repeat="volunteer in volunteerList">
             <md-checkbox ng-checked="exists(volunteer.id, checkoutList)" layout="column" ng-click="toggle(volunteer.id, checkoutList)">

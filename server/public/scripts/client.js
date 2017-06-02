@@ -371,6 +371,7 @@ $scope.getVolunteers = function(volunteer) {
     });
 };
 
+<<<<<<< HEAD
 var filledOut;
 
 filledOut = $scope.volunteerObject.email ||
@@ -383,6 +384,12 @@ $scope.checkout = function(checkoutList) {
   if (filledOut) {
   $scope.changeView();
   }
+=======
+$scope.checkout = function(checkoutList) {
+  console.log('logging checkoutList: ', $scope.checkoutList);
+  $scope.checkoutVolunteers(checkoutList);
+  $scope.changeView();
+>>>>>>> a501328fecdd89d39d649d5c191d3d6e7dc7ee40
 };
 
 //PUT Route that updates the checkout time of chosen volunteer record(s)
@@ -838,7 +845,11 @@ $scope.updatePassword = function() {
       }
     });
   }
+<<<<<<< HEAD
 }
+=======
+};
+>>>>>>> a501328fecdd89d39d649d5c191d3d6e7dc7ee40
 
 
 }]);
@@ -992,7 +1003,11 @@ myApp.controller('ViewEventController', ['$scope','$mdDialog','UserService','Uti
 }]);
 
 myApp.controller('VolunteerController', ['$scope', '$http', '$location', 'UserService', 'VolunteerService', 'UtilitiesService', function($scope, $http, $location, UserService, VolunteerService, UtilitiesService){
+<<<<<<< HEAD
 console.log("VolunteerController Loaded");
+=======
+
+>>>>>>> a501328fecdd89d39d649d5c191d3d6e7dc7ee40
 
 $scope.redirect = UserService.redirect;
 $scope.volunteer = VolunteerService.volunteer;
@@ -1019,6 +1034,7 @@ $scope.volunteer = {
   };
 
 $scope.formatdob = function() {
+<<<<<<< HEAD
   console.log("formatdob", $scope.volunteer.birthdate);
   if ( $scope.volunteer.birthdate) {
     birtdateToDB = UtilitiesService.formatDate(angular.copy($scope.volunteer.birthdate));
@@ -1027,6 +1043,13 @@ $scope.formatdob = function() {
   else {
     $scope.volunteer.birthdate = '1900-01-01';
     console.log("default birthdate", birtdateToDB);
+=======
+  if ( $scope.volunteer.birthdate) {
+    birtdateToDB = UtilitiesService.formatDate(angular.copy($scope.volunteer.birthdate));
+  }
+  else {
+    $scope.volunteer.birthdate = '1900-01-01';
+>>>>>>> a501328fecdd89d39d649d5c191d3d6e7dc7ee40
   }
 };
 
@@ -1034,6 +1057,7 @@ $scope.cancel = function(){
   $location.path('/checkInOut');
 };
 
+<<<<<<< HEAD
 //sets date on datepicker to 8 years back for the convenience of user
 $scope.minmaxDate = function() {
     this.myDate = new Date();
@@ -1091,11 +1115,21 @@ console.log("WaiverController loaded!");
   //   guardianBottomPhoto: "",
   //   dateBottomGuardPhoto: todaysDate
   // };
+=======
+}]);
+
+myApp.controller('WaiverController', ['$scope', '$http', '$location', 'VolunteerService', function($scope, $http, $location, VolunteerService) {
+
+  $scope.message = '';
+>>>>>>> a501328fecdd89d39d649d5c191d3d6e7dc7ee40
 
   $scope.waiverObj = VolunteerService.waiverObj;
 
   $scope.submitAdultWaiver = function() {
+<<<<<<< HEAD
     console.log("XXcurrent waiverObj: ", $scope.waiverObj);
+=======
+>>>>>>> a501328fecdd89d39d649d5c191d3d6e7dc7ee40
     var filledOut;
 
     filledOut = $scope.waiverObj.dateTopAdult &&
@@ -1104,6 +1138,7 @@ console.log("WaiverController loaded!");
                 $scope.waiverObj.nameBottomAdult &&
                 $scope.waiverObj.dateBottomAdult;
 
+<<<<<<< HEAD
     if (filledOut) {
       $location.path('/waiver-photo');
     }
@@ -1115,6 +1150,28 @@ console.log("WaiverController loaded!");
 
   $scope.submitYouthWaiver = function() {
     console.log("current waiverObj: ", $scope.waiverObj);
+=======
+    var signature = $scope.waiverObj.nameBottomAdult;
+    checkAdultSignFormat(signature);
+
+    function checkAdultSignFormat(signature) {
+      if (filledOut &&
+          signature.charAt(0) === '/' &&
+          signature.charAt(signature.length -1) === '/') {
+            $location.path("/waiver-photo");
+      }
+      else if (filledOut &&
+        (signature.charAt(0) !== '/' || signature.charAt(signature.length -1) !== '/' )) {
+          $scope.message = 'Please put name between slashes';
+        }
+      else {
+        $scope.message = 'Please fill out all highlighted fields';
+      }
+    }
+  };
+
+  $scope.submitYouthWaiver = function() {
+>>>>>>> a501328fecdd89d39d649d5c191d3d6e7dc7ee40
     var noParentAll,
         parentAll,
         filledOut;
@@ -1127,7 +1184,11 @@ console.log("WaiverController loaded!");
     parentAll = $scope.waiverObj.dateTopYouth &&
                 $scope.waiverObj.nameTopYouth &&
                 $scope.waiverObj.guardianTopYouth &&
+<<<<<<< HEAD
                 $scope.waiverObj.agreedYouth && 
+=======
+                $scope.waiverObj.agreedYouth &&
+>>>>>>> a501328fecdd89d39d649d5c191d3d6e7dc7ee40
                 $scope.waiverObj.nameBottomYouth &&
                 $scope.waiverObj.dateBottomVolYouth &&
                 $scope.waiverObj.guardianBottomYouth &&
@@ -1135,6 +1196,7 @@ console.log("WaiverController loaded!");
 
     filledOut = noParentAll || parentAll;
 
+<<<<<<< HEAD
     if (filledOut) {
       $location.path('/waiver-photo');
     }
@@ -1170,12 +1232,42 @@ console.log("WaiverController loaded!");
     }
 
   }; // end submitPhotoWaiver
+=======
+    var youthSignature = $scope.waiverObj.nameBottomYouth;
+    var guardianSignature = $scope.waiverObj.guardianBottomYouth;
+
+    if ( filledOut ) {
+      if ( noParentAll ) {
+        $location.path("/override");
+      }
+      else if ( parentAll ) {
+        $location.path("/waiver-photo");
+      }
+    }
+    else {
+      $scope.message = 'Please complete all highlighted fields';
+    }
+  };
+
+  $scope.submitPhotoWaiver = function() {
+    if ( $scope.waiverObj.agreedPhoto ) {
+      $location.path("/confirmation");
+    }
+    else {
+      $location.path("/override");
+    }
+  };
+>>>>>>> a501328fecdd89d39d649d5c191d3d6e7dc7ee40
 
   $scope.declineWaiver = function() {
     $location.path("/override");
   };
 
+<<<<<<< HEAD
 }]); // end submitPhotoWaiver
+=======
+}]);
+>>>>>>> a501328fecdd89d39d649d5c191d3d6e7dc7ee40
 
 myApp.factory('CSVService', ['$http','$mdDialog', function($http,$mdDialog){
   console.log('CSVService Loaded');
@@ -1379,9 +1471,14 @@ myApp.factory('UserService', ['$http', '$location', function($http, $location){
 }]);
 
 myApp.factory('UtilitiesService', ['$http','$mdDialog', function($http,$mdDialog){
+<<<<<<< HEAD
 console.log('UtilitiesService loaded');
 
 let todaysDate = new Date();
+=======
+
+var todaysDate = new Date();
+>>>>>>> a501328fecdd89d39d649d5c191d3d6e7dc7ee40
 
   formatDate = function(date) {
     var curr_date = date.getDate();
@@ -1414,11 +1511,18 @@ return {
     showAlert: showAlert
   };
 
+<<<<<<< HEAD
 
 }]);//end of UtilitiesService
 
 myApp.factory('VolunteerService', ['$http', '$location', 'UserService', 'UtilitiesService', function($http, $location, UserService, UtilitiesService){
 console.log("Volunteer Service loaded");
+=======
+}]);//end of UtilitiesService
+
+myApp.factory('VolunteerService', ['$http', '$location', 'UserService', 'UtilitiesService', function($http, $location, UserService, UtilitiesService){
+
+>>>>>>> a501328fecdd89d39d649d5c191d3d6e7dc7ee40
 
   var preregisteredVolunteerObj = {
     email: '',
@@ -1472,6 +1576,7 @@ console.log("Volunteer Service loaded");
     dateBottomGuardPhoto: todaysDate
   };
 
+<<<<<<< HEAD
 
   preregisteredVolunteer = function(volunteer){
       console.log("inside preregisteredVolunteer function", volunteer );
@@ -1483,17 +1588,49 @@ console.log("Volunteer Service loaded");
 
         // volunteerToDB = angular.copy(response.data)
         // console.log('VOLUNTEERTODB', volunteerToDB);
+=======
+  waiverDateCheck = function(waiverDate) {
+
+    var WaiverYear = waiverDate.substr(0,4);
+    var WaiverMonth = waiverDate.substr(5,2)-1;
+    var WaiverDay = waiverDate.substr(8,2);
+    var waiverFormattedDate = new Date(WaiverYear,WaiverMonth,WaiverDay,0,0,0);
+    console.log("Formatted: ", waiverFormattedDate);
+    var today = new Date();
+    today.setFullYear(today.getFullYear() - 1);
+    console.log("TODAY", today);
+    if(waiverFormattedDate <= today){
+      console.log("false");
+      return true;
+    } else {
+      console.log("true");
+      return false;
+    }
+  };
+
+  preregisteredVolunteer = function(volunteer){
+      $http.post('/volunteer/initial', volunteer)
+      .then(function(response){
+>>>>>>> a501328fecdd89d39d649d5c191d3d6e7dc7ee40
         preregisteredVolunteerObj.email = response.data[0].email;
         preregisteredVolunteerObj.first_name = response.data[0].first_name;
         preregisteredVolunteerObj.last_name = response.data[0].last_name;
         preregisteredVolunteerObj.under_18 = response.data[0].under_18;
         preregisteredVolunteerObj.birthdate = response.data[0].birthdate;
         preregisteredVolunteerObj.has_signed_waiver = response.data[0].has_signed_waiver;
+<<<<<<< HEAD
         preregisteredVolunteerObj.has_allowed_photos = response.data[0].has_allowed_photos;
+=======
+        preregisteredVolunteerObj.adult_lw_date = response.data[0].adult_lw_date;
+        preregisteredVolunteerObj.minor_lw_date = response.data[0].minor_lw_date;
+        preregisteredVolunteerObj.has_allowed_photos = response.data[0].has_allowed_photos;
+        preregisteredVolunteerObj.pw_date = response.data[0].pw_date;
+>>>>>>> a501328fecdd89d39d649d5c191d3d6e7dc7ee40
         preregisteredVolunteerObj.parent_email = response.data[0].parent_email;
         preregisteredVolunteerObj.id = response.data[0].id;
 
         if(response.data[0]){
+<<<<<<< HEAD
           console.log("found");
           if(preregisteredVolunteerObj.under_18 === true && preregisteredVolunteerObj.has_signed_waiver === false){
             $location.path('/waiver-youth');
@@ -1505,18 +1642,43 @@ console.log("Volunteer Service loaded");
             $location.path('/waiver-photo');
           } else if
             (preregisteredVolunteerObj.under_18 === false && preregisteredVolunteerObj.has_allowed_photos === false){
+=======
+          if((preregisteredVolunteerObj.under_18 === true && preregisteredVolunteerObj.has_signed_waiver === false) ||
+          (preregisteredVolunteerObj.under_18 === true && preregisteredVolunteerObj.has_signed_waiver === true && waiverDateCheck(preregisteredVolunteerObj.minor_lw_date)))
+          {
+            $location.path('/waiver-youth');
+          } else if
+            ((preregisteredVolunteerObj.under_18 === false && preregisteredVolunteerObj.has_signed_waiver === false) ||
+            (preregisteredVolunteerObj.under_18 === false && preregisteredVolunteerObj.has_signed_waiver === true && waiverDateCheck(preregisteredVolunteerObj.adult_lw_date)))
+            {
+            $location.path('/waiver-adult');
+          } else if
+            ((preregisteredVolunteerObj.under_18 === true && preregisteredVolunteerObj.has_allowed_photos === false) ||
+            (preregisteredVolunteerObj.under_18 === true && preregisteredVolunteerObj.has_allowed_photos === true && waiverDateCheck(preregisteredVolunteerObj.pw_date)))
+            {
+            $location.path('/waiver-photo');
+          } else if
+            ((preregisteredVolunteerObj.under_18 === false && preregisteredVolunteerObj.has_allowed_photos === false) ||
+            (preregisteredVolunteerObj.under_18 === true && preregisteredVolunteerObj.has_allowed_photos === true && waiverDateCheck(preregisteredVolunteerObj.pw_date)))
+            {
+>>>>>>> a501328fecdd89d39d649d5c191d3d6e7dc7ee40
             $location.path('/waiver-photo');
           } else {
             $location.path('/confirmation');
           }
         }
+<<<<<<< HEAD
         console.log('PREREGISTERED VOLUNTEER: ', preregisteredVolunteerObj);
       });
       // return preregisteredVolunteerObj;
+=======
+      });
+>>>>>>> a501328fecdd89d39d649d5c191d3d6e7dc7ee40
     };
 
 
     setEventTime = function(){
+<<<<<<< HEAD
           console.log("in setEventTime!");
           updateWaiver();
     };
@@ -1525,6 +1687,12 @@ console.log("Volunteer Service loaded");
 
     updateWaiver = function(){
       console.log("in updateWaiver!");
+=======
+          updateWaiver();
+    };
+
+    updateWaiver = function(){
+>>>>>>> a501328fecdd89d39d649d5c191d3d6e7dc7ee40
         var checkInTime = new Date();
         waiverObj.event_id = UserService.eventObject.eventCode;
         waiverObj.time_in = UtilitiesService.formatTime(checkInTime);
@@ -1532,7 +1700,10 @@ console.log("Volunteer Service loaded");
         waiverObj.volunteerID = preregisteredVolunteerObj.id;
         $http.post('/volunteer/complete', waiverObj)
         .then(function(response){
+<<<<<<< HEAD
           console.log("in .then from updateWaiver! ", response);
+=======
+>>>>>>> a501328fecdd89d39d649d5c191d3d6e7dc7ee40
           return response;
         });
       };
@@ -1591,4 +1762,8 @@ console.log("Volunteer Service loaded");
    setEventTime: setEventTime
  };
 
+<<<<<<< HEAD
 }]); //end of VolunteerService
+=======
+}]);
+>>>>>>> a501328fecdd89d39d649d5c191d3d6e7dc7ee40

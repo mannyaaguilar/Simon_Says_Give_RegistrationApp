@@ -1,8 +1,8 @@
-myApp.controller('HoursController', ['$scope', '$mdDialog', '$http', 'UtilitesService', 'UserService',
-  function($scope, $mdDialog, $http, UtilitesService, UserService) {
+myApp.controller('HoursController', ['$scope', '$mdDialog', '$http', 'UtilitiesService', 'UserService',
+  function($scope, $mdDialog, $http, UtilitiesService, UserService) {
 
 $scope.serverResponseObject = {};
-// Gets all records in the database
+
 getHours = function(){
   $http.get('/ssgHours/')
   .then(function(response) {
@@ -17,7 +17,6 @@ getHours = function(){
 };
 getHours();
 
-// Modal window that confirms record deletion
 $scope.showConfirm = function(ev, ssgHours) {
   var confirm = $mdDialog.confirm()
         .title('Are you sure that you want to delete this record?')
@@ -30,9 +29,8 @@ $scope.showConfirm = function(ev, ssgHours) {
     deleteHours(ssgHours);
   });
 };
-// Deletes a specific record
+
 deleteHours = function(ssgHours) {
-  console.log("the id: ", ssgHours);
   $http.delete('/ssgHours/delete/' + ssgHours.id)
   .then(function(response) {
     getHours();
@@ -47,7 +45,6 @@ $scope.hours = {
 var hoursToSend = {};
 var message;
 
-// calls function from factory that saves record into the database
 $scope.createHours = function(hoursEntered) {
 
   hoursToSend = angular.copy(hoursEntered);
@@ -57,12 +54,10 @@ $scope.createHours = function(hoursEntered) {
 
   postHours(hoursToSend);
 };
-// Sends hours information to server
+
 postHours = function(hoursToPost) {
-  console.log("hoursToPost: ", hoursToPost);
   $http.post('/ssgHours/add', hoursToPost)
   .then(function(response) {
-    console.log("Response: ", response);
   });
 };
 

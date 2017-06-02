@@ -1,18 +1,12 @@
 module.exports = function(grunt){
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    // uglify: {
-    //   build: {
-    //     src: 'client/scripts/*.js',
-    //     dest: 'server/public/scripts/client.min.js'
-    //   }
-    // },
-    concat: {
-      scripts: {
+    uglify: {
+      build: {
         src: ['client/scripts/*.js',
               'client/scripts/**/*.js'],
-        dest: 'server/public/scripts/client.js'
-      },
+        dest: 'server/public/scripts/client.min.js'
+      }
     },
     copy: {
       html: {
@@ -28,13 +22,6 @@ module.exports = function(grunt){
         src: ['style.css'],
         dest: 'server/public/styles/'
       },
-      // bootstrap: {
-      //   expand: true,
-      //   cwd: 'node_modules/bootstrap/dist/',
-      //   src: ['css/bootstrap.css',
-      //         'js/bootstrap.js'],
-      //   dest: 'server/public/vendors/bootstrap/'
-      // },
       angular: {
         expand: true,
         cwd: 'node_modules/angular/',
@@ -84,18 +71,11 @@ module.exports = function(grunt){
               'angular-messages.min.js.map'],
         dest: 'server/public/vendors/angular-messages/'
       }
-    },
-    watch: {
-      files: [
-        'client/**/*.*'
-      ],
-      tasks: ['concat','copy']
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-watch');
 
-  grunt.registerTask('default', ['concat','copy', 'watch']);
+  grunt.registerTask('default', ['uglify','copy']);
 };
