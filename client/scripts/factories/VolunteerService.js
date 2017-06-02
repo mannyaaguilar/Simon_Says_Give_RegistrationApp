@@ -73,6 +73,7 @@ myApp.factory('VolunteerService', ['$http', '$location', 'UserService', 'Utiliti
   };
 
   preregisteredVolunteer = function(volunteer){
+    volunteer.event_id = UserService.eventObject.eventCode;
       $http.post('/volunteer/initial', volunteer)
       .then(function(response){
         preregisteredVolunteerObj.email = response.data[0].email;

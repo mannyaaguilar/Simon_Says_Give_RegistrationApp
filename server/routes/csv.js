@@ -105,7 +105,6 @@ router.post('/upload', function(req, res, next) {
             jsonObject = jsonArrObj[i];
             db.query('INSERT INTO json_volunteer (info) VALUES ($1);',
             [jsonObject], function(queryError,result) {
-              done();
               if (queryError) {
                 console.log('Error inserting into json_volunteer table');
               }
