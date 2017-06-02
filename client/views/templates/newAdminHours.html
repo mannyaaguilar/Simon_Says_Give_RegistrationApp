@@ -14,6 +14,7 @@
 
   <div layout="column" flex="70">
     <!-- DATE -->
+    <h1>Log New Office Hours:</h1>
     <div layout="row">
       <md-input-container layout="column" flex="45" class="eventInputs">
         <label>Enter date *</label>
@@ -46,6 +47,7 @@
       </md-input-container>
     </div>
     <div layout="row">
+      <md-button class="themed-Btn" aria-label="Cancel" value="Cancel" ng-click="redirect('/displayEvents')">Back to Admin Home</md-button>
       <button class="themed-Btn" ng-click="createHours(hours)">Submit</button>
     </div>
 

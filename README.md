@@ -5,10 +5,10 @@
 
 - [Description](#description)
 - [Product Example](#product-example)
-- [Exported CSV Format](#exported-csv-format)
-- [Local Installation](#local-installation)
 - [Contributors](#contributors)
 - [Technologies](#technologies)
+- [Exported CSV Format](#exported-csv-format)
+- [Local Installation](#local-installation)
 - [Acknowledgments](#acknowledgments)
 
 ---
@@ -67,6 +67,40 @@ The Check Out Process:
 - Confirms successful check out
 
 ---
+## Contributors
+
+- [Craig Baird](https://github.com/craigbaird)
+- [Claudia Calderas](https://github.com/claudiacalderas)
+- [Christopher Keller](https://github.com/cjameskeller)
+- [Erin Kinnen](https://github.com/erinkinnen)
+- [Lisa Schoofs](https://github.com/lisaschoofs)
+
+---
+## Technologies
+
+### Primary
+
+- [**AngularJS**](https://angularjs.org/)
+- [**Angular Material**](https://material.angularjs.org/)
+    - [Angular Route](https://www.npmjs.com/package/angular-route)
+- [bcrypt](https://www.npmjs.com/package/bcrypt)
+- [csvtojson](https://www.npmjs.com/package/csvtojson)
+- [**Express**](https://expressjs.com/)
+    - [Express Session](https://www.npmjs.com/package/express-session)
+- [json2csv](https://www.npmjs.com/package/json2csv)
+- [**Node.js**](https://nodejs.org/en/)
+- [Passport](http://passportjs.org/)
+- [**PostgreSQL**](https://www.npmjs.com/package/pg)
+
+### Build Tools
+
+- [Grunt](https://gruntjs.com/)
+
+### Deployment
+
+- [Heroku](https://www.heroku.com/)
+
+---
 ## Exported CSV Format
 
 |Column 1|Column 2|Column 3|Column 4|Column 5|Column 6|
@@ -105,40 +139,6 @@ There are three quick steps described individually below:
     - In the same terminal window, type `npm start`, and the terminal will display "Listening on port 5000".
     - Type "localhost:5000" in the address bar of your browser, and now the application is running, without a need for internet access! However, this means the application also cannot make changes to the real database, so local installation is only useful for testing.
     - When done using the application locally, type `^c` again to turn the server off.
-
----
-## Contributors
-
-- [Craig Baird](https://github.com/craigbaird)
-- [Claudia Calderas](https://github.com/claudiacalderas)
-- [Christopher Keller](https://github.com/cjameskeller)
-- [Erin Kinnen](https://github.com/erinkinnen)
-- [Lisa Schoofs](https://github.com/lisaschoofs)
-
----
-## Technologies
-
-### Primary
-
-- [**AngularJS**](https://angularjs.org/)
-- [**Angular Material**](https://material.angularjs.org/)
-    - [Angular Route](https://www.npmjs.com/package/angular-route)
-- [bcrypt](https://www.npmjs.com/package/bcrypt)
-- [csvtojson](https://www.npmjs.com/package/csvtojson)
-- [**Express**](https://expressjs.com/)
-    - [Express Session](https://www.npmjs.com/package/express-session)
-- [json2csv](https://www.npmjs.com/package/json2csv)
-- [**Node.js**](https://nodejs.org/en/)
-- [Passport](http://passportjs.org/)
-- [**PostgreSQL**](https://www.npmjs.com/package/pg)
-
-### Build Tools
-
-- [Grunt](https://gruntjs.com/)
-
-### Deployment
-
-- [Heroku](https://www.heroku.com/)
 
 ---
 ## Acknowledgments
