@@ -2,6 +2,7 @@ myApp.controller('HoursController', ['$scope', '$mdDialog', '$http', 'UtilitiesS
   function($scope, $mdDialog, $http, UtilitiesService, UserService) {
 
 $scope.serverResponseObject = {};
+$scope.redirect = UserService.redirect;
 
 getHours = function(){
   $http.get('/ssgHours/')
@@ -48,9 +49,9 @@ var message;
 $scope.createHours = function(hoursEntered) {
 
   hoursToSend = angular.copy(hoursEntered);
-  hoursToSend.hoursDate = UtilitesService.formatDate(hoursToSend.hoursDate);
-  hoursToSend.hoursFromTime = UtilitesService.formatTime(hoursToSend.hoursFromTime);
-  hoursToSend.hoursUntilTime = UtilitesService.formatTime(hoursToSend.hoursUntilTime);
+  hoursToSend.hoursDate = UtilitiesService.formatDate(hoursToSend.hoursDate);
+  hoursToSend.hoursFromTime = UtilitiesService.formatTime(hoursToSend.hoursFromTime);
+  hoursToSend.hoursUntilTime = UtilitiesService.formatTime(hoursToSend.hoursUntilTime);
 
   postHours(hoursToSend);
 };
