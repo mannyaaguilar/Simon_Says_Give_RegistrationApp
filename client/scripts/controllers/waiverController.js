@@ -44,9 +44,13 @@ myApp.controller('WaiverController', ['$window', '$scope', '$rootScope', '$ancho
 
     filledOut = noParentAll || parentAll;
 
-
-    if (filledOut) {
-      $location.path('/waiver-photo');
+    if ( filledOut ) {
+       if ( noParentAll ) {
+         $location.path("/override");
+       }
+       else if ( parentAll ) {
+         $location.path("/waiver-photo");
+       }
     }
     else {
       $scope.message = 'Please fill out all highlighted fields';
