@@ -5,7 +5,7 @@
   <div layout-md="column" flex="20"></div>
   <div layout="column" flex="60">
     <div class="volunteerPage">
-      <p>Please search for you or your group by email or by name:</p>
+      <p>Please search for you or your group by <b>email</b> or by <b>name</b>:</p>
       <!-- SEARCH SECTION -->
       <div layout="row">
         <div layout-md="column" flex="70">
@@ -38,11 +38,19 @@
         <div>
           <md-button ng-click="back()" class="biggerButton themed-Btn badButton" name="cancel" aria-label="Cancel" value="Cancel">Cancel</md-button>
         </div>
-      </md-input-container>      
+      </md-input-container>
       <!-- RESULTS SECTION -->
       <div layout="column" ng-show="success">
         <br>
-        <p>Select who you want to check out!</p>
+
+        <h3 class="inputError">{{message}}</h3>
+
+          <!-- <div flex-xs="" flex="50">
+            <md-checkbox aria-label="Select All" ng-checked="isChecked()" md-indeterminate="isIndeterminate()" ng-click="toggleAll()">
+            <span ng-if="isChecked()">Un-</span>Select All
+          </md-checkbox>
+        </div> -->
+
         <div layout="column">
           <div class="demo-select-all-checkboxes" layout="column" ng-repeat="volunteer in volunteerList">
             <md-checkbox ng-checked="exists(volunteer.id, checkoutList)" layout="column" ng-click="toggle(volunteer.id, checkoutList)">

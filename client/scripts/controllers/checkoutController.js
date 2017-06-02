@@ -42,6 +42,17 @@ $scope.isChecked = function() {
 //Function run on click of Search button - take inputs and check for records
 //in database, appends results to DOM
 $scope.search = function(volunteer) {
+  // var filledOut;
+  // filledOut = $scope.volunteerObject.email ||
+  //             $scope.volunteerObject.first_name ||
+  //             $scope.volunteerObject.last_name;
+  // FINISH IF/ELSE LOGIC HERE
+  // if (filledOut) {
+  //   // logic
+  // }
+  // else {
+  //   $scope.message = "Please enter email or name to search";
+  // }
   $scope.getVolunteers(volunteer);
   $scope.success = true;
 };
@@ -54,10 +65,11 @@ $scope.getVolunteers = function(volunteer) {
     });
 };
 
-//Checkout selected volunteers
 $scope.checkout = function(checkoutList) {
   $scope.checkoutVolunteers(checkoutList);
+  // if (filledOut) {
   $scope.changeView();
+  // }
 };
 
 //PUT Route that updates the checkout time of chosen volunteer record(s)

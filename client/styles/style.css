@@ -28,7 +28,8 @@ h1 {
 }
 
 a {
-  color: gray;
+  color: white;
+  text-decoration: none; /* no underline */
 }
 
 .ssg_header {
