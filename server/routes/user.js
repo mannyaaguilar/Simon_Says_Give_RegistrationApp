@@ -54,7 +54,6 @@ router.post('/forgotpassword', function(req, res) {
 
       var userQuery = 'SELECT email FROM users WHERE username = $1';
       db.query(userQuery,[req.body.username], function(queryError,result) {
-        done();
         if (queryError) {
           res.sendStatus(500);
         } else {
