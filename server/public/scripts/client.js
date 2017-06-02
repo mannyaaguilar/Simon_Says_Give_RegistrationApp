@@ -101,6 +101,26 @@ myApp.config(['$routeProvider', '$locationProvider',
         }]
       }
     })
+    // Add new office hours view
+    .when('/newHours', {
+      templateUrl: '/views/templates/newAdminHours.html',
+      controller: 'HoursController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser('ADMIN');
+        }]
+      }
+    })
+    // View and edit office hours view
+    .when('/viewHours', {
+      templateUrl: '/views/templates/adminHours.html',
+      controller: 'HoursController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser('ADMIN');
+        }]
+      }
+    })
     // Main View of the app
     .when('/user', {
       templateUrl: '/views/templates/user.html',
@@ -381,6 +401,10 @@ $scope.changeView = function() {
   $location.path('/confirmed');
 };
 
+$scope.back = function() {
+  $location.path('/checkInOut');
+};
+
 }]);
 
 myApp.controller('ConfirmationController', ['$scope', '$http', '$location', 'UserService', '$timeout',
@@ -585,6 +609,77 @@ myApp.controller('HeaderController', ['$scope', 'UserService', function($scope, 
   $scope.redirect = UserService.redirect;
   $scope.logout = UserService.logout;
   $scope.eventObject = UserService.eventObject;
+
+}]);
+
+myApp.controller('HoursController', ['$scope', '$mdDialog', '$http', 'UtilitesService', 'UserService',
+  function($scope, $mdDialog, $http, UtilitesService, UserService) {
+
+$scope.serverResponseObject = {};
+// Gets all records in the database
+getHours = function(){
+  $http.get('/ssgHours/')
+  .then(function(response) {
+    var holderArray = angular.copy(response.data);
+    for (i = 0; i < holderArray.length; i++) {
+      holderArray[i].date = holderArray[i].date.slice(0, 10);
+      holderArray[i].time_in = holderArray[i].time_in.slice(0, 5);
+      holderArray[i].time_out = holderArray[i].time_out.slice(0, 5);
+    }
+    $scope.serverResponseObject.allHours = angular.copy(holderArray);
+  });
+};
+getHours();
+
+// Modal window that confirms record deletion
+$scope.showConfirm = function(ev, ssgHours) {
+  var confirm = $mdDialog.confirm()
+        .title('Are you sure that you want to delete this record?')
+        .textContent('')
+        .ariaLabel('Delete this record')
+        .targetEvent(ev)
+        .ok('Delete')
+        .cancel('Cancel');
+  $mdDialog.show(confirm).then(function() {
+    deleteHours(ssgHours);
+  });
+};
+// Deletes a specific record
+deleteHours = function(ssgHours) {
+  console.log("the id: ", ssgHours);
+  $http.delete('/ssgHours/delete/' + ssgHours.id)
+  .then(function(response) {
+    getHours();
+  });
+};
+
+$scope.hours = {
+  hoursFromTime: '',
+  hoursUntilTime: '',
+  hoursDate: ''
+};
+var hoursToSend = {};
+var message;
+
+// calls function from factory that saves record into the database
+$scope.createHours = function(hoursEntered) {
+
+  hoursToSend = angular.copy(hoursEntered);
+  hoursToSend.hoursDate = UtilitesService.formatDate(hoursToSend.hoursDate);
+  hoursToSend.hoursFromTime = UtilitesService.formatTime(hoursToSend.hoursFromTime);
+  hoursToSend.hoursUntilTime = UtilitesService.formatTime(hoursToSend.hoursUntilTime);
+
+  postHours(hoursToSend);
+};
+// Sends hours information to server
+postHours = function(hoursToPost) {
+  console.log("hoursToPost: ", hoursToPost);
+  $http.post('/ssgHours/add', hoursToPost)
+  .then(function(response) {
+    console.log("Response: ", response);
+  });
+};
+
 
 }]);
 
@@ -1032,7 +1127,7 @@ console.log("WaiverController loaded!");
     parentAll = $scope.waiverObj.dateTopYouth &&
                 $scope.waiverObj.nameTopYouth &&
                 $scope.waiverObj.guardianTopYouth &&
-                $scope.waiverObj.agreedYouth &&
+                $scope.waiverObj.agreedYouth && 
                 $scope.waiverObj.nameBottomYouth &&
                 $scope.waiverObj.dateBottomVolYouth &&
                 $scope.waiverObj.guardianBottomYouth &&
@@ -1056,12 +1151,14 @@ console.log("WaiverController loaded!");
     var filledOutYouth;
 
     filledOutAdult = $scope.waiverObj.agreedPhoto &&
-                     $scope.waiverObj.agreedAdult &&
+                     $scope.waiverObj.dateBottomPhoto &&
                      $scope.waiverObj.nameBottomPhoto;
 
     filledOutYouth = $scope.waiverObj.agreedPhoto &&
-                     $scope.waiverObj.agreedYouth &&
-                     $scope.waiverObj.nameBottomPhoto;
+                     $scope.waiverObj.dateBottomVolPhoto &&
+                     $scope.waiverObj.nameBottomPhoto &&
+                     $scope.waiverObj.guardianBottomPhoto &&
+                     $scope.waiverObj.dateBottomGuardPhoto;
 
     filledOut = filledOutAdult || filledOutYouth;
 

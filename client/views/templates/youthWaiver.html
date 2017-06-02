@@ -157,7 +157,7 @@
           ng-click="waiverObj.agreedYouth = true"> <a href="http://localhost:5000/#/waiver-youth#signatures">Accept</a> </button>
       </div>
 
-      <!-- <div> <a id="signatures"></a> <div> -->
+      <div> <a id="signatures"></a> <div>
 
       <div ng-show="waiverObj.agreedYouth || waiverObj.noParentYouth">
         <div layout="row" class="bufferDiv">
@@ -167,7 +167,6 @@
             <span>Signature of Volunteer:</span>
           </div>
           <md-input-container class="noMargins yellowBack" flex="85">
-            <!-- <label>Please enter your name between slash marks: /John Doe/</label> -->
             <input required type="text" name="youthWaiverNameBottom" value=""
               ng-model="waiverObj.nameBottomYouth">
           </md-input-container>
@@ -193,7 +192,6 @@
             <span>Signature of Guardian:</span>
           </div>
           <md-input-container class="noMargins yellowBack" flex="85">
-            <!-- <label>Please enter your name between slash marks: /John Doe/</label> -->
             <input ng-required="!waiverObj.noParentYouth"
               type="text" name="youthWaiverGuardianBottom" value=""
               ng-model="waiverObj.guardianBottomYouth" required/>
@@ -219,7 +217,6 @@
             <span>Guardian Email Address:</span>
           </div>
           <md-input-container class="noMargins yellowBack" flex="85">
-            <label>Please type the email for your parent or guardian:</label>
             <input ng-required="waiverObj.noParentYouth"
               type="email" name="youthWaiverGuardianEmail" value=""
               ng-model="waiverObj.guardianEmailYouth" required/>

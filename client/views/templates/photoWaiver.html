@@ -112,7 +112,7 @@
 <div layout="row" class="bufferDiv">
 </div>
 
-<div> <a id="signature"></a> <div>
+<div> <a id="signature"></a> </div>
 
   <div layout="row">
     <div flex="15"></div>
@@ -170,9 +170,8 @@
           <span>Signature of Volunteer:</span>
         </div>
         <md-input-container class="noMargins yellowBack" flex="85">
-          <!-- <label>Please enter your name between slash marks: /John Doe/</label> -->
           <input type="text" name="photoWaiverNameBottom" value=""
-            ng-model="waiverObj.nameBottomPhoto">
+            ng-model="waiverObj.nameBottomPhoto" required/>
         </md-input-container>
       </div>
       <div layout="row" class="bufferDiv">
@@ -196,7 +195,7 @@
         <md-input-container class="noMargins yellowBack" flex="85">
           <!-- <label>Please enter your name between slash marks: /John Doe/</label> -->
           <input type="text" name="photoWaiverGuardianBottom" value=""
-            ng-model="waiverObj.guardianBottomPhoto">
+            ng-model="waiverObj.guardianBottomPhoto" required/>
         </md-input-container>
       </div>
       <div layout="row" class="bufferDiv">

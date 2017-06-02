@@ -71,7 +71,7 @@ console.log("WaiverController loaded!");
     parentAll = $scope.waiverObj.dateTopYouth &&
                 $scope.waiverObj.nameTopYouth &&
                 $scope.waiverObj.guardianTopYouth &&
-                $scope.waiverObj.agreedYouth &&
+                $scope.waiverObj.agreedYouth && 
                 $scope.waiverObj.nameBottomYouth &&
                 $scope.waiverObj.dateBottomVolYouth &&
                 $scope.waiverObj.guardianBottomYouth &&
@@ -95,12 +95,14 @@ console.log("WaiverController loaded!");
     var filledOutYouth;
 
     filledOutAdult = $scope.waiverObj.agreedPhoto &&
-                     $scope.waiverObj.agreedAdult &&
+                     $scope.waiverObj.dateBottomPhoto &&
                      $scope.waiverObj.nameBottomPhoto;
 
     filledOutYouth = $scope.waiverObj.agreedPhoto &&
-                     $scope.waiverObj.agreedYouth &&
-                     $scope.waiverObj.nameBottomPhoto;
+                     $scope.waiverObj.dateBottomVolPhoto &&
+                     $scope.waiverObj.nameBottomPhoto &&
+                     $scope.waiverObj.guardianBottomPhoto &&
+                     $scope.waiverObj.dateBottomGuardPhoto;
 
     filledOut = filledOutAdult || filledOutYouth;
 
