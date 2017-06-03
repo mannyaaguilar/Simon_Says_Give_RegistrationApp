@@ -1,6 +1,5 @@
 myApp.factory('VolunteerService', ['$http', '$location', 'UserService', 'UtilitiesService', function($http, $location, UserService, UtilitiesService){
 
-
   var preregisteredVolunteerObj = {
     email: '',
     first_name: '',

@@ -1,5 +1,8 @@
 myApp.controller('WaiverController', ['$window', '$scope', '$rootScope', '$anchorScroll', '$http', '$location', 'VolunteerService', function($window, $scope, $rootScope, $anchorScroll, $http, $location, VolunteerService) {
 
+ $scope.currentURL = $location.$$absUrl + "/#signatures";
+ 
+
   $scope.message = '';
 
   $scope.waiverObj = VolunteerService.waiverObj;
