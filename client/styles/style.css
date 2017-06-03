@@ -19,7 +19,6 @@ body {
   padding: 0;
   height: 100%;
   font-family: 'Open Sans';
-  /*background-color: #f3eab2;*/
 }
 
 h1 {
@@ -124,25 +123,13 @@ a {
 }
 /* Login Page Styles */
 
-
-/*styling for big logo on checkInOut and confirmation views
-not sure we need anymore*/
-/*.mainLogo {
-  padding-top: 30px;
-  max-height: 60%;
-  max-width: 60%;
-  display:flex;
-  justify-content:center;
-  align-items:flex-end;
-}*/
-
  /* Header / Footer styles */
 .navbarLogo {
   max-height: 100%;
   max-width: 100%;
 }
 
-footer {
+.footer {
   position: fixed;
   left: 0;
   bottom: 0;
