@@ -18,7 +18,6 @@ myApp.controller('ViewEventController', ['$scope','$mdDialog','UserService','Uti
 
   // fills out input fields with current event information
   $scope.populate = function() {
-    console.log('Current Event is:', EventService.serverResponseObject.currentEvent);
     if (EventService.serverResponseObject.currentEvent != undefined) {
       $scope.event.eventCode = EventService.serverResponseObject.currentEvent.event_code;
       $scope.event.eventName = EventService.serverResponseObject.currentEvent.event_name;
@@ -53,7 +52,6 @@ myApp.controller('ViewEventController', ['$scope','$mdDialog','UserService','Uti
 
   // calls function from factory that saves changes to event into the database
   $scope.editEvent = function(eventEntered) {
-    console.log('EDITING EVENT', eventEntered);
     // validates and copies data to an object to send to the factory
     if ($scope.event.eventCode != '' && $scope.event.eventName != '' && $scope.event.eventTeam != '' && $scope.event.eventDate) {
       eventToSend = angular.copy($scope.event);
@@ -66,7 +64,6 @@ myApp.controller('ViewEventController', ['$scope','$mdDialog','UserService','Uti
         eventToSend.eventUntilTime = UtilitiesService.formatTime(eventToSend.eventUntilTime);
       }
       // send information to factory
-      console.log('EVENT TO SEND: ', eventToSend);
       EventService.updateEvent(eventToSend);
     }
   } // function updateEvent()
@@ -76,7 +73,6 @@ myApp.controller('ViewEventController', ['$scope','$mdDialog','UserService','Uti
     var eventParams = {};
     eventParams.eventCode = eventObject.eventCode;
     eventParams.time = UtilitiesService.formatTime(eventObject.eventUntilTime);
-    console.log('Logging out volunteers for event:', eventParams);
     EventService.logoutVolunteersByEvent(eventParams);
   }
 

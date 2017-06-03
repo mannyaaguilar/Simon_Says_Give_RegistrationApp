@@ -25,7 +25,7 @@ var todaysDate = new Date();
           .ariaLabel(message)
           .ok('Ok')
       );
-    };
+  };
 
 return {
     formatDate: formatDate,

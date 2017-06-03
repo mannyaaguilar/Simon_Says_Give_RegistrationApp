@@ -9,7 +9,6 @@ myApp.controller('LoginController', ['$scope', '$http', '$routeParams', 'UserSer
     eventCode: ''
   };
 
-
   // Logins Admin user
   $scope.login = function() {
     if($scope.user.username == '' || $scope.user.password == '') {

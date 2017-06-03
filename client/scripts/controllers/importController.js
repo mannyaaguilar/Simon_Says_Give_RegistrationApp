@@ -5,8 +5,6 @@ myApp.controller('ImportController', ['$scope', '$http', '$location', 'UserServi
   $scope.redirect = UserService.redirect;
   $scope.serverResponseObject = CSVService.serverResponseObject;
 
-  console.log('ImportController loaded');
-
   var reader;
   var progress = document.querySelector('.percent');
 
@@ -14,25 +12,25 @@ myApp.controller('ImportController', ['$scope', '$http', '$location', 'UserServi
     reader.abort();
   }
 
-  function errorHandler(evt) {
-    switch(evt.target.error.code) {
-     case evt.target.error.NOT_FOUND_ERR:
+  function errorHandler(fileEvent) {
+    switch(fileEvent.target.error.code) {
+     case fileEvent.target.error.NOT_FOUND_ERR:
        alert('File Not Found!');
        break;
-     case evt.target.error.NOT_READABLE_ERR:
+     case fileEvent.target.error.NOT_READABLE_ERR:
        alert('File is not readable');
        break;
-     case evt.target.error.ABORT_ERR:
+     case fileEvent.target.error.ABORT_ERR:
        break;
      default:
        alert('An error occurred reading this file.');
     };
   }
 
-  function updateProgress(evt) {
-    // evt is an ProgressEvent.
-    if (evt.lengthComputable) {
-      var percentLoaded = Math.round((evt.loaded / evt.total) * 100);
+  function updateProgress(fileEvent) {
+    // fileEvent is an ProgressEvent.
+    if (fileEvent.lengthComputable) {
+      var percentLoaded = Math.round((fileEvent.loaded / fileEvent.total) * 100);
       // Increase the progress bar length.
       if (percentLoaded < 100) {
         progress.style.width = percentLoaded + '%';
@@ -41,7 +39,7 @@ myApp.controller('ImportController', ['$scope', '$http', '$location', 'UserServi
     }
   }
 
-  function handleFileSelect(evt) {
+  function handleFileSelect(fileEvent) {
     // Reset progress indicator on new file selection.
     progress.style.width = '0%';
     progress.textContent = 'Importing data 0%';
@@ -49,24 +47,24 @@ myApp.controller('ImportController', ['$scope', '$http', '$location', 'UserServi
     reader = new FileReader();
     reader.onerror = errorHandler;
     reader.onprogress = updateProgress;
-    reader.onabort = function(e) {
+    reader.onabort = function(readerEvent) {
       alert('File read cancelled');
     };
-    reader.onloadstart = function(e) {
+    reader.onloadstart = function(readerEvent) {
       document.getElementById('progress_bar').className = 'loading';
     };
-    reader.onload = function(e) {
+    reader.onload = function(readerEvent) {
       // Ensure that the progress bar displays 100% at the end.
       progress.style.width = '100%';
       progress.textContent = 'Importing data 100%';
       setTimeout("document.getElementById('progress_bar').className='';", 2000);
 
       // sends read file to factory function
-      CSVService.sendCSV(e.target.result);
+      CSVService.sendCSV(readerEvent.target.result);
     }
 
     // Read in the file as a text string.
-    reader.readAsText(evt.target.files[0]);
+    reader.readAsText(fileEvent.target.files[0]);
   }
 
   document.getElementById('files').addEventListener('change', handleFileSelect, false);

@@ -1,8 +1,11 @@
 myApp.controller('CreateEventController', ['$scope', '$location','UserService', 'UtilitiesService','EventService',
                 function($scope, $location, UserService, UtilitiesService, EventService) {
 
+  // function that uses $location to change to the required view
   $scope.redirect = UserService.redirect;
+  // object in the EventService factory that stores event information
   $scope.serverResponseObject = EventService.serverResponseObject;
+  // object that stores information entered by the user
   $scope.event = {
     eventCode: '',
     eventName: '',
@@ -13,12 +16,11 @@ myApp.controller('CreateEventController', ['$scope', '$location','UserService', 
     eventUntilTime: '',
   };
   $scope.event.eventDate;
+  // object with event information formatted to be sent to the server
   var eventToSend = {};
-  var message;
 
   // calls function from factory that saves event into the database
   $scope.createEvent = function(eventEntered) {
-    console.log('EVENT ENTERED', eventEntered);
     // validates and copies data to an object to send to the factory
     if (alphanumeric($scope.event.eventCode)) {
       if ($scope.event.eventCode != '' && $scope.event.eventName != '' && $scope.event.eventTeam != '' && $scope.event.eventDate) {
@@ -32,7 +34,6 @@ myApp.controller('CreateEventController', ['$scope', '$location','UserService', 
           eventToSend.eventUntilTime = UtilitiesService.formatTime(eventToSend.eventUntilTime);
         }
         // send information to factory
-        console.log('EVENT TO SEND: ', eventToSend);
         EventService.postEvent(eventToSend);
       }
     } else {
