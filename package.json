@@ -10,7 +10,7 @@
   "author": "Craig Baird, Claudia Calderas, Chris Keller, Erin Kinnen, Lisa Schoofs",
   "license": "ISC",
   "dependencies": {
-    "angular": "1.5.0",
+    "angular": "1.6.4",
     "angular-animate": "1.6.4",
     "angular-aria": "1.6.4",
     "angular-material": "1.1.4",
