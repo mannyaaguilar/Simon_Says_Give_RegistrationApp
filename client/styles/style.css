@@ -10,7 +10,7 @@
 }
 
 html {
-    position: relative;
+    /*position: relative;*/
     min-height: 100%;
 }
 
@@ -231,7 +231,7 @@ a {
 }
 
 .checkInOutPage {
-  padding-top: 220px;
+  padding-top: 130px;
 }
 
 .volunteerPage {
@@ -272,7 +272,7 @@ a {
 /*Check In/Check Out Styles*/
 
 #confirmation {
-  padding-top: 220px;
+  padding-top: 200px;
   text-align: center;
 }
 
