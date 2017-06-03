@@ -1,6 +1,7 @@
 myApp.factory('EventService', ['$http','$mdDialog', function($http,$mdDialog){
   console.log('CSVService Loaded');
 
+  // stores event information
   serverResponseObject = {};
 
   // Gets all events in the database

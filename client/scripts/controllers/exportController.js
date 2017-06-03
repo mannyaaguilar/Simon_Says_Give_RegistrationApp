@@ -1,31 +1,31 @@
 myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserService', 'UtilitiesService','CSVService',
             function($scope, $http, $location, UserService, UtilitiesService, CSVService) {
 
-  $scope.userObject = UserService.userObject;
-  $scope.logout = UserService.logout;
+  // function that uses $location to change to the required view
   $scope.redirect = UserService.redirect;
-  $scope.serverResponseObject = CSVService.serverResponseObject;
+  // option selected by user
   $scope.exportOption = '';
+  // boolean value that enables/disables dates for option Volunteer hours
   $scope.datesEnabledValue = true;
+  // boolean value that enables/disables dates for option Office hours
   $scope.officeDatesEnabledValue = true;
+  // Dates for option Volunteer hours
   $scope.fromDate;
   $scope.toDate;
+  // Dates for option Office hours
+  $scope.officeFromDate;
+  $scope.officeToDate;
+  // error message string (for date validation)
   var errorMessage = "";
-
-
-  console.log('ExportController loaded');
 
   // prepares information (parameter dates) and calls function in factory
   $scope.exportInformation = function(option) {
-    console.log('Export Information clicked, exporting: ', option);
     data = {
       fromDate : new Date(),
       toDate : new Date()
     };
     // checks if option selected was hours and prepares data object of parameters
     if ($scope.exportOption === 'hours') {
-      console.log('From Date', $scope.fromDate);
-      console.log('To Date', $scope.toDate);
       data.fromDate = $scope.fromDate;
       data.toDate = $scope.toDate;
       if (validDates (data.fromDate, data.toDate)) {
@@ -33,8 +33,6 @@ myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserServi
         CSVService.requestHoursCSV(data);
       }
     } else if ($scope.exportOption === 'officeHours') {
-      console.log('From Date', $scope.officeFromDate);
-      console.log('To Date', $scope.officeToDate);
       data.fromDate = $scope.officeFromDate;
       data.toDate = $scope.officeToDate;
       if (validDates (data.fromDate, data.toDate)) {
@@ -42,6 +40,7 @@ myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserServi
         CSVService.requestOfficeHoursCSV(data);
       }
     } else {
+      // calls function in factory that requests data from the server
       CSVService.requestVolunteerCSV();
     }
   };
