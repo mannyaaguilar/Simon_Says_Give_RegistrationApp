@@ -7,6 +7,7 @@ myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserServi
   $scope.serverResponseObject = CSVService.serverResponseObject;
   $scope.exportOption = '';
   $scope.datesEnabledValue = true;
+  $scope.officeDatesEnabledValue = true;
   $scope.fromDate;
   $scope.toDate;
   var errorMessage = "";
@@ -22,7 +23,7 @@ myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserServi
       toDate : new Date()
     };
     // checks if option selected was hours and prepares data object of parameters
-    if ($scope.exportOption === 'hours'){
+    if ($scope.exportOption === 'hours') {
       console.log('From Date', $scope.fromDate);
       console.log('To Date', $scope.toDate);
       data.fromDate = $scope.fromDate;
@@ -30,6 +31,15 @@ myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserServi
       if (validDates (data.fromDate, data.toDate)) {
         // calls function in factory that requests data from the server
         CSVService.requestHoursCSV(data);
+      }
+    } else if ($scope.exportOption === 'officeHours') {
+      console.log('From Date', $scope.officeFromDate);
+      console.log('To Date', $scope.officeToDate);
+      data.fromDate = $scope.officeFromDate;
+      data.toDate = $scope.officeToDate;
+      if (validDates (data.fromDate, data.toDate)) {
+        // calls function in factory that requests data from the server
+        CSVService.requestOfficeHoursCSV(data);
       }
     } else {
       CSVService.requestVolunteerCSV();
@@ -61,6 +71,14 @@ myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserServi
       }
     } else {
       $scope.datesEnabledValue = true;
+    }
+
+    if ($scope.exportOption === 'officeHours'){
+      if ($scope.officeDatesEnabledValue) {
+        $scope.officeDatesEnabledValue = false;
+      }
+    } else {
+      $scope.officeDatesEnabledValue = true;
     }
   };
 

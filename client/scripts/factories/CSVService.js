@@ -37,6 +37,20 @@ myApp.factory('CSVService', ['$http','$mdDialog', function($http,$mdDialog){
     });
   };
 
+  // Requests CSV file from server
+  requestOfficeHoursCSV = function(data) {
+    console.log('Getting Office hours .csv ');
+    console.log('Data: ', data);
+    var formattedFromDate = formatDate(data.fromDate);
+    var formattedToDate = formatDate(data.toDate);
+    $http.get('/csv/export/officeHours/' + formattedFromDate + '/' + formattedToDate).then(function(response) {
+      console.log('Back from server after getting csv content',response);
+      // opens the route - downloads the file
+      var route = '/csv/export/officeHours/' + formattedFromDate + '/' + formattedToDate;
+      window.open(route);
+    });
+  };
+
   // Formats date to DB format
   formatDate = function(date) {
     var curr_date = date.getDate();
@@ -60,7 +74,8 @@ myApp.factory('CSVService', ['$http','$mdDialog', function($http,$mdDialog){
   return {
     sendCSV : sendCSV,
     requestVolunteerCSV : requestVolunteerCSV,
-    requestHoursCSV :requestHoursCSV,
+    requestHoursCSV : requestHoursCSV,
+    requestOfficeHoursCSV : requestOfficeHoursCSV,
     serverResponseObject : serverResponseObject
   };
 }]);
