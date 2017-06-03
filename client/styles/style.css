@@ -135,9 +135,9 @@ a {
   bottom: 0;
   width: 100%;
   height: 55px;
-  overflow:hidden;
+  /*overflow:hidden;
   display:flex;
-  align-items:flex-end;
+  align-items:flex-end;*/
   background-color: #3573b9;
 }
 
