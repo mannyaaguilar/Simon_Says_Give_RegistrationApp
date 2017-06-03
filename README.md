@@ -103,9 +103,23 @@ The Check Out Process:
 ---
 ## Exported CSV Format
 
-|Column 1|Column 2|Column 3|Column 4|Column 5|Column 6|
-|--------|--------|--------|--------|--------|--------|
-|value 1 |value 2 |value 3 |value 4 |value 5 |value 6 |
+- volunteer.csv
+
+|First Name  |Last Name   |Email       |Parent Email|
+|------------|------------|------------|------------|
+|value 1     |value 2     |value 3     |value 4     |
+
+- volunteer_hours.csv
+
+|First Name  |Last Name   |Email       |Date        |Time In     |Time Out    |
+|------------|------------|------------|------------|------------|------------|
+|value 1     |value 2     |value 3     |value 4     |value 5     |value 6     |
+
+- office_hours.csv
+
+|Staff Username|Date        |Time In     |Time Out    |
+|--------------|------------|------------|------------|
+|value 1       |value 2     |value 3     |value 4     |
 
 ---
 ## Local Installation
