@@ -136,10 +136,10 @@ not sure we need anymore*/
   align-items:flex-end;
 }*/
 
-/* Header / Footer styles */
+ /* Header / Footer styles */
 .navbarLogo {
-  max-height: 18%;
-  max-width: 18%;
+  max-height: 100%;
+  max-width: 100%;
 }
 
 footer {
