@@ -39,19 +39,12 @@
           <md-button ng-click="back()" class="biggerButton themed-Btn badButton" name="cancel" aria-label="Cancel" value="Cancel">Cancel</md-button>
         </div>
       </md-input-container>
-      <!-- RESULTS SECTION -->
+      <!-- RESULTS SECTION - ng-show informs if it displays or not-->
       <div layout="column" ng-show="success">
         <br>
-
         <h3 class="inputError">{{message}}</h3>
-
-          <!-- <div flex-xs="" flex="50">
-            <md-checkbox aria-label="Select All" ng-checked="isChecked()" md-indeterminate="isIndeterminate()" ng-click="toggleAll()">
-            <span ng-if="isChecked()">Un-</span>Select All
-          </md-checkbox>
-        </div> -->
-
         <div layout="column">
+          <h2>Please Select Who You'd Like to Check Out: </h2>
           <div class="demo-select-all-checkboxes" layout="column" ng-repeat="volunteer in volunteerList">
             <md-checkbox ng-checked="exists(volunteer.id, checkoutList)" layout="column" ng-click="toggle(volunteer.id, checkoutList)">
               {{volunteer.first_name}} {{volunteer.last_name}}   ({{volunteer.email}})
@@ -64,7 +57,7 @@
               <md-button ng-click="back()" class="biggerButton themed-Btn badButton" name="cancel" aria-label="Cancel" value="Cancel">Cancel</md-button>
             </div>
           </md-input-container>
-          <md-input-container class="chechOutContainer">
+          <md-input-container class="checkOutContainer">
               <md-button class="biggerButton themed-Btn blueButton" type="submit" name="submit" aria-label="Checkout"
               value="Checkout" ng-click="checkout(checkoutList)">Checkout</md-button>
           </md-input-container>
@@ -74,7 +67,5 @@
     </div>
   </div>
 </div>
-
-<!-- div with ng-show for list of search results: -->
 
 <div ng-include="'views/partials/footer.html'"></div>

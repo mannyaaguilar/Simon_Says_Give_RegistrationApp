@@ -66,10 +66,9 @@ $scope.getVolunteers = function(volunteer) {
 };
 
 $scope.checkout = function(checkoutList) {
+  // insert if/else logic to check if anyone is selected to checkout
   $scope.checkoutVolunteers(checkoutList);
-  // if (filledOut) {
   $scope.changeView();
-  // }
 };
 
 //PUT Route that updates the checkout time of chosen volunteer record(s)
