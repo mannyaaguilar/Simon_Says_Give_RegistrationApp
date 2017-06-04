@@ -23,7 +23,8 @@ router.post('/', function(req, res) {
         if (queryError) {
           console.log('Error making query.');
           res.send(500);
-        } else {
+        }
+        else {
           res.send(result.rows);
         } //ends else
       }); //ends db query

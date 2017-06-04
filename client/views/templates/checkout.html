@@ -6,6 +6,7 @@
   <div layout="column" flex="60">
     <div class="volunteerPage">
       <p>Please search for you or your group by <b>email</b> or by <b>name</b>:</p>
+      <h3 class="inputError">{{errorMessage}}</h3>
       <!-- SEARCH SECTION -->
       <div layout="row">
         <div layout-md="column" flex="70">
@@ -41,7 +42,6 @@
       </md-input-container>
       <!-- RESULTS SECTION - ng-show informs if it displays or not-->
       <div layout="column" ng-show="success">
-        <br>
         <h3 class="inputError">{{message}}</h3>
         <div layout="column">
           <h2>Please Select Who You'd Like to Check Out: </h2>
@@ -51,7 +51,8 @@
             </md-checkbox>
           </div>
         </div>
-        <div layout="row" ng-show="success" layout-align="center center" class="chechOutContainer">
+        <h2 class="inputError">{{checkoutMessage}}</h2>
+        <div layout="row" ng-show="success" layout-align="center center" class="checkOutContainer">
           <md-input-container layout="row" layout-align="center center">
             <div>
               <md-button ng-click="back()" class="biggerButton themed-Btn badButton" name="cancel" aria-label="Cancel" value="Cancel">Cancel</md-button>
@@ -61,6 +62,7 @@
               <md-button class="biggerButton themed-Btn blueButton" type="submit" name="submit" aria-label="Checkout"
               value="Checkout" ng-click="checkout(checkoutList)">Checkout</md-button>
           </md-input-container>
+
         </div>
       </div>
 
