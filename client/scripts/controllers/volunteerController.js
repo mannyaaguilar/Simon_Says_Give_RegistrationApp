@@ -1,5 +1,5 @@
 myApp.controller('VolunteerController', ['$scope', '$http', '$location', 'UserService', 'VolunteerService', 'UtilitiesService', function($scope, $http, $location, UserService, VolunteerService, UtilitiesService){
-console.log("VolunteerController Loaded");
+
 
 $scope.redirect = UserService.redirect;
 $scope.volunteer = VolunteerService.volunteer;
@@ -26,14 +26,11 @@ $scope.volunteer = {
   };
 
 $scope.formatdob = function() {
-  console.log("formatdob", $scope.volunteer.birthdate);
   if ( $scope.volunteer.birthdate) {
     birtdateToDB = UtilitiesService.formatDate(angular.copy($scope.volunteer.birthdate));
-    console.log('birthdate', birtdateToDB);
   }
   else {
     $scope.volunteer.birthdate = '1900-01-01';
-    console.log("default birthdate", birtdateToDB);
   }
 };
 
@@ -41,22 +38,4 @@ $scope.cancel = function(){
   $location.path('/checkInOut');
 };
 
-//sets date on datepicker to 8 years back for the convenience of user
-$scope.minmaxDate = function() {
-    this.myDate = new Date();
-    this.maxDate = new Date(
-    this.myDate.getFullYear(),
-    this.myDate.getMonth(),
-    this.myDate.getDate()
-  );
-};
-
-// $scope.volunteerData = function(){
-// VolunteerService.volunteerToDB = angular.copy($scope.volunteer);
-// console.log("INSIDE COPY volunteerToDB", VolunteerService.volunteerToDB );
-// };
-
-$scope.minmaxDate();
-// $scope.volunteerData();
-// VolunteerService.postNewVolunteer();
-}]);//end VolunteerController
+}]);

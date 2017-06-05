@@ -101,13 +101,23 @@ myApp.config(['$routeProvider', '$locationProvider',
         }]
       }
     })
-    // Main View of the app
-    .when('/user', {
-      templateUrl: '/views/templates/user.html',
-      controller: 'UserController',
+    // Add new office hours view
+    .when('/newHours', {
+      templateUrl: '/views/templates/newAdminHours.html',
+      controller: 'HoursController',
       resolve: {
         getuser : ['UserService', function(UserService){
-          return UserService.getuser();
+          return UserService.getuser('ADMIN');
+        }]
+      }
+    })
+    // View and edit office hours view
+    .when('/viewHours', {
+      templateUrl: '/views/templates/adminHours.html',
+      controller: 'HoursController',
+      resolve: {
+        getuser : ['UserService', function(UserService){
+          return UserService.getuser('ADMIN');
         }]
       }
     })
@@ -121,15 +131,6 @@ myApp.config(['$routeProvider', '$locationProvider',
         }],
         checkevent : ['UserService', function(UserService){
           return UserService.checkEvent();
-        }]
-      }
-    })
-    .when('/startEvent', {
-      templateUrl: '/views/templates/startEvent.html',
-      controller: 'startEventController',
-      resolve: {
-        getuser : ['UserService', function(UserService){
-          return UserService.getuser();
         }]
       }
     })

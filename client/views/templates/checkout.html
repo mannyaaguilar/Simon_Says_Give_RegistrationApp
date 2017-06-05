@@ -5,7 +5,10 @@
   <div layout-md="column" flex="20"></div>
   <div layout="column" flex="60">
     <div class="volunteerPage">
-      <p>Please search for you or your group by email or by name:</p>
+      <h1>CHECKOUT</h1>
+
+      <p>Please search for you or your group by <b>email</b> or by <b>name</b>:</p>
+      <h3 class="inputError">{{errorMessage}}</h3>
       <!-- SEARCH SECTION -->
       <div layout="row">
         <div layout-md="column" flex="70">
@@ -14,7 +17,6 @@
               <label for="email">Email:</label>
               <input type="text" ng-model="volunteerObject.email"/>
           </md-input-container>
-
           <!-- FIRST AND LAST NAME -->
           <div layout="row">
             <md-input-container layout="column" flex="45" >
@@ -37,43 +39,37 @@
       </div>
       <md-input-container ng-show="!success" layout="row" layout-align="center center">
         <div>
+          <br>
+          <br>
           <md-button ng-click="back()" class="biggerButton themed-Btn badButton" name="cancel" aria-label="Cancel" value="Cancel">Cancel</md-button>
         </div>
       </md-input-container>
-      <!-- RESULTS SECTION -->
-
+      <!-- RESULTS SECTION - ng-show informs if it displays or not-->
       <div layout="column" ng-show="success">
-        <br>
-        <p>Select who you want to check out!</p>
-          <!-- <div flex-xs="" flex="50">
-            <md-checkbox aria-label="Select All" ng-checked="isChecked()" md-indeterminate="isIndeterminate()" ng-click="toggleAll()">
-            <span ng-if="isChecked()">Un-</span>Select All
-          </md-checkbox>
-        </div> -->
+        <h3 class="inputError">{{message}}</h3>
         <div layout="column">
+          <h2>Please Select Who You'd Like to Check Out: </h2>
           <div class="demo-select-all-checkboxes" layout="column" ng-repeat="volunteer in volunteerList">
             <md-checkbox ng-checked="exists(volunteer.id, checkoutList)" layout="column" ng-click="toggle(volunteer.id, checkoutList)">
               {{volunteer.first_name}} {{volunteer.last_name}}   ({{volunteer.email}})
             </md-checkbox>
           </div>
         </div>
-        <div layout="row" ng-show="success" layout-align="center center" class="chechOutContainer">
+        <h2 class="inputError">{{checkoutMessage}}</h2>
+        <div layout="row" ng-show="success" layout-align="center center" class="checkOutContainer">
           <md-input-container layout="row" layout-align="center center">
             <div>
               <md-button ng-click="back()" class="biggerButton themed-Btn badButton" name="cancel" aria-label="Cancel" value="Cancel">Cancel</md-button>
             </div>
           </md-input-container>
-          <md-input-container class="chechOutContainer">
+          <md-input-container class="checkOutContainer">
               <md-button class="biggerButton themed-Btn blueButton" type="submit" name="submit" aria-label="Checkout"
               value="Checkout" ng-click="checkout(checkoutList)">Checkout</md-button>
           </md-input-container>
+
         </div>
       </div>
 
     </div>
   </div>
 </div>
-
-<!-- div with ng-show for list of search results: -->
-
-<div ng-include="'views/partials/footer.html'"></div>

@@ -1,45 +1,14 @@
-myApp.controller('WaiverController', ['$scope', '$http', '$location', 'VolunteerService', function($scope, $http, $location, VolunteerService) {
+myApp.controller('WaiverController', ['$window', '$scope', '$rootScope', '$anchorScroll', '$http', '$location', 'VolunteerService', function($window, $scope, $rootScope, $anchorScroll, $http, $location, VolunteerService) {
 
-console.log("WaiverController loaded!");
-    $scope.message = '';
+ $scope.currentURL = $location.$$absUrl + "/#signatures";
 
-  //ALL OF THESE WILL NEED TO BE IN A FACTORY
 
-  // var todaysDate = new Date();
-  //
-  // $scope.waiverObj = {
-  //   //Adult waiver
-  //   volunteerIndex: "",
-  //   dateTopAdult: todaysDate,
-  //   nameTopAdult: "",
-  //   agreedAdult: false,
-  //   nameBottomAdult: "",
-  //   dateBottomAdult: todaysDate,
-  //   //Youth waiver
-  //   dateTopYouth: todaysDate,
-  //   nameTopYouth: "",
-  //   agreedYouth: false,
-  //   nameBottomYouth: "",
-  //   dateBottomYouth: todaysDate,
-  //   noParentYouth: "",
-  //   dateBottomVolYouth: todaysDate,
-  //   guardianEmailYouth: "",
-  //   guardianTopYouth: "",
-  //   guardianBottomYouth: "",
-  //   dateBottomGuardYouth: todaysDate,
-  //   //Photo waiver
-  //   agreedPhoto: false,
-  //   nameBottomPhoto: "",
-  //   dateBottomPhoto: todaysDate,
-  //   dateBottomVolPhoto: todaysDate,
-  //   guardianBottomPhoto: "",
-  //   dateBottomGuardPhoto: todaysDate
-  // };
+  $scope.message = '';
 
   $scope.waiverObj = VolunteerService.waiverObj;
+  $scope.preregisteredVolunteerObj = VolunteerService.preregisteredVolunteerObj;
 
   $scope.submitAdultWaiver = function() {
-    console.log("XXcurrent waiverObj: ", $scope.waiverObj);
     var filledOut;
 
     filledOut = $scope.waiverObj.dateTopAdult &&
@@ -48,27 +17,16 @@ console.log("WaiverController loaded!");
                 $scope.waiverObj.nameBottomAdult &&
                 $scope.waiverObj.dateBottomAdult;
 
-    var signature = $scope.waiverObj.nameBottomAdult;
-    checkAdultSignFormat(signature);
+    if (filledOut) {
+      $location.path('/waiver-photo');
+    }
+    else {
+      $scope.message = 'Please fill out all highlighted fields';
+    }
 
-    function checkAdultSignFormat(signature) {
-      if (filledOut &&
-          signature.charAt(0) === '/' &&
-          signature.charAt(signature.length -1) === '/') {
-            $location.path("/waiver-photo");
-      }
-      else if (filledOut &&
-        (signature.charAt(0) !== '/' || signature.charAt(signature.length -1) !== '/' )) {
-          $scope.message = 'Please put name between slashes';
-        }
-      else {
-        $scope.message = 'Please fill out all highlighted fields';
-      }
-    } // end checkSignatureFormat
-  }; // end submitAdultWaiver
+  };
 
   $scope.submitYouthWaiver = function() {
-    console.log("current waiverObj: ", $scope.waiverObj);
     var noParentAll,
         parentAll,
         filledOut;
@@ -89,56 +47,47 @@ console.log("WaiverController loaded!");
 
     filledOut = noParentAll || parentAll;
 
-    var youthSignature = $scope.waiverObj.nameBottomYouth;
-    var guardianSignature = $scope.waiverObj.guardianBottomYouth;
-
-
-
-    // NEEDS TO BE FINISHED
-    // function checkYouthSignFormat(youthSignature, guardianSignature) {
-    //   if (filledOut &&
-    //       youthSignature.charAt(0) === '/' &&
-    //       youthSignature.charAt(youthSignature.length -1) === '/') {
-    //         $location.path("/override");
-    //   }
-    //   else if (filledOut &&
-    //     (signature.charAt(0) !== '/' || signature.charAt(signature.length -1) !== '/' )) {
-    //       $scope.message = 'Please put name between slashes';
-    //     }
-    //   else {
-    //     $scope.message = 'Please fill out all highlighted fields';
-    //   }
-    // } // end checkSignatureFormat
-
-
-
-
     if ( filledOut ) {
-      if ( noParentAll ) {
-        $location.path("/override");
-      }
-      else if ( parentAll ) {
-        $location.path("/waiver-photo");
-      }
+       if ( noParentAll ) {
+         $location.path("/override");
+       }
+       else if ( parentAll ) {
+         $location.path("/waiver-photo");
+       }
     }
     else {
-      $scope.message = 'Please complete all highlighted fields';
+      $scope.message = 'Please fill out all highlighted fields';
     }
   }; // end submitYouthWaiver
 
   $scope.submitPhotoWaiver = function() {
-    console.log("current waiverObj: ", $scope.waiverObj);
+    var filledOut;
+    var filledOutAdult;
+    var filledOutYouth;
 
-    if ( $scope.waiverObj.agreedPhoto ) {
-      $location.path("/confirmation");
+    filledOutAdult = $scope.waiverObj.agreedPhoto &&
+                     $scope.waiverObj.dateBottomPhoto &&
+                     $scope.waiverObj.nameBottomPhoto;
+
+    filledOutYouth = $scope.waiverObj.agreedPhoto &&
+                     $scope.waiverObj.dateBottomVolPhoto &&
+                     $scope.waiverObj.nameBottomPhoto &&
+                     $scope.waiverObj.guardianBottomPhoto &&
+                     $scope.waiverObj.dateBottomGuardPhoto;
+
+    filledOut = filledOutAdult || filledOutYouth;
+
+    if (filledOut) {
+          $location.path('/confirmation');
     }
     else {
-      $location.path("/override");
+      $scope.message = 'Please fill out all highlighted fields';
     }
-  };
+
+  }; // end submitPhotoWaiver
 
   $scope.declineWaiver = function() {
     $location.path("/override");
   };
 
-}]);
+}]); // end submitPhotoWaiver

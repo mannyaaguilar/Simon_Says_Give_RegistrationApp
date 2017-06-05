@@ -20,12 +20,10 @@ router.get('/', function(req, res) {
   // check if logged in
   if(req.isAuthenticated()) {
     // send back user object from database
-    console.log('logged in');
     //prepare an object = { }
     res.send(req.user);
   } else {
     // failure best handled on the server. do redirect here.
-    console.log('not logged in');
     // should probably be res.sendStatus(403) and handled client-side, esp if this is an AJAX request (which is likely with AngularJS)
     res.send(false);
   }
@@ -34,7 +32,6 @@ router.get('/', function(req, res) {
 // clear all server session information about this user
 router.get('/logout', function(req, res) {
   // Use passport's built-in method to log out the user
-  console.log('Logged out');
   req.logout();
   res.sendStatus(200);
 });
@@ -54,7 +51,6 @@ router.post('/forgotpassword', function(req, res) {
 
       var userQuery = 'SELECT email FROM users WHERE username = $1';
       db.query(userQuery,[req.body.username], function(queryError,result) {
-        done();
         if (queryError) {
           res.sendStatus(500);
         } else {
@@ -72,7 +68,6 @@ router.post('/forgotpassword', function(req, res) {
               if (error) {
                   return console.log(error);
               }
-              console.log('Message %s sent: %s', info.messageId, info.response);
           });
 
           var userQuery = 'UPDATE users SET code = $1 WHERE username = $2';

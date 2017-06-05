@@ -4,19 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "grunt uglify",
+    "postinstall": "grunt",
     "start": "node server/app.js"
   },
   "author": "Craig Baird, Claudia Calderas, Chris Keller, Erin Kinnen, Lisa Schoofs",
   "license": "ISC",
   "dependencies": {
-    "angular": "1.5.0",
+    "angular": "1.6.4",
     "angular-animate": "1.6.4",
     "angular-aria": "1.6.4",
     "angular-material": "1.1.4",
     "angular-messages": "1.6.4",
     "angular-route": "1.6.4",
-    "bcrypt": "0.8.5",
+    "bcrypt": "^0.8.5",
     "body-parser": "1.13.3",
     "bootstrap": "3.3.5",
     "chance": "1.0.9",

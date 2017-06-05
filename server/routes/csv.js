@@ -47,6 +47,50 @@ router.get('/export/hours/:fromDate/:toDate', function(req, res, next) {
   }
 });
 
+// GET request - office hours .csv file
+router.get('/export/officeHours/:fromDate/:toDate', function(req, res, next) {
+  if(req.isAuthenticated()) {
+    var fromDate = req.params.fromDate;
+    var toDate = req.params.toDate;
+    // connects to the pool
+    pool.connect(function(errorConnectingToDatabase,db,done) {
+      if(errorConnectingToDatabase) {
+        res.sendStatus(500);
+      } else {
+        // query that selects all office hours for a selected period of time
+        var jsonQuery = 'SELECT volunteer_hours.staff_name as "Staff Username", ' +
+        'volunteer_hours.date as "Date", volunteer_hours.time_in as "Time in", ' +
+        'volunteer_hours.time_out as "Time out" FROM volunteer_hours ' +
+        'WHERE volunteer_hours.date >= $1 and volunteer_hours.date <= $2' +
+        'AND volunteer_hours.staff_name IS NOT NULL';
+        db.query(jsonQuery, [fromDate, toDate], function(queryError,result) {
+          done();
+          if (queryError) {
+            res.sendStatus(500);
+          } else {
+            // converts query resutl to JSON
+            var jsonString = JSON.stringify(result.rows);
+            var json = JSON.parse(jsonString);
+            // parameters for json2csv function
+            var opts = {
+              data: json,
+              fields: ['Staff Username', 'Date', 'Time in', 'Time out'],
+              quotes: ''
+            };
+            // converts json data to csv
+            var result = json2csv(opts);
+            // sends csv file to client
+            res.attachment('office_hours.csv');
+            res.status(200).send(result);
+          } // else
+        }); // db.query
+      } // else
+    }); // pool.connect
+  } else {
+    res.sendStatus(401);
+  }
+});
+
 // GET request - volunteer .csv file
 router.get('/export/volunteer', function(req, res, next) {
   if(req.isAuthenticated()) {
@@ -105,7 +149,6 @@ router.post('/upload', function(req, res, next) {
             jsonObject = jsonArrObj[i];
             db.query('INSERT INTO json_volunteer (info) VALUES ($1);',
             [jsonObject], function(queryError,result) {
-              done();
               if (queryError) {
                 console.log('Error inserting into json_volunteer table');
               }
