@@ -48,14 +48,14 @@ router.post('/add', function(req,res) {
       } else {
         var eventQuery = 'INSERT INTO event (event_code, event_name, event_team, event_description, event_location, event_date, ' +
           'event_from_time, event_until_time) VALUES ' +
-          '($1, $2, $3, $4, $5, $6, $7, $8);'
+          '($1, $2, $3, $4, $5, $6, $7, $8);';
         db.query(eventQuery,
         [eventCode, eventName,eventTeam,eventDescription,eventLocation,eventDate,eventFromTime,eventUntilTime], function(queryError,result) {
           done();
           if (queryError) {
             res.send("There was an error saving the event. Please make sure that event code doesn't exist in the database.");
           } else {
-            res.send("Event created successfully.")
+            res.send("Event created successfully.");
           }
         });
       }

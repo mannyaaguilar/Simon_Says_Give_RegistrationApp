@@ -37,6 +37,7 @@ myApp.controller('LoginController', ['$scope', '$http', '$routeParams', 'UserSer
         if(response.data.event_code) {
           UserService.eventObject.eventCode = response.data.event_code;
           UserService.eventObject.eventName = response.data.event_name;
+          UserService.eventObject.eventID = response.data.id;
           UserService.redirect('/checkInOut');
         } else {
           UtilitiesService.showAlert('Invalid event code.');
