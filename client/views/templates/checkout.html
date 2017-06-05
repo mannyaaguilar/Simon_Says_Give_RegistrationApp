@@ -5,6 +5,8 @@
   <div layout-md="column" flex="20"></div>
   <div layout="column" flex="60">
     <div class="volunteerPage">
+      <h1>CHECKOUT</h1>
+
       <p>Please search for you or your group by <b>email</b> or by <b>name</b>:</p>
       <h3 class="inputError">{{errorMessage}}</h3>
       <!-- SEARCH SECTION -->
@@ -37,6 +39,8 @@
       </div>
       <md-input-container ng-show="!success" layout="row" layout-align="center center">
         <div>
+          <br>
+          <br>
           <md-button ng-click="back()" class="biggerButton themed-Btn badButton" name="cancel" aria-label="Cancel" value="Cancel">Cancel</md-button>
         </div>
       </md-input-container>
@@ -69,5 +73,3 @@
     </div>
   </div>
 </div>
-
-<div ng-include="'views/partials/footer.html'"></div>

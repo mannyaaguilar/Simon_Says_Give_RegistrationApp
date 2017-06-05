@@ -121,16 +121,6 @@ myApp.config(['$routeProvider', '$locationProvider',
         }]
       }
     })
-    // Main View of the app
-    .when('/user', {
-      templateUrl: '/views/templates/user.html',
-      controller: 'UserController',
-      resolve: {
-        getuser : ['UserService', function(UserService){
-          return UserService.getuser();
-        }]
-      }
-    })
     //adds volunteerView and controller
     .when('/volunteer', {
       templateUrl: '/views/templates/volunteer.html',
@@ -141,15 +131,6 @@ myApp.config(['$routeProvider', '$locationProvider',
         }],
         checkevent : ['UserService', function(UserService){
           return UserService.checkEvent();
-        }]
-      }
-    })
-    .when('/startEvent', {
-      templateUrl: '/views/templates/startEvent.html',
-      controller: 'startEventController',
-      resolve: {
-        getuser : ['UserService', function(UserService){
-          return UserService.getuser();
         }]
       }
     })
