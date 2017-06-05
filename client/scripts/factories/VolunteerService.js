@@ -72,7 +72,8 @@ myApp.factory('VolunteerService', ['$http', '$location', 'UserService', 'Utiliti
   };
 
   preregisteredVolunteer = function(volunteer){
-    volunteer.event_id = UserService.eventObject.eventCode;
+    volunteer.event_code = UserService.eventObject.eventCode;
+    volunteer.event_id = UserService.eventObject.eventID;
       $http.post('/volunteer/initial', volunteer)
       .then(function(response){
         preregisteredVolunteerObj.email = response.data[0].email;
@@ -122,7 +123,8 @@ myApp.factory('VolunteerService', ['$http', '$location', 'UserService', 'Utiliti
 
     updateWaiver = function(){
         var checkInTime = new Date();
-        waiverObj.event_id = UserService.eventObject.eventCode;
+        waiverObj.event_code = UserService.eventObject.eventCode;
+        waiverObj.event_id = UserService.eventObject.eventID;
         waiverObj.time_in = UtilitiesService.formatTime(checkInTime);
         waiverObj.date = UtilitiesService.formatDate(checkInTime);
         waiverObj.volunteerID = preregisteredVolunteerObj.id;

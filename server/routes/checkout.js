@@ -6,13 +6,18 @@ var pool = require('../modules/pool');
 //POST gets matching volunteers from database
 router.post('/', function(req, res) {
 
-    pool.connect(function(error, db, done){
-      if(error) {
-        console.log('error connecting to the database.');
-        res.send(500);
-
-      } else {
-        db.query("SELECT volunteer.first_name, volunteer.last_name, " +
+  pool.connect(function(err, client, done) {
+    if ( err ) {
+      next(err);
+    }
+    client.query("SELECT * FROM event WHERE event_code = $1;",
+    [req.body.event_code],
+    function(err, result) {
+      if ( err ) {
+        next(err);
+      }
+      else if ( result.rows.length !== 0 ) {
+        client.query("SELECT volunteer.first_name, volunteer.last_name, " +
         "volunteer.email, volunteer_hours.id FROM volunteer JOIN volunteer_hours " +
         "ON volunteer.id = volunteer_hours.volunteer_id WHERE volunteer_hours.event_id " +
         "= $4 AND (volunteer.first_name " + "ILIKE $1 OR volunteer.last_name ILIKE $2 " +
@@ -30,18 +35,25 @@ router.post('/', function(req, res) {
         }); //ends db query
       } //ends else
     }); //ends pool.connect
+  });
 }); //ends router.post
 
 
 //PUT Route that updates the checkout time of chosen volunteer record(s)
 router.put('/:ids/:timeout', function(req, res){
-  
-    pool.connect(function(errorConnectingToDatabase, db, done){
-      if(errorConnectingToDatabase) {
-        console.log('Error connecting to the database.');
-        res.send(500);
-      } else {
-        db.query("UPDATE volunteer_hours SET time_out = '" + req.params.timeout +
+
+  pool.connect(function(err, client, done) {
+    if ( err ) {
+      next(err);
+    }
+    client.query("SELECT * FROM event WHERE event_code = $1;",
+    [req.body.event_code],
+    function(err, result) {
+      if ( err ) {
+        next(err);
+      }
+      else if ( result.rows.length !== 0 ) {
+        client.query("UPDATE volunteer_hours SET time_out = '" + req.params.timeout +
         "' WHERE id IN (" + req.params.ids + ");", function(queryError, result){
           done();
           if(queryError) {
@@ -54,6 +66,7 @@ router.put('/:ids/:timeout', function(req, res){
         }); //ends db query
       } //ends else
     }); //ends pool.connect
+  });
 }); //ends router
 
 module.exports = router;
