@@ -353,3 +353,7 @@ a {
 .extraPadding {
   padding: 10px;
 }
+
+#forgotpassword {
+  color: Darkgray;
+}
