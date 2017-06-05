@@ -1,7 +1,7 @@
 myApp.controller('WaiverController', ['$window', '$scope', '$rootScope', '$anchorScroll', '$http', '$location', 'VolunteerService', function($window, $scope, $rootScope, $anchorScroll, $http, $location, VolunteerService) {
 
  $scope.currentURL = $location.$$absUrl + "/#signatures";
- 
+
 
   $scope.message = '';
 
@@ -61,7 +61,6 @@ myApp.controller('WaiverController', ['$window', '$scope', '$rootScope', '$ancho
   }; // end submitYouthWaiver
 
   $scope.submitPhotoWaiver = function() {
-    console.log("current waiverObj: ", $scope.waiverObj);
     var filledOut;
     var filledOutAdult;
     var filledOutYouth;
