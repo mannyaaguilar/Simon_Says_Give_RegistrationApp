@@ -1,5 +1,4 @@
 myApp.factory('CSVService', ['$http','$mdDialog', function($http,$mdDialog){
-  console.log('CSVService Loaded');
 
   // Sends CSV file content to server
   sendCSV = function(csv) {

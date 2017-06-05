@@ -3,7 +3,6 @@ var localStrategy = require('passport-local').Strategy;
 var encryptLib = require('../modules/encryption');
 var pool = require('../modules/pool');
 
-console.log('clients connected: ', connectCount);
 
 var acquireCount = 0;
 pool.on('acquire', function (client) {

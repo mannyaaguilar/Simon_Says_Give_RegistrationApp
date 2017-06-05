@@ -68,7 +68,6 @@ router.post('/forgotpassword', function(req, res) {
               if (error) {
                   return console.log(error);
               }
-              console.log('Message %s sent: %s', info.messageId, info.response);
           });
 
           var userQuery = 'UPDATE users SET code = $1 WHERE username = $2';
