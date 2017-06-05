@@ -60,7 +60,6 @@ router.put('/:ids/:timeout', function(req, res){
             console.log('Error making query.');
             res.sendStatus(500);
           } else {
-            console.log(result);
             res.sendStatus(201);
           } //ends else
         }); //ends db query

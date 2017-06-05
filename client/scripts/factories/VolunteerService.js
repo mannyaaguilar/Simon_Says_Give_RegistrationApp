@@ -57,15 +57,11 @@ myApp.factory('VolunteerService', ['$http', '$location', 'UserService', 'Utiliti
     var WaiverMonth = waiverDate.substr(5,2)-1;
     var WaiverDay = waiverDate.substr(8,2);
     var waiverFormattedDate = new Date(WaiverYear,WaiverMonth,WaiverDay,0,0,0);
-    console.log("Formatted: ", waiverFormattedDate);
     var today = new Date();
     today.setFullYear(today.getFullYear() - 1);
-    console.log("TODAY", today);
     if(waiverFormattedDate <= today){
-      console.log("false");
       return true;
     } else {
-      console.log("true");
       return false;
     }
   };
@@ -124,7 +120,6 @@ myApp.factory('VolunteerService', ['$http', '$location', 'UserService', 'Utiliti
         var checkInTime = new Date();
         waiverObj.event_code = UserService.eventObject.eventCode;
         waiverObj.event_id = UserService.eventObject.eventID;
-        console.log("user service event obj: ", UserService.eventObject);
         waiverObj.time_in = UtilitiesService.formatTime(checkInTime);
         waiverObj.date = UtilitiesService.formatDate(checkInTime);
         waiverObj.volunteerID = preregisteredVolunteerObj.id;
