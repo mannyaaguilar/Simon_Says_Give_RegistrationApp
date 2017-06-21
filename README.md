@@ -1,5 +1,6 @@
 # SIMON SAYS GIVE Volunteer Application
 ## Prime Digital Academy Full Stack Engineering Program - Group Project
+View the application online: https://ssg-develop.herokuapp.com
 
 ## Table of Contents
 
